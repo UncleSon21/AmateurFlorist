@@ -329,10 +329,10 @@ svg                              { display: none !important; }
       <button class="nav-icon-btn" aria-label="Wishlist">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </button>
-      <button class="nav-icon-btn" aria-label="Cart" style="position:relative">
+      <a href="cart.html" class="nav-icon-btn cart-icon" aria-label="Cart" style="position:relative">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         <span class="cart-badge cart-count" id="nav-cart-count" style="display:none">0</span>
-      </button>
+      </a>
     </div>
   </div>
 </nav>
@@ -672,13 +672,73 @@ function switchTab(btn) {
 }
 
 // Actions
+// ─── Cart wiring (writes to localStorage 'vf_cart_v1' so the cart page + badge sync) ───
+const CART_KEY = 'vf_cart_v1';
+
+function getCurrentCartItem() {
+  // Pull product id from URL (?id=...) or fall back to the page slug.
+  const params = new URLSearchParams(location.search);
+  const productId = params.get('id') || 'sample-product';
+
+  // Selected size variant — the redesign uses radios with name="size" and the
+  // value is the price ($65/$85/$115/$165). We map back to the variant code.
+  const sizeRadio = document.querySelector('input[name="size"]:checked');
+  const sizeValue = sizeRadio ? sizeRadio.value : '85';
+  const sizeMap = { '65':'petite', '85':'classic', '115':'luxe', '165':'grand' };
+  const variantId = sizeMap[sizeValue] || 'classic';
+
+  // Optional: presentation upsell (vase) — captured as an add-on
+  const presRadio = document.querySelector('input[name="pres"]:checked');
+  const addOnIds = (presRadio && Number(presRadio.value) > 0) ? ['vase'] : [];
+
+  const qty = Math.max(1, parseInt(document.getElementById('qtyDisplay')?.textContent || '1', 10));
+  return { productId, variantId, addOnIds, qty };
+}
+
+function loadCart() {
+  try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch { return []; }
+}
+
+function saveCart(c) {
+  localStorage.setItem(CART_KEY, JSON.stringify(c));
+  window.dispatchEvent(new Event('cart:changed'));
+  document.dispatchEvent(new CustomEvent('cart:changed'));
+  // Trigger storage event handlers in same tab too (storage event normally only fires across tabs)
+  window.dispatchEvent(new StorageEvent('storage', { key: CART_KEY, newValue: localStorage.getItem(CART_KEY) }));
+}
+
+function addToCart(item) {
+  const cart = loadCart();
+  const existing = cart.findIndex(ci =>
+    ci.productId === item.productId &&
+    ci.variantId === item.variantId &&
+    JSON.stringify(ci.addOnIds) === JSON.stringify(item.addOnIds)
+  );
+  if (existing >= 0) cart[existing].qty += item.qty;
+  else cart.push(item);
+  saveCart(cart);
+}
+
+function syncBadge() {
+  const badge = document.getElementById('nav-cart-count');
+  if (!badge) return;
+  const total = loadCart().reduce((s, ci) => s + (ci.qty || 1), 0);
+  if (total > 0) { badge.textContent = String(total); badge.style.display = ''; }
+  else           { badge.style.display = 'none'; }
+}
+syncBadge();
+window.addEventListener('cart:changed', syncBadge);
+
 function handleCart() {
+  addToCart(getCurrentCartItem());
   const btn = document.getElementById('addCartBtn');
-  btn.textContent = 'Added to cart';
+  btn.textContent = 'Added to cart ✓';
   btn.classList.add('added');
   setTimeout(() => { btn.textContent = 'Add to Cart'; btn.classList.remove('added'); }, 2000);
 }
+
 function handleBuy() {
+  addToCart(getCurrentCartItem());
   window.location.href = 'cart.html';
 }
 
