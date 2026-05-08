@@ -554,6 +554,7 @@ svg                              { display: none !important; }
   <div class="footer-bottom">© 2026 Vaniaflorist · Sydney, NSW · All rights reserved</div>
 </footer>
 
+<!-- DISABLED: inline mock checkout replaced by checkout.ts. Uncomment to fall back.
 <script>
 window.addEventListener('DOMContentLoaded', () => {
 });
@@ -768,6 +769,8 @@ function placeOrder() {
 renderSummaryItems();
 updateTotals();
 </script>
+-->
+
 
 <!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
 <script type="module">
@@ -799,5 +802,6 @@ updateTotals();
 })();
 </script>
 
+<script type="module" src="src/scripts/checkout.ts"></script>
 </body>
 </html>

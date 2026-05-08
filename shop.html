@@ -110,8 +110,8 @@ button{cursor:pointer;font-family:inherit}
 .filter-search input::placeholder{color:var(--accent-light)}
 
 /* Material pills */
-.filter-pills{display:flex;gap:6px;flex-shrink:0}
-.filter-pill{
+.material-pills{display:flex;gap:6px;flex-shrink:0}
+.material-pill{
   padding:5px 16px;
   border:.5px solid var(--border);border-radius:var(--radius);
   background:transparent;
@@ -119,8 +119,8 @@ button{cursor:pointer;font-family:inherit}
   color:var(--text-muted);transition:all .25s;
   white-space:nowrap;
 }
-.filter-pill:hover{border-color:var(--accent);color:var(--accent)}
-.filter-pill.active{background:var(--accent-dark);border-color:var(--accent-dark);color:#faf8f4}
+.material-pill:hover{border-color:var(--accent);color:var(--accent)}
+.material-pill.active{background:var(--accent-dark);border-color:var(--accent-dark);color:#faf8f4}
 
 /* Category select */
 .filter-select{
@@ -285,7 +285,7 @@ svg                              { display: none !important; }
 
 <!-- Top Bar -->
 <div class="topbar">
-  Free delivery across Sydney on orders over $80 — <a href="#">Shop now</a>
+  Free delivery across Sydney on orders over $80 — <a href="shop.html">Shop now</a>
 </div>
 
 <!-- Nav -->
@@ -293,9 +293,9 @@ svg                              { display: none !important; }
   <div class="nav-inner">
     <div class="nav-links">
       <a href="shop.html">Shop</a>
-      <a href="#">Occasions</a>
+      <a href="shop.html#occasions">Occasions</a>
       <a href="about.html">About</a>
-      <a href="#">Weddings</a>
+      <a href="weddings.html">Weddings</a>
     </div>
     <div class="logo">
       <a href="index.html">
@@ -333,10 +333,10 @@ svg                              { display: none !important; }
       <input type="text" id="searchInput" placeholder="Search flowers…" autocomplete="off">
     </div>
     <div class="filter-sep"></div>
-    <div class="filter-pills" id="materialPills">
-      <button class="filter-pill active" data-material="all">All</button>
-      <button class="filter-pill" data-material="fresh">Fresh</button>
-      <button class="filter-pill" data-material="artificial">Preserved</button>
+    <div class="material-pills" id="materialPills">
+      <button class="material-pill active" data-material="all">All</button>
+      <button class="material-pill" data-material="fresh">Fresh</button>
+      <button class="material-pill" data-material="artificial">Preserved</button>
     </div>
     <div class="filter-sep"></div>
     <select class="filter-select" id="categorySelect">
@@ -348,7 +348,7 @@ svg                              { display: none !important; }
       <option value="newbaby">New Baby</option>
     </select>
     <div class="filter-right">
-      <span class="filter-results"><strong id="resultCount">12</strong> arrangements</span>
+      <span class="filter-results"><strong id="resultsCount">12</strong> arrangements</span>
       <div class="grid-toggle">
         <button class="grid-btn" id="grid4btn" title="4 columns">
           <svg width="12" height="12" viewBox="0 0 12 12"><rect x="0" y="0" width="5" height="5" rx=".5" fill="currentColor"/><rect x="7" y="0" width="5" height="5" rx=".5" fill="currentColor"/><rect x="0" y="7" width="5" height="5" rx=".5" fill="currentColor"/><rect x="7" y="7" width="5" height="5" rx=".5" fill="currentColor"/></svg>
@@ -371,6 +371,7 @@ svg                              { display: none !important; }
   </div>
 </section>
 
+<!-- DISABLED: inline mock products replaced by shop_page_db.ts. Uncomment to fall back.
 <script>
 var SHOP_TWEAKS = /*EDITMODE-BEGIN*/{
   "accentScheme": "sage",
@@ -441,7 +442,7 @@ function renderProducts() {
   const aspectStyle = imageCrop === 'portrait' ? 'aspect-ratio:3/4' : imageCrop === 'square' ? 'aspect-ratio:1/1' : 'aspect-ratio:4/3';
 
   grid.innerHTML = filtered.map((p, i) => `
-    <a href="#" class="prod-card" style="animation-delay:${i * 0.04}s">
+    <a href="shop.html" class="prod-card" style="animation-delay:${i * 0.04}s">
       <div class="prod-img" style="${aspectStyle}">
         <img src="${p.img}" alt="${p.name}" loading="${i < 4 ? 'eager' : 'lazy'}">
         <span class="prod-badge ${p.material === 'fresh' ? 'badge-fresh' : 'badge-artificial'}">${p.material === 'fresh' ? 'Fresh' : 'Preserved'}</span>
@@ -469,9 +470,9 @@ function renderProducts() {
 
 // Filter pills
 document.getElementById('materialPills').addEventListener('click', e => {
-  const btn = e.target.closest('.filter-pill');
+  const btn = e.target.closest('.material-pill');
   if (!btn) return;
-  document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.material-pill').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   activeMaterial = btn.dataset.material;
   renderProducts();
@@ -502,7 +503,7 @@ document.getElementById('grid2btn').addEventListener('click', () => {
   grid.className = 'grid-2'; document.querySelectorAll('.grid-btn').forEach(b=>b.classList.remove('active')); document.getElementById('grid2btn').classList.add('active');
 });
 // Sync filter UI with URL-derived defaults
-document.querySelectorAll('#materialPills .filter-pill').forEach(b => {
+document.querySelectorAll('#materialPills .material-pill').forEach(b => {
   b.classList.toggle('active', b.dataset.material === activeMaterial);
 });
 const catSel = document.getElementById('categorySelect');
@@ -510,6 +511,8 @@ if (catSel && catSel.querySelector(`option[value="${activeCategory}"]`)) catSel.
 
 renderProducts();
 </script>
+-->
+
 
 <!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
 <script type="module">
@@ -541,5 +544,6 @@ renderProducts();
 })();
 </script>
 
+<script type="module" src="src/scripts/shop_page_db.ts"></script>
 </body>
 </html>

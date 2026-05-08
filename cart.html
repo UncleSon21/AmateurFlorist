@@ -255,7 +255,7 @@ svg                              { display: none !important; }
   <div class="container">
     <div class="cart-header">
       <h1 class="cart-title">Your Cart</h1>
-      <p class="cart-sub" id="cartSub">Loading your items…</p>
+      <p class="cart-sub" id="cart-subtitle">Loading your items…</p>
     </div>
 
     <div class="cart-layout">
@@ -263,12 +263,12 @@ svg                              { display: none !important; }
       <div class="items-panel">
         <div class="panel-title">Items</div>
 
-        <div class="cart-loading" id="cartLoading">
+        <div class="cart-loading" id="cart-loading">
           <div class="spinner"></div>
           <p>Loading your cart…</p>
         </div>
 
-        <div class="cart-empty" id="cartEmpty">
+        <div class="cart-empty" id="cart-empty">
           <div class="empty-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
           </div>
@@ -277,7 +277,7 @@ svg                              { display: none !important; }
           <a href="shop.html" class="btn-shop">Browse the shop →</a>
         </div>
 
-        <div id="cartList"></div>
+        <div id="cart-list"></div>
       </div>
 
       <!-- Summary -->
@@ -285,23 +285,23 @@ svg                              { display: none !important; }
         <div class="panel-title">Order Summary</div>
         <div class="summary-body">
           <div class="summary-row">
-            <span>Subtotal (<span id="itemCount">0</span> items)</span>
-            <span id="subtotalVal">$0.00</span>
+            <span>Subtotal (<span id="item-count">0</span> items)</span>
+            <span id="summary-subtotal">$0.00</span>
           </div>
           <div class="summary-row">
             <span>Delivery</span>
-            <span id="deliveryVal">—</span>
+            <span id="summary-delivery">—</span>
           </div>
           <div class="del-progress">
-            <div class="del-track"><div class="del-bar" id="delBar" style="width:0%"></div></div>
-            <p class="del-text" id="delText">Add items to see delivery estimate</p>
+            <div class="del-track"><div class="del-bar" id="delivery-bar" style="width:0%"></div></div>
+            <p class="del-text" id="delivery-progress-text">Add items to see delivery estimate</p>
           </div>
           <div class="summary-total">
             <span class="summary-total-label">Total</span>
-            <span id="summaryTotal">$0.00</span>
+            <span id="summary-total">$0.00</span>
           </div>
 
-          <a href="checkout.html" class="btn-checkout disabled" id="checkoutBtn">Proceed to Checkout</a>
+          <a href="checkout.html" class="btn-checkout disabled" id="btn-checkout">Proceed to Checkout</a>
           <a href="shop.html" class="btn-continue">Continue Shopping</a>
 
           <div class="summary-trust">
@@ -328,6 +328,7 @@ svg                              { display: none !important; }
   <div class="footer-bottom">© 2026 Vaniaflorist · Sydney, NSW · All rights reserved</div>
 </footer>
 
+<!-- DISABLED: inline mock cart replaced by cart_page.ts. Uncomment to fall back.
 <script>
 // Auto seasonal colour
 window.addEventListener('DOMContentLoaded', () => {
@@ -430,6 +431,8 @@ function removeItem(id) {
 // Simulate loading
 setTimeout(renderCart, 600);
 </script>
+-->
+
 
 <!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
 <script type="module">
@@ -461,5 +464,6 @@ setTimeout(renderCart, 600);
 })();
 </script>
 
+<script type="module" src="src/scripts/cart_page.ts"></script>
 </body>
 </html>

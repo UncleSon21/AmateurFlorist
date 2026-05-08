@@ -312,7 +312,7 @@ svg                              { display: none !important; }
     <p class="confirm-sub">Your flowers are being prepared with care. We've sent a confirmation to <strong id="emailDisplay">sarah@example.com</strong> — keep an eye out for tracking updates.</p>
     <div class="order-pill">
       <span>Order</span>
-      <strong id="orderNumber">#VF-2026-0428</strong>
+      <strong id="order-id-display">#VF-2026-0428</strong>
       <span style="color:var(--accent-light)">·</span>
       <span id="orderDate">27 Apr 2026</span>
     </div>
@@ -360,7 +360,7 @@ svg                              { display: none !important; }
     <div class="detail-card">
       <p class="detail-eyebrow">Your order</p>
       <h2 class="detail-title">What's blooming for you</h2>
-      <div id="confItems" style="margin-top:14px">
+      <div id="order-items-list" style="margin-top:14px">
         <div class="conf-item">
           <div class="conf-thumb"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Blush Romance"></div>
           <div>
@@ -410,7 +410,7 @@ svg                              { display: none !important; }
       <div class="side-section">
         <p class="side-label">Need to make a change?</p>
         <p class="side-body" style="font-size:.9rem;color:var(--text-muted);font-style:italic;line-height:1.7;margin-bottom:10px">If you spot anything wrong, our team can adjust your order — get in touch within the next hour.</p>
-        <a href="#" class="btn-ghost">Contact support →</a>
+        <a href="mailto:hello@vaniaflorist.com.au" class="btn-ghost">Contact support →</a>
       </div>
     </div>
   </div>
@@ -430,7 +430,7 @@ svg                              { display: none !important; }
         </div>
         <h3 class="next-name">Track in real time</h3>
         <p class="next-desc">We'll text you when your bouquet leaves the studio. Reply STOP at any time to opt out.</p>
-        <a href="#" class="next-link">Track this order →</a>
+        <a href="order-confirmation.html" class="next-link">Track this order →</a>
       </div>
       <div class="next-card">
         <div class="next-icon">
@@ -438,7 +438,7 @@ svg                              { display: none !important; }
         </div>
         <h3 class="next-name">Care guide for fresh blooms</h3>
         <p class="next-desc">Tips to help your arrangement last twice as long — trim stems, change water every 2 days, keep them out of direct sun.</p>
-        <a href="#" class="next-link">Read care guide →</a>
+        <a href="product-details.html#care" class="next-link">Read care guide →</a>
       </div>
       <div class="next-card">
         <div class="next-icon">
@@ -446,7 +446,7 @@ svg                              { display: none !important; }
         </div>
         <h3 class="next-name">Refer a friend, save $20</h3>
         <p class="next-desc">Share Vaniaflorist with someone special — they get $20 off their first order, and so do you.</p>
-        <a href="#" class="next-link">Get your code →</a>
+        <a href="shop.html" class="next-link">Get your code →</a>
       </div>
     </div>
   </div>
@@ -513,6 +513,8 @@ setTimeout(() => {
   window.addEventListener('storage', e => { if(e.key === 'vf_cart_v1') update(); });
 })();
 </script>
+
+<script type="module" src="src/scripts/order-confirmation.ts"></script>
 
 </body>
 </html>

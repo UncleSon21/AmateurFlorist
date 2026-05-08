@@ -90,10 +90,10 @@ button{cursor:pointer;font-family:inherit}
 .nav-links a:hover::after,.nav-btn:hover::after{width:100%}
 
 /* Shop dropdown */
-.nav-shop{position:relative}
+.nav-shop{position:relative;padding-bottom:14px;margin-bottom:-14px}        /* extend hover area down */
 .nav-shop > .nav-btn{cursor:pointer}
 .nav-shop-menu{
-  position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-8px);
+  position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(-8px);
   min-width:220px;background:var(--bg);border:.5px solid var(--border);
   padding:14px 0;box-shadow:0 10px 40px rgba(28,22,18,.08);
   opacity:0;pointer-events:none;
@@ -681,9 +681,6 @@ svg                                  { display: none !important; }
       <button class="nav-icon-btn" aria-label="Search" id="searchButton">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </button>
-      <a href="wishlist.html" class="nav-icon-btn" aria-label="Wishlist">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      </a>
       <a href="cart.html" class="nav-icon-btn cart-icon" aria-label="Cart" style="position:relative">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         <span class="cart-badge cart-count" id="nav-cart-count" style="display:none">0</span>
@@ -747,7 +744,7 @@ svg                                  { display: none !important; }
       <h2 class="sec-title">Find the perfect bouquet<br>for any moment</h2>
     </div>
     <div class="occasions-grid">
-      <a href="#" class="occ-card reveal">
+      <a href="shop.html" class="occ-card reveal">
         <div class="occ-img"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Birthday flowers"></div>
         <div class="occ-body">
           <h3 class="occ-name">Birthday</h3>
@@ -755,7 +752,7 @@ svg                                  { display: none !important; }
           <span class="occ-link">Shop Birthday →</span>
         </div>
       </a>
-      <a href="#" class="occ-card reveal">
+      <a href="shop.html" class="occ-card reveal">
         <div class="occ-img"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Anniversary flowers"></div>
         <div class="occ-body">
           <h3 class="occ-name">Anniversary</h3>
@@ -763,7 +760,7 @@ svg                                  { display: none !important; }
           <span class="occ-link">Shop Anniversary →</span>
         </div>
       </a>
-      <a href="#" class="occ-card reveal">
+      <a href="shop.html" class="occ-card reveal">
         <div class="occ-img"><img src="images/gallery/bouquet-white.jpg" alt="Sympathy flowers"></div>
         <div class="occ-body">
           <h3 class="occ-name">Sympathy</h3>
@@ -771,7 +768,7 @@ svg                                  { display: none !important; }
           <span class="occ-link">Shop Sympathy →</span>
         </div>
       </a>
-      <a href="#" class="occ-card reveal">
+      <a href="shop.html" class="occ-card reveal">
         <div class="occ-img"><img src="images/gallery/bouquet-workshop.jpg" alt="Wedding flowers"></div>
         <div class="occ-body">
           <h3 class="occ-name">Wedding</h3>
@@ -779,7 +776,7 @@ svg                                  { display: none !important; }
           <span class="occ-link">Enquire →</span>
         </div>
       </a>
-      <a href="#" class="occ-card reveal">
+      <a href="shop.html" class="occ-card reveal">
         <div class="occ-img"><img src="images/gallery/flowers-market.jpg" alt="New baby flowers"></div>
         <div class="occ-body">
           <h3 class="occ-name">New Baby</h3>
@@ -787,7 +784,7 @@ svg                                  { display: none !important; }
           <span class="occ-link">Shop New Baby →</span>
         </div>
       </a>
-      <a href="#" class="occ-card reveal">
+      <a href="shop.html" class="occ-card reveal">
         <div class="occ-img"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Thank you flowers"></div>
         <div class="occ-body">
           <h3 class="occ-name">Thank You</h3>
@@ -805,7 +802,7 @@ svg                                  { display: none !important; }
     <p class="eyebrow">Customer Favorites</p>
     <h2 class="sec-title">Our best-selling arrangements</h2>
     <div class="bestsellers-grid">
-      <a href="#" class="prod-card reveal">
+      <a href="shop.html" class="prod-card reveal">
         <div class="prod-img">
           <img src="images/gallery/bouquet-pink-roses.jpg" alt="Blush Romance">
           <span class="prod-badge badge-bestseller">#1 Best Seller</span>
@@ -822,7 +819,7 @@ svg                                  { display: none !important; }
           </div>
         </div>
       </a>
-      <a href="#" class="prod-card reveal">
+      <a href="shop.html" class="prod-card reveal">
         <div class="prod-img">
           <img src="images/gallery/bouquet-white.jpg" alt="Elegant White">
           <span class="prod-badge badge-wedding">Wedding Fave</span>
@@ -839,7 +836,7 @@ svg                                  { display: none !important; }
           </div>
         </div>
       </a>
-      <a href="#" class="prod-card reveal">
+      <a href="shop.html" class="prod-card reveal">
         <div class="prod-img">
           <img src="images/gallery/bouquet-pink-tulip.jpg" alt="Spring Tulips">
           <span class="prod-badge badge-new">New Season</span>
@@ -856,7 +853,7 @@ svg                                  { display: none !important; }
           </div>
         </div>
       </a>
-      <a href="#" class="prod-card reveal">
+      <a href="shop.html" class="prod-card reveal">
         <div class="prod-img">
           <img src="images/gallery/flowers-market.jpg" alt="Market Fresh">
           <span class="type-badge type-fresh">Fresh</span>
@@ -894,7 +891,7 @@ svg                                  { display: none !important; }
         </div>
         <h3 class="coll-name">The Living<br>Collection</h3>
         <p class="coll-desc">Fresh seasonal flowers, handcrafted and delivered the same day across Sydney.</p>
-        <a href="#" class="text-link">Shop fresh →</a>
+        <a href="shop.html?type=fresh" class="text-link">Shop fresh →</a>
       </div>
       <div class="coll-card reveal">
         <span class="coll-num">02</span>
@@ -907,7 +904,7 @@ svg                                  { display: none !important; }
         </div>
         <h3 class="coll-name">The Forever<br>Collection</h3>
         <p class="coll-desc">Preserved &amp; artificial flowers that last a lifetime. Ships anywhere in Australia.</p>
-        <a href="#" class="text-link">Shop forever →</a>
+        <a href="shop.html?type=forever" class="text-link">Shop forever →</a>
       </div>
       <div class="coll-card reveal">
         <span class="coll-num">03</span>
@@ -918,7 +915,7 @@ svg                                  { display: none !important; }
         </div>
         <h3 class="coll-name">The Ceremony<br>Collection</h3>
         <p class="coll-desc">Wedding flowers by appointment. Fresh, preserved, or both — tailored to your vision.</p>
-        <a href="#" class="text-link">Enquire →</a>
+        <a href="weddings.html" class="text-link">Enquire →</a>
       </div>
     </div>
   </div>
@@ -973,7 +970,7 @@ svg                                  { display: none !important; }
 
         <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
           <a href="shop.html?type=forever" class="btn-dark">Shop Forever Collection →</a>
-          <a href="#" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);text-decoration:none;border-bottom:.5px solid var(--border);padding-bottom:3px">Fresh vs Forever guide</a>
+          <a href="shop.html">Fresh vs Forever guide</a>
         </div>
       </div>
     </div>
@@ -1039,7 +1036,7 @@ svg                                  { display: none !important; }
           <span class="cust-stars">★★★★★</span>
           <span class="cust-name">— Priya M., Surry Hills</span>
         </div>
-        <a href="#" class="btn-dark" style="display:inline-flex">Shop now →</a>
+        <a href="shop.html" class="btn-dark" style="display:inline-flex">Shop now →</a>
       </div>
     </div>
   </div>
@@ -1051,12 +1048,12 @@ svg                                  { display: none !important; }
     <p class="eyebrow">Our Creations</p>
     <h2 class="sec-title">A glimpse into our world</h2>
     <div class="gallery-grid">
-      <a href="#" class="gal-item reveal"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Pink tulip bouquet" loading="lazy"><div class="gal-cap"><span>Pink tulips</span></div></a>
-      <a href="#" class="gal-item reveal"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Blush roses" loading="lazy"><div class="gal-cap"><span>Blush roses</span></div></a>
-      <a href="#" class="gal-item reveal"><img src="images/gallery/bouquet-workshop.jpg" alt="Fresh arrangement" loading="lazy"><div class="gal-cap"><span>Fresh flowers</span></div></a>
-      <a href="#" class="gal-item reveal"><img src="images/gallery/bouquet-white.jpg" alt="White orchids" loading="lazy"><div class="gal-cap"><span>White orchids</span></div></a>
-      <a href="#" class="gal-item reveal"><img src="images/gallery/flowers-market.jpg" alt="Market blooms" loading="lazy"><div class="gal-cap"><span>Market blooms</span></div></a>
-      <a href="#" class="gal-item gal-cta reveal">
+      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Pink tulip bouquet" loading="lazy"><div class="gal-cap"><span>Pink tulips</span></div></a>
+      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Blush roses" loading="lazy"><div class="gal-cap"><span>Blush roses</span></div></a>
+      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/bouquet-workshop.jpg" alt="Fresh arrangement" loading="lazy"><div class="gal-cap"><span>Fresh flowers</span></div></a>
+      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/bouquet-white.jpg" alt="White orchids" loading="lazy"><div class="gal-cap"><span>White orchids</span></div></a>
+      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/flowers-market.jpg" alt="Market blooms" loading="lazy"><div class="gal-cap"><span>Market blooms</span></div></a>
+      <a href="shop.html" class="gal-item gal-cta reveal">
         <span class="gal-cta-sub">Ready to order?</span>
         <span class="gal-cta-title">Shop the full collection</span>
         <span class="gal-arrow">→</span>
@@ -1124,7 +1121,7 @@ svg                                  { display: none !important; }
   <div class="footer-inner">
     <div class="footer-cols">
       <div>
-        <a href="#" class="footer-logo-name">Vaniaflorist</a>
+        <a href="index.html" class="footer-logo-name">Vaniaflorist</a>
         <p class="footer-tagline">Sydney's luxury florist. Handcrafted bouquets, wedding flowers, and preserved arrangements — delivered across Greater Sydney.</p>
       </div>
       <div class="footer-col">
@@ -1132,20 +1129,20 @@ svg                                  { display: none !important; }
         <ul>
           <li><a href="shop.html">All Flowers</a></li>
           <li><a href="product-details.html">Product Details</a></li>
-          <li><a href="#">The Living Collection</a></li>
-          <li><a href="#">The Forever Collection</a></li>
-          <li><a href="#">The Ceremony Collection</a></li>
-          <li><a href="#">Occasions</a></li>
+          <li><a href="shop.html?type=fresh">The Living Collection</a></li>
+          <li><a href="shop.html?type=forever">The Forever Collection</a></li>
+          <li><a href="weddings.html">The Ceremony Collection</a></li>
+          <li><a href="shop.html#occasions">Occasions</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Help</h4>
         <ul>
           <li><a href="about.html">About Vaniaflorist</a></li>
-          <li><a href="#">Delivery &amp; Returns</a></li>
-          <li><a href="#">Care Guide</a></li>
-          <li><a href="#">Wedding Enquiries</a></li>
-          <li><a href="#">Instagram</a></li>
+          <li><a href="shop.html#delivery">Delivery &amp; Returns</a></li>
+          <li><a href="product-details.html#care">Care Guide</a></li>
+          <li><a href="weddings.html">Wedding Enquiries</a></li>
+          <li><a href="https://instagram.com/vaniaflorist" target="_blank" rel="noopener">Instagram</a></li>
         </ul>
       </div>
     </div>
@@ -1390,12 +1387,12 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
 
         <h3 class="vs-section-title" style="margin-top:36px;">Shop by occasion</h3>
         <div class="vs-occasions">
-          <a class="vs-occ-pill" href="shop.html?occasion=birthday"><span class="vs-occ-icon">🎂</span> Birthday</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=anniversary"><span class="vs-occ-icon">💕</span> Anniversary</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=sympathy"><span class="vs-occ-icon">🕊️</span> Sympathy</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=thank-you"><span class="vs-occ-icon">✿</span> Thank you</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=new-baby"><span class="vs-occ-icon">👶</span> New baby</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=just-because"><span class="vs-occ-icon">✦</span> Just because</a>
+          <a class="vs-occ-pill" href="shop.html?occasion=birthday">Birthday</a>
+          <a class="vs-occ-pill" href="shop.html?occasion=anniversary">Anniversary</a>
+          <a class="vs-occ-pill" href="shop.html?occasion=sympathy">Sympathy</a>
+          <a class="vs-occ-pill" href="shop.html?occasion=thank-you">Thank you</a>
+          <a class="vs-occ-pill" href="shop.html?occasion=new-baby">New baby</a>
+          <a class="vs-occ-pill" href="shop.html?occasion=just-because">Just because</a>
         </div>
       </div>
 

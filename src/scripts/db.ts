@@ -7,7 +7,28 @@ const SUPABASE_URL: string = (window as any).SUPABASE_URL || import.meta.env.VIT
 // @ts-ignore
 const SUPABASE_ANON_KEY: string = (window as any).SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+export const SUPABASE_CONFIGURED = !!(SUPABASE_URL && SUPABASE_ANON_KEY);
+
+if (!SUPABASE_CONFIGURED) {
+  console.warn(
+    "[Vaniaflorist] Supabase env vars missing. Pages that fetch products/orders will render empty states.\n" +
+    "Add .env file with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to enable backend. See ENV_SETUP.md."
+  );
+}
+
+// Build a real client when configured, otherwise a stub that returns empty data
+// without throwing — letting pages render their empty/loading states cleanly.
+export const supabase: any = SUPABASE_CONFIGURED
+  ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : {
+      from: () => ({
+        select: () => ({
+          order: () => Promise.resolve({ data: [], error: null }),
+          eq:    () => ({ single: () => Promise.resolve({ data: null, error: { message: "Supabase not configured" } }) }),
+        }),
+        insert: () => Promise.resolve({ data: null, error: { message: "Supabase not configured" } }),
+      }),
+    };
 
 export async function fetchCatalog() {
   const { data, error } = await supabase
