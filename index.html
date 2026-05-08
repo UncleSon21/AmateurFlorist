@@ -1232,12 +1232,15 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
     opacity:0; pointer-events:none;
     transition: opacity .35s cubic-bezier(.16,1,.3,1);
     display:flex; flex-direction:column;
+    overflow-y:auto;                  /* allow scrolling when content exceeds viewport */
+    -webkit-overflow-scrolling:touch; /* smooth iOS momentum scrolling */
+    overscroll-behavior:contain;       /* don't bleed scroll into the body */
   }
   .vs-overlay.open { opacity:1; pointer-events:auto; }
   .vs-overlay.open .vs-inner { transform: translateY(0); opacity:1; }
 
   .vs-inner {
-    width:100%; max-width:880px; margin:0 auto; padding:80px 40px 40px;
+    width:100%; max-width:880px; margin:0 auto; padding:80px 40px 60px;
     transform: translateY(-24px); opacity:0;
     transition: transform .45s cubic-bezier(.16,1,.3,1) .05s, opacity .35s ease .05s;
   }
