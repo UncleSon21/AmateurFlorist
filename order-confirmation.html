@@ -279,10 +279,38 @@ button{cursor:pointer;font-family:inherit}
 .cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
 
 /* ── DEV TOGGLE: hide decorative SVGs + seasonal animations (keep nav icons) ── */
-svg                              { display: none !important; }
-.nav-icon-btn svg, .vs-close svg { display: inline-block !important; }
+svg { display: none !important; }
+/* Whitelist: any SVG inside an interactive element stays visible. */
+a svg,
+button svg,
+.nav-icon-btn svg,
+.vs-close svg,
+.back-link svg,
+.item-remove svg,
+.qty-btn svg,
+.btn-add-cart svg,
+.btn-buy-now svg,
+.btn-checkout svg,
+.cart-icon svg                    { display: inline-block !important; }
 #petals-canvas                   { display: none !important; }
 #season-side-left,#season-side-right,.nav-branch { display: none !important; }
+
+
+/* ── TS-rendered order-confirmation rows ── */
+.order-item-row{display:grid;grid-template-columns:64px 1fr auto;gap:14px;padding:14px 0;border-bottom:.5px solid var(--border);align-items:center}
+.order-item-row:last-child{border-bottom:none}
+.order-item-img{width:64px;height:64px;border-radius:var(--radius);overflow:hidden;background:var(--bg-alt)}
+.order-item-img img{width:100%;height:100%;object-fit:cover}
+.order-item-info{min-width:0}
+.order-item-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);margin-bottom:2px}
+.order-item-meta{font-size:11px;color:var(--text-muted);letter-spacing:.5px}
+.order-item-price{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--accent);white-space:nowrap}
+.detail-row{display:flex;justify-content:space-between;align-items:flex-start;padding:8px 0;border-bottom:.5px solid var(--border);gap:18px}
+.detail-row:last-child{border-bottom:none}
+.detail-key{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);flex-shrink:0;padding-top:2px}
+.detail-val{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);text-align:right;line-height:1.4}
+.cost-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:var(--text-muted)}
+.cost-row.total{padding:14px 0;font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--accent);border-top:.5px solid var(--border);margin-top:6px;font-weight:300}
 
 </style>
 </head>

@@ -261,10 +261,32 @@ button{cursor:pointer;font-family:inherit}
 .cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
 
 /* ── DEV TOGGLE: hide decorative SVGs + seasonal animations (keep nav icons) ── */
-svg                              { display: none !important; }
-.nav-icon-btn svg, .vs-close svg { display: inline-block !important; }
+svg { display: none !important; }
+/* Whitelist: any SVG inside an interactive element stays visible. */
+a svg,
+button svg,
+.nav-icon-btn svg,
+.vs-close svg,
+.back-link svg,
+.item-remove svg,
+.qty-btn svg,
+.btn-add-cart svg,
+.btn-buy-now svg,
+.btn-checkout svg,
+.cart-icon svg                    { display: inline-block !important; }
 #petals-canvas                   { display: none !important; }
 #season-side-left,#season-side-right,.nav-branch { display: none !important; }
+
+
+/* ── TS-rendered checkout sidebar (summary panel) ── */
+.summary-items{padding:8px 0;border-bottom:.5px solid var(--border);margin-bottom:14px}
+.summary-line{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;padding:8px 0}
+.summary-line-img{width:48px;height:48px;border-radius:var(--radius);overflow:hidden;background:var(--bg-alt);flex-shrink:0}
+.summary-line-img img{width:100%;height:100%;object-fit:cover}
+.summary-line-info{min-width:0}
+.summary-line-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.summary-line-meta{font-size:10px;color:var(--text-muted);letter-spacing:.5px}
+.summary-line-price{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--accent);white-space:nowrap}
 
 </style>
 </head>

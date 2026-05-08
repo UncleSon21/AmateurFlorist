@@ -89,16 +89,16 @@ function buildGallery(images: string[]) {
   setMainImage(images[0] ?? "");
 
   thumbWrap.innerHTML = images.map((url, i) => `
-    <div class="thumbnail ${i === 0 ? "active" : ""}" data-idx="${i}">
+    <div class="pd-thumb thumbnail ${i === 0 ? "active" : ""}" data-idx="${i}">
       <img src="${url}" alt="Product image ${i + 1}" loading="lazy">
     </div>
   `).join("");
 
-  thumbWrap.querySelectorAll<HTMLElement>(".thumbnail").forEach(th => {
+  thumbWrap.querySelectorAll<HTMLElement>(".pd-thumb").forEach(th => {
     th.addEventListener("click", () => {
       const idx = Number(th.dataset["idx"]);
       setMainImage(images[idx] ?? "");
-      thumbWrap.querySelectorAll(".thumbnail").forEach(t => t.classList.remove("active"));
+      thumbWrap.querySelectorAll(".pd-thumb").forEach(t => t.classList.remove("active"));
       th.classList.add("active");
     });
   });
@@ -109,11 +109,11 @@ function buildVariants(variants: any[]) {
   const wrap = qs<HTMLElement>(".size-options");
   if (!wrap) return;
   wrap.innerHTML = variants.map((v, i) => `
-    <label class="size-option">
+    <label class="size-opt size-option">
       <input type="radio" name="variant" value="${i}" ${i === 0 ? "checked" : ""}>
       <div class="size-box">
-        <span class="price">$${(v.priceCents / 100).toFixed(0)}</span>
-        <span class="label">${v.name}</span>
+        <span class="sz-price price">$${(v.priceCents / 100).toFixed(0)}</span>
+        <span class="sz-label label">${v.name}</span>
       </div>
     </label>
   `).join("");
