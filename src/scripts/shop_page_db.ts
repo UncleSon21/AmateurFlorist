@@ -37,8 +37,8 @@ function renderGrid(list: any[]) {
     const materialLabel = p.material === "fresh" ? "Fresh" : "Artificial";
     const href = `product-details.html?id=${p.id}`;
     return `
-      <a class="product-card" href="${href}" data-product-id="${p.id}">
-        <div class="product-image">
+      <a class="prod-card product-card" href="${href}" data-product-id="${p.id}">
+        <div class="prod-img product-image">
           ${img ? `<img loading="lazy" src="${img}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')">` : ""}
           <div class="product-image-placeholder" ${img ? 'style="display:none"' : ""}>
             <svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.35">
@@ -52,17 +52,18 @@ function renderGrid(list: any[]) {
             </svg>
             <span>Photo coming soon</span>
           </div>
-          <span class="material-badge ${materialClass}">${materialLabel}</span>
+          <span class="material-badge mat-badge ${materialClass}">${materialLabel}</span>
+          <div class="prod-overlay"><span class="quick-view">Quick view</span></div>
         </div>
-        <div class="product-info">
-          <h3 class="product-title">${p.name}</h3>
-          <p class="product-description">${p.description || ""}</p>
-          <div class="product-footer">
-            <div class="product-price-wrap">
-              <span class="product-price-label">From</span>
-              <span class="product-price">$${minPrice.toFixed(2)}</span>
+        <div class="prod-body product-info">
+          <h3 class="prod-name product-title">${p.name}</h3>
+          <p class="prod-desc product-description">${p.description || ""}</p>
+          <div class="prod-footer product-footer">
+            <div class="prod-price-wrap product-price-wrap">
+              <span class="prod-price-from product-price-label">From</span>
+              <span class="prod-price product-price">$${minPrice.toFixed(2)}</span>
             </div>
-            <span class="view-details-btn">Shop Now</span>
+            <span class="view-details-btn">Shop Now →</span>
           </div>
         </div>
       </a>`;

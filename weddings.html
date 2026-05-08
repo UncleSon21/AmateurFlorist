@@ -217,6 +217,25 @@ svg                              { display: none !important; }
 #petals-canvas                   { display: none !important; }
 #season-side-left,#season-side-right,.nav-branch { display: none !important; }
 
+
+/* Shop dropdown (consistent across pages) */
+.nav-shop{position:relative;padding-bottom:14px;margin-bottom:-14px}
+.nav-shop > .nav-btn{cursor:pointer;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);background:none;border:none;padding:0;transition:color .3s}
+.nav-shop > .nav-btn:hover,.nav-shop > .nav-btn.active{color:var(--text)}
+.nav-shop-menu{
+  position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(-8px);
+  min-width:220px;background:var(--bg);border:.5px solid var(--border);
+  padding:14px 0;box-shadow:0 10px 40px rgba(28,22,18,.08);
+  opacity:0;pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease;
+  z-index:50;
+}
+.nav-shop:hover > .nav-shop-menu,.nav-shop:focus-within > .nav-shop-menu{
+  opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);
+}
+.nav-shop-menu a{display:block;padding:9px 22px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:background .2s,color .2s}
+.nav-shop-menu a:hover{background:var(--bg-alt);color:var(--accent)}
+.nav-shop-menu a::after{display:none}
 </style>
 </head>
 <body>
@@ -224,12 +243,24 @@ svg                              { display: none !important; }
 <div class="topbar">Wedding consultations from $0 — book your free 30-minute discovery call</div>
 
 <nav class="nav">
+  <!-- Seasonal SVG branches injected by seasonalTheme.ts -->
+  <div id="nav-branch-left"  class="nav-branch nav-branch--left"  aria-hidden="true"></div>
+  <div id="nav-branch-right" class="nav-branch nav-branch--right" aria-hidden="true"></div>
+
   <div class="nav-inner">
     <div class="nav-links">
-      <a href="shop.html">Shop ⌄</a>
-      <a href="shop.html#occasions">Occasions</a>
-      <a href="about.html">About</a>
-      <a href="weddings.html" class="current">Weddings</a>
+      <div class="nav-shop">
+        <a href="shop.html" class="nav-btn" >Shop &#8964;</a>
+        <div class="nav-shop-menu" role="menu">
+          <a href="shop.html" role="menuitem">All Flowers</a>
+          <a href="shop.html?type=fresh" role="menuitem">The Living Collection</a>
+          <a href="shop.html?type=forever" role="menuitem">The Forever Collection</a>
+          <a href="weddings.html" role="menuitem">The Ceremony Collection</a>
+        </div>
+      </div>
+      <a href="shop.html#occasions" >Occasions</a>
+      <a href="about.html" >About</a>
+      <a href="weddings.html" class="active">Weddings</a>
     </div>
     <div class="logo">
       <a href="index.html">
@@ -238,8 +269,13 @@ svg                              { display: none !important; }
       </a>
     </div>
     <div class="nav-actions">
-      <button class="nav-icon-btn" aria-label="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
-      <button class="nav-icon-btn" aria-label="Cart"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></button>
+      <button class="nav-icon-btn" aria-label="Search" id="searchButton">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <a href="cart.html" class="nav-icon-btn cart-icon" aria-label="Cart" style="position:relative">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-badge cart-count" id="nav-cart-count" style="display:none">0</span>
+      </a>
     </div>
   </div>
 </nav>
@@ -507,27 +543,77 @@ svg                              { display: none !important; }
     <h2 class="sec-title">Tell us about your day</h2>
     <p class="sec-sub">Fill in what you can — even rough is fine. We'll be in touch within one business day with next steps.</p>
 
-    <form class="enq-card" onsubmit="handleEnquiry(event)">
-      <div class="field"><label>Your name</label><input type="text" required placeholder="Sarah Chen"></div>
-      <div class="field"><label>Partner's name</label><input type="text" placeholder="James Lee"></div>
-      <div class="field"><label>Email</label><input type="email" required placeholder="sarah@example.com"></div>
-      <div class="field"><label>Phone</label><input type="tel" placeholder="04xx xxx xxx"></div>
-      <div class="field"><label>Wedding date <span style="text-transform:none;color:rgba(250,248,244,.4);letter-spacing:0">— estimate is fine</span></label><input type="date"></div>
-      <div class="field"><label>Venue / suburb</label><input type="text" placeholder="Centennial Park, Sydney"></div>
+    <form class="enq-card" id="weddingEnquiryForm" novalidate>
+      <div class="field"><label>Your name</label><input type="text" name="name" id="enq-name" required placeholder="Your full name"></div>
+      <div class="field"><label>Partner's name</label><input type="text" name="partnerName" id="enq-partner" placeholder="Optional"></div>
+      <div class="field"><label>Email</label><input type="email" name="email" id="enq-email" required placeholder="you@example.com"></div>
+      <div class="field"><label>Phone</label><input type="tel" name="phone" id="enq-phone" placeholder="04xx xxx xxx"></div>
+      <div class="field"><label>Wedding date <span style="text-transform:none;color:rgba(250,248,244,.4);letter-spacing:0">— estimate is fine</span></label><input type="date" name="weddingDate" id="enq-date"></div>
+      <div class="field"><label>Venue / suburb</label><input type="text" name="venue" id="enq-venue" placeholder="Centennial Park, Sydney"></div>
       <div class="field">
         <label>Guest count</label>
-        <select><option>20–40</option><option>50–100</option><option>100–150</option><option>150+</option><option>Not sure yet</option></select>
+        <select name="guestCount" id="enq-guests"><option>20–40</option><option>50–100</option><option>100–150</option><option>150+</option><option>Not sure yet</option></select>
       </div>
       <div class="field">
         <label>Style preference</label>
-        <select><option>Fresh flowers only</option><option>Forever (preserved/artificial)</option><option>A mix of both</option><option>Not sure — help us decide</option></select>
+        <select name="style" id="enq-style"><option>Fresh flowers only</option><option>Forever (preserved/artificial)</option><option>A mix of both</option><option>Not sure — help us decide</option></select>
       </div>
-      <div class="field full"><label>Tell us about your vision <span style="text-transform:none;color:rgba(250,248,244,.4);letter-spacing:0">— colours, vibe, anything you love</span></label><textarea placeholder="We're imagining soft pinks and creams, lots of texture, maybe some eucalyptus..."></textarea></div>
+      <div class="field full"><label>Tell us about your vision <span style="text-transform:none;color:rgba(250,248,244,.4);letter-spacing:0">— colours, vibe, anything you love</span></label><textarea name="message" id="enq-message" placeholder="Soft pinks and creams, lots of texture, maybe some eucalyptus..."></textarea></div>
       <div class="enq-submit-row">
-        <p class="enq-fine">No commitment — we'll reply within one business day.</p>
-        <button type="submit" class="btn-light">Send enquiry →</button>
+        <p class="enq-fine" id="enq-msg">No commitment — we'll reply within one business day.</p>
+        <button type="submit" class="btn-light" id="enq-submit">Send enquiry →</button>
       </div>
     </form>
+
+    <script type="module">
+      // Wire wedding-enquiry form to the Supabase Edge Function.
+      const FN_URL = (import.meta.env.VITE_SUPABASE_URL || "")
+        + "/functions/v1/submit-wedding-enquiry";
+      const ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || "";
+
+      const form    = document.getElementById("weddingEnquiryForm");
+      const submit  = document.getElementById("enq-submit");
+      const msgEl   = document.getElementById("enq-msg");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (!form.reportValidity()) return;
+
+        if (!FN_URL.startsWith("http")) {
+          msgEl.textContent = "Form not configured — please email us directly.";
+          msgEl.style.color = "#c0392b";
+          return;
+        }
+
+        submit.disabled = true;
+        submit.textContent = "Sending…";
+
+        const data = Object.fromEntries(new FormData(form).entries());
+
+        try {
+          const res = await fetch(FN_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${ANON_KEY}`,
+              "apikey": ANON_KEY,
+            },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error(`${res.status}`);
+          form.reset();
+          msgEl.textContent = "Thank you — we'll be in touch within one business day.";
+          msgEl.style.color = "var(--accent-light)";
+          submit.textContent = "Sent ✓";
+        } catch (err) {
+          console.error("Enquiry submit failed:", err);
+          msgEl.textContent = "Sorry — something went wrong. Please try again or email us directly.";
+          msgEl.style.color = "#c0392b";
+          submit.disabled = false;
+          submit.textContent = "Send enquiry →";
+        }
+      });
+    </script>
   </div>
 </section>
 

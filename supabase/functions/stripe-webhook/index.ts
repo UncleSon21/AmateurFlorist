@@ -3,39 +3,14 @@
 // 1. Verifies the Stripe signature
 // 2. Creates the order + items in Supabase
 // 3. Sends confirmation emails via Resend
-const TWILIO_SID    = Deno.env.get("TWILIO_ACCOUNT_SID")!;
-const TWILIO_TOKEN  = Deno.env.get("TWILIO_AUTH_TOKEN")!;
-const TWILIO_FROM   = Deno.env.get("TWILIO_FROM_NUMBER")!; // e.g. "+61400000000"
-const OWNER_PHONE   = "+61XXXXXXXXX"; // your mobile
-
-async function sendSMS(to: string, body: string) {
-  const res = await fetch(
-    `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_SID}/Messages.json`,
-    {
-      method: "POST",
-      headers: {
-        "Authorization": "Basic " + btoa(`${TWILIO_SID}:${TWILIO_TOKEN}`),
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({ From: TWILIO_FROM, To: to, Body: body }).toString(),
-    }
-  );
-  if (!res.ok) console.error("SMS failed:", await res.text());
-}
-
-// Then inside the checkout.session.completed handler, after the emails:
-await sendSMS(
-  OWNER_PHONE,
-  `New order from ${meta.customer_name} — ${formatPrice(totalCents)}. Delivery: ${meta.delivery_date}. Call: ${meta.customer_phone}`
-);
-
-if (meta.customer_phone) {
-  await sendSMS(
-    meta.customer_phone,
-    `Hi ${meta.customer_name}! Your Vania Florist order is confirmed for ${meta.delivery_date}. Total: ${formatPrice(totalCents)}. We'll call to confirm. 🌸`
-  );
-}
-
+//
+// Required env vars (set via: supabase secrets set KEY=value):
+//   STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET
+//   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+//   RESEND_API_KEY      — optional; emails skipped if missing
+//   FROM_EMAIL          — verified Resend sender (e.g. orders@vaniaflorist.com.au)
+//   OWNER_EMAIL         — where order alerts go
+//   TWILIO_*            — optional; SMS skipped if missing
 
 import Stripe from "https://esm.sh/stripe@17?target=deno";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
@@ -52,11 +27,37 @@ const supabase = createClient(
 const WEBHOOK_SECRET = Deno.env.get("STRIPE_WEBHOOK_SECRET")!;
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY") || "";
 
-// ─── UPDATE THESE ───
-const OWNER_EMAIL = "hungsonle2112@gmail.com";  // Vania's email for order alerts
-const FROM_EMAIL  = "onboarding@resend.dev";  // Verified Resend domain
-// For testing before domain verification, use:
-// const FROM_EMAIL = "onboarding@resend.dev";
+// Email config — pulled from env. Defaults are sandbox/test values that
+// Resend won't deliver to anyone except the account owner.
+const OWNER_EMAIL = Deno.env.get("OWNER_EMAIL") || "hungsonle2112@gmail.com";
+const FROM_EMAIL  = Deno.env.get("FROM_EMAIL")  || "onboarding@resend.dev";
+
+// Twilio (optional — SMS notifications)
+const TWILIO_SID    = Deno.env.get("TWILIO_ACCOUNT_SID") || "";
+const TWILIO_TOKEN  = Deno.env.get("TWILIO_AUTH_TOKEN")  || "";
+const TWILIO_FROM   = Deno.env.get("TWILIO_FROM_NUMBER") || "";
+const OWNER_PHONE   = Deno.env.get("OWNER_PHONE")        || "";
+const TWILIO_CONFIGURED = !!(TWILIO_SID && TWILIO_TOKEN && TWILIO_FROM);
+
+async function sendSMS(to: string, body: string) {
+  if (!TWILIO_CONFIGURED || !to) return;
+  try {
+    const res = await fetch(
+      `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_SID}/Messages.json`,
+      {
+        method: "POST",
+        headers: {
+          "Authorization": "Basic " + btoa(`${TWILIO_SID}:${TWILIO_TOKEN}`),
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({ From: TWILIO_FROM, To: to, Body: body }).toString(),
+      }
+    );
+    if (!res.ok) console.error("SMS failed:", await res.text());
+  } catch (err) {
+    console.error("SMS error:", err);
+  }
+}
 
 function formatPrice(cents: number): string {
   return `$${(cents / 100).toFixed(2)}`;
@@ -287,6 +288,22 @@ Deno.serve(async (req) => {
           "Your Vania Florist Order Confirmation",
           buildCustomerEmail(emailData, itemsForEmail)
         );
+      }
+
+      // Optional SMS — only sends if Twilio env vars are set
+      if (TWILIO_CONFIGURED) {
+        if (OWNER_PHONE) {
+          await sendSMS(
+            OWNER_PHONE,
+            `New order from ${meta.customer_name} — ${formatPrice(totalCents)}. Delivery: ${meta.delivery_date}. Call: ${meta.customer_phone}`
+          );
+        }
+        if (meta.customer_phone) {
+          await sendSMS(
+            meta.customer_phone,
+            `Hi ${meta.customer_name}! Your Vaniaflorist order is confirmed for ${meta.delivery_date}. Total: ${formatPrice(totalCents)}. We'll be in touch shortly.`
+          );
+        }
       }
 
       console.log(`Order ${order.id} created for session ${session.id}`);

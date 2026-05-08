@@ -75,44 +75,46 @@ export function mountCartDrawer() {
   el.innerHTML = `<div class="cart-drawer-loading">Loading cart…</div>`;
   document.body.appendChild(el);
 
-  // Inject styles
+  // Inject styles — uses CSS variables from seasonalTheme.ts so the drawer
+  // re-themes when the season changes (--accent, --bg, --bg-alt, etc.)
   const style = document.createElement("style");
   style.textContent = `
     #cart-drawer {
       position: fixed;
-      right: 16px;
-      bottom: 16px;
-      background: #fff;
-      border: 1px solid #f0e8dd;
-      border-radius: 16px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.04);
-      padding: 0;
+      right: 20px;
+      bottom: 20px;
+      background: var(--bg, #fff);
+      border: .5px solid var(--border, rgba(28,22,18,.13));
+      border-radius: var(--radius, 2px);
+      box-shadow: 0 12px 40px rgba(28,22,18,.10), 0 2px 8px rgba(28,22,18,.04);
       max-width: 340px;
       min-width: 280px;
       z-index: 9999;
       overflow: hidden;
-      font-family: 'Georgia', serif;
-      transition: opacity 0.2s ease, transform 0.2s ease;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text, #1e1a17);
+      transition: opacity 0.2s ease, transform 0.2s ease, background 0.4s, border-color 0.4s;
     }
     #cart-drawer .drawer-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 14px 18px;
-      border-bottom: 1px solid #f0e8dd;
-      background: #faf8f5;
+      border-bottom: .5px solid var(--border, rgba(28,22,18,.13));
+      background: var(--bg-alt, #faf8f5);
     }
     #cart-drawer .drawer-header h3 {
       margin: 0;
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      color: #8b7355;
+      color: var(--accent, #8b7355);
     }
     #cart-drawer .drawer-header .drawer-count {
-      font-size: 0.75rem;
-      color: #999;
+      font-size: 11px;
+      color: var(--text-muted, #6b5d54);
+      letter-spacing: .5px;
     }
     #cart-drawer .drawer-body {
       padding: 12px 18px;
@@ -122,15 +124,17 @@ export function mountCartDrawer() {
     #cart-drawer .drawer-empty {
       text-align: center;
       padding: 20px 0;
-      color: #bbb;
-      font-size: 0.85rem;
+      color: var(--text-muted, #6b5d54);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 14px;
     }
     #cart-drawer .drawer-item {
       display: flex;
       align-items: center;
       gap: 12px;
       padding: 10px 0;
-      border-bottom: 1px solid #f8f4ef;
+      border-bottom: .5px solid var(--border, rgba(28,22,18,.13));
     }
     #cart-drawer .drawer-item:last-child {
       border-bottom: none;
@@ -138,9 +142,9 @@ export function mountCartDrawer() {
     #cart-drawer .drawer-item-img {
       width: 44px;
       height: 44px;
-      border-radius: 8px;
+      border-radius: var(--radius, 2px);
       overflow: hidden;
-      background: #faf8f5;
+      background: var(--bg-alt, #faf8f5);
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -157,61 +161,68 @@ export function mountCartDrawer() {
       min-width: 0;
     }
     #cart-drawer .drawer-item-name {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #2b2b2b;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text, #1e1a17);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
     #cart-drawer .drawer-item-variant {
-      font-size: 0.75rem;
-      color: #999;
+      font-size: 11px;
+      color: var(--text-muted, #6b5d54);
+      letter-spacing: .5px;
     }
     #cart-drawer .drawer-item-qty {
-      font-size: 0.8rem;
-      color: #8b7355;
-      font-weight: 600;
+      font-size: 11px;
+      color: var(--accent, #8b7355);
+      font-weight: 500;
+      letter-spacing: 1px;
       flex-shrink: 0;
     }
     #cart-drawer .drawer-item-remove {
       background: none;
       border: none;
       cursor: pointer;
-      color: #ccc;
+      color: var(--accent-light, #c8b89a);
       padding: 4px;
-      border-radius: 4px;
-      font-size: 0.75rem;
+      border-radius: var(--radius, 2px);
+      font-size: 12px;
       transition: color 0.2s;
       flex-shrink: 0;
     }
     #cart-drawer .drawer-item-remove:hover {
-      color: #e05252;
+      color: var(--accent-dark, #2c2420);
     }
     #cart-drawer .drawer-footer {
       padding: 14px 18px;
-      border-top: 1px solid #f0e8dd;
+      border-top: .5px solid var(--border, rgba(28,22,18,.13));
     }
     #cart-drawer .drawer-footer a {
       display: block;
       text-align: center;
-      background: #8b7355;
-      color: white;
+      background: var(--accent-dark, #2c2420);
+      color: var(--bg, #fff);
       text-decoration: none;
-      padding: 10px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      transition: background 0.2s;
+      padding: 12px;
+      border-radius: var(--radius, 2px);
+      font-weight: 500;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background 0.3s;
     }
     #cart-drawer .drawer-footer a:hover {
-      background: #6d5a44;
+      background: var(--accent, #8b7355);
     }
     .cart-drawer-loading {
       padding: 20px;
       text-align: center;
-      color: #bbb;
-      font-size: 0.85rem;
+      color: var(--text-muted, #6b5d54);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 14px;
     }
   `;
   document.head.appendChild(style);

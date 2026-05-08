@@ -498,6 +498,25 @@ svg                              { display: none !important; }
 #petals-canvas                   { display: none !important; }
 #season-side-left,#season-side-right,.nav-branch { display: none !important; }
 
+
+/* Shop dropdown (consistent across pages) */
+.nav-shop{position:relative;padding-bottom:14px;margin-bottom:-14px}
+.nav-shop > .nav-btn{cursor:pointer;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);background:none;border:none;padding:0;transition:color .3s}
+.nav-shop > .nav-btn:hover,.nav-shop > .nav-btn.active{color:var(--text)}
+.nav-shop-menu{
+  position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(-8px);
+  min-width:220px;background:var(--bg);border:.5px solid var(--border);
+  padding:14px 0;box-shadow:0 10px 40px rgba(28,22,18,.08);
+  opacity:0;pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease;
+  z-index:50;
+}
+.nav-shop:hover > .nav-shop-menu,.nav-shop:focus-within > .nav-shop-menu{
+  opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);
+}
+.nav-shop-menu a{display:block;padding:9px 22px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:background .2s,color .2s}
+.nav-shop-menu a:hover{background:var(--bg-alt);color:var(--accent)}
+.nav-shop-menu a::after{display:none}
 </style>
 </head>
 <body>
@@ -509,11 +528,24 @@ svg                              { display: none !important; }
 
 <!-- Nav -->
 <nav class="nav">
+  <!-- Seasonal SVG branches injected by seasonalTheme.ts -->
+  <div id="nav-branch-left"  class="nav-branch nav-branch--left"  aria-hidden="true"></div>
+  <div id="nav-branch-right" class="nav-branch nav-branch--right" aria-hidden="true"></div>
+
   <div class="nav-inner">
     <div class="nav-links">
-      <a href="index.html">Shop</a>
+      <div class="nav-shop">
+        <a href="shop.html" class="nav-btn" >Shop &#8964;</a>
+        <div class="nav-shop-menu" role="menu">
+          <a href="shop.html" role="menuitem">All Flowers</a>
+          <a href="shop.html?type=fresh" role="menuitem">The Living Collection</a>
+          <a href="shop.html?type=forever" role="menuitem">The Forever Collection</a>
+          <a href="weddings.html" role="menuitem">The Ceremony Collection</a>
+        </div>
+      </div>
+      <a href="shop.html#occasions" >Occasions</a>
       <a href="about.html" class="active">About</a>
-      <a href="weddings.html">Weddings</a>
+      <a href="weddings.html" >Weddings</a>
     </div>
     <div class="logo">
       <a href="index.html">
@@ -522,12 +554,13 @@ svg                              { display: none !important; }
       </a>
     </div>
     <div class="nav-actions">
-      <button class="nav-icon-btn" aria-label="Search">
+      <button class="nav-icon-btn" aria-label="Search" id="searchButton">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </button>
-      <button class="nav-icon-btn" aria-label="Cart" style="position:relative">
+      <a href="cart.html" class="nav-icon-btn cart-icon" aria-label="Cart" style="position:relative">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-      </button>
+        <span class="cart-badge cart-count" id="nav-cart-count" style="display:none">0</span>
+      </a>
     </div>
   </div>
 </nav>
