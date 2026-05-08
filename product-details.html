@@ -354,19 +354,19 @@ svg                              { display: none !important; }
       <!-- LEFT: Images -->
       <div class="pd-images">
         <div class="pd-main-img">
-          <img id="mainImg" src="images/gallery/bouquet-pink-roses.jpg" alt="Blush Romance bouquet">
+          <img id="p-image" src="images/gallery/bouquet-pink-roses.jpg" alt="Blush Romance bouquet">
         </div>
-        <div class="pd-thumbs">
-          <div class="pd-thumb active" onclick="switchImg(this,'images/gallery/bouquet-pink-roses.jpg')">
+        <div class="pd-thumbs thumbnail-images">
+          <div class="pd-thumb active">
             <img src="images/gallery/bouquet-pink-roses.jpg" alt="">
           </div>
-          <div class="pd-thumb" onclick="switchImg(this,'images/gallery/bouquet-pink-tulip.jpg')">
+          <div class="pd-thumb">
             <img src="images/gallery/bouquet-pink-tulip.jpg" alt="">
           </div>
-          <div class="pd-thumb" onclick="switchImg(this,'images/gallery/bouquet-workshop.jpg')">
+          <div class="pd-thumb">
             <img src="images/gallery/bouquet-workshop.jpg" alt="">
           </div>
-          <div class="pd-thumb" onclick="switchImg(this,'images/gallery/flowers-market.jpg')">
+          <div class="pd-thumb">
             <img src="images/gallery/flowers-market.jpg" alt="">
           </div>
         </div>
@@ -375,10 +375,10 @@ svg                              { display: none !important; }
       <!-- RIGHT: Info -->
       <div class="pd-info">
         <div class="pd-top">
-          <span class="mat-badge fresh">Fresh</span>
+          <span class="mat-badge fresh" id="material-badge">Fresh</span>
         </div>
         <h1 class="pd-title" id="p-title">Blush Romance</h1>
-        <p class="pd-subtitle">Lush pink roses and seasonal peonies, hand-tied in our signature wrap. Made the morning it ships.</p>
+        <p class="pd-subtitle product-subtitle">Lush pink roses and seasonal peonies, hand-tied in our signature wrap. Made the morning it ships.</p>
 
         <div class="pd-divider"></div>
 
@@ -386,21 +386,21 @@ svg                              { display: none !important; }
         <div class="size-section">
           <span class="sec-label">Choose your size</span>
           <p class="size-note">All prices in AUD · Free delivery over $80</p>
-          <div class="size-opts">
+          <div class="size-opts size-options">
             <label class="size-opt">
-              <input type="radio" name="size" value="65" onchange="updateSummary()">
+              <input type="radio" name="size" value="65">
               <div class="size-box"><span class="sz-price">$65</span><span class="sz-label">Petite</span></div>
             </label>
             <label class="size-opt">
-              <input type="radio" name="size" value="85" checked onchange="updateSummary()">
+              <input type="radio" name="size" value="85" checked>
               <div class="size-box"><span class="sz-price">$85</span><span class="sz-label">Classic</span></div>
             </label>
             <label class="size-opt">
-              <input type="radio" name="size" value="115" onchange="updateSummary()">
+              <input type="radio" name="size" value="115">
               <div class="size-box"><span class="sz-price">$115</span><span class="sz-label">Luxe</span></div>
             </label>
             <label class="size-opt">
-              <input type="radio" name="size" value="165" onchange="updateSummary()">
+              <input type="radio" name="size" value="165">
               <div class="size-box"><span class="sz-price">$165</span><span class="sz-label">Grand</span></div>
             </label>
           </div>
@@ -411,14 +411,14 @@ svg                              { display: none !important; }
           <span class="sec-label">Presentation</span>
           <div class="pres-opts">
             <label class="pres-opt">
-              <input type="radio" name="pres" value="0" checked onchange="updateSummary()">
+              <input type="radio" name="presentation" value="wrapped" checked>
               <div class="pres-box">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
                 <span>Wrapped Bouquet</span>
               </div>
             </label>
             <label class="pres-opt">
-              <input type="radio" name="pres" value="30" onchange="updateSummary()">
+              <input type="radio" name="presentation" value="vase">
               <div class="pres-box">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 3h8l1 6H7L8 3z"/><path d="M7 9c0 5 2 9 5 9s5-4 5-9"/></svg>
                 <span>In Vase</span>
@@ -432,9 +432,9 @@ svg                              { display: none !important; }
         <div class="qty-section">
           <span class="sec-label">Quantity</span>
           <div class="qty-stepper">
-            <button class="qty-btn" id="qtyDec" onclick="changeQty(-1)">−</button>
+            <button class="qty-btn" id="qty-dec">−</button>
             <span id="qty-display">1</span>
-            <button class="qty-btn" id="qtyInc" onclick="changeQty(1)">+</button>
+            <button class="qty-btn" id="qty-inc">+</button>
           </div>
         </div>
 
@@ -484,17 +484,25 @@ svg                              { display: none !important; }
         <!-- Order summary -->
         <div class="order-summary">
           <p class="summary-hd">Order Summary</p>
-          <div id="summaryRows"></div>
+          <div class="summary-row">
+            <span id="summary-product-name">—</span>
+            <span id="summary-product-price">—</span>
+          </div>
+          <div class="summary-row" id="summary-presentation" style="display:none">
+            <span>+ In Vase</span>
+            <span id="summary-presentation-price">$30.00</span>
+          </div>
+          <div id="summary-addons"></div>
           <div class="summary-total">
             <span class="summary-total-label">Total</span>
-            <span id="total-price">$85.00</span>
+            <span id="total-price">$0.00</span>
           </div>
         </div>
 
         <!-- Actions -->
         <div class="action-btns">
-          <button class="btn-buy" onclick="handleBuy()">Buy Now</button>
-          <button class="btn-cart" id="addCartBtn" onclick="handleCart()">Add to Cart</button>
+          <button class="btn-buy btn-buy-now">Buy Now</button>
+          <button class="btn-cart btn-add-cart" id="addCartBtn">Add to Cart</button>
         </div>
 
         <!-- Trust -->
@@ -518,11 +526,11 @@ svg                              { display: none !important; }
     <!-- Tabs -->
     <div class="pd-tabs">
       <div class="tab-btns">
-        <button class="tab-btn active" data-tab="details" onclick="switchTab(this)">Product Details</button>
-        <button class="tab-btn" data-tab="delivery" onclick="switchTab(this)">Delivery Info</button>
-        <button class="tab-btn" data-tab="care" onclick="switchTab(this)">Care Guide</button>
+        <button class="tab-btn tab-button active" data-tab="details">Product Details</button>
+        <button class="tab-btn tab-button" data-tab="delivery">Delivery Info</button>
+        <button class="tab-btn tab-button" data-tab="care">Care Guide</button>
       </div>
-      <div class="tab-pane active" data-tab="details">
+      <div class="tab-pane tab-content active" data-tab="details">
         <h3>About this arrangement</h3>
         <p>Our Blush Romance bouquet is built around the season's finest pink roses and peonies — selected fresh from Sydney Basin growers the morning of your delivery. Every stem is chosen by hand, and the bouquet is tied on the day it ships.</p>
         <ul>
@@ -533,7 +541,7 @@ svg                              { display: none !important; }
           <li>Available in four sizes — petite to grand</li>
         </ul>
       </div>
-      <div class="tab-pane" data-tab="delivery">
+      <div class="tab-pane tab-content" data-tab="delivery">
         <h3>Delivery information</h3>
         <ul>
           <li><strong>Same-day delivery:</strong> Order before 2pm for delivery today across Greater Sydney</li>
@@ -543,7 +551,7 @@ svg                              { display: none !important; }
           <li><strong>Express:</strong> Within 3 hours for urgent orders (+$15)</li>
         </ul>
       </div>
-      <div class="tab-pane" data-tab="care">
+      <div class="tab-pane tab-content" data-tab="care">
         <h3>Care instructions</h3>
         <ol>
           <li>Remove flowers from packaging immediately upon arrival</li>
@@ -564,13 +572,14 @@ svg                              { display: none !important; }
 </footer>
 
 <script>
-// Auto seasonal colour
+// Inline UI helpers — date quick-pick + gift-card preview only.
+// Product data, cart wiring, qty/tabs/variants are driven by
+// src/scripts/product-details.ts (loaded as a module below).
 window.addEventListener('DOMContentLoaded', () => {
-initDateQuick();
+  initDateQuick();
   renderCard();
 });
 
-// Date quick-pick
 function initDateQuick() {
   const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -583,13 +592,11 @@ function initDateQuick() {
   document.getElementById('dq-d2').textContent = fmt(d2);
   document.getElementById('dq-l2').textContent = days[d2.getDay()];
 
-  // Set delivery pill based on time
   const pill = document.getElementById('deliveryPill');
   const hr = now.getHours();
   if (hr < 14) pill.textContent = `Order before 2pm — delivers today, ${fmt(d0)}`;
   else pill.textContent = `Order today — delivers tomorrow, ${fmt(d1)}`;
 
-  // Click handlers
   document.querySelectorAll('#dateQuick button').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('#dateQuick button').forEach(b => b.classList.remove('active'));
@@ -607,9 +614,13 @@ function initDateQuick() {
       }
     });
   });
+
+  // Set min date on the hidden custom date input
+  const today = new Date().toISOString().split('T')[0];
+  const di = document.getElementById('delivDate');
+  if (di) { di.min = today; di.value = today; }
 }
 
-// Gift toggle + card preview
 function toggleGift() {
   document.getElementById('giftSection').classList.toggle('open');
 }
@@ -627,129 +638,10 @@ function renderCard() {
   counter.textContent = count;
   counter.parentElement.classList.toggle('over', count > 180);
 }
-
-// Thumbnail switch
-function switchImg(el, src) {
-  document.querySelectorAll('.pd-thumb').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  const main = document.getElementById('mainImg');
-  main.style.opacity = 0;
-  setTimeout(() => { main.src = src; main.style.opacity = 1; }, 150);
-}
-
-// Quantity
-let qty = 1;
-function changeQty(delta) {
-  qty = Math.max(1, Math.min(10, qty + delta));
-  document.getElementById('qty-display').textContent = qty;
-  document.getElementById('qtyDec').disabled = qty <= 1;
-  updateSummary();
-}
-
-// Summary
-function updateSummary() {
-  const sizeEl = document.querySelector('input[name="size"]:checked');
-  const presEl = document.querySelector('input[name="pres"]:checked');
-  const sizeNames = { '65':'Petite','85':'Classic','115':'Luxe','165':'Grand' };
-  const basePrice = sizeEl ? parseInt(sizeEl.value) : 85;
-  const presPrice = presEl ? parseInt(presEl.value) : 0;
-  const total = (basePrice + presPrice) * qty;
-
-  const rows = document.getElementById('summaryRows');
-  let html = `<div class="summary-row"><span>Blush Romance — ${sizeNames[basePrice] || 'Classic'} × ${qty}</span><span>$${(basePrice * qty).toFixed(2)}</span></div>`;
-  if (presPrice > 0) html += `<div class="summary-row"><span>In Vase</span><span>$${(presPrice * qty).toFixed(2)}</span></div>`;
-  rows.innerHTML = html;
-  document.getElementById('total-price').textContent = `$${total.toFixed(2)}`;
-}
-
-// Tab switching
-function switchTab(btn) {
-  const tab = btn.dataset.tab;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelector(`.tab-pane[data-tab="${tab}"]`).classList.add('active');
-}
-
-// Actions
-// ─── Cart wiring (writes to localStorage 'vf_cart_v1' so the cart page + badge sync) ───
-const CART_KEY = 'vf_cart_v1';
-
-function getCurrentCartItem() {
-  // Pull product id from URL (?id=...) or fall back to the page slug.
-  const params = new URLSearchParams(location.search);
-  const productId = params.get('id') || 'sample-product';
-
-  // Selected size variant — the redesign uses radios with name="size" and the
-  // value is the price ($65/$85/$115/$165). We map back to the variant code.
-  const sizeRadio = document.querySelector('input[name="size"]:checked');
-  const sizeValue = sizeRadio ? sizeRadio.value : '85';
-  const sizeMap = { '65':'petite', '85':'classic', '115':'luxe', '165':'grand' };
-  const variantId = sizeMap[sizeValue] || 'classic';
-
-  // Optional: presentation upsell (vase) — captured as an add-on
-  const presRadio = document.querySelector('input[name="pres"]:checked');
-  const addOnIds = (presRadio && Number(presRadio.value) > 0) ? ['vase'] : [];
-
-  const qty = Math.max(1, parseInt(document.getElementById('qtyDisplay')?.textContent || '1', 10));
-  return { productId, variantId, addOnIds, qty };
-}
-
-function loadCart() {
-  try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch { return []; }
-}
-
-function saveCart(c) {
-  localStorage.setItem(CART_KEY, JSON.stringify(c));
-  window.dispatchEvent(new Event('cart:changed'));
-  document.dispatchEvent(new CustomEvent('cart:changed'));
-  // Trigger storage event handlers in same tab too (storage event normally only fires across tabs)
-  window.dispatchEvent(new StorageEvent('storage', { key: CART_KEY, newValue: localStorage.getItem(CART_KEY) }));
-}
-
-function addToCart(item) {
-  const cart = loadCart();
-  const existing = cart.findIndex(ci =>
-    ci.productId === item.productId &&
-    ci.variantId === item.variantId &&
-    JSON.stringify(ci.addOnIds) === JSON.stringify(item.addOnIds)
-  );
-  if (existing >= 0) cart[existing].qty += item.qty;
-  else cart.push(item);
-  saveCart(cart);
-}
-
-function syncBadge() {
-  const badge = document.getElementById('nav-cart-count');
-  if (!badge) return;
-  const total = loadCart().reduce((s, ci) => s + (ci.qty || 1), 0);
-  if (total > 0) { badge.textContent = String(total); badge.style.display = ''; }
-  else           { badge.style.display = 'none'; }
-}
-syncBadge();
-window.addEventListener('cart:changed', syncBadge);
-
-function handleCart() {
-  addToCart(getCurrentCartItem());
-  const btn = document.getElementById('addCartBtn');
-  btn.textContent = 'Added to cart ✓';
-  btn.classList.add('added');
-  setTimeout(() => { btn.textContent = 'Add to Cart'; btn.classList.remove('added'); }, 2000);
-}
-
-function handleBuy() {
-  addToCart(getCurrentCartItem());
-  window.location.href = 'cart.html';
-}
-
-// Set min date to today
-const today = new Date().toISOString().split('T')[0];
-document.getElementById('delivDate').min = today;
-document.getElementById('delivDate').value = today;
-
-updateSummary();
-changeQty(0);
 </script>
+
+<!-- Real product data + cart wiring (Supabase-backed) -->
+<script type="module" src="src/scripts/product-details.ts"></script>
 
 <!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
 <script type="module">
