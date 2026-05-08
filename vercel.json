@@ -1,13 +1,4 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "rewrites": [
-    { "source": "/shop",                "destination": "/shop.html" },
-    { "source": "/about",               "destination": "/about.html" },
-    { "source": "/cart",                "destination": "/cart.html" },
-    { "source": "/checkout",            "destination": "/checkout.html" },
-    { "source": "/product/:slug",       "destination": "/product-details.html" },
-    { "source": "/order-confirmation",  "destination": "/order-confirmation.html" },
-    { "source": "/weddings",            "destination": "/weddings.html" }
-  ]
+  "cleanUrls": false,
+  "trailingSlash": false
 }
