@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="season.js"></script>
 <style>
 :root {
   --accent:      #8b7355;
@@ -287,40 +288,22 @@ button{cursor:pointer;font-family:inherit}
 @media(max-width:1024px){.pd-layout{grid-template-columns:1fr;gap:40px}.pd-images{position:static}.pd-main-img{aspect-ratio:4/3}}
 @media(max-width:768px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.container{padding:0 24px}.action-btns{grid-template-columns:1fr}.breadcrumb-inner{padding:0 24px}}
 @media(max-width:480px){.pd-title{font-size:2rem}.tab-btn{padding:10px 14px}}
-
-/* ── Seasonal theme overlays (populated by seasonalTheme.ts) ── */
-#petals-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:8888}
-@media(prefers-reduced-motion:reduce){ #petals-canvas{display:none} }
-#season-side-left,#season-side-right{position:fixed;top:0;width:110px;height:100vh;pointer-events:none;z-index:1;overflow:hidden;opacity:.65}
-#season-side-left{left:0} #season-side-right{right:0}
-@media(max-width:1280px){ #season-side-left,#season-side-right{display:none} }
-.nav-branch{position:absolute;top:0;width:190px;height:64px;pointer-events:none;opacity:.55;z-index:0}
-.nav-branch--left{left:0} .nav-branch--right{right:0;transform:scaleX(-1)}
-@media(max-width:900px){ .nav-branch{display:none} }
-.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
-
-/* ── DEV TOGGLE: hide decorative SVGs + seasonal animations (keep nav icons) ── */
-svg                              { display: none !important; }
-.nav-icon-btn svg, .vs-close svg { display: inline-block !important; }
-#petals-canvas                   { display: none !important; }
-#season-side-left,#season-side-right,.nav-branch { display: none !important; }
-
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  Free delivery across Sydney on orders over $80 — <a href="shop.html">Shop now</a>
+  Free delivery across Sydney on orders over $80 — <a href="shop-redesign.html">Shop now</a>
 </div>
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="shop.html" class="back-link">
+    <a href="shop-redesign.html" class="back-link">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       Back to shop
     </a>
     <div class="logo">
-      <a href="index.html">
+      <a href="Vaniaflorist Redesign.html">
         <span class="logo-name">Vaniaflorist</span>
         <span class="logo-sub">Sydney Florist</span>
       </a>
@@ -331,7 +314,7 @@ svg                              { display: none !important; }
       </button>
       <button class="nav-icon-btn" aria-label="Cart" style="position:relative">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span class="cart-badge cart-count" id="nav-cart-count" style="display:none">0</span>
+        <span class="cart-badge">2</span>
       </button>
     </div>
   </div>
@@ -339,9 +322,9 @@ svg                              { display: none !important; }
 
 <div class="breadcrumb">
   <div class="breadcrumb-inner">
-    <a href="index.html">Home</a>
+    <a href="Vaniaflorist Redesign.html">Home</a>
     <span class="breadcrumb-sep">›</span>
-    <a href="shop.html">Shop</a>
+    <a href="shop-redesign.html">Shop</a>
     <span class="breadcrumb-sep">›</span>
     <span>Blush Romance</span>
   </div>
@@ -566,7 +549,8 @@ svg                              { display: none !important; }
 <script>
 // Auto seasonal colour
 window.addEventListener('DOMContentLoaded', () => {
-initDateQuick();
+  if (window.VaniaSeasons) window.VaniaSeasons.init();
+  initDateQuick();
   renderCard();
 });
 
@@ -679,7 +663,7 @@ function handleCart() {
   setTimeout(() => { btn.textContent = 'Add to Cart'; btn.classList.remove('added'); }, 2000);
 }
 function handleBuy() {
-  window.location.href = 'cart.html';
+  window.location.href = 'cart-redesign.html';
 }
 
 // Set min date to today
@@ -689,36 +673,6 @@ document.getElementById('delivDate').value = today;
 
 updateSummary();
 changeQty(0);
-</script>
-
-<!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
-<script type="module">
-  import { initSeasonalTheme, updateHeroCopy } from "./seasonalTheme.ts";
-  const current = initSeasonalTheme();
-  updateHeroCopy(current);
-</script>
-
-<!-- Cart badge sync -->
-<script>
-(function syncCartBadge(){
-  function update(){
-    const badge = document.getElementById('nav-cart-count');
-    if(!badge) return;
-    let count = 0;
-    try {
-      const raw = localStorage.getItem('vf_cart_v1');
-      if(raw){
-        const items = JSON.parse(raw);
-        if(Array.isArray(items)) count = items.reduce((a,i)=>a+(i.qty||1),0);
-      }
-    } catch(e){}
-    if(count > 0){ badge.textContent = String(count); badge.style.display = ''; }
-    else         { badge.style.display = 'none'; }
-  }
-  update();
-  window.addEventListener('cart:changed', update);
-  window.addEventListener('storage', e => { if(e.key === 'vf_cart_v1') update(); });
-})();
 </script>
 
 </body>

@@ -478,14 +478,38 @@ const __HERO_REMOVED__ = true; // placeholder to keep line references stable
 // PUBLIC API
 // ─────────────────────────────────────────────────────────────────────────────
 const ALL_SEASONS = ['spring', 'summer', 'autumn', 'winter'];
+
+// CSS variable palettes mirroring the redesign — these drive the new
+// inline-CSS-var theme system used by the redesigned pages.
+const SEASON_VARS = {
+    spring: { accent:'#5a1a2a', accentDark:'#2a0d15', accentLight:'#a8606e', bg:'#fdf8f9', bgAlt:'#f5eff2' },
+    summer: { accent:'#6b8870', accentDark:'#1e2a22', accentLight:'#a8c0aa', bg:'#f8faf8', bgAlt:'#eef3ee' },
+    autumn: { accent:'#a85738', accentDark:'#3a1c12', accentLight:'#d8a48a', bg:'#faf8f4', bgAlt:'#f5f0e8' },
+    winter: { accent:'#1c3656', accentDark:'#0e1d30', accentLight:'#7a96b8', bg:'#f6f8fa', bgAlt:'#eaf0f5' }
+};
+
+function applyCssVars(season) {
+    const v = SEASON_VARS[season];
+    if (!v) return;
+    const r = document.documentElement;
+    r.style.setProperty('--accent',       v.accent);
+    r.style.setProperty('--accent-dark',  v.accentDark);
+    r.style.setProperty('--accent-light', v.accentLight);
+    r.style.setProperty('--bg',           v.bg);
+    r.style.setProperty('--bg-alt',       v.bgAlt);
+    document.body.dataset.season = season;
+}
+
 export function initSeasonalTheme(override) {
-    //const season = override ?? getAustralianSeason();
-    const season = "winter"
+    // Date-based detection is the default; pass an override (e.g. 'winter') to force.
+    const season = override ?? getAustralianSeason();
     ALL_SEASONS.forEach(s => document.body.classList.remove(`season-${s}`));
     document.body.classList.add(`season-${season}`);
+    applyCssVars(season);                 // ← bridge to redesign CSS variables
     updateNavBranches(season);
     updateSideDecorations(season);
     startParticles(season);
+    updateHeroCopy(season);                // ← inject seasonal hero copy if hooks exist
     return season;
 }
 export function destroySeasonalTheme() {
@@ -502,18 +526,19 @@ export function destroySeasonalTheme() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const HERO_COPY = {
-    spring: { eyebrow: 'Spring Collection', headline: 'Where every petal <em>blooms</em>', subtitle: 'Fresh beginnings &amp; blush beauty', cta: 'Explore the bloom collection' },
-    summer: { eyebrow: 'Summer Collection', headline: 'Flowers that <em>flourish</em>', subtitle: 'Abundance, warmth &amp; golden light', cta: 'Shop summer abundance' },
-    autumn: { eyebrow: 'Autumn Collection', headline: 'Beauty in the <em>turning</em>', subtitle: 'Warmth, amber &amp; quiet elegance', cta: 'Discover the harvest edit' },
-    winter: { eyebrow: 'Winter Collection', headline: 'Flowers for the <em>still</em> season', subtitle: 'Cool clarity &amp; crystalline grace', cta: 'The winter collection' }
+    spring: { eyebrow: 'Spring collection', headline: 'Soft blooms,<br>in <em>full grace</em>',     subtitle: 'Blush hues &amp; tender new growth',  cta: 'Explore the collection' },
+    summer: { eyebrow: 'Summer collection', headline: 'Sunlit beauty,<br>in <em>full bloom</em>',    subtitle: 'Sage greens &amp; abundant warmth',   cta: 'Explore the collection' },
+    autumn: { eyebrow: 'Autumn collection', headline: 'Quiet warmth,<br>in <em>full turn</em>',      subtitle: 'Terracotta hues &amp; lasting amber', cta: 'Explore the collection' },
+    winter: { eyebrow: 'Winter collection', headline: 'Quiet beauty,<br>in <em>full bloom</em>',     subtitle: 'Deep navy hues &amp; lasting warmth', cta: 'Explore the collection' }
 };
 
 export function updateHeroCopy(season) {
     const y = new Date().getFullYear();
     const c = HERO_COPY[season];
+    if (!c) return;
     const el = (id) => document.getElementById(id);
     if (el('hero-eyebrow-text')) el('hero-eyebrow-text').textContent = c.eyebrow + ' ' + y;
-    if (el('hero-headline')) el('hero-headline').innerHTML = c.headline;
-    if (el('hero-subtitle')) el('hero-subtitle').innerHTML = c.subtitle;
-    if (el('hero-cta-primary')) el('hero-cta-primary').textContent = c.cta;
+    if (el('hero-headline'))     el('hero-headline').innerHTML       = c.headline;
+    if (el('hero-subtitle'))     el('hero-subtitle').innerHTML       = c.subtitle;
+    if (el('hero-cta-primary'))  el('hero-cta-primary').textContent  = c.cta;
 }

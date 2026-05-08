@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about vaniaflorist — Sydney's trusted local florist with over a decade of experience creating beautiful floral arrangements.">
+    <title>About Us | vaniaflorist</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <p>Free Delivery on Orders Over $50 &nbsp;·&nbsp; Same-Day Delivery Available in Sydney</p>
+    </div>
+
+    <!-- Navigation — matches all other pages -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="text-link">Home</a>
+                <a href="shop.html" class="text-link">Shop</a>
+                <a href="about.html" class="text-link active">About</a>
+                <a href="index.html#contact" class="text-link">Contact</a>
+            </div>
+            <div class="logo">
+                <a href="index.html">
+                    <h1 class="logo-title">vaniaflorist</h1>
+                    <p class="logo-subtitle">Sydney Florist</p>
+                </a>
+            </div>
+            <div class="nav-right">
+                <a href="cart.html" class="nav-icon cart-icon" aria-label="Shopping Cart" style="text-decoration:none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="cart-count" id="nav-cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="height: 400px;">
+        <div class="hero-image" style="background-image: url('https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=1950&q=80');"></div>
+        <div class="hero-content">
+            <h2>About vaniaflorist</h2>
+            <p>Rooted in tradition, blooming with passion.</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about" id="about-page">
+        <div class="container">
+            <h2 class="section-title">Our Story</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>At vaniaflorist, we believe every flower tells a story. Founded with love in the heart of Sydney, our shop began as a small family dream and blossomed into a trusted local florist known for creativity, care, and community.</p>
+                    <p>With over a decade of experience, we've hand-delivered joy through floral arrangements for weddings, birthdays, anniversaries, and just-because moments.</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat">
+                        <h3>12+</h3>
+                        <p>Years of Experience</p>
+                    </div>
+                    <div class="stat">
+                        <h3>15,000+</h3>
+                        <p>Arrangements Delivered</p>
+                    </div>
+                    <div class="stat">
+                        <h3>600+</h3>
+                        <p>Events Adorned</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="services">
+        <div class="container">
+            <h2 class="section-title">Meet the Team</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8b7355" stroke-width="1.5"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </div>
+                    <h3>Vania</h3>
+                    <p>Founder &amp; Head Florist – Inspired by nature, led by heart.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8b7355" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>Vania</h3>
+                    <p>Design Lead – Brings beauty and balance to every bouquet.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8b7355" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><path d="M8 18.5h8"/></svg>
+                    </div>
+                    <h3>Vania</h3>
+                    <p>Delivery Manager – Ensures your flowers arrive fresh and on time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="about highlight" style="padding: 60px 0;">
+        <div class="container highlight-container" style="text-align: center;">
+            <h2 class="section-title" style="margin-bottom: 16px;">Ready to Order?</h2>
+            <p style="color: #666; margin-bottom: 28px; font-size: 1.1rem;">Browse our handcrafted collection and find the perfect arrangement.</p>
+            <a href="shop.html" class="btn-primary" style="display:inline-block;text-decoration:none;padding:16px 36px;border-radius:6px;">SHOP NOW</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-logo">vaniaflorist</h3>
+                    <p>Celebrating life's special moments with flowers.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram" rel="noopener">Instagram</a>
+                        <a href="#" aria-label="Facebook" rel="noopener">Facebook</a>
+                        <a href="#" aria-label="Pinterest" rel="noopener">Pinterest</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="footer-year">2026</span> vaniaflorist. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

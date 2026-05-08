@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <style>
 /* ═══════════════════════════════════════
    VANIAFLORIST STYLE SYSTEM
@@ -261,25 +264,8 @@ button{cursor:pointer;font-family:inherit}
 @media(max-width:768px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.nav-links{display:none}.logo{grid-column:2}.shop-container{padding:0 20px}.grid-toggle{display:none}.filterbar-inner{padding:0 20px}}
 @media(max-width:480px){#productsGrid,#productsGrid.grid-3,#productsGrid.grid-2{grid-template-columns:1fr 1fr;gap:10px}.prod-desc{display:none}.shop-hero{padding:44px 0 36px}}
 @media(max-width:360px){#productsGrid{grid-template-columns:1fr}}
-
-/* ── Seasonal theme overlays (populated by seasonalTheme.ts) ── */
-#petals-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:8888}
-@media(prefers-reduced-motion:reduce){ #petals-canvas{display:none} }
-#season-side-left,#season-side-right{position:fixed;top:0;width:110px;height:100vh;pointer-events:none;z-index:1;overflow:hidden;opacity:.65}
-#season-side-left{left:0} #season-side-right{right:0}
-@media(max-width:1280px){ #season-side-left,#season-side-right{display:none} }
-.nav-branch{position:absolute;top:0;width:190px;height:64px;pointer-events:none;opacity:.55;z-index:0}
-.nav-branch--left{left:0} .nav-branch--right{right:0;transform:scaleX(-1)}
-@media(max-width:900px){ .nav-branch{display:none} }
-.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
-
-/* ── DEV TOGGLE: hide decorative SVGs + seasonal animations (keep nav icons) ── */
-svg                              { display: none !important; }
-.nav-icon-btn svg, .vs-close svg { display: inline-block !important; }
-#petals-canvas                   { display: none !important; }
-#season-side-left,#season-side-right,.nav-branch { display: none !important; }
-
 </style>
+<script src="season.js"></script>
 </head>
 <body>
 
@@ -292,13 +278,13 @@ svg                              { display: none !important; }
 <nav class="nav">
   <div class="nav-inner">
     <div class="nav-links">
-      <a href="shop.html">Shop</a>
+      <a href="shop-redesign.html">Shop</a>
       <a href="#">Occasions</a>
-      <a href="about.html">About</a>
+      <a href="about-redesign.html">About</a>
       <a href="#">Weddings</a>
     </div>
     <div class="logo">
-      <a href="index.html">
+      <a href="Vaniaflorist Redesign.html">
         <span class="logo-name">Vaniaflorist</span>
         <span class="logo-sub">Sydney Florist</span>
       </a>
@@ -312,7 +298,7 @@ svg                              { display: none !important; }
       </button>
       <button class="nav-icon-btn" aria-label="Cart" style="position:relative">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span class="cart-badge cart-count" id="nav-cart-count" style="display:none">0</span>
+        <span class="cart-badge">2</span>
       </button>
     </div>
   </div>
@@ -370,6 +356,9 @@ svg                              { display: none !important; }
     <div id="productsGrid" class="grid-3"></div>
   </div>
 </section>
+
+<!-- Tweaks root -->
+<div id="tweaks-root"></div>
 
 <script>
 var SHOP_TWEAKS = /*EDITMODE-BEGIN*/{
@@ -501,6 +490,10 @@ document.getElementById('grid3btn').addEventListener('click', () => {
 document.getElementById('grid2btn').addEventListener('click', () => {
   grid.className = 'grid-2'; document.querySelectorAll('.grid-btn').forEach(b=>b.classList.remove('active')); document.getElementById('grid2btn').classList.add('active');
 });
+
+// Seasonal colour
+if (window.VaniaSeasons) window.VaniaSeasons.init();
+
 // Sync filter UI with URL-derived defaults
 document.querySelectorAll('#materialPills .filter-pill').forEach(b => {
   b.classList.toggle('active', b.dataset.material === activeMaterial);
@@ -511,34 +504,59 @@ if (catSel && catSel.querySelector(`option[value="${activeCategory}"]`)) catSel.
 renderProducts();
 </script>
 
-<!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
-<script type="module">
-  import { initSeasonalTheme, updateHeroCopy } from "./seasonalTheme.ts";
-  const current = initSeasonalTheme();
-  updateHeroCopy(current);
-</script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+function applyShopTweaks(t) {
+  const root = document.documentElement;
+  const schemes = {
+    taupe: { accent:'#8b7355', accentDark:'#2c2420', accentLight:'#c8b89a', bg:'#faf8f4', bgAlt:'#f5f0e8' },
+    rose:  { accent:'#a05870', accentDark:'#2a1a1f', accentLight:'#c8a0a8', bg:'#fdf8f9', bgAlt:'#f5eff0' },
+    sage:  { accent:'#6b8870', accentDark:'#1e2a22', accentLight:'#a8c0aa', bg:'#f8faf8', bgAlt:'#eef3ee' },
+  };
+  const s = schemes[t.accentScheme] || schemes.taupe;
+  root.style.setProperty('--accent', s.accent);
+  root.style.setProperty('--accent-dark', s.accentDark);
+  root.style.setProperty('--accent-light', s.accentLight);
+  root.style.setProperty('--bg', s.bg);
+  root.style.setProperty('--bg-alt', s.bgAlt);
 
-<!-- Cart badge sync -->
-<script>
-(function syncCartBadge(){
-  function update(){
-    const badge = document.getElementById('nav-cart-count');
-    if(!badge) return;
-    let count = 0;
-    try {
-      const raw = localStorage.getItem('vf_cart_v1');
-      if(raw){
-        const items = JSON.parse(raw);
-        if(Array.isArray(items)) count = items.reduce((a,i)=>a+(i.qty||1),0);
-      }
-    } catch(e){}
-    if(count > 0){ badge.textContent = String(count); badge.style.display = ''; }
-    else         { badge.style.display = 'none'; }
-  }
-  update();
-  window.addEventListener('cart:changed', update);
-  window.addEventListener('storage', e => { if(e.key === 'vf_cart_v1') update(); });
-})();
+  // card style
+  document.querySelectorAll('.prod-card').forEach(c => {
+    if (t.cardStyle === 'shadow') { c.style.border = 'none'; c.style.boxShadow = '0 2px 16px rgba(0,0,0,.07)'; }
+    else if (t.cardStyle === 'flat') { c.style.border = 'none'; c.style.boxShadow = 'none'; c.style.background = 'var(--bg-alt)'; }
+    else { c.style.border = ''; c.style.boxShadow = ''; c.style.background = ''; }
+  });
+
+  // prices
+  showPrices = t.showPrices;
+  imageCrop = t.imageCrop;
+  renderProducts();
+}
+
+function ShopTweaksApp() {
+  const [tweaks, setTweak] = window.useTweaks(SHOP_TWEAKS);
+  React.useEffect(() => { applyShopTweaks(tweaks); }, [tweaks]);
+  return (
+    <window.TweaksPanel title="Tweaks">
+      <window.TweakSection label="Brand">
+        <window.TweakRadio id="accentScheme" label="Colour scheme"
+          options={[{value:'taupe',label:'Taupe'},{value:'rose',label:'Rose'},{value:'sage',label:'Sage'}]}
+          value={tweaks.accentScheme} onChange={v => setTweak('accentScheme', v)} />
+      </window.TweakSection>
+      <window.TweakSection label="Cards">
+        <window.TweakRadio id="cardStyle" label="Card style"
+          options={[{value:'bordered',label:'Bordered'},{value:'shadow',label:'Shadow'},{value:'flat',label:'Flat'}]}
+          value={tweaks.cardStyle} onChange={v => setTweak('cardStyle', v)} />
+        <window.TweakToggle id="showPrices" label="Show prices"
+          value={tweaks.showPrices} onChange={v => setTweak('showPrices', v)} />
+        <window.TweakRadio id="imageCrop" label="Image crop"
+          options={[{value:'landscape',label:'4:3'},{value:'square',label:'1:1'},{value:'portrait',label:'3:4'}]}
+          value={tweaks.imageCrop} onChange={v => setTweak('imageCrop', v)} />
+      </window.TweakSection>
+    </window.TweaksPanel>
+  );
+}
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<ShopTweaksApp />);
 </script>
 
 </body>

@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Vaniaflorist — Sydney's luxury florist. Handcrafted bouquets, wedding flowers, artificial & fresh arrangements. Same-day delivery across Sydney.">
 <title>Vaniaflorist — Sydney Florist</title>
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <style>
 /* ═══════════════════════════════════════
    VANIAFLORIST — REDESIGNED HOMEPAGE
@@ -88,29 +89,6 @@ button{cursor:pointer;font-family:inherit}
 }
 .nav-links a:hover,.nav-btn:hover{color:var(--text)}
 .nav-links a:hover::after,.nav-btn:hover::after{width:100%}
-
-/* Shop dropdown */
-.nav-shop{position:relative}
-.nav-shop > .nav-btn{cursor:pointer}
-.nav-shop-menu{
-  position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-8px);
-  min-width:220px;background:var(--bg);border:.5px solid var(--border);
-  padding:14px 0;box-shadow:0 10px 40px rgba(28,22,18,.08);
-  opacity:0;pointer-events:none;
-  transition:opacity .2s ease,transform .2s ease;
-  z-index:50;
-}
-.nav-shop:hover > .nav-shop-menu,
-.nav-shop:focus-within > .nav-shop-menu{
-  opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);
-}
-.nav-shop-menu a{
-  display:block;padding:9px 22px;font-size:10px;letter-spacing:2px;
-  text-transform:uppercase;color:var(--text-muted);text-decoration:none;
-  transition:background .2s,color .2s;
-}
-.nav-shop-menu a:hover{background:var(--bg-alt);color:var(--accent)}
-.nav-shop-menu a::after{display:none}
 .logo{text-align:center}
 .logo-name{
   font-family:'Great Vibes',cursive;
@@ -139,7 +117,7 @@ button{cursor:pointer;font-family:inherit}
 
 /* ── Hero ── */
 .hero{
-  min-height:62vh;
+  min-height:88vh;
   display:grid;
   grid-template-columns:52% 48%;
   background:var(--bg);
@@ -147,7 +125,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .hero-left{
   display:flex;flex-direction:column;justify-content:center;
-  padding:48px clamp(32px,6vw,100px) 48px clamp(40px,7vw,120px);
+  padding:80px clamp(32px,6vw,100px) 80px clamp(40px,7vw,120px);
   position:relative;z-index:2;
 }
 .hero-eyebrow{
@@ -591,7 +569,7 @@ button{cursor:pointer;font-family:inherit}
   .nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}
   .nav-links{display:none}
   .logo{grid-column:2}
-  .hero{grid-template-columns:1fr;min-height:58vh}
+  .hero{grid-template-columns:1fr;min-height:80vh}
   .hero-right{position:absolute;inset:0;z-index:0;opacity:.25}
   .hero-left{padding:60px 24px 80px;z-index:2}
   .testimonials-grid{grid-template-columns:1fr}
@@ -609,85 +587,42 @@ button{cursor:pointer;font-family:inherit}
   .gallery-grid{grid-template-columns:1fr}
   .hero-btns{flex-direction:column;align-items:flex-start}
 }
-
-/* ── Seasonal theme system overlays (populated by seasonalTheme.ts) ── */
-#petals-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:8888}
-@media(prefers-reduced-motion:reduce){ #petals-canvas{display:none} }
-
-#season-side-left,#season-side-right{position:fixed;top:0;width:110px;height:100vh;pointer-events:none;z-index:1;overflow:hidden;opacity:.65}
-#season-side-left{left:0}
-#season-side-right{right:0}
-@media(max-width:1280px){ #season-side-left,#season-side-right{display:none} }
-
-.nav-branch{position:absolute;top:0;width:190px;height:64px;pointer-events:none;opacity:.55;z-index:0}
-.nav-branch--left{left:0}
-.nav-branch--right{right:0;transform:scaleX(-1)}
-@media(max-width:900px){ .nav-branch{display:none} }
-
-/* ════════════════════════════════════════════════════════════════════
-   DEV TOGGLE — Hide DECORATIVE SVGs + seasonal canvas + side branches.
-   Keeps functional nav icons (search/wishlist/cart) visible.
-   To bring everything back, comment out this block.
-   ════════════════════════════════════════════════════════════════════ */
-svg                                  { display: none !important; }
-.nav-icon-btn svg, .vs-close svg     { display: inline-block !important; } /* keep nav icons + search overlay close */
-#petals-canvas                       { display: none !important; }
-#season-side-left,
-#season-side-right                   { display: none !important; }
-.nav-branch                          { display: none !important; }
-
-/* ── Cart badge ── */
-.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
 </style>
+<script src="season.js"></script>
 </head>
 <body>
 
-<!-- Particle canvas (snow / petals etc., injected by seasonalTheme.ts) -->
-<canvas id="petals-canvas" aria-hidden="true"></canvas>
-
 <!-- Top Bar -->
 <div class="topbar">
-  Free delivery across Sydney on orders over $80 — <a href="shop.html">Shop now</a>
+  Free delivery across Sydney on orders over $80 — <a href="#">Shop now</a>
 </div>
 
 <!-- Nav -->
 <nav class="nav">
-  <!-- Seasonal SVG branches injected by seasonalTheme.ts -->
-  <div id="nav-branch-left"  class="nav-branch nav-branch--left"  aria-hidden="true"></div>
-  <div id="nav-branch-right" class="nav-branch nav-branch--right" aria-hidden="true"></div>
-
   <div class="nav-inner">
     <div class="nav-links">
-      <div class="nav-shop">
-        <a href="shop.html" class="nav-btn">Shop &#8964;</a>
-        <div class="nav-shop-menu" role="menu">
-          <a href="shop.html" role="menuitem">All Flowers</a>
-          <a href="shop.html?type=fresh" role="menuitem">The Living Collection</a>
-          <a href="shop.html?type=forever" role="menuitem">The Forever Collection</a>
-          <a href="weddings.html" role="menuitem">The Ceremony Collection</a>
-        </div>
-      </div>
-      <a href="shop.html#occasions">Occasions</a>
-      <a href="about.html">About</a>
+      <a href="shop-redesign.html" class="nav-btn">Shop &#8964;</a>
+      <a href="#">Occasions</a>
+      <a href="about-redesign.html">About</a>
       <a href="weddings.html">Weddings</a>
     </div>
     <div class="logo">
-      <a href="index.html">
+      <a href="#">
         <span class="logo-name">Vaniaflorist</span>
         <span class="logo-sub">Sydney Florist</span>
       </a>
     </div>
     <div class="nav-actions">
-      <button class="nav-icon-btn" aria-label="Search" id="searchButton">
+      <button class="nav-icon-btn" aria-label="Search" id="open-search-btn">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </button>
-      <a href="wishlist.html" class="nav-icon-btn" aria-label="Wishlist">
+      <button class="nav-icon-btn" aria-label="Wishlist">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      </a>
-      <a href="cart.html" class="nav-icon-btn cart-icon" aria-label="Cart" style="position:relative">
+      </button>
+      <button class="nav-icon-btn" aria-label="Cart" style="position:relative">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span class="cart-badge cart-count" id="nav-cart-count" style="display:none">0</span>
-      </a>
+        <span class="cart-badge">2</span>
+      </button>
     </div>
   </div>
 </nav>
@@ -695,13 +630,13 @@ svg                                  { display: none !important; }
 <!-- Hero -->
 <section class="hero" id="home">
   <div class="hero-left">
-    <p class="hero-eyebrow"><span class="hero-eyebrow-line"></span> <span id="hero-eyebrow-text">Winter collection 2026</span> <span class="hero-eyebrow-line"></span></p>
-    <h1 class="hero-h1" id="hero-headline">Quiet beauty,<br>in <em>full bloom</em></h1>
+    <p class="hero-eyebrow"><span class="hero-eyebrow-line"></span> Winter collection 2026 <span class="hero-eyebrow-line"></span></p>
+    <h1 class="hero-h1">Quiet beauty,<br>in <em>full bloom</em></h1>
     <hr class="hero-divider">
-    <p class="hero-sub" id="hero-subtitle">Deep navy hues &amp; lasting warmth</p>
+    <p class="hero-sub">Deep navy hues &amp; lasting warmth</p>
     <p class="hero-from">Arrangements from $65</p>
     <div class="hero-btns">
-      <a href="shop.html" class="btn-dark" id="hero-cta-primary">Explore the collection</a>
+      <a href="shop-redesign.html" class="btn-dark">Explore the collection</a>
       <a href="weddings.html" class="btn-ghost">View weddings →</a>
     </div>
     <p class="hero-trust">
@@ -972,7 +907,7 @@ svg                                  { display: none !important; }
         </div>
 
         <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
-          <a href="shop.html?type=forever" class="btn-dark">Shop Forever Collection →</a>
+          <a href="shop-redesign.html?type=forever" class="btn-dark">Shop Forever Collection →</a>
           <a href="#" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);text-decoration:none;border-bottom:.5px solid var(--border);padding-bottom:3px">Fresh vs Forever guide</a>
         </div>
       </div>
@@ -1072,7 +1007,7 @@ svg                                  { display: none !important; }
       <p class="eyebrow">Our story</p>
       <h2 class="sec-title">A small team,<br>made with care</h2>
       <p style="font-size:14px;color:var(--text-muted);line-height:1.85;margin:16px 0 28px;font-weight:300">We're a passionate Sydney florist — every bouquet is handcrafted the morning it ships, sourced from local growers, and made for the person receiving it. Not a template. Not a warehouse.</p>
-      <a href="about.html" class="btn-dark">Meet the team →</a>
+      <a href="about-redesign.html" class="btn-dark">Meet the team →</a>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div style="border-radius:var(--radius);overflow:hidden;height:220px">
@@ -1130,8 +1065,8 @@ svg                                  { display: none !important; }
       <div class="footer-col">
         <h4>Shop</h4>
         <ul>
-          <li><a href="shop.html">All Flowers</a></li>
-          <li><a href="product-details.html">Product Details</a></li>
+          <li><a href="shop-redesign.html">All Flowers</a></li>
+          <li><a href="product-redesign.html">Product Details</a></li>
           <li><a href="#">The Living Collection</a></li>
           <li><a href="#">The Forever Collection</a></li>
           <li><a href="#">The Ceremony Collection</a></li>
@@ -1141,7 +1076,7 @@ svg                                  { display: none !important; }
       <div class="footer-col">
         <h4>Help</h4>
         <ul>
-          <li><a href="about.html">About Vaniaflorist</a></li>
+          <li><a href="about-redesign.html">About Vaniaflorist</a></li>
           <li><a href="#">Delivery &amp; Returns</a></li>
           <li><a href="#">Care Guide</a></li>
           <li><a href="#">Wedding Enquiries</a></li>
@@ -1153,39 +1088,104 @@ svg                                  { display: none !important; }
   </div>
 </footer>
 
-<!-- Seasonal theme system: sets CSS variables, body class, hero copy,
-     nav-branch SVGs, side decorations and particles based on Australian date.
-     Pass an override (e.g. initSeasonalTheme('winter')) to force a season. -->
-<script type="module">
-  import { initSeasonalTheme, updateHeroCopy } from "./seasonalTheme.ts";
-  const current = initSeasonalTheme();
-  updateHeroCopy(current);
-</script>
+<!-- Tweaks root -->
+<div id="tweaks-root"></div>
 
-<!-- Cart badge sync — reads vf_cart_v1 from localStorage and updates badge live. -->
 <script>
-(function syncCartBadge(){
-  function update(){
-    const badge = document.getElementById('nav-cart-count');
-    if(!badge) return;
-    let count = 0;
-    try {
-      const raw = localStorage.getItem('vf_cart_v1');
-      if(raw){
-        const items = JSON.parse(raw);
-        if(Array.isArray(items)) count = items.reduce((a,i)=>a+(i.qty||1),0);
-      }
-    } catch(e){}
-    if(count > 0){ badge.textContent = String(count); badge.style.display = ''; }
-    else         { badge.style.display = 'none'; }
+var TWEAK_DEFAULS = /*EDITMODE-BEGIN*/{
+  "accentScheme": "sage",
+  "heroLayout": "split",
+  "showPrices": true,
+  "cardStyle": "bordered"
+}/*EDITMODE-END*/;
+</script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+
+function applyTweaks(t) {
+  const root = document.documentElement;
+  // Accent scheme
+  // Season-aligned schemes — match season.js
+  const schemes = {
+    burgundy:   { accent:'#5a1a2a', accentDark:'#2a0d15', accentLight:'#a8606e', bg:'#fdf8f9', bgAlt:'#f5eff2' }, // Spring
+    sage:       { accent:'#6b8870', accentDark:'#1e2a22', accentLight:'#a8c0aa', bg:'#f8faf8', bgAlt:'#eef3ee' }, // Summer
+    terracotta: { accent:'#a85738', accentDark:'#3a1c12', accentLight:'#d8a48a', bg:'#faf8f4', bgAlt:'#f5f0e8' }, // Autumn
+    navy:       { accent:'#1c3656', accentDark:'#0e1d30', accentLight:'#7a96b8', bg:'#f6f8fa', bgAlt:'#eaf0f5' }, // Winter
+  };
+  const s = schemes[t.accentScheme] || schemes.navy;
+  // Sync with season pill so the bottom-left badge reflects choice
+  const seasonMap = { burgundy:'spring', sage:'summer', terracotta:'autumn', navy:'winter' };
+  if (window.VaniaSeasons && seasonMap[t.accentScheme]) {
+    try { window.VaniaSeasons.set(seasonMap[t.accentScheme]); } catch(e) {}
   }
-  update();
-  window.addEventListener('cart:changed', update);
-  window.addEventListener('storage', e => { if(e.key === 'vf_cart_v1') update(); });
-})();
+  root.style.setProperty('--accent', s.accent);
+  root.style.setProperty('--accent-dark', s.accentDark);
+  root.style.setProperty('--accent-light', s.accentLight);
+  root.style.setProperty('--bg', s.bg);
+  root.style.setProperty('--bg-alt', s.bgAlt);
+
+  // Hero layout
+  const heroEl = document.querySelector('.hero');
+  if(heroEl) {
+    if(t.heroLayout === 'split') {
+      heroEl.style.gridTemplateColumns = '52% 48%';
+      const heroRight = heroEl.querySelector('.hero-right');
+      if(heroRight) { heroRight.style.position=''; heroRight.style.inset=''; heroRight.style.opacity=''; heroRight.style.zIndex=''; }
+    } else if(t.heroLayout === 'centered') {
+      heroEl.style.gridTemplateColumns = '1fr';
+      const heroRight = heroEl.querySelector('.hero-right');
+      if(heroRight) { heroRight.style.position='absolute'; heroRight.style.inset='0'; heroRight.style.opacity='.18'; heroRight.style.zIndex='0'; }
+    }
+  }
+
+  // Prices
+  document.querySelectorAll('.prod-price').forEach(el => { el.style.display = t.showPrices ? '' : 'none'; });
+
+  // Card style
+  document.querySelectorAll('.prod-card,.occ-card,.testi-card').forEach(el => {
+    if(t.cardStyle === 'borderless') { el.style.border='none'; el.style.boxShadow='0 2px 16px rgba(0,0,0,.06)'; }
+    else if(t.cardStyle === 'filled') { el.style.border='none'; el.style.background='var(--bg-alt)'; el.style.boxShadow='none'; }
+    else { el.style.border=''; el.style.boxShadow=''; el.style.background=''; }
+  });
+}
+
+function TweaksApp() {
+  const [tweaks, setTweak] = window.useTweaks(TWEAK_DEFAULS);
+  React.useEffect(() => { applyTweaks(tweaks); }, [tweaks]);
+  return (
+    <window.TweaksPanel title="Tweaks">
+      <window.TweakSection label="Season">
+        <window.TweakSelect id="accentScheme" label="Colour scheme"
+          options={[
+            {value:'burgundy',label:'Spring · Burgundy'},
+            {value:'sage',label:'Summer · Sage'},
+            {value:'terracotta',label:'Autumn · Terracotta'},
+            {value:'navy',label:'Winter · Navy'},
+          ]}
+          value={tweaks.accentScheme} onChange={v=>setTweak('accentScheme',v)}/>
+      </window.TweakSection>
+      <window.TweakSection label="Hero">
+        <window.TweakRadio id="heroLayout" label="Layout"
+          options={[{value:'split',label:'Split'},{value:'centered',label:'Overlay'}]}
+          value={tweaks.heroLayout} onChange={v=>setTweak('heroLayout',v)}/>
+      </window.TweakSection>
+      <window.TweakSection label="Products">
+        <window.TweakToggle id="showPrices" label="Show prices"
+          value={tweaks.showPrices} onChange={v=>setTweak('showPrices',v)}/>
+        <window.TweakRadio id="cardStyle" label="Card style"
+          options={[{value:'bordered',label:'Bordered'},{value:'borderless',label:'Shadow'},{value:'filled',label:'Filled'}]}
+          value={tweaks.cardStyle} onChange={v=>setTweak('cardStyle',v)}/>
+      </window.TweakSection>
+    </window.TweaksPanel>
+  );
+}
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<TweaksApp/>);
 </script>
 
 <script>
+// Seasonal colour — auto-detect Australian season
+if (window.VaniaSeasons) window.VaniaSeasons.init();
+
 // Scroll reveal
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('in'); revealObserver.unobserve(e.target); } });
@@ -1366,19 +1366,19 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
       <div>
         <h3 class="vs-section-title">Popular searches</h3>
         <ul class="vs-list">
-          <li><a class="vs-link" href="shop.html?type=forever">
+          <li><a class="vs-link" href="shop-redesign.html?type=forever">
             <span>Forever roses</span>
             <span class="vs-arrow">→</span>
           </a></li>
-          <li><a class="vs-link" href="shop.html?q=peonies">
+          <li><a class="vs-link" href="shop-redesign.html?q=peonies">
             <span>Peonies</span>
             <span class="vs-arrow">→</span>
           </a></li>
-          <li><a class="vs-link" href="shop.html?q=white">
+          <li><a class="vs-link" href="shop-redesign.html?q=white">
             <span>White bouquets</span>
             <span class="vs-arrow">→</span>
           </a></li>
-          <li><a class="vs-link" href="shop.html?q=hatbox">
+          <li><a class="vs-link" href="shop-redesign.html?q=hatbox">
             <span>Hatbox arrangements</span>
             <span class="vs-arrow">→</span>
           </a></li>
@@ -1390,40 +1390,40 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
 
         <h3 class="vs-section-title" style="margin-top:36px;">Shop by occasion</h3>
         <div class="vs-occasions">
-          <a class="vs-occ-pill" href="shop.html?occasion=birthday"><span class="vs-occ-icon">🎂</span> Birthday</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=anniversary"><span class="vs-occ-icon">💕</span> Anniversary</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=sympathy"><span class="vs-occ-icon">🕊️</span> Sympathy</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=thank-you"><span class="vs-occ-icon">✿</span> Thank you</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=new-baby"><span class="vs-occ-icon">👶</span> New baby</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=just-because"><span class="vs-occ-icon">✦</span> Just because</a>
+          <a class="vs-occ-pill" href="shop-redesign.html?occasion=birthday"><span class="vs-occ-icon">🎂</span> Birthday</a>
+          <a class="vs-occ-pill" href="shop-redesign.html?occasion=anniversary"><span class="vs-occ-icon">💕</span> Anniversary</a>
+          <a class="vs-occ-pill" href="shop-redesign.html?occasion=sympathy"><span class="vs-occ-icon">🕊️</span> Sympathy</a>
+          <a class="vs-occ-pill" href="shop-redesign.html?occasion=thank-you"><span class="vs-occ-icon">✿</span> Thank you</a>
+          <a class="vs-occ-pill" href="shop-redesign.html?occasion=new-baby"><span class="vs-occ-icon">👶</span> New baby</a>
+          <a class="vs-occ-pill" href="shop-redesign.html?occasion=just-because"><span class="vs-occ-icon">✦</span> Just because</a>
         </div>
       </div>
 
       <!-- RIGHT: Trending bouquets -->
       <div>
         <h3 class="vs-section-title">Trending now</h3>
-        <a class="vs-trending-card" href="product-details.html">
+        <a class="vs-trending-card" href="product-redesign.html">
           <div class="vs-trending-img" style="background-image:url('images/gallery/bouquet-pink-roses.jpg')"></div>
           <div class="vs-trending-meta">
             <p class="vs-trending-name">Blush Roses Bouquet</p>
             <p class="vs-trending-price">From $89 · Fresh</p>
           </div>
         </a>
-        <a class="vs-trending-card" href="product-details.html">
+        <a class="vs-trending-card" href="product-redesign.html">
           <div class="vs-trending-img" style="background-image:url('images/gallery/bouquet-white.jpg')"></div>
           <div class="vs-trending-meta">
             <p class="vs-trending-name">White Garden Arrangement</p>
             <p class="vs-trending-price">From $115 · Fresh</p>
           </div>
         </a>
-        <a class="vs-trending-card" href="product-details.html">
+        <a class="vs-trending-card" href="product-redesign.html">
           <div class="vs-trending-img" style="background-image:url('images/gallery/bouquet-pink-tulip.jpg')"></div>
           <div class="vs-trending-meta">
             <p class="vs-trending-name">Tulip Hatbox</p>
             <p class="vs-trending-price">From $135 · Forever</p>
           </div>
         </a>
-        <a class="vs-trending-card" href="product-details.html">
+        <a class="vs-trending-card" href="product-redesign.html">
           <div class="vs-trending-img" style="background-image:url('images/gallery/flowers-market.jpg')"></div>
           <div class="vs-trending-meta">
             <p class="vs-trending-name">Florist's Choice</p>
@@ -1444,7 +1444,7 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
 (function(){
   const overlay = document.getElementById('vs-overlay');
   const input   = document.getElementById('vs-input');
-  const openBtn = document.getElementById('searchButton');
+  const openBtn = document.getElementById('open-search-btn');
   const closeBtn= document.getElementById('vs-close');
 
   function open() {
@@ -1475,7 +1475,7 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
 
   input.addEventListener('keydown', e => {
     if (e.key === 'Enter' && input.value.trim()) {
-      window.location.href = 'shop.html?q=' + encodeURIComponent(input.value.trim());
+      window.location.href = 'shop-redesign.html?q=' + encodeURIComponent(input.value.trim());
     }
   });
 })();

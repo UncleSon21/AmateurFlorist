@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="season.js"></script>
 <style>
 :root {
   --accent:      #8b7355;
@@ -267,6 +266,24 @@ button{cursor:pointer;font-family:inherit}
   .tracker-card,.detail-card{padding:24px 22px}
   .nav-inner{padding:14px 20px}
 }
+
+/* ── Seasonal theme overlays (populated by seasonalTheme.ts) ── */
+#petals-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:8888}
+@media(prefers-reduced-motion:reduce){ #petals-canvas{display:none} }
+#season-side-left,#season-side-right{position:fixed;top:0;width:110px;height:100vh;pointer-events:none;z-index:1;overflow:hidden;opacity:.65}
+#season-side-left{left:0} #season-side-right{right:0}
+@media(max-width:1280px){ #season-side-left,#season-side-right{display:none} }
+.nav-branch{position:absolute;top:0;width:190px;height:64px;pointer-events:none;opacity:.55;z-index:0}
+.nav-branch--left{left:0} .nav-branch--right{right:0;transform:scaleX(-1)}
+@media(max-width:900px){ .nav-branch{display:none} }
+.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
+
+/* ── DEV TOGGLE: hide decorative SVGs + seasonal animations (keep nav icons) ── */
+svg                              { display: none !important; }
+.nav-icon-btn svg, .vs-close svg { display: inline-block !important; }
+#petals-canvas                   { display: none !important; }
+#season-side-left,#season-side-right,.nav-branch { display: none !important; }
+
 </style>
 </head>
 <body>
@@ -441,7 +458,6 @@ button{cursor:pointer;font-family:inherit}
 
 <script>
 window.addEventListener('DOMContentLoaded', () => {
-  if (window.VaniaSeasons) window.VaniaSeasons.init();
 });
 
 // Read query params from checkout
@@ -466,6 +482,36 @@ setTimeout(() => {
   steps[1].classList.add('active');
   rail.style.setProperty('--progress', '0.5');
 }, 1400);
+</script>
+
+<!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
+<script type="module">
+  import { initSeasonalTheme, updateHeroCopy } from "./seasonalTheme.ts";
+  const current = initSeasonalTheme();
+  updateHeroCopy(current);
+</script>
+
+<!-- Cart badge sync -->
+<script>
+(function syncCartBadge(){
+  function update(){
+    const badge = document.getElementById('nav-cart-count');
+    if(!badge) return;
+    let count = 0;
+    try {
+      const raw = localStorage.getItem('vf_cart_v1');
+      if(raw){
+        const items = JSON.parse(raw);
+        if(Array.isArray(items)) count = items.reduce((a,i)=>a+(i.qty||1),0);
+      }
+    } catch(e){}
+    if(count > 0){ badge.textContent = String(count); badge.style.display = ''; }
+    else         { badge.style.display = 'none'; }
+  }
+  update();
+  window.addEventListener('cart:changed', update);
+  window.addEventListener('storage', e => { if(e.key === 'vf_cart_v1') update(); });
+})();
 </script>
 
 </body>

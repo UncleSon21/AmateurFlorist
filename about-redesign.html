@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <style>
 /* ═══════════════════════════════════════
    VANIAFLORIST — STYLE SYSTEM
@@ -480,25 +483,8 @@ button{cursor:pointer;font-family:inherit}
   .stat-item{border-right:none;border-bottom:.5px solid rgba(255,255,255,.08)}
   .process-steps{grid-template-columns:1fr}
 }
-
-/* ── Seasonal theme overlays (populated by seasonalTheme.ts) ── */
-#petals-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:8888}
-@media(prefers-reduced-motion:reduce){ #petals-canvas{display:none} }
-#season-side-left,#season-side-right{position:fixed;top:0;width:110px;height:100vh;pointer-events:none;z-index:1;overflow:hidden;opacity:.65}
-#season-side-left{left:0} #season-side-right{right:0}
-@media(max-width:1280px){ #season-side-left,#season-side-right{display:none} }
-.nav-branch{position:absolute;top:0;width:190px;height:64px;pointer-events:none;opacity:.55;z-index:0}
-.nav-branch--left{left:0} .nav-branch--right{right:0;transform:scaleX(-1)}
-@media(max-width:900px){ .nav-branch{display:none} }
-.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
-
-/* ── DEV TOGGLE: hide decorative SVGs + seasonal animations (keep nav icons) ── */
-svg                              { display: none !important; }
-.nav-icon-btn svg, .vs-close svg { display: inline-block !important; }
-#petals-canvas                   { display: none !important; }
-#season-side-left,#season-side-right,.nav-branch { display: none !important; }
-
 </style>
+<script src="season.js"></script>
 </head>
 <body>
 
@@ -511,12 +497,12 @@ svg                              { display: none !important; }
 <nav class="nav">
   <div class="nav-inner">
     <div class="nav-links">
-      <a href="index.html">Shop</a>
+      <a href="Vaniaflorist Redesign.html">Shop</a>
       <a href="#" class="active">About</a>
       <a href="#">Weddings</a>
     </div>
     <div class="logo">
-      <a href="index.html">
+      <a href="Vaniaflorist Redesign.html">
         <span class="logo-name">Vaniaflorist</span>
         <span class="logo-sub">Sydney Florist</span>
       </a>
@@ -580,7 +566,7 @@ svg                              { display: none !important; }
         <p>Vaniaflorist started with a simple belief: that beautiful, fresh flowers should be accessible to everyone in Sydney — not just for weddings or grand occasions, but for the everyday moments that deserve something special.</p>
         <p>We're a small, passionate team. Every bouquet is made the morning it ships, sourced from local growers where possible, and built around the person receiving it — not a template.</p>
         <p>We're still growing, still learning, and genuinely proud of every arrangement that leaves our studio. Your support means everything to us.</p>
-        <a href="index.html" class="btn-dark">Shop the collection →</a>
+        <a href="Vaniaflorist Redesign.html" class="btn-dark">Shop the collection →</a>
       </div>
       <div class="story-img reveal">
         <div class="story-img-main">
@@ -733,7 +719,7 @@ svg                              { display: none !important; }
     <h2 class="cta-title">Every occasion deserves<br><em>something beautiful</em></h2>
     <p class="cta-sub">Sydney-wide delivery · Same-day available · Arrangements from $65</p>
     <div class="cta-btns">
-      <a href="index.html" class="btn-light">Shop the collection</a>
+      <a href="Vaniaflorist Redesign.html" class="btn-light">Shop the collection</a>
       <a href="#" class="btn-outline-light">Wedding enquiries →</a>
     </div>
   </div>
@@ -771,6 +757,8 @@ svg                              { display: none !important; }
   </div>
 </footer>
 
+<div id="tweaks-root"></div>
+
 <script>
 var ABOUT_TWEAKS = /*EDITMODE-BEGIN*/{
   "accentScheme": "sage",
@@ -779,7 +767,84 @@ var ABOUT_TWEAKS = /*EDITMODE-BEGIN*/{
   "teamStyle": "card"
 }/*EDITMODE-END*/;
 </script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+function applyAboutTweaks(t) {
+  const root = document.documentElement;
+  const schemes = {
+    taupe: { accent:'#8b7355', accentDark:'#2c2420', accentLight:'#c8b89a', bg:'#faf8f4', bgAlt:'#f5f0e8' },
+    rose:  { accent:'#a05870', accentDark:'#2a1a1f', accentLight:'#c8a0a8', bg:'#fdf8f9', bgAlt:'#f5eff0' },
+    sage:  { accent:'#6b8870', accentDark:'#1e2a22', accentLight:'#a8c0aa', bg:'#f8faf8', bgAlt:'#eef3ee' },
+  };
+  const s = schemes[t.accentScheme] || schemes.taupe;
+  root.style.setProperty('--accent', s.accent);
+  root.style.setProperty('--accent-dark', s.accentDark);
+  root.style.setProperty('--accent-light', s.accentLight);
+  root.style.setProperty('--bg', s.bg);
+  root.style.setProperty('--bg-alt', s.bgAlt);
+
+  // Stats bar
+  const bar = document.getElementById('stats-bar');
+  if (bar) bar.style.display = t.showStats ? '' : 'none';
+
+  // Hero layout
+  const heroInner = document.querySelector('.page-hero-inner');
+  if (heroInner) {
+    heroInner.style.gridTemplateColumns = t.heroLayout === 'split' ? '1fr 1fr' : '1fr';
+    const heroImg = document.querySelector('.page-hero-img');
+    if (heroImg) heroImg.style.display = t.heroLayout === 'split' ? '' : 'none';
+  }
+
+  // Team style
+  document.querySelectorAll('.team-card').forEach(c => {
+    if (t.teamStyle === 'minimal') {
+      c.style.border = 'none';
+      c.style.background = 'transparent';
+      c.style.boxShadow = 'none';
+      const photo = c.querySelector('.team-photo');
+      if (photo) photo.style.borderRadius = '50%';
+    } else {
+      c.style.border = '';
+      c.style.background = '';
+      c.style.boxShadow = '';
+      const photo = c.querySelector('.team-photo');
+      if (photo) photo.style.borderRadius = '';
+    }
+  });
+}
+
+function AboutTweaksApp() {
+  const [tweaks, setTweak] = window.useTweaks(ABOUT_TWEAKS);
+  React.useEffect(() => { applyAboutTweaks(tweaks); }, [tweaks]);
+  return (
+    <window.TweaksPanel title="Tweaks">
+      <window.TweakSection label="Brand">
+        <window.TweakRadio id="accentScheme" label="Colour scheme"
+          options={[{value:'taupe',label:'Taupe'},{value:'rose',label:'Rose'},{value:'sage',label:'Sage'}]}
+          value={tweaks.accentScheme} onChange={v => setTweak('accentScheme', v)} />
+      </window.TweakSection>
+      <window.TweakSection label="Page">
+        <window.TweakToggle id="showStats" label="Show stats bar"
+          value={tweaks.showStats} onChange={v => setTweak('showStats', v)} />
+        <window.TweakRadio id="heroLayout" label="Hero layout"
+          options={[{value:'split',label:'Split'},{value:'text-only',label:'Text only'}]}
+          value={tweaks.heroLayout} onChange={v => setTweak('heroLayout', v)} />
+      </window.TweakSection>
+      <window.TweakSection label="Team">
+        <window.TweakRadio id="teamStyle" label="Card style"
+          options={[{value:'card',label:'Card'},{value:'minimal',label:'Minimal'}]}
+          value={tweaks.teamStyle} onChange={v => setTweak('teamStyle', v)} />
+      </window.TweakSection>
+    </window.TweaksPanel>
+  );
+}
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<AboutTweaksApp />);
+</script>
+
 <script>
+// Seasonal colour
+if (window.VaniaSeasons) window.VaniaSeasons.init();
+
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if(e.isIntersecting){ e.target.classList.add('in'); revealObserver.unobserve(e.target); }
@@ -793,36 +858,6 @@ setTimeout(() => {
     if(r.top < window.innerHeight) el.classList.add('in');
   });
 }, 50);
-</script>
-
-<!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
-<script type="module">
-  import { initSeasonalTheme, updateHeroCopy } from "./seasonalTheme.ts";
-  const current = initSeasonalTheme();
-  updateHeroCopy(current);
-</script>
-
-<!-- Cart badge sync -->
-<script>
-(function syncCartBadge(){
-  function update(){
-    const badge = document.getElementById('nav-cart-count');
-    if(!badge) return;
-    let count = 0;
-    try {
-      const raw = localStorage.getItem('vf_cart_v1');
-      if(raw){
-        const items = JSON.parse(raw);
-        if(Array.isArray(items)) count = items.reduce((a,i)=>a+(i.qty||1),0);
-      }
-    } catch(e){}
-    if(count > 0){ badge.textContent = String(count); badge.style.display = ''; }
-    else         { badge.style.display = 'none'; }
-  }
-  update();
-  window.addEventListener('cart:changed', update);
-  window.addEventListener('storage', e => { if(e.key === 'vf_cart_v1') update(); });
-})();
 </script>
 
 </body>

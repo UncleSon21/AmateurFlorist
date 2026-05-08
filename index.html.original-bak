@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vaniaflorist — Sydney's luxury florist. Handcrafted bouquets, wedding flowers, artificial & fresh arrangements. Same-day delivery across Sydney.">
+    <title>Vaniaflorist — Sydney Florist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/seasonal.css">
+    <style>
+    /* ══════════════════════════════════════════════════
+       HOMEPAGE PROFESSIONAL VERSION 5 — UX Enhancements
+       ══════════════════════════════════════════════════ */
+
+    /* ── Sticky CTA Button ── */
+    .sticky-cta {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 1000;
+        background: #8b7355;
+        color: white;
+        padding: 14px 28px;
+        border-radius: 2px;
+        text-decoration: none;
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        box-shadow: 0 8px 24px rgba(139,115,85,0.25);
+        transition: all 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+    }
+    .sticky-cta.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    .sticky-cta:hover {
+        background: #6d5a44;
+        box-shadow: 0 12px 32px rgba(139,115,85,0.35);
+    }
+    @media (max-width: 640px) {
+        .sticky-cta {
+            bottom: 16px;
+            right: 16px;
+            padding: 12px 20px;
+            font-size: 10px;
+        }
+    }
+
+    /* ── Shop by Occasion Section ── */
+    .shop-by-occasion {
+        padding: 100px 40px;
+        background: #faf8f4;
+    }
+    .shop-by-occasion .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .section-eyebrow {
+        text-align: center;
+        font-size: 9px;
+        font-weight: 400;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #c8b89a;
+        font-family: 'Inter', sans-serif;
+        margin-bottom: 12px;
+    }
+    .section-title {
+        text-align: center;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 2.2rem;
+        font-weight: 300;
+        color: #1e1a17;
+        margin-bottom: 60px;
+        line-height: 1.3;
+    }
+    .occasion-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 24px;
+    }
+    .occasion-card {
+        background: white;
+        border-radius: 2px;
+        overflow: hidden;
+        text-decoration: none;
+        transition: all 0.35s ease;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        border: 0.5px solid rgba(139,115,85,0.12);
+    }
+    .occasion-card:hover {
+        box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+        transform: translateY(-4px);
+        border-color: rgba(139,115,85,0.3);
+    }
+    .occasion-card-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #e8ddd0 0%, #d4c5a0 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        overflow: hidden;
+        position: relative;
+    }
+    .occasion-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .occasion-card-content {
+        padding: 24px;
+        text-align: center;
+    }
+    .occasion-card-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.3rem;
+        font-weight: 300;
+        color: #1e1a17;
+        margin-bottom: 8px;
+    }
+    .occasion-card-desc {
+        font-size: 12px;
+        color: #888;
+        line-height: 1.6;
+        margin-bottom: 16px;
+        font-weight: 300;
+    }
+    .occasion-card-cta {
+        display: inline-block;
+        padding: 10px 20px;
+        background: transparent;
+        border: 0.5px solid rgba(139,115,85,0.2);
+        border-radius: 2px;
+        color: #8b7355;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        font-family: 'Inter', sans-serif;
+    }
+    .occasion-card:hover .occasion-card-cta {
+        background: #2c2420;
+        border-color: #2c2420;
+        color: white;
+    }
+
+    /* ── Trust Badges Section ── */
+    .trust-badges {
+        padding: 40px 40px;
+        background: white;
+        border-top: 0.5px solid rgba(139,115,85,0.12);
+        border-bottom: 0.5px solid rgba(139,115,85,0.12);
+    }
+    .trust-badges .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 32px;
+        text-align: center;
+    }
+    .trust-badge-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    .trust-badge-icon {
+        font-size: 2rem;
+        color: #8b7355;
+    }
+    .trust-badge-text {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 20px;
+        color: #6b5d54;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+    }
+
+    /* ── Best Sellers Section ── */
+    .best-sellers {
+        padding: 100px 40px;
+        background: white;
+    }
+    .best-sellers .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .bestseller-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+    .bestseller-card {
+        position: relative;
+        border-radius: 2px;
+        overflow: hidden;
+        height: 280px;
+        text-decoration: none;
+        display: block;
+        transition: all 0.3s ease;
+        border: 0.5px solid rgba(139,115,85,0.12);
+    }
+    .bestseller-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+    .bestseller-card:hover img {
+        transform: scale(1.05);
+    }
+    .bestseller-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: #8b7355;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 2px;
+        font-size: 9px;
+        font-weight: 400;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: 'Inter', sans-serif;
+    }
+    .bestseller-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 40%, rgba(30,26,23,0.6) 100%);
+        display: flex;
+        align-items: flex-end;
+        padding: 20px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .bestseller-card:hover .bestseller-overlay {
+        opacity: 1;
+    }
+    .bestseller-name {
+        color: white;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.1rem;
+        font-weight: 300;
+    }
+
+    /* ── Testimonials Section ── */
+    .testimonials-section {
+        padding: 100px 40px;
+        background: #faf8f4;
+    }
+    .testimonials-section .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+    }
+    .testimonial-card {
+        background: white;
+        padding: 32px;
+        border-radius: 2px;
+        border: 0.5px solid rgba(139,115,85,0.12);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        transition: all 0.3s ease;
+    }
+    .testimonial-card:hover {
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        border-color: rgba(139,115,85,0.3);
+    }
+    .testimonial-stars {
+        color: #c8b89a;
+        font-size: 12px;
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+    }
+    .testimonial-text {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1rem;
+        font-style: italic;
+        font-weight: 300;
+        color: #2b2420;
+        line-height: 1.7;
+        margin-bottom: 16px;
+    }
+    .testimonial-author {
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        color: #888;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+    }
+
+    /* ── Loved by Sydney Section (Enhanced) ── */
+    .customer-love {
+        padding: 100px 40px;
+        background: white;
+    }
+    .customer-love .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .customer-love-eyebrow {
+        text-align: center;
+        font-size: 9px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #c8b89a;
+        font-family: 'Inter', sans-serif;
+        margin-bottom: 12px;
+        font-weight: 400;
+    }
+    .customer-love-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: center;
+    }
+    .customer-photo-wrap {
+        border-radius: 2px;
+        overflow: hidden;
+        aspect-ratio: 3/4;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        border: 0.5px solid rgba(139,115,85,0.12);
+    }
+    .customer-photo-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+        transition: transform 0.6s ease;
+    }
+    .customer-photo-wrap:hover img {
+        transform: scale(1.03);
+    }
+    .customer-love-text {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    .quote-mark {
+        margin-bottom: 20px;
+        flex-shrink: 0;
+    }
+    .customer-love-text blockquote {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.25rem;
+        font-style: italic;
+        font-weight: 300;
+        color: #2b2420;
+        line-height: 1.75;
+        margin: 0 0 28px 0;
+        padding: 0;
+        border: none;
+    }
+    .customer-love-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    .customer-stars {
+        color: #c8b89a;
+        font-size: 12px;
+        letter-spacing: 2px;
+        font-weight: 400;
+    }
+    .customer-name {
+        font-size: 12px;
+        color: #888;
+        font-family: 'Inter', sans-serif;
+        font-weight: 300;
+    }
+    @media (max-width: 760px) {
+        .customer-love-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        .customer-photo-wrap {
+            aspect-ratio: 4/3;
+        }
+    }
+
+    /* ── Fade in on scroll ── */
+    .fade-in-on-scroll {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* ── Learn More Button ── */
+    .learn-more-btn {
+        display: inline-block;
+        padding: 14px 36px;
+        border: 0.5px solid rgba(139,115,85,0.3);
+        color: #8b7355;
+        text-decoration: none;
+        font-size: 11px;
+        letter-spacing: 2px;
+        font-weight: 400;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+        font-family: 'Inter', sans-serif;
+        text-transform: uppercase;
+    }
+    .learn-more-btn:hover {
+        background: #2c2420;
+        border-color: #2c2420;
+        color: #faf8f4;
+    }
+
+    /* ── Marquee ── */
+    .marquee-wrap {
+        overflow: hidden;
+        background: #fff;
+        border-top: 0.5px solid rgba(139,115,85,0.12);
+        border-bottom: 0.5px solid rgba(139,115,85,0.12);
+    }
+    .marquee-inner {
+        display: flex;
+        animation: scroll-left 30s linear infinite;
+        white-space: nowrap;
+    }
+    .marquee-item {
+        padding: 16px 40px;
+        font-size: 18px;
+        color: #8b7355;
+        font-weight: 400;
+        letter-spacing: 1px;
+        flex-shrink: 0;
+    }
+    @keyframes scroll-left {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+
+    /* ── Trust Strip ── */
+    .trust-strip {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 0;
+        background: #f5f0e8;
+        border-top: 0.5px solid rgba(139,115,85,0.12);
+        border-bottom: 0.5px solid rgba(139,115,85,0.12);
+    }
+    .trust-item {
+        padding: 20px;
+        text-align: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        color: #6b5d54;
+        font-weight: 400;
+        letter-spacing: 1px;
+        border-right: 0.5px solid rgba(139,115,85,0.12);
+    }
+    .trust-item:last-child {
+        border-right: none;
+    }
+
+    /* ── About ── */
+    .about {
+        padding: 100px 40px;
+        background: white;
+    }
+    .about .container {
+        max-width: 720px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .about-text p {
+        font-size: 15px;
+        color: #6b5d54;
+        line-height: 1.8;
+        margin-bottom: 32px;
+        font-weight: 300;
+    }
+
+    /* ── Services ── */
+    .services {
+        padding: 100px 40px;
+        background: #faf8f4;
+    }
+    .services .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+    }
+    .service-card {
+        padding: 44px 32px;
+        border-radius: 2px;
+        border: 0.5px solid rgba(139,115,85,0.12);
+        text-align: center;
+        transition: all 0.35s ease;
+        background: white;
+    }
+    .service-card:hover {
+        border-color: rgba(139,115,85,0.3);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .service-card .service-icon {
+        width: 68px;
+        height: 68px;
+        margin: 0 auto 20px;
+        background: #faf8f4;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    .service-card:hover .service-icon {
+        background: #8b7355;
+    }
+    .service-card:hover .service-icon svg {
+        stroke: #fff;
+    }
+    .service-card h3 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.25rem;
+        font-weight: 300;
+        color: #1e1a17;
+        margin-bottom: 12px;
+    }
+    .service-card p {
+        font-size: 12px;
+        color: #888;
+        line-height: 1.7;
+        font-weight: 300;
+    }
+
+    /* ── Gallery ── */
+    .gallery {
+        padding: 100px 40px;
+        background: #faf8f4;
+    }
+    .gallery .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    .gallery-item {
+        position: relative;
+        border-radius: 2px;
+        overflow: hidden;
+        height: 280px;
+        text-decoration: none;
+        display: block;
+        border: 0.5px solid rgba(139,115,85,0.12);
+    }
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .gallery-item:hover img {
+        transform: scale(1.04);
+    }
+    .gallery-item .gallery-caption {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 45%, rgba(30,26,23,0.55) 100%);
+        display: flex;
+        align-items: flex-end;
+        padding: 28px;
+    }
+    .gallery-item .gallery-caption span {
+        color: #fff;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.1rem;
+        font-weight: 300;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    .gallery-item--cta {
+        background: linear-gradient(135deg, #2b241e 0%, #3d3228 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+    }
+    .gallery-item--cta:hover {
+        opacity: 0.9;
+    }
+    .gallery-cta {
+        text-align: center;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+    .gallery-cta-sub {
+        font-size: 9px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #c8b89a;
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+    }
+    .gallery-cta-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.3rem;
+        font-weight: 300;
+        color: #f5f0e8;
+        line-height: 1.3;
+    }
+    .gallery-cta-arrow {
+        font-size: 1.4rem;
+        color: #c8b89a;
+        transition: transform 0.3s ease;
+    }
+    .gallery-item--cta:hover .gallery-cta-arrow {
+        transform: translateX(6px);
+    }
+
+    /* ── Contact ── */
+    .contact {
+        padding: 100px 40px;
+        background: white;
+    }
+    .contact .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .contact-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+    }
+    .contact-info h3 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.6rem;
+        font-weight: 300;
+        color: #2c2420;
+        margin-bottom: 16px;
+    }
+    .contact-info p {
+        color: #6b5d54;
+        line-height: 1.8;
+        margin-bottom: 24px;
+        font-size: 14px;
+        font-weight: 300;
+    }
+    .postcode-wrap {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+    .postcode-wrap input {
+        padding: 14px 18px;
+        border: 0.5px solid rgba(139,115,85,0.15);
+        border-radius: 2px;
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        font-weight: 300;
+        width: 200px;
+        outline: none;
+        background: #fff;
+        transition: all 0.3s ease;
+    }
+    .postcode-wrap input:focus {
+        border-color: #8b7355;
+        box-shadow: 0 0 0 3px rgba(139,115,85,0.1);
+    }
+    .postcode-wrap button {
+        padding: 14px 28px;
+        background: #2c2420;
+        color: #faf8f4;
+        border: none;
+        border-radius: 2px;
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .postcode-wrap button:hover {
+        background: #8b7355;
+    }
+    .postcode-result {
+        font-size: 12px;
+        margin-top: 12px;
+        font-weight: 300;
+    }
+
+    /* ── Footer ── */
+    .footer {
+        background: #2c2420;
+        color: #faf8f4;
+        padding: 60px 40px 20px;
+    }
+    .footer .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+    .footer-section h3,
+    .footer-section h4 {
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 300;
+        margin-bottom: 16px;
+    }
+    .footer-section h3 {
+        font-size: 1.8rem;
+        font-family: 'Great Vibes', cursive;
+    }
+    .footer-section h4 {
+        font-size: 1rem;
+        color: #c8b89a;
+    }
+    .footer-section .footer-logo {
+        font-size: 40px;
+        color: #c8b89a;
+        line-height: 1.8;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        font-weight: 300;
+    }
+    .footer-section p,
+    .footer-section a {
+        font-size: 14px;
+        color: #c8b89a;
+        line-height: 1.8;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        font-weight: 300;
+    }
+    .footer-section a:hover {
+        color: #faf8f4;
+    }
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+    }
+    .footer-section li {
+        margin-bottom: 8px;
+    }
+    .social-links {
+        display: flex;
+        gap: 16px;
+    }
+    .footer-bottom {
+        border-top: 0.5px solid rgba(200,184,154,0.2);
+        padding-top: 20px;
+        text-align: center;
+        font-size: 11px;
+        color: #c8b89a;
+        font-weight: 300;
+    }
+
+    /* ── Hero ── */
+    .hero {
+        height: 85vh;
+        min-height: 520px;
+        max-height: 800px;
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 55% 45%;
+    }
+    .hero-photo {
+        position: relative;
+        overflow: hidden;
+    }
+    .hero-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center bottom;
+        filter: brightness(0.95) contrast(1.05);
+        display: block;
+    }
+    .hero-photo-fade {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(to right,
+            var(--hero-bg, #faf8f4) 0%,
+            transparent 10%
+        );
+    }
+    body.season-spring .hero-photo-fade { --hero-bg: #fdf0f5; }
+    body.season-summer .hero-photo-fade { --hero-bg: #f0f5ec; }
+    body.season-autumn .hero-photo-fade { --hero-bg: #fdf5ec; }
+    body.season-winter .hero-photo-fade { --hero-bg: #eef4fa; }
+
+    .hero-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: clamp(32px, 6vw, 120px);
+        padding-right: 48px;
+        z-index: 2;
+        max-width: 540px;
+    }
+    .hero-content h2 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 4.5rem;
+        font-weight: 300;
+        color: #1e1a17;
+        line-height: 1.08;
+        margin-bottom: 0;
+        letter-spacing: -1px;
+    }
+    .hero-content h2 em {
+        font-style: italic;
+        color: var(--s-accent, #c47028);
+    }
+    .hero-content > p {
+        font-size: 15px;
+        color: #6b5d54;
+        max-width: 400px;
+        margin-bottom: 0;
+        font-weight: 300;
+    }
+    .hero-buttons {
+        margin-top: 24px;
+    }
+    .hero-buttons .btn-primary,
+    .hero-buttons .btn-secondary {
+        display: inline-block;
+        text-decoration: none;
+        padding: 16px 36px;
+        font-size: 11px;
+        letter-spacing: 2px;
+        border-radius: 2px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+    }
+    .hero-buttons .btn-primary {
+        background: #8b7355;
+        color: #fff;
+        border: none;
+    }
+    .hero-buttons .btn-primary:hover {
+        background: #6d5a44;
+    }
+    .hero-buttons .btn-secondary {
+        background: transparent;
+        color: #8b7355;
+        border: 0.5px solid rgba(139,115,85,0.3);
+    }
+    .hero-buttons .btn-secondary:hover {
+        border-color: #8b7355;
+        background: rgba(139,115,85,0.04);
+    }
+
+    .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        font-family: 'Inter', sans-serif;
+        font-size: 9px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #8b7355;
+        margin: 0 0 16px 0;
+        padding: 0;
+        font-weight: 400;
+    }
+    .hero-eyebrow-dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: #c8b89a;
+        display: inline-block;
+        flex-shrink: 0;
+    }
+
+    .hero-divider {
+        display: block;
+        width: 48px;
+        height: 0.5px;
+        background: linear-gradient(90deg, #c8b89a 0%, transparent 100%);
+        border: none;
+        margin: 16px 0 16px 0;
+    }
+
+    .hero-trust {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 14px;
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        letter-spacing: 1px;
+        color: #a89880;
+        flex-wrap: wrap;
+        line-height: 1;
+        font-weight: 300;
+    }
+    .hero-trust-dot {
+        font-size: 8px;
+        color: #c8b89a;
+        line-height: 1;
+    }
+
+    .hero-review {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 0.5px solid rgba(139,115,85,0.15);
+    }
+    .hero-review-stars {
+        color: #c8b89a;
+        font-size: 11px;
+        letter-spacing: 2px;
+        flex-shrink: 0;
+        line-height: 1;
+        font-weight: 400;
+    }
+    .hero-review-sep {
+        width: 0.5px;
+        height: 24px;
+        background: rgba(139,115,85,0.2);
+        flex-shrink: 0;
+    }
+    .hero-review-text {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 12px;
+        font-style: italic;
+        color: #7a6a5a;
+        line-height: 1.5;
+        font-weight: 300;
+    }
+
+    @media (max-width: 860px) {
+        .hero { grid-template-columns: 1fr; }
+        .hero-content { max-width: 100%; padding-right: 32px; }
+    }
+    @media (max-width: 560px) {
+        .hero-content { padding-left: 20px; padding-right: 20px; max-width: calc(100vw - 40px); }
+        .hero-content h2 { font-size: 2.8rem; }
+    }
+    @media (max-width: 480px) {
+        .hero-content h2 { font-size: 2.2rem; }
+    }
+
+    /* ── Petals canvas ── */
+    #petals-canvas {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 8888;
+    }
+    </style>
+</head>
+<body>
+
+    <canvas id="petals-canvas" aria-hidden="true"></canvas>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        Free delivery across Sydney on orders over $80 — <a href="shop.html">Shop now</a>
+    </div>
+
+    <!-- Nav -->
+    <header class="navbar" id="navbar">
+        <div id="nav-branch-left" class="nav-branch nav-branch--left" aria-hidden="true"></div>
+        <div id="nav-branch-right" class="nav-branch nav-branch--right" aria-hidden="true"></div>
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="dropdown-container">
+                    <button class="nav-dropdown">Shop <span class="arrow">&#8964;</span></button>
+                    <div class="dropdown-menu">
+                        <a href="shop.html" class="dropdown-item">All Flowers</a>
+                        <a href="shop.html#living" class="dropdown-item">The Living Collection</a>
+                        <a href="shop.html#forever" class="dropdown-item">The Forever Collection</a>
+                        <a href="shop.html#ceremony" class="dropdown-item">The Ceremony Collection</a>
+                    </div>
+                </div>
+                <a href="occasions.html" class="text-link">Occasions</a>
+                <a href="weddings.html" class="text-link">Weddings</a>
+            </div>
+            <div class="logo">
+                <a href="index.html">
+                    <h1 class="logo-title">Vaniaflorist</h1>
+                    <p class="logo-subtitle">Sydney Florist</p>
+                </a>
+            </div>
+            <div class="nav-right">
+                <button class="nav-icon" id="searchButton" aria-label="Search">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                </button>
+                <a href="wishlist.html" class="nav-icon" aria-label="Wishlist">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </a>
+                <a href="cart.html" class="nav-icon cart-icon" aria-label="Cart">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <span class="cart-count" id="nav-cart-count" style="display:none">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-content">
+            <button class="search-close" id="searchClose" aria-label="Close">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <div class="search-header">
+                <h2>Find your arrangement</h2>
+                <p>Search by occasion, flower type, or colour</p>
+            </div>
+            <div class="search-input-wrap">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="text" id="searchInput" placeholder="e.g. pink roses, wedding, birthday…" autocomplete="off">
+                <button class="search-submit-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+            </div>
+            <div class="search-cats">
+                <h4>Collections</h4>
+                <div class="search-cat-grid">
+                    <a href="shop.html#living" class="search-cat-card"><span class="cat-name">Living</span><span class="cat-sub">Fresh seasonal</span></a>
+                    <a href="shop.html#forever" class="search-cat-card"><span class="cat-name">Forever</span><span class="cat-sub">Artificial & preserved</span></a>
+                    <a href="weddings.html" class="search-cat-card"><span class="cat-name">Ceremony</span><span class="cat-sub">Wedding flowers</span></a>
+                    <a href="shop.html?category=birthday" class="search-cat-card"><span class="cat-name">Birthday</span><span class="cat-sub">Celebratory bouquets</span></a>
+                    <a href="shop.html?category=sympathy" class="search-cat-card"><span class="cat-name">Sympathy</span><span class="cat-sub">Thoughtful tributes</span></a>
+                    <a href="shop.html?category=seasonal" class="search-cat-card"><span class="cat-name">Seasonal</span><span class="cat-sub">What's blooming now</span></a>
+                </div>
+            </div>
+            <div class="search-tags">
+                <h4>Popular searches</h4>
+                <div class="search-tags-wrap">
+                    <a href="shop.html?q=pink+roses" class="search-tag">Pink roses</a>
+                    <a href="shop.html?q=white+bouquet" class="search-tag">White bouquet</a>
+                    <a href="shop.html?q=birthday" class="search-tag">Birthday</a>
+                    <a href="shop.html?q=anniversary" class="search-tag">Anniversary</a>
+                    <a href="shop.html?q=tulips" class="search-tag">Tulips</a>
+                    <a href="shop.html?q=same-day" class="search-tag">Same-day</a>
+                </div>
+            </div>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Sticky CTA Button -->
+    <a href="shop.html" class="sticky-cta" id="stickyCTA">Shop Now</a>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="hero-photo" aria-hidden="true">
+            <img src="images/gallery/flowers-market.jpg" alt="Seasonal bouquet arrangement" loading="eager">
+            <div class="hero-photo-fade"></div>
+        </div>
+        <div class="hero-content">
+            <p class="hero-eyebrow">
+                <span class="hero-eyebrow-dot"></span>
+                <span id="hero-eyebrow-text">Spring collection 2026</span>
+                <span class="hero-eyebrow-dot"></span>
+            </p>
+            <h2 class="hero-title" id="hero-headline">Where every<br>petal <em id="hero-word">blooms</em></h2>
+            <hr class="hero-divider">
+            <p class="hero-sub" id="hero-subtitle">Fresh beginnings &amp; blush beauty</p>
+            <p class="hero-price" style="font-size: 14px; color: #6b5d54; margin-top: 12px; font-weight: 300;">Arrangements from $65</p>
+            <div class="hero-buttons">
+                <a href="shop.html" class="btn-primary" id="hero-cta-primary">Explore the collection</a>
+                <a href="weddings.html" class="btn-secondary">View weddings →</a>
+            </div>
+            <p class="hero-trust">
+                5★ rated
+                <span class="hero-trust-dot">·</span>
+                Sydney-wide delivery
+                <span class="hero-trust-dot">·</span>
+                Same-day available
+            </p>
+            <div class="hero-review">
+                <span class="hero-review-stars">★★★★★</span>
+                <span class="hero-review-sep"></span>
+                <span class="hero-review-text">"Even more beautiful in person" — Leidine, Sydney</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges Section -->
+    <div class="trust-badges">
+        <div class="container">
+            <div class="trust-badge-item">
+                <div class="trust-badge-icon">✓</div>
+                <div class="trust-badge-text">100% Secure Checkout</div>
+            </div>
+            <div class="trust-badge-item">
+                <div class="trust-badge-icon">★</div>
+                <div class="trust-badge-text">5-Star Rated</div>
+            </div>
+            <div class="trust-badge-item">
+                <div class="trust-badge-icon">→</div>
+                <div class="trust-badge-text">Same-Day Delivery</div>
+            </div>
+            <div class="trust-badge-item">
+                <div class="trust-badge-icon">◆</div>
+                <div class="trust-badge-text">Handcrafted Daily</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Marquee -->
+    <div class="marquee-wrap">
+        <div class="marquee-inner">
+            <span class="marquee-item">Same-day delivery</span>
+            <span class="marquee-item">Handcrafted bouquets</span>
+            <span class="marquee-item">Wedding specialists</span>
+            <span class="marquee-item">Fresh & artificial</span>
+            <span class="marquee-item">Sydney's premier florist</span>
+            <span class="marquee-item">Same-day delivery</span>
+            <span class="marquee-item">Handcrafted bouquets</span>
+            <span class="marquee-item">Wedding specialists</span>
+            <span class="marquee-item">Fresh & artificial</span>
+            <span class="marquee-item">Sydney's premier florist</span>
+        </div>
+    </div>
+
+    <!-- Shop by Occasion Section -->
+    <section class="shop-by-occasion fade-in-on-scroll">
+        <div class="container">
+            <p class="section-eyebrow">Shop by Occasion</p>
+            <h2 class="section-title">Find the perfect bouquet for any moment</h2>
+            <div class="occasion-grid">
+                <a href="shop.html?occasion=birthday" class="occasion-card fade-in-on-scroll">
+                    <div class="occasion-card-image">
+                        <img src="images/gallery/bouquet-pink-roses.jpg" alt="Birthday bouquet">
+                    </div>
+                    <div class="occasion-card-content">
+                        <h3 class="occasion-card-title">Birthday</h3>
+                        <p class="occasion-card-desc">Celebratory bouquets to brighten their special day</p>
+                        <span class="occasion-card-cta">Shop Birthday</span>
+                    </div>
+                </a>
+                <a href="shop.html?occasion=anniversary" class="occasion-card fade-in-on-scroll">
+                    <div class="occasion-card-image">
+                        <img src="images/gallery/bouquet-pink-tulip.jpg" alt="Anniversary bouquet">
+                    </div>
+                    <div class="occasion-card-content">
+                        <h3 class="occasion-card-title">Anniversary</h3>
+                        <p class="occasion-card-desc">Romantic arrangements to celebrate your love</p>
+                        <span class="occasion-card-cta">Shop Anniversary</span>
+                    </div>
+                </a>
+                <a href="shop.html?occasion=sympathy" class="occasion-card fade-in-on-scroll">
+                    <div class="occasion-card-image">
+                        <img src="images/gallery/bouquet-white.jpg" alt="Sympathy arrangement">
+                    </div>
+                    <div class="occasion-card-content">
+                        <h3 class="occasion-card-title">Sympathy</h3>
+                        <p class="occasion-card-desc">Thoughtful tributes to honor cherished memories</p>
+                        <span class="occasion-card-cta">Shop Sympathy</span>
+                    </div>
+                </a>
+                <a href="shop.html?occasion=new-baby" class="occasion-card fade-in-on-scroll">
+                    <div class="occasion-card-image">
+                        <img src="images/gallery/flowers-market.jpg" alt="New baby arrangement">
+                    </div>
+                    <div class="occasion-card-content">
+                        <h3 class="occasion-card-title">New Baby</h3>
+                        <p class="occasion-card-desc">Delicate arrangements to welcome new life</p>
+                        <span class="occasion-card-cta">Shop New Baby</span>
+                    </div>
+                </a>
+                <a href="shop.html?occasion=congratulations" class="occasion-card fade-in-on-scroll">
+                    <div class="occasion-card-image">
+                        <img src="images/gallery/bouquet-workshop.jpg" alt="Congratulations bouquet">
+                    </div>
+                    <div class="occasion-card-content">
+                        <h3 class="occasion-card-title">Congratulations</h3>
+                        <p class="occasion-card-desc">Vibrant bouquets to celebrate achievements</p>
+                        <span class="occasion-card-cta">Shop Congratulations</span>
+                    </div>
+                </a>
+                <a href="shop.html?occasion=thank-you" class="occasion-card fade-in-on-scroll">
+                    <div class="occasion-card-image">
+                        <img src="images/gallery/bouquet-pink-roses.jpg" alt="Thank you arrangement">
+                    </div>
+                    <div class="occasion-card-content">
+                        <h3 class="occasion-card-title">Thank You</h3>
+                        <p class="occasion-card-desc">Express gratitude with elegant flowers</p>
+                        <span class="occasion-card-cta">Shop Thank You</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers Section -->
+    <section class="best-sellers fade-in-on-scroll">
+        <div class="container">
+            <p class="section-eyebrow">Customer Favorites</p>
+            <h2 class="section-title">Our Best-Selling Arrangements</h2>
+            <div class="bestseller-grid">
+                <a href="shop.html#bestseller-1" class="bestseller-card fade-in-on-scroll">
+                    <img src="images/gallery/bouquet-pink-roses.jpg" alt="Blush Romance Bouquet">
+                    <span class="bestseller-badge">Best Seller</span>
+                    <div class="bestseller-overlay">
+                        <div class="bestseller-name">Blush Romance</div>
+                    </div>
+                </a>
+                <a href="shop.html#bestseller-2" class="bestseller-card fade-in-on-scroll">
+                    <img src="images/gallery/bouquet-white.jpg" alt="Elegant White Orchids">
+                    <span class="bestseller-badge">Best Seller</span>
+                    <div class="bestseller-overlay">
+                        <div class="bestseller-name">Elegant White</div>
+                    </div>
+                </a>
+                <a href="shop.html#bestseller-3" class="bestseller-card fade-in-on-scroll">
+                    <img src="images/gallery/bouquet-pink-tulip.jpg" alt="Spring Tulip Mix">
+                    <span class="bestseller-badge">Best Seller</span>
+                    <div class="bestseller-overlay">
+                        <div class="bestseller-name">Spring Tulips</div>
+                    </div>
+                </a>
+                <a href="shop.html#bestseller-4" class="bestseller-card fade-in-on-scroll">
+                    <img src="images/gallery/flowers-market.jpg" alt="Market Fresh Mix">
+                    <span class="bestseller-badge">Best Seller</span>
+                    <div class="bestseller-overlay">
+                        <div class="bestseller-name">Market Fresh</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loved by Sydney — Unified Section -->
+    <section class="testimonials-section fade-in-on-scroll">
+        <div class="container">
+            <p class="section-eyebrow">Real Moments</p>
+            <h2 class="section-title">Loved by Sydney</h2>
+
+            <!-- Three review cards -->
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in-on-scroll">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Absolutely stunning. I couldn't believe how beautiful the bouquet was — it was even better in person. Will definitely be ordering again for every special occasion."</p>
+                    <div class="testimonial-author">— Leidine, Sydney</div>
+                </div>
+                <div class="testimonial-card fade-in-on-scroll">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Same-day delivery was a lifesaver. The flowers arrived fresh and beautifully arranged. Highly recommended for last-minute gifts and special moments."</p>
+                    <div class="testimonial-author">— Marcus, Bondi</div>
+                </div>
+                <div class="testimonial-card fade-in-on-scroll">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"The wedding florals were absolutely exquisite. Every detail was perfect, and our guests couldn't stop complimenting the arrangements throughout the celebration."</p>
+                    <div class="testimonial-author">— Sarah & James, Sydney</div>
+                </div>
+            </div>
+
+            <!-- Customer photo + featured quote -->
+            <div class="customer-love-grid fade-in-on-scroll" style="margin-top: 72px;">
+                <div class="customer-photo-wrap">
+                    <img src="images/gallery/customer-Leidine.jpg" alt="Happy customer with bouquet from Vaniaflorist">
+                </div>
+                <div class="customer-love-text">
+                    <svg class="quote-mark" width="48" height="36" viewBox="0 0 48 36" fill="none"><path d="M0 36V22.5C0 15.9 2.1 10.5 6.3 6.3C10.5 2.1 16.2 0 23.4 0V6C19.8 6 16.95 7.05 14.85 9.15C12.75 11.25 11.7 14.1 11.7 17.7H21.6V36H0ZM26.4 36V22.5C26.4 15.9 28.5 10.5 32.7 6.3C36.9 2.1 42.6 0 49.8 0V6C46.2 6 43.35 7.05 41.25 9.15C39.15 11.25 38.1 14.1 38.1 17.7H48V36H26.4Z" fill="#e8ddd0"/></svg>
+                    <blockquote>Absolutely stunning. I couldn't believe how beautiful the bouquet was — it was even better in person. Will definitely be ordering again for every special occasion.</blockquote>
+                    <div class="customer-love-meta">
+                        <div class="customer-stars">★★★★★</div>
+                        <span class="customer-name">— Leidine, Sydney</span>
+                    </div>
+                    <a href="shop.html" class="learn-more-btn" style="margin-top:32px;display:inline-block;">Shop now</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="about fade-in-on-scroll">
+        <div class="container">
+            <p class="section-eyebrow">Our story</p>
+            <h2 class="section-title">Welcome to Vaniaflorist —<br>where passion meets petals.</h2>
+            <div class="about-text">
+                <p>Crafted for those who appreciate elegance, our floral arrangements are thoughtfully designed with charm and care, bringing beauty to your doorstep across Sydney.</p>
+                <a href="about.html" class="learn-more-btn">Our story</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collections -->
+    <section id="services" class="services fade-in-on-scroll">
+        <div class="container">
+            <p class="section-eyebrow">What we offer</p>
+            <h2 class="section-title">Three collections, one vision</h2>
+        </div>
+        <div class="services-grid" style="padding: 0 40px;">
+            <div class="service-card fade-in-on-scroll">
+                <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
+                <h3>The Living Collection</h3>
+                <p>Fresh seasonal flowers, handcrafted and delivered the same day across Sydney.</p>
+                <a href="shop.html#living" class="learn-more-btn">Shop fresh</a>
+            </div>
+            <div class="service-card fade-in-on-scroll">
+                <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12M12 12C12 7 8 3 3 3c0 5 4 9 9 9zM12 12c0-5 4-9 9-9-1 5-4 9-9 9z"/></svg></div>
+                <h3>The Forever Collection</h3>
+                <p>Preserved & artificial flowers that last a lifetime. Ships anywhere in Australia.</p>
+                <a href="shop.html#forever" class="learn-more-btn">Shop forever</a>
+            </div>
+            <div class="service-card fade-in-on-scroll">
+                <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+                <h3>The Ceremony Collection</h3>
+                <p>Wedding flowers by appointment. Fresh, preserved, or both. Tailored to your vision.</p>
+                <a href="weddings.html" class="learn-more-btn">Enquire</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="gallery fade-in-on-scroll">
+        <div class="container">
+            <p class="section-eyebrow">Our Creations</p>
+            <h2 class="section-title">A glimpse into our world</h2>
+            <div class="gallery-grid">
+                <a href="shop.html" class="gallery-item fade-in-on-scroll"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Pink tulip bouquet" loading="lazy"><div class="gallery-caption"><span>Pink tulips</span></div></a>
+                <a href="shop.html" class="gallery-item fade-in-on-scroll"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Blush pink roses" loading="lazy"><div class="gallery-caption"><span>Blush roses</span></div></a>
+                <a href="shop.html" class="gallery-item fade-in-on-scroll"><img src="images/gallery/bouquet-workshop.jpg" alt="Fresh arrangement" loading="lazy"><div class="gallery-caption"><span>Fresh flowers</span></div></a>
+                <a href="shop.html" class="gallery-item fade-in-on-scroll"><img src="images/gallery/bouquet-white.jpg" alt="White orchid bouquet" loading="lazy"><div class="gallery-caption"><span>White orchids</span></div></a>
+                <a href="shop.html" class="gallery-item fade-in-on-scroll"><img src="images/gallery/flowers-market.jpg" alt="Flower market" loading="lazy"><div class="gallery-caption"><span>Market blooms</span></div></a>
+                <a href="shop.html" class="gallery-item gallery-item--cta fade-in-on-scroll">
+                    <div class="gallery-cta">
+                        <span class="gallery-cta-sub">Ready to order?</span>
+                        <span class="gallery-cta-title">Shop the full collection</span>
+                        <span class="gallery-cta-arrow">→</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Strip -->
+    <div class="trust-strip">
+        <div class="trust-item">Fresh & Artificial</div>
+        <div class="trust-item">Wedding Specialists</div>
+        <div class="trust-item">Sydney-wide Delivery</div>
+        <div class="trust-item">Handcrafted Daily</div>
+    </div>
+
+    <!-- Delivery -->
+    <section id="delivery" class="contact fade-in-on-scroll">
+        <div class="container">
+            <p class="section-eyebrow">Delivery</p>
+            <h2 class="section-title">We deliver across Greater Sydney</h2>
+            <div class="contact-content">
+                <div class="contact-info fade-in-on-scroll">
+                    <h3>Check your postcode</h3>
+                    <p>Orders over $80 include free delivery. Same-day available for orders placed before 2 PM.</p>
+                    <div class="postcode-wrap">
+                        <input type="text" placeholder="Enter your postcode" maxlength="4" id="postcodeInput">
+                        <button id="postcodeBtn">Check</button>
+                    </div>
+                    <p id="postcodeResult" class="postcode-result"></p>
+                </div>
+                <div class="contact-info fade-in-on-scroll" style="display:flex;align-items:center;justify-content:center;">
+                    <div style="text-align:center;">
+                        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:1.3rem;color:#6b5d54;line-height:1.7;margin-bottom:16px;">Questions? We'd love to hear from you.</p>
+                        <a href="/cdn-cgi/l/email-protection#452d2029292a0533242b2c2423292a372c36316b262a286b2430" class="learn-more-btn"><span class="__cf_email__" data-cfemail="c2aaa7aeaead82b4a3acaba3a4aeadb0abb1b6eca1adafeca3b7">[email&#160;protected]</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <p class="footer-logo">Vaniaflorist</p>
+                    <p class="footer-tagline">Creating beautiful moments with nature's finest blooms in Sydney.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Collections</h4>
+                    <ul>
+                        <li><a href="shop.html?collection=living">The Living Collection</a></li>
+                        <li><a href="shop.html?collection=forever">The Forever Collection</a></li>
+                        <li><a href="weddings.html">The Ceremony Collection</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" rel="noopener">Instagram</a>
+                        <a href="#" rel="noopener">Facebook</a>
+                        <a href="#" rel="noopener">Pinterest</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="footer-year"></span> Vaniaflorist. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // ── Scroll reveal ──
+        const revealObserver = new IntersectionObserver(
+            entries => entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    revealObserver.unobserve(e.target);
+                }
+            }),
+            { threshold: 0.12 }
+        );
+        document.querySelectorAll('.fade-in-on-scroll').forEach(el => revealObserver.observe(el));
+
+        // ── Footer year ──
+        const fy = document.getElementById('footer-year');
+        if (fy) fy.textContent = new Date().getFullYear();
+
+        // ── Navbar scroll ──
+        const navbar = document.getElementById('navbar');
+        if (navbar) {
+            window.addEventListener('scroll', () => {
+                navbar.classList.toggle('scrolled', window.scrollY > 50);
+            }, { passive: true });
+        }
+
+        // ── Sticky CTA Button ──
+        const stickyCTA = document.getElementById('stickyCTA');
+        if (stickyCTA) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 500) {
+                    stickyCTA.classList.add('visible');
+                } else {
+                    stickyCTA.classList.remove('visible');
+                }
+            }, { passive: true });
+        }
+
+        // ── Search overlay ──
+        const searchBtn = document.getElementById('searchButton');
+        const searchOverlay = document.getElementById('searchOverlay');
+        const searchClose = document.getElementById('searchClose');
+        const searchInput = document.getElementById('searchInput');
+        if (searchBtn && searchOverlay) {
+            searchBtn.addEventListener('click', () => {
+                searchOverlay.classList.add('active');
+                setTimeout(() => searchInput && searchInput.focus(), 300);
+            });
+            searchClose && searchClose.addEventListener('click', () => searchOverlay.classList.remove('active'));
+            searchOverlay.addEventListener('click', e => { if (e.target === searchOverlay) searchOverlay.classList.remove('active'); });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') searchOverlay.classList.remove('active'); });
+        }
+
+        // ── Cart count ──
+        try {
+            const cartEl = document.getElementById('nav-cart-count');
+            if (cartEl) {
+                const cart = JSON.parse(localStorage.getItem('vaniaflorist_cart') || '[]');
+                const total = cart.reduce((s, i) => s + (i.quantity || 1), 0);
+                if (total > 0) { cartEl.textContent = total; cartEl.style.display = 'flex'; }
+            }
+        } catch(e) {}
+
+        // ── Postcode checker ──
+        const postcodeBtn = document.getElementById('postcodeBtn');
+        const postcodeInput = document.getElementById('postcodeInput');
+        const postcodeResult = document.getElementById('postcodeResult');
+        const sydneyPostcodes = ['2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027','2028','2029','2030','2031','2032','2033','2034','2035','2036','2037','2038','2039','2040','2041','2042','2043','2044','2045','2046','2047','2048','2049','2050','2060','2061','2062','2063','2064','2065','2066','2067','2068','2069','2070','2071','2072','2073','2074','2075','2076','2077','2079','2080','2081','2082','2083','2084','2085','2086','2087','2088','2089','2090','2092','2093','2094','2095','2096','2097','2099','2100','2101','2102','2103','2104','2105','2106','2107','2108','2110','2111','2112','2113','2114','2115','2116','2117','2118','2119','2120','2121','2122','2125','2126','2127','2128','2130','2131','2132','2133','2134','2135','2136','2137','2138','2140','2141','2142','2143','2144','2145','2146','2147','2148','2150','2151','2152','2153','2154','2155','2156','2157','2158','2159','2160','2161','2162','2163','2164','2165','2166','2167','2168','2170','2171','2172','2173','2174','2175','2176','2177','2178','2179','2190','2191','2192','2193','2194','2195','2196','2197','2198','2199','2200','2203','2204','2205','2206','2207','2208','2209','2210','2211','2212','2213','2214','2216','2217','2218','2219','2220','2221','2222','2223','2224','2225','2226','2227','2228','2229','2230','2231','2232','2233','2234'];
+        if (postcodeBtn && postcodeInput && postcodeResult) {
+            postcodeBtn.addEventListener('click', () => {
+                const pc = postcodeInput.value.trim();
+                if (!pc) return;
+                postcodeResult.textContent = sydneyPostcodes.includes(pc)
+                    ? '✓ We deliver to ' + pc + '. Free delivery on orders over $80.'
+                    : 'We don\'t currently deliver to ' + pc + '. Contact us for options.';
+                postcodeResult.style.color = sydneyPostcodes.includes(pc) ? '#4a8a32' : '#c47028';
+            });
+            postcodeInput.addEventListener('keydown', e => { if (e.key === 'Enter') postcodeBtn.click(); });
+        }
+    </script>
+    <script type="module">
+        import { initSeasonalTheme,updateHeroCopy } from "./seasonalTheme.ts";
+        var current = initSeasonalTheme();
+        updateHeroCopy(current);
+    </script>
+
+</body>
+</html>

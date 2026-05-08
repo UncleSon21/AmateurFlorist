@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse our collection of handcrafted floral arrangements – Vaniaflorist Sydney Florist">
+    <title>Shop – Vaniaflorist Sydney Florist</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/shop-styles.css">
+    <link rel="stylesheet" href="styles/seasonal.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="top-bar">
+        <p>Free Delivery on Orders Over $50 &nbsp;·&nbsp; Same-Day Delivery Available in Sydney</p>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="text-link">Home</a>
+                <a href="shop.html"  class="text-link active">Shop</a>
+                <a href="about.html" class="text-link">About</a>
+                <a href="index.html#contact" class="text-link">Contact</a>
+            </div>
+            <div class="logo">
+                <a href="index.html">
+                    <h1 class="logo-title">Vaniaflorist</h1>
+                    <p class="logo-subtitle">Sydney Florist</p>
+                </a>
+            </div>
+            <div class="nav-right">
+                <a href="cart.html" class="nav-icon cart-icon" aria-label="Shopping Cart" style="text-decoration:none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="cart-count" id="nav-cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="shop-hero">
+        <p class="shop-hero-eyebrow">Sydney's Finest Florals</p>
+        <h1>Our Collection</h1>
+        <p>Handcrafted arrangements for every occasion, delivered fresh to your door</p>
+    </section>
+
+    <div class="shop-filterbar">
+        <div class="shop-filterbar-inner">
+            <div class="filter-search-wrap">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="text" id="searchInput" placeholder="Search flowers…" autocomplete="off">
+            </div>
+            <div class="filter-divider"></div>
+            <div class="material-pills">
+                <button class="material-pill active" data-material="all">All</button>
+                <button class="material-pill" data-material="fresh">Fresh</button>
+                <button class="material-pill" data-material="artificial">Artificial</button>
+            </div>
+            <div class="filter-divider"></div>
+            <div class="filter-category-wrap">
+                <select id="categorySelect"><option value="all">All Categories</option></select>
+            </div>
+            <div class="filter-results" id="resultsCount"></div>
+        </div>
+    </div>
+
+    <section class="shop-content">
+        <div class="container">
+            <div id="productsGrid">
+                <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line price"></div></div></div>
+                <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line price"></div></div></div>
+                <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line price"></div></div></div>
+                <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line price"></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <script type="module" src="src/scripts/shop_page_db.ts"></script>
+    <script type="module">
+        import { initSeasonalTheme } from "./seasonalTheme.ts";
+        initSeasonalTheme();
+    </script>
+
+</body>
+</html>

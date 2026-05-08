@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="season.js"></script>
 <style>
 :root {
   --accent:      #8b7355;
@@ -205,40 +206,22 @@ button{cursor:pointer;font-family:inherit}
 @media(max-width:900px){.cart-layout{grid-template-columns:1fr}.summary-panel{position:static}}
 @media(max-width:768px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.container{padding:0 20px}}
 @media(max-width:600px){.cart-item{grid-template-columns:70px 1fr}.item-right{grid-column:2;flex-direction:row;align-items:center;justify-content:space-between}.item-img{width:70px;height:70px;grid-row:1/3}.cart-title{font-size:2.2rem}}
-
-/* ── Seasonal theme overlays (populated by seasonalTheme.ts) ── */
-#petals-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:8888}
-@media(prefers-reduced-motion:reduce){ #petals-canvas{display:none} }
-#season-side-left,#season-side-right{position:fixed;top:0;width:110px;height:100vh;pointer-events:none;z-index:1;overflow:hidden;opacity:.65}
-#season-side-left{left:0} #season-side-right{right:0}
-@media(max-width:1280px){ #season-side-left,#season-side-right{display:none} }
-.nav-branch{position:absolute;top:0;width:190px;height:64px;pointer-events:none;opacity:.55;z-index:0}
-.nav-branch--left{left:0} .nav-branch--right{right:0;transform:scaleX(-1)}
-@media(max-width:900px){ .nav-branch{display:none} }
-.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
-
-/* ── DEV TOGGLE: hide decorative SVGs + seasonal animations (keep nav icons) ── */
-svg                              { display: none !important; }
-.nav-icon-btn svg, .vs-close svg { display: inline-block !important; }
-#petals-canvas                   { display: none !important; }
-#season-side-left,#season-side-right,.nav-branch { display: none !important; }
-
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  Free delivery across Sydney on orders over $80 — <a href="shop.html">Shop now</a>
+  Free delivery across Sydney on orders over $80 — <a href="shop-redesign.html">Shop now</a>
 </div>
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="shop.html" class="back-link">
+    <a href="shop-redesign.html" class="back-link">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       Continue shopping
     </a>
     <div class="logo">
-      <a href="index.html">
+      <a href="Vaniaflorist Redesign.html">
         <span class="logo-name">Vaniaflorist</span>
         <span class="logo-sub">Sydney Florist</span>
       </a>
@@ -274,7 +257,7 @@ svg                              { display: none !important; }
           </div>
           <h3>Your cart is empty</h3>
           <p>Add some beautiful flowers to get started.</p>
-          <a href="shop.html" class="btn-shop">Browse the shop →</a>
+          <a href="shop-redesign.html" class="btn-shop">Browse the shop →</a>
         </div>
 
         <div id="cartList"></div>
@@ -302,7 +285,7 @@ svg                              { display: none !important; }
           </div>
 
           <a href="checkout.html" class="btn-checkout disabled" id="checkoutBtn">Proceed to Checkout</a>
-          <a href="shop.html" class="btn-continue">Continue Shopping</a>
+          <a href="shop-redesign.html" class="btn-continue">Continue Shopping</a>
 
           <div class="summary-trust">
             <div class="trust-item">
@@ -331,6 +314,7 @@ svg                              { display: none !important; }
 <script>
 // Auto seasonal colour
 window.addEventListener('DOMContentLoaded', () => {
+  if (window.VaniaSeasons) window.VaniaSeasons.init();
 });
 
 // Mock cart data — replace with Supabase fetch
@@ -429,36 +413,6 @@ function removeItem(id) {
 
 // Simulate loading
 setTimeout(renderCart, 600);
-</script>
-
-<!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
-<script type="module">
-  import { initSeasonalTheme, updateHeroCopy } from "./seasonalTheme.ts";
-  const current = initSeasonalTheme();
-  updateHeroCopy(current);
-</script>
-
-<!-- Cart badge sync -->
-<script>
-(function syncCartBadge(){
-  function update(){
-    const badge = document.getElementById('nav-cart-count');
-    if(!badge) return;
-    let count = 0;
-    try {
-      const raw = localStorage.getItem('vf_cart_v1');
-      if(raw){
-        const items = JSON.parse(raw);
-        if(Array.isArray(items)) count = items.reduce((a,i)=>a+(i.qty||1),0);
-      }
-    } catch(e){}
-    if(count > 0){ badge.textContent = String(count); badge.style.display = ''; }
-    else         { badge.style.display = 'none'; }
-  }
-  update();
-  window.addEventListener('cart:changed', update);
-  window.addEventListener('storage', e => { if(e.key === 'vf_cart_v1') update(); });
-})();
 </script>
 
 </body>

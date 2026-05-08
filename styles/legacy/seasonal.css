@@ -1,0 +1,583 @@
+/* seasonal.css — Vaniaflorist — Complete theming for every element */
+
+#petals-canvas { position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:8888; }
+@media (prefers-reduced-motion:reduce) { #petals-canvas { display:none; } }
+#season-side-left,#season-side-right { position:fixed;top:0;width:110px;height:100vh;pointer-events:none;z-index:1;overflow:hidden;opacity:0.65; }
+#season-side-left { left:0; }
+#season-side-right { right:0; }
+@media (max-width:1280px) { #season-side-left,#season-side-right { display:none; } }
+
+.top-bar,.navbar,.hero,.hero-content h2,.hero-content h2 em,.hero-content > p,
+.hero-eyebrow,.hero-divider,.hero-trust,.hero-review,.hero-review-stars,.hero-review-text,
+.hero-buttons .btn-primary,.hero-buttons .btn-secondary,
+.trust-badges,.trust-badge-icon,.trust-badge-text,.marquee-wrap,.marquee-item,
+.shop-by-occasion,.section-eyebrow,.section-title,.occasion-card,.occasion-card-title,.occasion-card-cta,
+.best-sellers,.bestseller-badge,.testimonials-section,.testimonial-card,.testimonial-stars,.testimonial-text,
+.customer-love,.customer-love-eyebrow,.customer-stars,.customer-love-text blockquote,.customer-name,
+.about,.about-text p,.services,.service-card,.service-card h3,.service-card p,.gallery,
+.trust-strip,.trust-item,.contact,.contact-info h3,.contact-info p,.learn-more-btn,.sticky-cta,
+.logo-title,.logo-subtitle,footer,footer h3,footer h4,footer p,footer a,.footer-bottom {
+  transition:background 0.8s ease,color 0.6s ease,border-color 0.6s ease;
+}
+
+/* ══ SPRING Sep–Nov · Blush rose #5a1a2a ══ */
+body.season-spring .top-bar { background:#5a1a2a !important; color:rgba(255,255,255,0.9) !important; }
+body.season-spring .top-bar a { color:#fff !important; }
+body.season-spring .navbar { background:rgba(253,240,245,0.96) !important; border-bottom-color:rgba(90,26,42,0.15) !important; }
+body.season-spring .logo-title { color:#5a1a2a !important; }
+body.season-spring .logo-subtitle { color:#c8a0a8 !important; }
+body.season-spring .text-link { color:#7a3050 !important; }
+body.season-spring .text-link::after { background:#5a1a2a !important; }
+body.season-spring .nav-dropdown { color:#7a3050 !important; }
+body.season-spring .nav-icon { color:#7a3050 !important; }
+body.season-spring .dropdown-menu { background:#fff9fb !important; border-color:rgba(90,26,42,0.12) !important; }
+body.season-spring .dropdown-item { color:#7a3050 !important; }
+body.season-spring .hero { background:#fdf0f5 !important; }
+body.season-spring .hero-content h2 { color:#3d0a1e !important; }
+body.season-spring .hero-content h2 em { color:#5a1a2a !important; }
+body.season-spring .hero-content > p { color:#7a3050 !important; }
+body.season-spring .hero-eyebrow { color:#5a1a2a !important; }
+body.season-spring .hero-eyebrow-dot { background:#f9a8c9 !important; }
+body.season-spring .hero-eyebrow-line { background:#c8a0a8 !important; }
+body.season-spring .hero-divider { background:linear-gradient(90deg,#f9a8c9 0%,transparent 100%) !important; }
+body.season-spring .hero-trust { color:#b07090 !important; }
+body.season-spring .hero-trust-dot { color:#f9a8c9 !important; }
+body.season-spring .hero-review { border-top-color:rgba(90,26,42,0.15) !important; }
+body.season-spring .hero-review-stars { color:#c8a0a8 !important; }
+body.season-spring .hero-review-sep { background:rgba(90,26,42,0.2) !important; }
+body.season-spring .hero-review-text { color:#7a3050 !important; }
+body.season-spring .hero-buttons .btn-primary { background:#5a1a2a !important; }
+body.season-spring .hero-buttons .btn-primary:hover { background:#3d0d1c !important; }
+body.season-spring .hero-buttons .btn-secondary { color:#5a1a2a !important; border-color:rgba(90,26,42,0.3) !important; }
+body.season-spring .hero-buttons .btn-secondary:hover { border-color:#5a1a2a !important; }
+body.season-spring .trust-badges { background:#fff9fb !important; border-color:rgba(90,26,42,0.1) !important; }
+body.season-spring .trust-badge-icon { color:#5a1a2a !important; }
+body.season-spring .trust-badge-text { color:#7a3050 !important; }
+body.season-spring .marquee-wrap { background:#fff9fb !important; border-color:rgba(90,26,42,0.12) !important; }
+body.season-spring .marquee-item { color:#b07090 !important; }
+body.season-spring .marquee-item::after { color:#f9a8c9 !important; }
+body.season-spring .shop-by-occasion { background:#fff9fb !important; }
+body.season-spring .section-eyebrow { color:#c8a0a8 !important; }
+body.season-summer .section-eyebrow::before { background: #c8a0a8 !important;}
+body.season-spring .section-title { color:#3d0a1e !important; }
+body.season-spring .occasion-card { background:#fdf5f8 !important; border-color:rgba(90,26,42,0.12) !important; }
+body.season-spring .occasion-card-title { color:#3d0a1e !important; }
+body.season-spring .occasion-card-desc { color:#9a607a !important; }
+body.season-spring .occasion-card-cta { color:#5a1a2a !important; border-color:rgba(90,26,42,0.25) !important; }
+body.season-spring .occasion-card:hover .occasion-card-cta { background:#5a1a2a !important; border-color:#5a1a2a !important; color:#fff !important; }
+body.season-spring .best-sellers { background:#fff9fb !important; }
+body.season-spring .bestseller-badge { background:#5a1a2a !important; }
+body.season-spring .gallery-cta-sub {color: #3d0a1e !important; }
+body.season-spring .gallery-cta-arrow {color: #3d0a1e !important; }
+body.season-spring .gallery-item { background-color: #f9a8c9 !important;}
+body.season-spring .gallery-item--cta {background: #da81a4 !important;}
+body.season-spring .testimonials-section { background:#fdf0f5 !important; }
+body.season-spring .testimonial-card { background:#fff9fb !important; border-color:rgba(90,26,42,0.12) !important; }
+body.season-spring .testimonial-stars { color:#c8a0a8 !important; }
+body.season-spring .testimonial-text { color:#3d0a1e !important; }
+body.season-spring .customer-love { background:#fff9fb !important; }
+body.season-spring .customer-love-eyebrow { color:#c8a0a8 !important; }
+body.season-spring .customer-stars { color:#c8a0a8 !important; }
+body.season-spring .customer-love-text blockquote { color:#3d0a1e !important; }
+body.season-spring .quote-mark path { fill:#fce4ec !important; }
+body.season-spring .customer-name { color:#b07090 !important; }
+body.season-spring .about { background:#fdf0f5 !important; }
+body.season-spring .about-text p { color:#7a3050 !important; }
+body.season-spring .services { background:#fff9fb !important; }
+body.season-spring .service-card { background:#fff9fb !important; border-color:rgba(90,26,42,0.12) !important; }
+body.season-spring .service-card::after { background:#5a1a2a !important; }
+body.season-spring .service-card h3 { color:#3d0a1e !important; }
+body.season-spring .service-card p { color:#9a607a !important; }
+body.season-spring .service-card .service-icon svg { stroke:#5a1a2a !important; }
+body.season-spring .service-card:hover { background:#fce4ec !important; }
+body.season-spring .service-card:hover .service-icon {background:#fce4ec !important;}
+body.season-spring .gallery { background:#fdf0f5 !important; }
+body.season-spring .trust-strip { background:#3d0a1e !important; }
+body.season-spring .trust-item { color:rgba(253,240,245,0.7) !important; }
+body.season-spring .trust-item::before { background:rgba(232,104,138,0.5) !important; }
+body.season-spring .contact { background:#fff9fb !important; }
+body.season-spring .contact-info h3 { color:#3d0a1e !important; }
+body.season-spring .contact-info p { color:#7a3050 !important; }
+body.season-spring .postcode-wrap button { background:#3d0a1e !important; }
+body.season-spring .postcode-wrap button:hover { background:#5a1a2a !important; }
+body.season-spring .learn-more-btn { color:#5a1a2a !important; border-bottom-color:rgba(90,26,42,0.3) !important; }
+body.season-spring .learn-more-btn:hover { background:#5a1a2a !important; border-color:#5a1a2a !important; color:#fff !important; }
+body.season-spring .sticky-cta { background:#5a1a2a !important; }
+body.season-spring .sticky-cta:hover { background:#3d0d1c !important; }
+body.season-spring footer { background:#f8e4ee !important; }
+body.season-spring footer h3 { color:#5a1a2a !important; }
+body.season-spring footer h4 { color:#c8a0a8 !important; }
+body.season-spring footer p { color:#9a607a !important; }
+body.season-spring footer a { color:#7a3050 !important; }
+body.season-spring footer a:hover { color:#5a1a2a !important; }
+body.season-spring .footer-bottom { color:#b07090 !important; border-top-color:rgba(90,26,42,0.15) !important; }
+body.season-spring .footer-bottom p { color:#b07090 !important; }
+body.season-spring .search-cat-card:hover { border-color:rgba(90,26,42,0.4) !important; background:#fce4ec !important; }
+body.season-spring .search-tag:hover { background:#5a1a2a !important; border-color:#5a1a2a !important; color:#fff !important; }
+body.season-spring .search-submit-btn { background:#3d0a1e !important; }
+body.season-spring .search-submit-btn:hover { background:#5a1a2a !important; }
+body.season-spring .search-input-wrap input:focus { border-color:#5a1a2a !important; }
+
+/* ══ SUMMER Dec–Feb · Sage green #4a8a32 ══ */
+body.season-summer .top-bar { background:#3a6a28 !important; color:rgba(255,255,255,0.9) !important; }
+body.season-summer .top-bar a { color:#fff !important; }
+body.season-summer .navbar { background:rgba(240,245,236,0.96) !important; border-bottom-color:rgba(74,138,50,0.15) !important; }
+body.season-summer .logo-title { color:#3a7a28 !important; }
+body.season-summer .logo-subtitle { color:#5a9a42 !important; }
+body.season-summer .text-link { color:#2a5020 !important; }
+body.season-summer .text-link::after { background:#4a8a32 !important; }
+body.season-summer .nav-dropdown { color:#2a5020 !important; }
+body.season-summer .nav-icon { color:#2a5020 !important; }
+body.season-summer .dropdown-menu { background:#f5faf0 !important; border-color:rgba(74,138,50,0.12) !important; }
+body.season-summer .dropdown-item { color:#2a5020 !important; }
+body.season-summer .hero { background:#f0f5ec !important; }
+body.season-summer .hero-content h2 { color:#1a3010 !important; }
+body.season-summer .hero-content h2 em { color:#4a8a32 !important; }
+body.season-summer .hero-content > p { color:#3a5a28 !important; }
+body.season-summer .hero-eyebrow { color:#4a8a32 !important; }
+body.season-summer .hero-eyebrow-dot { background:#a5d07a !important; }
+body.season-summer .hero-eyebrow-line { background:#5a9a42 !important; }
+body.season-summer .hero-divider { background:linear-gradient(90deg,#a5d07a 0%,transparent 100%) !important; }
+body.season-summer .hero-trust { color:#4a7c2f !important; }
+body.season-summer .hero-trust-dot { color:#a5d07a !important; }
+body.season-summer .hero-review { border-top-color:rgba(74,138,50,0.15) !important; }
+body.season-summer .hero-review-stars { color:#5a9a42 !important; }
+body.season-summer .hero-review-sep { background:rgba(74,138,50,0.2) !important; }
+body.season-summer .hero-review-text { color:#3a5a28 !important; }
+body.season-summer .hero-buttons .btn-primary { background:#4a8a32 !important; }
+body.season-summer .hero-buttons .btn-primary:hover { background:#3a6a28 !important; }
+body.season-summer .hero-buttons .btn-secondary { color:#4a8a32 !important; border-color:rgba(74,138,50,0.3) !important; }
+body.season-summer .hero-buttons .btn-secondary:hover { border-color:#4a8a32 !important; }
+body.season-summer .trust-badges { background:#f5faf0 !important; border-color:rgba(74,138,50,0.1) !important; }
+body.season-summer .trust-badge-icon { color:#4a8a32 !important; }
+body.season-summer .trust-badge-text { color:#2a5020 !important; }
+body.season-summer .marquee-wrap { background:#f5faf0 !important; border-color:rgba(74,138,50,0.12) !important; }
+body.season-summer .marquee-item { color:#4a7c2f !important; }
+body.season-summer .marquee-item::after { color:#a5d07a !important; }
+body.season-summer .shop-by-occasion { background:#f5faf0 !important; }
+body.season-summer .section-eyebrow { color:#5a9a42 !important; }
+body.season-summer .section-eyebrow::before { background: #5a9a42 !important;}
+body.season-summer .section-title { color:#1a3010 !important; }
+body.season-summer .occasion-card { background:#f0f7eb !important; border-color:rgba(74,138,50,0.12) !important; }
+body.season-summer .occasion-card-title { color:#1a3010 !important; }
+body.season-summer .occasion-card-desc { color:#4a7a38 !important; }
+body.season-summer .occasion-card-cta { color:#4a8a32 !important; border-color:rgba(74,138,50,0.25) !important; }
+body.season-summer .occasion-card:hover .occasion-card-cta { background:#4a8a32 !important; border-color:#4a8a32 !important; color:#fff !important; }
+body.season-summer .best-sellers { background:#f5faf0 !important; }
+body.season-summer .bestseller-badge { background:#4a8a32 !important; }
+body.season-summer .gallery-cta-sub {color: #1a3010 !important; }
+body.season-summer .gallery-cta-arrow {color: #1a3010 !important; }
+body.season-summer .gallery-item { background-color: #4a8a32 !important;}
+body.season-summer .gallery-item--cta {background: #4a8a32 !important;}
+body.season-summer .testimonials-section { background:#f0f5ec !important; }
+body.season-summer .testimonial-card { background:#f5faf0 !important; border-color:rgba(74,138,50,0.12) !important; }
+body.season-summer .testimonial-stars { color:#5a9a42 !important; }
+body.season-summer .testimonial-text { color:#1a3010 !important; }
+body.season-summer .customer-love { background:#f5faf0 !important; }
+body.season-summer .customer-love-eyebrow { color:#5a9a42 !important; }
+body.season-summer .customer-stars { color:#5a9a42 !important; }
+body.season-summer .customer-love-text blockquote { color:#1a3010 !important; }
+body.season-summer .quote-mark path { fill:#dcedc8 !important; }
+body.season-summer .customer-name { color:#4a7a38 !important; }
+body.season-summer .about { background:#f0f5ec !important; }
+body.season-summer .about-text p { color:#3a5a28 !important; }
+body.season-summer .services { background:#f5faf0 !important; }
+body.season-summer .service-card { background:#f5faf0 !important; border-color:rgba(74,138,50,0.12) !important; }
+body.season-summer .service-card::after { background:#4a8a32 !important; }
+body.season-summer .service-card h3 { color:#1a3010 !important; }
+body.season-summer .service-card p { color:#4a7a38 !important; }
+body.season-summer .service-card .service-icon svg { stroke:#4a8a32 !important; }
+body.season-summer .service-card:hover { background:#dcedc8 !important; }
+body.season-autumn .service-card:hover .service-icon {background:#dcedc8 !important;}
+body.season-summer .gallery { background:#f0f5ec !important; }
+body.season-summer .trust-strip { background:#1a3010 !important; }
+body.season-summer .trust-item { color:rgba(240,247,235,0.7) !important; }
+body.season-summer .trust-item::before { background:rgba(165,208,122,0.5) !important; }
+body.season-summer .contact { background:#f5faf0 !important; }
+body.season-summer .contact-info h3 { color:#1a3010 !important; }
+body.season-summer .contact-info p { color:#3a5a28 !important; }
+body.season-summer .postcode-wrap button { background:#1a3010 !important; }
+body.season-summer .postcode-wrap button:hover { background:#4a8a32 !important; }
+body.season-summer .learn-more-btn { color:#4a8a32 !important; border-bottom-color:rgba(74,138,50,0.3) !important; }
+body.season-summer .learn-more-btn:hover { background: #4a8a32; color:#1a3010 !important; border-bottom-color:#4a8a32 !important; }
+body.season-summer .sticky-cta { background:#4a8a32 !important; }
+body.season-summer .sticky-cta:hover { background:#3a6a28 !important; }
+body.season-summer footer { background:#e8f5e9 !important; }
+body.season-summer footer h3 { color:#3a7a28 !important; }
+body.season-summer footer h4 { color:#5a9a42 !important; }
+body.season-summer footer p { color:#4a7a38 !important; }
+body.season-summer footer a { color:#2a5020 !important; }
+body.season-summer footer a:hover { color:#4a8a32 !important; }
+body.season-summer .footer-bottom { color:#7a9a60 !important; border-top-color:rgba(74,138,50,0.15) !important; }
+body.season-summer .footer-bottom p { color:#7a9a60 !important; }
+body.season-summer .search-cat-card:hover { border-color:rgba(74,138,50,0.4) !important; background:#dcedc8 !important; }
+body.season-summer .search-tag:hover { background:#4a8a32 !important; border-color:#4a8a32 !important; color:#fff !important; }
+body.season-summer .search-submit-btn { background:#1a3010 !important; }
+body.season-summer .search-submit-btn:hover { background:#4a8a32 !important; }
+body.season-summer .search-input-wrap input:focus { border-color:#4a8a32 !important; }
+
+/* ══ AUTUMN Mar–May · Amber harvest #a85738 ══ */
+body.season-autumn .top-bar { background:#8b4010 !important; color:rgba(255,255,255,0.9) !important; }
+body.season-autumn .top-bar a { color:#fde8c8 !important; }
+body.season-autumn .navbar { background:rgba(253,245,236,0.96) !important; border-bottom-color:rgba(168,87,56,0.15) !important; }
+body.season-autumn .logo-title { color:#8b4513 !important; }
+body.season-autumn .logo-subtitle { color:#a85738 !important; }
+body.season-autumn .text-link { color:#5a2808 !important; }
+body.season-autumn .text-link::after { background:#a85738 !important; }
+body.season-autumn .nav-dropdown { color:#5a2808 !important; }
+body.season-autumn .nav-icon { color:#5a2808 !important; }
+body.season-autumn .dropdown-menu { background:#fffaf4 !important; border-color:rgba(168,87,56,0.12) !important; }
+body.season-autumn .dropdown-item { color:#5a2808 !important; }
+body.season-autumn .hero { background:#fdf5ec !important; }
+body.season-autumn .hero-content h2 { color:#3d1c08 !important; }
+body.season-autumn .hero-content h2 em { color:#a85738 !important; }
+body.season-autumn .hero-content > p { color:#7a4020 !important; }
+body.season-autumn .hero-eyebrow { color:#a85738 !important; }
+body.season-autumn .hero-eyebrow-dot { background:#d8a48a !important; }
+body.season-autumn .hero-eyebrow-line { background:#b8623f !important; }
+body.season-autumn .hero-divider { background:linear-gradient(90deg,#d8a48a 0%,transparent 100%) !important; }
+body.season-autumn .hero-trust { color:#b08048 !important; }
+body.season-autumn .hero-trust-dot { color:#d8a48a !important; }
+body.season-autumn .hero-review { border-top-color:rgba(168,87,56,0.15) !important; }
+body.season-autumn .hero-review-stars { color:#b8623f !important; }
+body.season-autumn .hero-review-sep { background:rgba(168,87,56,0.2) !important; }
+body.season-autumn .hero-review-text { color:#7a4020 !important; }
+body.season-autumn .hero-buttons .btn-primary { background:#a85738 !important; }
+body.season-autumn .hero-buttons .btn-primary:hover { background:#8b4513 !important; }
+body.season-autumn .hero-buttons .btn-secondary { color:#a85738 !important; border-color:rgba(168,87,56,0.3) !important; }
+body.season-autumn .hero-buttons .btn-secondary:hover { border-color:#a85738 !important; }
+body.season-autumn .trust-badges { background:#fffaf4 !important; border-color:rgba(168,87,56,0.1) !important; }
+body.season-autumn .trust-badge-icon { color:#a85738 !important; }
+body.season-autumn .trust-badge-text { color:#7a4020 !important; }
+body.season-autumn .marquee-wrap { background:#fffaf4 !important; border-color:rgba(168,87,56,0.12) !important; }
+body.season-autumn .marquee-item { color:#b08048 !important; }
+body.season-autumn .marquee-item::after { color:#d8a48a !important; }
+body.season-autumn .shop-by-occasion { background:#fffaf4 !important; }
+body.season-autumn .section-eyebrow { color:#b8623f !important; }
+body.season-autumn .section-eyebrow::before { background: #b8623f !important;}
+body.season-autumn .section-title { color:#3d1c08 !important; }
+body.season-autumn .occasion-card { background:#fdf6ec !important; border-color:rgba(168,87,56,0.12) !important; }
+body.season-autumn .occasion-card-title { color:#3d1c08 !important; }
+body.season-autumn .occasion-card-desc { color:#7a4020 !important; }
+body.season-autumn .occasion-card-cta { color:#a85738 !important; border-color:rgba(168,87,56,0.25) !important; }
+body.season-autumn .occasion-card:hover .occasion-card-cta { background:#a85738 !important; border-color:#a85738 !important; color:#fff !important; }
+body.season-autumn .best-sellers { background:#fffaf4 !important; }
+body.season-autumn .bestseller-badge { background:#a85738 !important; }
+body.season-autumn .gallery-cta-sub {color: #a85738 !important; }
+body.season-autumn .gallery-cta-arrow {color: #a85738 !important; }
+body.season-autumn .gallery-item { background-color: #7a4020 !important;}
+body.season-autumn .gallery-item--cta {background: #7a4020 !important;}
+body.season-autumn .testimonials-section { background:#fdf5ec !important; }
+body.season-autumn .testimonial-card { background:#fffaf4 !important; border-color:rgba(168,87,56,0.12) !important; }
+body.season-autumn .testimonial-stars { color:#b8623f !important; }
+body.season-autumn .testimonial-text { color:#3d1c08 !important; }
+body.season-autumn .customer-love { background:#fffaf4 !important; }
+body.season-autumn .customer-love-eyebrow { color:#b8623f !important; }
+body.season-autumn .customer-stars { color:#b8623f !important; }
+body.season-autumn .customer-love-text blockquote { color:#3d1c08 !important; }
+body.season-autumn .quote-mark path { fill:#fde8c8 !important; }
+body.season-autumn .customer-name { color:#b08048 !important; }
+body.season-autumn .about { background:#fdf5ec !important; }
+body.season-autumn .about-text p { color:#7a4020 !important; }
+body.season-autumn .services { background:#fffaf4 !important; }
+body.season-autumn .service-card { background:#fffaf4 !important; border-color:rgba(168,87,56,0.12) !important; }
+body.season-autumn .service-card::after { background:#a85738 !important; }
+body.season-autumn .service-card h3 { color:#3d1c08 !important; }
+body.season-autumn .service-card p { color:#7a4020 !important; }
+body.season-autumn .service-card .service-icon svg { stroke:#a85738 !important; }
+body.season-autumn .service-card:hover { background:#fde8c8 !important; }
+body.season-autumn .service-card:hover .service-icon {background:#fde8c8 !important;}
+body.season-autumn .gallery { background:#fdf5ec !important; }
+body.season-autumn .trust-strip { background:#3d1c08 !important; }
+body.season-autumn .trust-item { color:rgba(253,245,236,0.7) !important; }
+body.season-autumn .trust-item::before { background:rgba(232,148,26,0.5) !important; }
+body.season-autumn .contact { background:#fffaf4 !important; }
+body.season-autumn .contact-info h3 { color:#3d1c08 !important; }
+body.season-autumn .contact-info p { color:#7a4020 !important; }
+body.season-autumn .postcode-wrap button { background:#3d1c08 !important; }
+body.season-autumn .postcode-wrap button:hover { background:#a85738 !important; }
+body.season-autumn .learn-more-btn { color:#a85738 !important; border-bottom-color:rgba(168,87,56,0.3) !important; }
+body.season-autumn .learn-more-btn:hover { background: #a85738; color:#3d1c08 !important; border-bottom-color:#a85738 !important; }
+body.season-autumn .sticky-cta { background:#a85738 !important; }
+body.season-autumn .sticky-cta:hover { background:#8b4513 !important; }
+body.season-autumn footer { background:#f5e4c8 !important; }
+body.season-autumn footer h3 { color:#8b4513 !important; }
+body.season-autumn footer h4 { color:#a85738 !important; }
+body.season-autumn footer p { color:#7a4020 !important; }
+body.season-autumn footer a { color:#5a2808 !important; }
+body.season-autumn footer a:hover { color:#a85738 !important; }
+body.season-autumn .footer-bottom { color:#b08048 !important; border-top-color:rgba(168,87,56,0.15) !important; }
+body.season-autumn .footer-bottom p { color:#b08048 !important; }
+body.season-autumn .search-cat-card:hover { border-color:rgba(168,87,56,0.4) !important; background:#fde8c8 !important; }
+body.season-autumn .search-tag:hover { background:#a85738 !important; border-color:#a85738 !important; color:#fff !important; }
+body.season-autumn .search-submit-btn { background:#3d1c08 !important; }
+body.season-autumn .search-submit-btn:hover { background:#a85738 !important; }
+body.season-autumn .search-input-wrap input:focus { border-color:#a85738 !important; }
+
+/* ══ WINTER Jun–Aug · Ice blue #1c3656 ══ */
+body.season-winter .top-bar { background:#1e4a7a !important; color:rgba(255,255,255,0.9) !important; }
+body.season-winter .top-bar a { color:#b0d8ec !important; }
+body.season-winter .navbar { background:rgba(238,244,250,0.96) !important; border-bottom-color:rgba(28,54,86,0.15) !important; }
+body.season-winter .logo-title { color:#142640 !important; }
+body.season-winter .logo-subtitle { color:#4a90c4 !important; }
+body.season-winter .text-link { color:#1a3a58 !important; }
+body.season-winter .text-link::after { background:#1c3656 !important; }
+body.season-winter .nav-dropdown { color:#1a3a58 !important; }
+body.season-winter .nav-icon { color:#1a3a58 !important; }
+body.season-winter .dropdown-menu { background:#f4fafd !important; border-color:rgba(28,54,86,0.12) !important; }
+body.season-winter .dropdown-item { color:#1a3a58 !important; }
+body.season-winter .hero { background:#eef4fa !important; }
+body.season-winter .hero-content h2 { color:#0d2535 !important; }
+body.season-winter .hero-content h2 em { color:#1c3656 !important; }
+body.season-winter .hero-content > p { color:#2a5070 !important; }
+body.season-winter .hero-eyebrow { color:#1c3656 !important; }
+body.season-winter .hero-eyebrow-dot { background:#7a96b8 !important; }
+body.season-winter .hero-eyebrow-line { background:#4a90c4 !important; }
+body.season-winter .hero-divider { background:linear-gradient(90deg,#7a96b8 0%,transparent 100%) !important; }
+body.season-winter .hero-trust { color:#5a8aaa !important; }
+body.season-winter .hero-trust-dot { color:#7a96b8 !important; }
+body.season-winter .hero-review { border-top-color:rgba(28,54,86,0.15) !important; }
+body.season-winter .hero-review-stars { color:#4a90c4 !important; }
+body.season-winter .hero-review-sep { background:rgba(28,54,86,0.2) !important; }
+body.season-winter .hero-review-text { color:#2a5070 !important; }
+body.season-winter .hero-buttons .btn-primary { background:#1c3656 !important; }
+body.season-winter .hero-buttons .btn-primary:hover { background:#142640 !important; }
+body.season-winter .hero-buttons .btn-secondary { color:#1c3656 !important; border-color:rgba(28,54,86,0.3) !important; }
+body.season-winter .hero-buttons .btn-secondary:hover { border-color:#1c3656 !important; }
+body.season-winter .trust-badges { background:#f4fafd !important; border-color:rgba(28,54,86,0.1) !important; }
+body.season-winter .trust-badge-icon { color:#1c3656 !important; }
+body.season-winter .trust-badge-text { color:#2a5070 !important; }
+body.season-winter .marquee-wrap { background:#f4fafd !important; border-color:rgba(28,54,86,0.12) !important; }
+body.season-winter .marquee-item { color:#5a8aaa !important; }
+body.season-winter .marquee-item::after { color:#7a96b8 !important; }
+body.season-winter .shop-by-occasion { background:#f4fafd !important; }
+body.season-winter .section-eyebrow { color:#4a90c4 !important; }
+body.season-winter .section-eyebrow::before { background: #4a90c4 !important;}
+body.season-winter .section-title { color:#0d2535 !important; }
+body.season-winter .occasion-card { background:#eef6fb !important; border-color:rgba(28,54,86,0.12) !important; }
+body.season-winter .occasion-card-title { color:#0d2535 !important; }
+body.season-winter .occasion-card-desc { color:#2a5070 !important; }
+body.season-winter .occasion-card-cta { color:#1c3656 !important; border-color:rgba(28,54,86,0.25) !important; }
+body.season-winter .occasion-card:hover .occasion-card-cta { background:#1c3656 !important; border-color:#1c3656 !important; color:#fff !important; }
+body.season-winter .best-sellers { background:#f4fafd !important; }
+body.season-winter .bestseller-badge { background:#1c3656 !important; }
+body.season-winter .gallery-cta-sub {color: #0d2535 !important; }
+body.season-winter .gallery-cta-arrow {color: #0d2535 !important; }
+body.season-winter .gallery-item { background-color: #1c3656 !important;}
+body.season-winter .gallery-item--cta {background: #1c3656 !important;}
+body.season-winter .testimonials-section { background:#eef4fa !important; }
+body.season-winter .testimonial-card { background:#f4fafd !important; border-color:rgba(28,54,86,0.12) !important; }
+body.season-winter .testimonial-stars { color:#4a90c4 !important; }
+body.season-winter .testimonial-text { color:#0d2535 !important; }
+body.season-winter .customer-love { background:#f4fafd !important; }
+body.season-winter .customer-love-eyebrow { color:#4a90c4 !important; }
+body.season-winter .customer-stars { color:#4a90c4 !important; }
+body.season-winter .customer-love-text blockquote { color:#0d2535 !important; }
+body.season-winter .quote-mark path { fill:#daedf8 !important; }
+body.season-winter .customer-name { color:#5a8aaa !important; }
+body.season-winter .about { background:#eef4fa !important; }
+body.season-winter .about-text p { color:#2a5070 !important; }
+body.season-winter .services { background:#f4fafd !important; }
+body.season-winter .service-card { background:#f4fafd !important; border-color:rgba(28,54,86,0.12) !important; }
+body.season-winter .service-card::after { background:#1c3656 !important; }
+body.season-winter .service-card h3 { color:#0d2535 !important; }
+body.season-winter .service-card p { color:#2a5070 !important; }
+body.season-winter .service-card .service-icon svg { stroke:#1c3656 !important; }
+body.season-winter .service-card:hover { background:#daedf8 !important; }
+body.season-winter .service-card:hover .service-icon {background:#daedf8 !important;}
+body.season-winter .gallery { background:#eef4fa !important; }
+body.season-winter .trust-strip { background:#0d2535 !important; }
+body.season-winter .trust-item { color:rgba(238,244,250,0.7) !important; }
+body.season-winter .trust-item::before { background:rgba(126,200,227,0.5) !important; }
+body.season-winter .contact { background:#f4fafd !important; }
+body.season-winter .contact-info h3 { color:#0d2535 !important; }
+body.season-winter .contact-info p { color:#2a5070 !important; }
+body.season-winter .postcode-wrap button { background:#0d2535 !important; }
+body.season-winter .postcode-wrap button:hover { background:#1c3656 !important; }
+body.season-winter .learn-more-btn { color:#1c3656 !important; border-bottom-color:rgba(28,54,86,0.3) !important; }
+body.season-winter .learn-more-btn:hover { background:#1c3656; color:#0d2535 !important; border-bottom-color:#1c3656 !important; }
+body.season-winter .sticky-cta { background:#1c3656 !important; }
+body.season-winter .sticky-cta:hover { background:#142640 !important; }
+body.season-winter footer { background:#d4eaf5 !important; }
+body.season-winter footer h3 { color:#142640 !important; }
+body.season-winter footer h4 { color:#4a90c4 !important; }
+body.season-winter footer p { color:#2a5070 !important; }
+body.season-winter footer a { color:#1a3a58 !important; }
+body.season-winter footer a:hover { color:#1c3656 !important; }
+body.season-winter .footer-bottom { color:#5a8aaa !important; border-top-color:rgba(28,54,86,0.15) !important; }
+body.season-winter .footer-bottom p { color:#5a8aaa !important; }
+body.season-winter .search-cat-card:hover { border-color:rgba(28,54,86,0.4) !important; background:#daedf8 !important; }
+body.season-winter .search-tag:hover { background:#1c3656 !important; border-color:#1c3656 !important; color:#fff !important; }
+body.season-winter .search-submit-btn { background:#0d2535 !important; }
+body.season-winter .search-submit-btn:hover { background:#1c3656 !important; }
+body.season-winter .search-input-wrap input:focus { border-color:#1c3656 !important; }
+
+
+/* ══ SHOP PAGE — shop.html ══════════════════════════════════════════════════ */
+
+/* ── Spring ── */
+body.season-spring .shop-hero                 { background:#fdf0f5 !important; border-bottom-color:rgba(90,26,42,0.12) !important; }
+body.season-spring .shop-hero-eyebrow         { color:#c8a0a8 !important; }
+body.season-spring .shop-hero h1              { color:#3d0a1e !important; }
+body.season-spring .shop-hero p               { color:#9a607a !important; }
+body.season-spring .shop-filterbar            { border-bottom-color:rgba(90,26,42,0.12) !important; }
+body.season-spring .material-pill             { color:#5a1a2a !important; border-color:rgba(90,26,42,0.25) !important; }
+body.season-spring .material-pill:hover       { background:#fdf0f5 !important; border-color:#5a1a2a !important; }
+body.season-spring .material-pill.active      { background:#5a1a2a !important; border-color:#5a1a2a !important; color:#fff !important; }
+body.season-spring #categorySelect            { color:#5a1a2a !important; border-color:rgba(90,26,42,0.25) !important; }
+body.season-spring .view-details-btn          { background:#5a1a2a !important; }
+body.season-spring .view-details-btn:hover    { background:#3d0d1c !important; }
+body.season-spring .product-price             { color:#5a1a2a !important; }
+body.season-spring .product-card:hover        { border-color:rgba(90,26,42,0.25) !important; }
+
+/* ── Summer ── */
+body.season-summer .shop-hero                 { background:#f0faf0 !important; border-bottom-color:rgba(90,158,58,0.12) !important; }
+body.season-summer .shop-hero-eyebrow         { color:#5a9e3a !important; }
+body.season-summer .shop-hero h1              { color:#1a3a0a !important; }
+body.season-summer .shop-hero p               { color:#4a7a30 !important; }
+body.season-summer .shop-filterbar            { border-bottom-color:rgba(90,158,58,0.12) !important; }
+body.season-summer .material-pill             { color:#5a9e3a !important; border-color:rgba(90,158,58,0.25) !important; }
+body.season-summer .material-pill:hover       { background:#f0faf0 !important; border-color:#5a9e3a !important; }
+body.season-summer .material-pill.active      { background:#5a9e3a !important; border-color:#5a9e3a !important; color:#fff !important; }
+body.season-summer #categorySelect            { color:#5a9e3a !important; border-color:rgba(90,158,58,0.25) !important; }
+body.season-summer .view-details-btn          { background:#5a9e3a !important; }
+body.season-summer .view-details-btn:hover    { background:#427828 !important; }
+body.season-summer .product-price             { color:#5a9e3a !important; }
+body.season-summer .product-card:hover        { border-color:rgba(90,158,58,0.25) !important; }
+
+/* ── Autumn ── */
+body.season-autumn .shop-hero                 { background:#fdf5ec !important; border-bottom-color:rgba(168,87,56,0.12) !important; }
+body.season-autumn .shop-hero-eyebrow         { color:#a85738 !important; }
+body.season-autumn .shop-hero h1              { color:#3d1c08 !important; }
+body.season-autumn .shop-hero p               { color:#7a4a20 !important; }
+body.season-autumn .shop-filterbar            { border-bottom-color:rgba(168,87,56,0.12) !important; }
+body.season-autumn .material-pill             { color:#a85738 !important; border-color:rgba(168,87,56,0.25) !important; }
+body.season-autumn .material-pill:hover       { background:#fdf5ec !important; border-color:#a85738 !important; }
+body.season-autumn .material-pill.active      { background:#a85738 !important; border-color:#a85738 !important; color:#fff !important; }
+body.season-autumn #categorySelect            { color:#a85738 !important; border-color:rgba(168,87,56,0.25) !important; }
+body.season-autumn .view-details-btn          { background:#a85738 !important; }
+body.season-autumn .view-details-btn:hover    { background:#7a3e1f !important; }
+body.season-autumn .product-price             { color:#a85738 !important; }
+body.season-autumn .product-card:hover        { border-color:rgba(168,87,56,0.25) !important; }
+
+/* ── Winter ── */
+body.season-winter .shop-hero                 { background:#eef4fa !important; border-bottom-color:rgba(28,54,86,0.12) !important; }
+body.season-winter .shop-hero-eyebrow         { color:#4a90c4 !important; }
+body.season-winter .shop-hero h1              { color:#0d2535 !important; }
+body.season-winter .shop-hero p               { color:#2a5070 !important; }
+body.season-winter .shop-filterbar            { border-bottom-color:rgba(28,54,86,0.12) !important; }
+body.season-winter .material-pill             { color:#1c3656 !important; border-color:rgba(28,54,86,0.25) !important; }
+body.season-winter .material-pill:hover       { background:#eef4fa !important; border-color:#1c3656 !important; }
+body.season-winter .material-pill.active      { background:#1c3656 !important; border-color:#1c3656 !important; color:#fff !important; }
+body.season-winter #categorySelect            { color:#1c3656 !important; border-color:rgba(28,54,86,0.25) !important; }
+body.season-winter .view-details-btn          { background:#1c3656 !important; }
+body.season-winter .view-details-btn:hover    { background:#142640 !important; }
+body.season-winter .product-price             { color:#1c3656 !important; }
+body.season-winter .product-card:hover        { border-color:rgba(28,54,86,0.25) !important; }
+/* ══════════════════════════════════════════════════════════════════════════════
+   SHOP PAGE — product card text + cart drawer
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Spring ── */
+body.season-spring .product-card               { background:#fff9fb !important; }
+body.season-spring .product-title              { color:#3d0a1e !important; }
+body.season-spring .product-description        { color:#9a607a !important; }
+body.season-spring .product-price-label        { color:#c8a0a8 !important; }
+body.season-spring .product-price              { color:#5a1a2a !important; }
+body.season-spring .product-footer             { border-top-color:rgba(90,26,42,0.1) !important; }
+body.season-spring .view-details-btn           { background:#5a1a2a !important; color:#fff !important; }
+body.season-spring .view-details-btn:hover     { background:#3d0d1c !important; }
+/* Cart drawer */
+body.season-spring .cart-drawer,
+body.season-spring .cart-panel,
+body.season-spring .cart-sidebar               { background:#fff9fb !important; border-left-color:rgba(90,26,42,0.15) !important; }
+body.season-spring .cart-header,
+body.season-spring .cart-title                 { color:#3d0a1e !important; border-bottom-color:rgba(90,26,42,0.12) !important; }
+body.season-spring .cart-count-label,
+body.season-spring .cart-items-count           { color:#5a1a2a !important; }
+body.season-spring .cart-empty-msg,
+body.season-spring .cart-empty p               { color:#9a607a !important; }
+body.season-spring .cart-empty-cta,
+body.season-spring .cart-browse-btn,
+body.season-spring [class*="cart"] button,
+body.season-spring [class*="cart"] .btn        { background:#5a1a2a !important; color:#fff !important; border-color:#5a1a2a !important; }
+body.season-spring [class*="cart"] button:hover,
+body.season-spring [class*="cart"] .btn:hover  { background:#3d0d1c !important; }
+
+/* ── Summer ── */
+body.season-summer .product-card               { background:#f5faf0 !important; }
+body.season-summer .product-title              { color:#1a3010 !important; }
+body.season-summer .product-description        { color:#4a7a38 !important; }
+body.season-summer .product-price-label        { color:#5a9a42 !important; }
+body.season-summer .product-price              { color:#4a8a32 !important; }
+body.season-summer .product-footer             { border-top-color:rgba(74,138,50,0.1) !important; }
+body.season-summer .view-details-btn           { background:#4a8a32 !important; color:#fff !important; }
+body.season-summer .view-details-btn:hover     { background:#3a6a28 !important; }
+/* Cart drawer */
+body.season-summer .cart-drawer,
+body.season-summer .cart-panel,
+body.season-summer .cart-sidebar               { background:#f5faf0 !important; border-left-color:rgba(74,138,50,0.15) !important; }
+body.season-summer .cart-header,
+body.season-summer .cart-title                 { color:#1a3010 !important; border-bottom-color:rgba(74,138,50,0.12) !important; }
+body.season-summer .cart-count-label,
+body.season-summer .cart-items-count           { color:#4a8a32 !important; }
+body.season-summer .cart-empty-msg,
+body.season-summer .cart-empty p               { color:#4a7a38 !important; }
+body.season-summer .cart-empty-cta,
+body.season-summer .cart-browse-btn,
+body.season-summer [class*="cart"] button,
+body.season-summer [class*="cart"] .btn        { background:#4a8a32 !important; color:#fff !important; border-color:#4a8a32 !important; }
+body.season-summer [class*="cart"] button:hover,
+body.season-summer [class*="cart"] .btn:hover  { background:#3a6a28 !important; }
+
+/* ── Autumn ── */
+body.season-autumn .product-card               { background:#fffaf4 !important; }
+body.season-autumn .product-title              { color:#3d1c08 !important; }
+body.season-autumn .product-description        { color:#7a4020 !important; }
+body.season-autumn .product-price-label        { color:#b8623f !important; }
+body.season-autumn .product-price              { color:#a85738 !important; }
+body.season-autumn .product-footer             { border-top-color:rgba(168,87,56,0.1) !important; }
+body.season-autumn .view-details-btn           { background:#a85738 !important; color:#fff !important; }
+body.season-autumn .view-details-btn:hover     { background:#7a3e1f !important; }
+/* Cart drawer */
+body.season-autumn .cart-drawer,
+body.season-autumn .cart-panel,
+body.season-autumn .cart-sidebar               { background:#fffaf4 !important; border-left-color:rgba(168,87,56,0.15) !important; }
+body.season-autumn .cart-header,
+body.season-autumn .cart-title                 { color:#3d1c08 !important; border-bottom-color:rgba(168,87,56,0.12) !important; }
+body.season-autumn .cart-count-label,
+body.season-autumn .cart-items-count           { color:#a85738 !important; }
+body.season-autumn .cart-empty-msg,
+body.season-autumn .cart-empty p               { color:#7a4020 !important; }
+body.season-autumn .cart-empty-cta,
+body.season-autumn .cart-browse-btn,
+body.season-autumn [class*="cart"] button,
+body.season-autumn [class*="cart"] .btn        { background:#a85738 !important; color:#fff !important; border-color:#a85738 !important; }
+body.season-autumn [class*="cart"] button:hover,
+body.season-autumn [class*="cart"] .btn:hover  { background:#7a3e1f !important; }
+
+/* ── Winter ── */
+body.season-winter .product-card               { background:#f4fafd !important; }
+body.season-winter .product-title              { color:#0d2535 !important; }
+body.season-winter .product-description        { color:#2a5070 !important; }
+body.season-winter .product-price-label        { color:#4a90c4 !important; }
+body.season-winter .product-price              { color:#1c3656 !important; }
+body.season-winter .product-footer             { border-top-color:rgba(28,54,86,0.1) !important; }
+body.season-winter .view-details-btn           { background:#1c3656 !important; color:#fff !important; }
+body.season-winter .view-details-btn:hover     { background:#142640 !important; }
+/* Cart drawer */
+body.season-winter .cart-drawer,
+body.season-winter .cart-panel,
+body.season-winter .cart-sidebar               { background:#eef4fa !important; border-left-color:rgba(28,54,86,0.15) !important; }
+body.season-winter .cart-header,
+body.season-winter .cart-title                 { color:#0d2535 !important; border-bottom-color:rgba(28,54,86,0.12) !important; }
+body.season-winter .cart-count-label,
+body.season-winter .cart-items-count           { color:#1c3656 !important; }
+body.season-winter .cart-empty-msg,
+body.season-winter .cart-empty p               { color:#2a5070 !important; }
+body.season-winter .cart-empty-cta,
+body.season-winter .cart-browse-btn,
+body.season-winter [class*="cart"] button,
+body.season-winter [class*="cart"] .btn        { background:#1c3656 !important; color:#fff !important; border-color:#1c3656 !important; }
+body.season-winter [class*="cart"] button:hover,
+body.season-winter [class*="cart"] .btn:hover  { background:#142640 !important; }
