@@ -629,19 +629,12 @@ button{cursor:pointer;font-family:inherit}
    Keeps functional nav icons (search/wishlist/cart) visible.
    To bring everything back, comment out this block.
    ════════════════════════════════════════════════════════════════════ */
-svg { display: none !important; }
-/* Whitelist: any SVG inside an interactive element stays visible. */
-a svg,
-button svg,
-.nav-icon-btn svg,
-.vs-close svg,
-.back-link svg,
-.item-remove svg,
-.qty-btn svg,
-.btn-add-cart svg,
-.btn-buy-now svg,
-.btn-checkout svg,
-.cart-icon svg                    { display: inline-block !important; }
+/* Hide only seasonal-theme injected decorations (canvas particles, nav branches, side panels) */
+#petals-canvas       { display: none !important; }
+.nav-branch          { display: none !important; }
+#season-side-left,
+#season-side-right   { display: none !important; }
+
 #petals-canvas                       { display: none !important; }
 #season-side-left,
 #season-side-right                   { display: none !important; }

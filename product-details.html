@@ -300,19 +300,12 @@ button{cursor:pointer;font-family:inherit}
 .cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
 
 /* ── DEV TOGGLE: hide decorative SVGs + seasonal animations (keep nav icons) ── */
-svg { display: none !important; }
-/* Whitelist: any SVG inside an interactive element stays visible. */
-a svg,
-button svg,
-.nav-icon-btn svg,
-.vs-close svg,
-.back-link svg,
-.item-remove svg,
-.qty-btn svg,
-.btn-add-cart svg,
-.btn-buy-now svg,
-.btn-checkout svg,
-.cart-icon svg                    { display: inline-block !important; }
+/* Hide only seasonal-theme injected decorations (canvas particles, nav branches, side panels) */
+#petals-canvas       { display: none !important; }
+.nav-branch          { display: none !important; }
+#season-side-left,
+#season-side-right   { display: none !important; }
+
 #petals-canvas                   { display: none !important; }
 #season-side-left,#season-side-right,.nav-branch { display: none !important; }
 
@@ -365,22 +358,9 @@ button svg,
       <!-- LEFT: Images -->
       <div class="pd-images">
         <div class="pd-main-img">
-          <img id="p-image" src="images/gallery/bouquet-pink-roses.jpg" alt="Blush Romance bouquet">
+          <img id="p-image" alt="" style="display:none">
         </div>
-        <div class="pd-thumbs thumbnail-images">
-          <div class="pd-thumb active">
-            <img src="images/gallery/bouquet-pink-roses.jpg" alt="">
-          </div>
-          <div class="pd-thumb">
-            <img src="images/gallery/bouquet-pink-tulip.jpg" alt="">
-          </div>
-          <div class="pd-thumb">
-            <img src="images/gallery/bouquet-workshop.jpg" alt="">
-          </div>
-          <div class="pd-thumb">
-            <img src="images/gallery/flowers-market.jpg" alt="">
-          </div>
-        </div>
+        <div class="pd-thumbs thumbnail-images"></div>
       </div>
 
       <!-- RIGHT: Info -->
@@ -388,7 +368,7 @@ button svg,
         <div class="pd-top">
           <span class="mat-badge fresh" id="material-badge">Fresh</span>
         </div>
-        <h1 class="pd-title" id="p-title">Blush Romance</h1>
+        <h1 class="pd-title" id="p-title">Loading…</h1>
         <p class="pd-subtitle product-subtitle">Lush pink roses and seasonal peonies, hand-tied in our signature wrap. Made the morning it ships.</p>
 
         <div class="pd-divider"></div>

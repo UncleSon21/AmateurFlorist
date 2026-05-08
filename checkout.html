@@ -261,19 +261,12 @@ button{cursor:pointer;font-family:inherit}
 .cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
 
 /* ── DEV TOGGLE: hide decorative SVGs + seasonal animations (keep nav icons) ── */
-svg { display: none !important; }
-/* Whitelist: any SVG inside an interactive element stays visible. */
-a svg,
-button svg,
-.nav-icon-btn svg,
-.vs-close svg,
-.back-link svg,
-.item-remove svg,
-.qty-btn svg,
-.btn-add-cart svg,
-.btn-buy-now svg,
-.btn-checkout svg,
-.cart-icon svg                    { display: inline-block !important; }
+/* Hide only seasonal-theme injected decorations (canvas particles, nav branches, side panels) */
+#petals-canvas       { display: none !important; }
+.nav-branch          { display: none !important; }
+#season-side-left,
+#season-side-right   { display: none !important; }
+
 #petals-canvas                   { display: none !important; }
 #season-side-left,#season-side-right,.nav-branch { display: none !important; }
 
@@ -436,10 +429,10 @@ button svg,
             </div>
 
             <ul style="list-style:none;padding:0;margin:0 0 20px 0;display:grid;gap:10px;font-size:13px;color:var(--text-muted);line-height:1.5">
-              <li style="display:flex;gap:10px"><span style="color:var(--accent);flex-shrink:0">✓</span> Card, Apple Pay, Google Pay &amp; Link supported</li>
-              <li style="display:flex;gap:10px"><span style="color:var(--accent);flex-shrink:0">✓</span> 256-bit TLS encryption end-to-end</li>
-              <li style="display:flex;gap:10px"><span style="color:var(--accent);flex-shrink:0">✓</span> PCI-DSS Level 1 (the highest standard)</li>
-              <li style="display:flex;gap:10px"><span style="color:var(--accent);flex-shrink:0">✓</span> No charge until you confirm on the next page</li>
+              <li style="display:flex;gap:10px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);flex-shrink:0;margin-top:3px"><polyline points="20 6 9 17 4 12"/></svg> Card, Apple Pay, Google Pay &amp; Link supported</li>
+              <li style="display:flex;gap:10px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);flex-shrink:0;margin-top:3px"><polyline points="20 6 9 17 4 12"/></svg> 256-bit TLS encryption end-to-end</li>
+              <li style="display:flex;gap:10px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);flex-shrink:0;margin-top:3px"><polyline points="20 6 9 17 4 12"/></svg> PCI-DSS Level 1 (the highest standard)</li>
+              <li style="display:flex;gap:10px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);flex-shrink:0;margin-top:3px"><polyline points="20 6 9 17 4 12"/></svg> No charge until you confirm on the next page</li>
             </ul>
 
             <div class="card-brands">

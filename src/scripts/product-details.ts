@@ -10,8 +10,17 @@ function qs<T extends Element>(sel: string, ctx: Document | Element = document) 
 function updateNavCount() {
   const cart = loadCart();
   const total = cart.reduce((s: number, ci: any) => s + ci.qty, 0);
-  const el = qs<HTMLElement>(".cart-count");
-  if (el) el.textContent = String(total);
+  // Update both #nav-cart-count (id) and any .cart-count (class) — the nav badge has both.
+  document.querySelectorAll<HTMLElement>("#nav-cart-count, .cart-count").forEach(el => {
+    if (total > 0) {
+      el.textContent = String(total);
+      el.style.display = "";
+    } else {
+      el.style.display = "none";
+    }
+  });
+  // Also dispatch to other tabs / listeners
+  window.dispatchEvent(new Event("cart:changed"));
 }
 
 // ── State ─────────────────────────────────────────────────────────────────────

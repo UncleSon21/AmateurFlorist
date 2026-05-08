@@ -82,7 +82,6 @@ function renderItem(item: EnrichedItem): string {
     <div class="cart-item" data-index="${item.cartIndex}">
       <div class="item-image">
         ${imgContent}
-        <span style="${item.image ? "display:none" : ""}">🌸</span>
       </div>
       <div class="item-details">
         <div class="item-name">${item.name}</div>
@@ -132,7 +131,7 @@ function updateSummary(items: EnrichedItem[]) {
   } else if (isFreeDelivery) {
     deliveryEl.textContent = "FREE";
     deliveryEl.style.color = "#5a9a5a";
-    progressText.textContent = "🎉 You've unlocked free delivery!";
+    progressText.textContent = "You've unlocked free delivery";
     progressText.style.color = "#5a9a5a";
   } else {
     deliveryEl.textContent = fmt(DELIVERY_FEE_CENTS);

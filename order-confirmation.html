@@ -279,19 +279,12 @@ button{cursor:pointer;font-family:inherit}
 .cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
 
 /* ── DEV TOGGLE: hide decorative SVGs + seasonal animations (keep nav icons) ── */
-svg { display: none !important; }
-/* Whitelist: any SVG inside an interactive element stays visible. */
-a svg,
-button svg,
-.nav-icon-btn svg,
-.vs-close svg,
-.back-link svg,
-.item-remove svg,
-.qty-btn svg,
-.btn-add-cart svg,
-.btn-buy-now svg,
-.btn-checkout svg,
-.cart-icon svg                    { display: inline-block !important; }
+/* Hide only seasonal-theme injected decorations (canvas particles, nav branches, side panels) */
+#petals-canvas       { display: none !important; }
+.nav-branch          { display: none !important; }
+#season-side-left,
+#season-side-right   { display: none !important; }
+
 #petals-canvas                   { display: none !important; }
 #season-side-left,#season-side-right,.nav-branch { display: none !important; }
 
