@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart — Vaniaflorist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="season.js"></script>
+<style>
+:root {
+  --accent:      #8b7355;
+  --accent-dark: #2c2420;
+  --accent-light:#c8b89a;
+  --bg:          #faf8f4;
+  --bg-alt:      #f5f0e8;
+  --text:        #1e1a17;
+  --text-muted:  #6b5d54;
+  --border:      rgba(139,115,85,0.13);
+  --radius:      2px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:var(--text);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit}
+
+/* ── Top bar ── */
+.topbar{background:var(--accent-dark);color:var(--accent-light);text-align:center;padding:9px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
+.topbar a{color:#d4c5a0;border-bottom:.5px solid rgba(212,197,160,.4)}
+
+/* ── Nav ── */
+.nav{position:sticky;top:0;z-index:900;background:rgba(250,248,244,.96);border-bottom:.5px solid var(--border);backdrop-filter:blur(16px);}
+.nav-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:16px 48px;gap:24px;}
+.back-link{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);transition:color .3s,gap .3s;}
+.back-link:hover{color:var(--text);gap:12px}
+.logo{text-align:center}
+.logo-name{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block;}
+.logo-sub{font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:2px;}
+.nav-actions{display:flex;align-items:center;gap:16px;justify-content:flex-end}
+.nav-icon-btn{background:none;border:none;color:var(--text-muted);padding:8px;transition:color .3s;display:inline-flex;align-items:center;}
+
+/* ── Page ── */
+.cart-page{min-height:70vh;padding:52px 0 100px;background:var(--bg)}
+.container{max-width:1100px;margin:0 auto;padding:0 48px}
+
+/* ── Header ── */
+.cart-header{margin-bottom:40px}
+.cart-title{
+  font-family:'Great Vibes',cursive;
+  font-size:3rem;color:var(--accent);font-weight:400;
+  line-height:1;margin-bottom:6px;
+}
+.cart-sub{font-size:12px;color:var(--text-muted);letter-spacing:.5px}
+
+/* ── Layout ── */
+.cart-layout{display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:start;}
+
+/* ── Items panel ── */
+.items-panel{
+  background:#fff;border-radius:var(--radius);
+  border:.5px solid var(--border);overflow:hidden;
+}
+.panel-title{
+  padding:18px 24px;border-bottom:.5px solid var(--border);
+  font-size:9px;font-weight:400;letter-spacing:3px;text-transform:uppercase;
+  color:var(--accent-light);
+}
+
+/* Loading */
+.cart-loading{padding:60px 24px;text-align:center;color:var(--accent-light)}
+.spinner{
+  width:32px;height:32px;border:.5px solid var(--border);border-top-color:var(--accent);
+  border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Empty */
+.cart-empty{padding:72px 24px;text-align:center;display:none}
+.empty-icon{
+  width:64px;height:64px;margin:0 auto 20px;
+  background:var(--bg-alt);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.empty-icon svg{color:var(--accent-light)}
+.cart-empty h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--text);margin-bottom:8px}
+.cart-empty p{font-size:13px;color:var(--text-muted);margin-bottom:28px}
+.btn-shop{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent-dark);color:#faf8f4;
+  padding:13px 28px;border-radius:var(--radius);
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:background .3s;
+}
+.btn-shop:hover{background:var(--accent)}
+
+/* Item list */
+#cartList{display:none}
+.cart-item{
+  display:grid;grid-template-columns:88px 1fr auto;
+  gap:18px;align-items:center;
+  padding:20px 24px;border-bottom:.5px solid var(--border);
+  animation:slideIn .3s ease both;
+}
+.cart-item:last-child{border-bottom:none}
+@keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.item-img{
+  width:88px;height:88px;border-radius:var(--radius);overflow:hidden;
+  background:var(--bg-alt);flex-shrink:0;border:.5px solid var(--border);
+}
+.item-img img{width:100%;height:100%;object-fit:cover;display:block}
+.item-details{}
+.item-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:300;color:var(--text);margin-bottom:3px;
+}
+.item-meta{font-size:11px;color:var(--accent-light);margin-bottom:12px;letter-spacing:.5px}
+.item-qty-row{display:flex;align-items:center;gap:8px}
+.qty-btn{
+  width:28px;height:28px;border:.5px solid var(--border);
+  background:#fff;border-radius:var(--radius);
+  font-size:1rem;display:flex;align-items:center;justify-content:center;
+  color:var(--accent);transition:all .2s;
+}
+.qty-btn:hover{background:var(--accent-dark);color:#fff;border-color:var(--accent-dark)}
+.qty-val{width:32px;text-align:center;font-size:13px;color:var(--text)}
+.item-right{
+  display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex-shrink:0;
+}
+.item-price{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;font-weight:300;color:var(--accent);
+}
+.item-remove{
+  background:none;border:none;color:var(--border);padding:4px;
+  display:flex;align-items:center;transition:color .2s;
+}
+.item-remove:hover{color:#c0392b}
+
+/* ── Summary panel ── */
+.summary-panel{
+  background:#fff;border-radius:var(--radius);
+  border:.5px solid var(--border);overflow:hidden;
+  position:sticky;top:88px;
+}
+.summary-body{padding:22px}
+.summary-row{
+  display:flex;justify-content:space-between;
+  font-size:12px;color:var(--text-muted);margin-bottom:10px;
+}
+.summary-total{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding-top:16px;border-top:.5px solid var(--border);
+  margin-top:8px;margin-bottom:20px;
+}
+.summary-total-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
+#summaryTotal{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;font-weight:300;color:var(--accent);
+}
+
+/* Free delivery progress */
+.del-progress{margin-bottom:20px}
+.del-track{height:2px;background:var(--border);border-radius:1px;overflow:hidden;margin-bottom:6px}
+.del-bar{height:100%;background:var(--accent);border-radius:1px;transition:width .4s ease}
+.del-text{font-size:11px;color:var(--text-muted);text-align:center}
+.del-text strong{color:var(--accent)}
+
+/* Buttons */
+.btn-checkout{
+  display:block;width:100%;
+  background:var(--accent-dark);color:#faf8f4;border:none;
+  padding:14px;border-radius:var(--radius);
+  font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
+  text-align:center;transition:background .3s;margin-bottom:10px;
+}
+.btn-checkout:hover{background:var(--accent)}
+.btn-checkout.disabled{opacity:.4;pointer-events:none}
+.btn-continue{
+  display:block;width:100%;
+  background:transparent;color:var(--text-muted);
+  border:.5px solid var(--border);
+  padding:13px;border-radius:var(--radius);
+  font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
+  text-align:center;transition:border-color .3s,color .3s;
+}
+.btn-continue:hover{border-color:var(--accent);color:var(--text)}
+
+/* Trust row */
+.summary-trust{
+  display:flex;justify-content:center;gap:24px;
+  margin-top:18px;padding-top:18px;
+  border-top:.5px solid var(--border);
+}
+.trust-item{
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  font-size:10px;color:var(--accent-light);text-align:center;
+}
+.trust-item svg{color:var(--accent-light)}
+
+/* ── Footer ── */
+.footer{background:var(--accent-dark);padding:48px 0 24px}
+.footer-bottom{max-width:1200px;margin:0 auto;padding:0 48px;text-align:center;font-size:10px;letter-spacing:1px;color:#5a4e44}
+
+/* ── Responsive ── */
+@media(max-width:900px){.cart-layout{grid-template-columns:1fr}.summary-panel{position:static}}
+@media(max-width:768px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.container{padding:0 20px}}
+@media(max-width:600px){.cart-item{grid-template-columns:70px 1fr}.item-right{grid-column:2;flex-direction:row;align-items:center;justify-content:space-between}.item-img{width:70px;height:70px;grid-row:1/3}.cart-title{font-size:2.2rem}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  Free delivery across Sydney on orders over $80 — <a href="shop-redesign.html">Shop now</a>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="shop-redesign.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Continue shopping
+    </a>
+    <div class="logo">
+      <a href="Vaniaflorist Redesign.html">
+        <span class="logo-name">Vaniaflorist</span>
+        <span class="logo-sub">Sydney Florist</span>
+      </a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" aria-label="Cart" style="position:relative">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main class="cart-page">
+  <div class="container">
+    <div class="cart-header">
+      <h1 class="cart-title">Your Cart</h1>
+      <p class="cart-sub" id="cartSub">Loading your items…</p>
+    </div>
+
+    <div class="cart-layout">
+      <!-- Items -->
+      <div class="items-panel">
+        <div class="panel-title">Items</div>
+
+        <div class="cart-loading" id="cartLoading">
+          <div class="spinner"></div>
+          <p>Loading your cart…</p>
+        </div>
+
+        <div class="cart-empty" id="cartEmpty">
+          <div class="empty-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          </div>
+          <h3>Your cart is empty</h3>
+          <p>Add some beautiful flowers to get started.</p>
+          <a href="shop-redesign.html" class="btn-shop">Browse the shop →</a>
+        </div>
+
+        <div id="cartList"></div>
+      </div>
+
+      <!-- Summary -->
+      <div class="summary-panel">
+        <div class="panel-title">Order Summary</div>
+        <div class="summary-body">
+          <div class="summary-row">
+            <span>Subtotal (<span id="itemCount">0</span> items)</span>
+            <span id="subtotalVal">$0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>Delivery</span>
+            <span id="deliveryVal">—</span>
+          </div>
+          <div class="del-progress">
+            <div class="del-track"><div class="del-bar" id="delBar" style="width:0%"></div></div>
+            <p class="del-text" id="delText">Add items to see delivery estimate</p>
+          </div>
+          <div class="summary-total">
+            <span class="summary-total-label">Total</span>
+            <span id="summaryTotal">$0.00</span>
+          </div>
+
+          <a href="checkout.html" class="btn-checkout disabled" id="checkoutBtn">Proceed to Checkout</a>
+          <a href="shop-redesign.html" class="btn-continue">Continue Shopping</a>
+
+          <div class="summary-trust">
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Secure checkout
+            </div>
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Same-day delivery
+            </div>
+            <div class="trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              Fresh flowers
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-bottom">© 2026 Vaniaflorist · Sydney, NSW · All rights reserved</div>
+</footer>
+
+<script>
+// Auto seasonal colour
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.VaniaSeasons) window.VaniaSeasons.init();
+});
+
+// Mock cart data — replace with Supabase fetch
+const MOCK_CART = [
+  { id:1, name:'Blush Romance', meta:'Classic · Wrapped Bouquet', price:85, qty:1, img:'images/gallery/bouquet-pink-roses.jpg' },
+  { id:2, name:'Spring Tulips', meta:'Petite · In Vase',          price:95, qty:1, img:'images/gallery/bouquet-pink-tulip.jpg' },
+];
+
+let cart = MOCK_CART.map(i => ({...i}));
+const FREE_DELIVERY = 80;
+
+function renderCart() {
+  const loading = document.getElementById('cartLoading');
+  const empty   = document.getElementById('cartEmpty');
+  const list    = document.getElementById('cartList');
+
+  loading.style.display = 'none';
+
+  if (!cart.length) {
+    empty.style.display = 'block';
+    list.style.display  = 'none';
+    document.getElementById('cartSub').textContent = 'Your cart is empty';
+    updateSummary();
+    return;
+  }
+
+  empty.style.display = 'none';
+  list.style.display  = 'block';
+  const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+  document.getElementById('cartSub').textContent = `${totalItems} item${totalItems !== 1 ? 's' : ''} in your cart`;
+
+  list.innerHTML = cart.map(item => `
+    <div class="cart-item" data-id="${item.id}">
+      <div class="item-img">
+        <img src="${item.img}" alt="${item.name}">
+      </div>
+      <div class="item-details">
+        <h3 class="item-name">${item.name}</h3>
+        <p class="item-meta">${item.meta}</p>
+        <div class="item-qty-row">
+          <button class="qty-btn" onclick="changeItemQty(${item.id}, -1)">−</button>
+          <span class="qty-val">${item.qty}</span>
+          <button class="qty-btn" onclick="changeItemQty(${item.id}, 1)">+</button>
+        </div>
+      </div>
+      <div class="item-right">
+        <span class="item-price">$${(item.price * item.qty).toFixed(2)}</span>
+        <button class="item-remove" onclick="removeItem(${item.id})" aria-label="Remove">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  updateSummary();
+}
+
+function updateSummary() {
+  const subtotal    = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const totalItems  = cart.reduce((s, i) => s + i.qty, 0);
+  const delivery    = subtotal >= FREE_DELIVERY || subtotal === 0 ? 0 : 12;
+  const total       = subtotal + delivery;
+  const progress    = Math.min(100, (subtotal / FREE_DELIVERY) * 100);
+
+  document.getElementById('itemCount').textContent    = totalItems;
+  document.getElementById('subtotalVal').textContent  = `$${subtotal.toFixed(2)}`;
+  document.getElementById('deliveryVal').textContent  = delivery === 0 ? (subtotal > 0 ? 'Free' : '—') : `$${delivery.toFixed(2)}`;
+  document.getElementById('summaryTotal').textContent = `$${total.toFixed(2)}`;
+  document.getElementById('delBar').style.width       = `${progress}%`;
+
+  const remaining = FREE_DELIVERY - subtotal;
+  const delText   = document.getElementById('delText');
+  if (subtotal === 0) {
+    delText.innerHTML = 'Add items to see delivery estimate';
+  } else if (remaining > 0) {
+    delText.innerHTML = `Add <strong>$${remaining.toFixed(2)}</strong> more for free delivery`;
+  } else {
+    delText.innerHTML = '<strong>You qualify for free delivery</strong>';
+  }
+
+  const btn = document.getElementById('checkoutBtn');
+  if (cart.length) { btn.classList.remove('disabled'); } else { btn.classList.add('disabled'); }
+}
+
+function changeItemQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty = Math.max(1, item.qty + delta);
+  renderCart();
+}
+
+function removeItem(id) {
+  cart = cart.filter(i => i.id !== id);
+  renderCart();
+}
+
+// Simulate loading
+setTimeout(renderCart, 600);
+</script>
+
+</body>
+</html>

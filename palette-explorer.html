@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Palette Explorer — Vaniaflorist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;background:#1a1614;color:#e8e2da;padding:32px;line-height:1.5}
+.page-h{max-width:1400px;margin:0 auto 28px}
+.page-h h1{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;letter-spacing:-.5px;color:#fff}
+.page-h p{color:#a89e92;margin-top:6px;max-width:680px;font-size:13px}
+.legend{margin-top:14px;display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:#a89e92}
+.legend kbd{background:#2a2420;padding:2px 8px;border-radius:3px;color:#e8e2da;font-family:'DM Sans',sans-serif;letter-spacing:.5px;font-size:10px}
+
+.season-row{max-width:1400px;margin:0 auto 40px}
+.season-h{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:#fff;margin-bottom:6px;letter-spacing:-.3px}
+.season-meta{font-size:11px;color:#a89e92;margin-bottom:18px;letter-spacing:1px;text-transform:uppercase}
+.season-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+
+.swatch-card{
+  border-radius:4px;overflow:hidden;
+  background:var(--bg);color:var(--text);
+  border:.5px solid rgba(255,255,255,.08);
+  cursor:pointer;transition:transform .25s,border-color .25s,box-shadow .25s;
+  display:flex;flex-direction:column;
+  font-family:'DM Sans',sans-serif;
+  position:relative;
+}
+.swatch-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.2);box-shadow:0 12px 32px rgba(0,0,0,.4)}
+.swatch-card.selected{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.15),0 12px 36px rgba(0,0,0,.5)}
+.swatch-card.selected::after{
+  content:'✓';position:absolute;top:10px;right:10px;
+  width:22px;height:22px;border-radius:50%;background:#fff;color:#1a1614;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;
+  box-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+
+.sw-preview{padding:20px 22px 24px;flex:1;display:flex;flex-direction:column}
+.sw-eyebrow{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent-light);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sw-eyebrow::before{content:'';width:18px;height:.5px;background:var(--accent-light)}
+.sw-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;line-height:1.05;letter-spacing:-.3px;color:var(--accent-heading);margin-bottom:6px}
+.sw-title em{font-style:italic;color:var(--accent-heading)}
+.sw-script{font-family:'Great Vibes',cursive;color:var(--accent-heading);font-size:1.5rem;line-height:1;font-style:normal;display:block;margin-top:2px}
+.sw-body{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:var(--text-muted);line-height:1.6;margin:8px 0 14px}
+.sw-cta-row{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:8px}
+.sw-btn{display:inline-block;background:var(--accent-dark);color:var(--bg);padding:9px 16px;border-radius:2px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none}
+.sw-link{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent-heading);border-bottom:.5px solid var(--accent-heading)}
+
+.sw-chips{display:flex;height:42px;border-top:.5px solid rgba(0,0,0,.06)}
+.sw-chip{flex:1;display:flex;align-items:center;justify-content:center;font-size:9px;letter-spacing:1.5px;text-transform:uppercase}
+
+.sw-meta{padding:10px 18px;background:rgba(0,0,0,.04);font-size:10px;color:var(--text-muted);display:flex;justify-content:space-between;border-top:.5px solid rgba(0,0,0,.06)}
+.sw-meta strong{color:var(--text);font-weight:400}
+
+.review-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(20,17,15,.97);backdrop-filter:blur(16px);
+  border-top:.5px solid rgba(255,255,255,.1);
+  padding:18px 32px;
+  display:flex;align-items:center;gap:24px;
+  z-index:100;
+}
+.review-summary{flex:1;display:flex;gap:24px;flex-wrap:wrap;font-size:12px}
+.review-item{display:flex;align-items:center;gap:8px;color:#a89e92}
+.review-item strong{color:#fff;font-weight:400}
+.review-swatch{width:20px;height:20px;border-radius:3px;border:.5px solid rgba(255,255,255,.2)}
+.review-cta{
+  background:#fff;color:#1a1614;border:none;
+  padding:11px 22px;border-radius:3px;
+  font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;
+  cursor:pointer;transition:opacity .3s;
+}
+.review-cta:hover{opacity:.85}
+.review-cta:disabled{opacity:.4;cursor:not-allowed}
+
+@media(max-width:900px){
+  .season-grid{grid-template-columns:1fr}
+  body{padding:20px;padding-bottom:140px}
+}
+</style>
+</head>
+<body>
+
+<div class="page-h">
+  <h1>Palette Explorer</h1>
+  <p>Each season shows three accent pairings. The accent colour appears on headings, italic emphasis, the script font, and inline links. The base/dark/light tones stay the same — we're just trying out different "voice" colours.</p>
+  <div class="legend">
+    <span><kbd>Click</kbd> a swatch to select it for that season</span>
+    <span><kbd>4 selections</kbd> — one per season</span>
+    <span>When all 4 are picked, hit <kbd>Apply</kbd></span>
+  </div>
+</div>
+
+<!-- SPRING -->
+<div class="season-row" data-season="spring">
+  <h2 class="season-h">Spring · Rose <span style="color:#a89e92;font-size:.65em;font-style:italic;font-family:'Cormorant Garamond',serif">— soft, romantic, garden-fresh</span></h2>
+  <p class="season-meta">Base: dusty rose · #a05870</p>
+  <div class="season-grid"></div>
+</div>
+
+<!-- SUMMER -->
+<div class="season-row" data-season="summer">
+  <h2 class="season-h">Summer · Sage <span style="color:#a89e92;font-size:.65em;font-style:italic;font-family:'Cormorant Garamond',serif">— calm, herbal, sun-bleached</span></h2>
+  <p class="season-meta">Base: muted sage · #6b8870</p>
+  <div class="season-grid"></div>
+</div>
+
+<!-- AUTUMN -->
+<div class="season-row" data-season="autumn">
+  <h2 class="season-h">Autumn · Taupe <span style="color:#a89e92;font-size:.65em;font-style:italic;font-family:'Cormorant Garamond',serif">— warm, earthy, considered</span></h2>
+  <p class="season-meta">Base: warm taupe · #8b7355</p>
+  <div class="season-grid"></div>
+</div>
+
+<!-- WINTER -->
+<div class="season-row" data-season="winter">
+  <h2 class="season-h">Winter · Frost <span style="color:#a89e92;font-size:.65em;font-style:italic;font-family:'Cormorant Garamond',serif">— crisp, quiet, considered</span></h2>
+  <p class="season-meta">Base: blue-grey · #6e8499</p>
+  <div class="season-grid"></div>
+</div>
+
+<div class="review-bar">
+  <div class="review-summary" id="reviewSummary">
+    <div class="review-item">Spring · <strong>Pick one above</strong></div>
+    <div class="review-item">Summer · <strong>Pick one above</strong></div>
+    <div class="review-item">Autumn · <strong>Pick one above</strong></div>
+    <div class="review-item">Winter · <strong>Pick one above</strong></div>
+  </div>
+  <button class="review-cta" id="applyBtn" disabled onclick="applySelections()">Apply Selections →</button>
+</div>
+
+<script>
+// Palette options per season — each season has a base palette + 3 heading-accent variants
+const PALETTES = {
+  spring: {
+    base: { accent:'#a05870', accentDark:'#2a1a1f', accentLight:'#c8a0b0', bg:'#fdf8f9', bgAlt:'#f5eff2', text:'#1e1517', textMuted:'#6b5158' },
+    options: [
+      { id:'burgundy',   name:'Deep Burgundy', accentHeading:'#5a1a2a', desc:'Rich + romantic. Headings feel like deep wine.' },
+      { id:'champagne',  name:'Soft Gold',     accentHeading:'#8a7548', desc:'Delicate, airy. Like vintage paper.' },
+      { id:'forest',     name:'Forest Green',  accentHeading:'#2d4a3a', desc:'Botanical contrast. Garden + earth.' },
+    ]
+  },
+  summer: {
+    base: { accent:'#6b8870', accentDark:'#1e2a22', accentLight:'#a8c0aa', bg:'#f8faf8', bgAlt:'#eef3ee', text:'#1a201c', textMuted:'#5d6b60' },
+    options: [
+      { id:'gold',       name:'Warm Gold',     accentHeading:'#a88433', desc:'Brass + sage. Your suggestion ✦' },
+      { id:'antique',    name:'Antique Gold',  accentHeading:'#7d6740', desc:'Slightly muted, more grounded.' },
+      { id:'coral',      name:'Coral Blush',   accentHeading:'#c47a6e', desc:'Softer warmth. Sunset-on-leaves.' },
+    ]
+  },
+  autumn: {
+    base: { accent:'#8b7355', accentDark:'#2c2420', accentLight:'#c8b89a', bg:'#faf8f4', bgAlt:'#f5f0e8', text:'#1e1a17', textMuted:'#6b5d54' },
+    options: [
+      { id:'terracotta', name:'Terracotta',    accentHeading:'#a85738', desc:'Earthy, warm. Like dried clay.' },
+      { id:'orange',     name:'Burnt Orange',  accentHeading:'#c85a28', desc:'Bolder, autumnal pop.' },
+      { id:'aubergine',  name:'Deep Aubergine',accentHeading:'#4a2438', desc:'Refined contrast. Quiet richness.' },
+    ]
+  },
+  winter: {
+    base: { accent:'#6e8499', accentDark:'#1c2630', accentLight:'#b4c4d2', bg:'#f6f8fa', bgAlt:'#eaf0f5', text:'#161e26', textMuted:'#566876' },
+    options: [
+      { id:'navy',       name:'Deep Navy',     accentHeading:'#1c3656', desc:'Classic, crisp. Maritime depth.' },
+      { id:'pewter',     name:'Pewter Silver', accentHeading:'#5a6878', desc:'Icy, minimal. Almost monochrome.' },
+      { id:'burgundy',   name:'Burgundy',      accentHeading:'#6a1f2a', desc:'Warm against cold blue. Holiday wine.' },
+    ]
+  }
+};
+
+const selections = { spring:null, summer:null, autumn:null, winter:null };
+
+// Render swatch cards
+Object.keys(PALETTES).forEach(seasonKey => {
+  const data = PALETTES[seasonKey];
+  const grid = document.querySelector(`.season-row[data-season="${seasonKey}"] .season-grid`);
+  data.options.forEach(opt => {
+    const card = document.createElement('div');
+    card.className = 'swatch-card';
+    card.dataset.season = seasonKey;
+    card.dataset.option = opt.id;
+    card.style.cssText = `
+      --bg:${data.base.bg};
+      --bg-alt:${data.base.bgAlt};
+      --text:${data.base.text};
+      --text-muted:${data.base.textMuted};
+      --accent:${data.base.accent};
+      --accent-dark:${data.base.accentDark};
+      --accent-light:${data.base.accentLight};
+      --accent-heading:${opt.accentHeading};
+    `;
+    card.innerHTML = `
+      <div class="sw-preview">
+        <p class="sw-eyebrow">${opt.name}</p>
+        <h3 class="sw-title">A bouquet, <em>thoughtfully</em><span class="sw-script">in bloom</span></h3>
+        <p class="sw-body">Hand-tied seasonal flowers, delivered across Sydney since 2018.</p>
+        <div class="sw-cta-row">
+          <a href="#" class="sw-btn">Shop now</a>
+          <a href="#" class="sw-link">Learn more →</a>
+        </div>
+      </div>
+      <div class="sw-chips" style="background:${data.base.bgAlt}">
+        <div class="sw-chip" style="background:${data.base.accent};color:${data.base.bg}">Base</div>
+        <div class="sw-chip" style="background:${data.base.accentDark};color:${data.base.bg}">Dark</div>
+        <div class="sw-chip" style="background:${opt.accentHeading};color:${data.base.bg}">Heading</div>
+        <div class="sw-chip" style="background:${data.base.accentLight};color:${data.base.accentDark}">Light</div>
+      </div>
+      <div class="sw-meta">
+        <span style="font-style:italic;font-family:'Cormorant Garamond',serif;font-size:12px">${opt.desc}</span>
+        <span><strong>${opt.accentHeading}</strong></span>
+      </div>
+    `;
+    card.addEventListener('click', () => selectOption(seasonKey, opt.id));
+    grid.appendChild(card);
+  });
+});
+
+function selectOption(seasonKey, optionId) {
+  selections[seasonKey] = optionId;
+  // Update UI
+  document.querySelectorAll(`.swatch-card[data-season="${seasonKey}"]`).forEach(c => {
+    c.classList.toggle('selected', c.dataset.option === optionId);
+  });
+  // Update review bar
+  const items = document.querySelectorAll('.review-item');
+  ['spring','summer','autumn','winter'].forEach((s, i) => {
+    const sel = selections[s];
+    if (sel) {
+      const opt = PALETTES[s].options.find(o => o.id === sel);
+      items[i].innerHTML = `<span class="review-swatch" style="background:${opt.accentHeading}"></span>${s.charAt(0).toUpperCase()+s.slice(1)} · <strong>${opt.name}</strong>`;
+    } else {
+      items[i].innerHTML = `${s.charAt(0).toUpperCase()+s.slice(1)} · <strong style="color:#7d7167">Not picked</strong>`;
+    }
+  });
+  // Enable apply button when all 4 selected
+  const allPicked = Object.values(selections).every(Boolean);
+  document.getElementById('applyBtn').disabled = !allPicked;
+}
+
+function applySelections() {
+  const summary = ['spring','summer','autumn','winter'].map(s => {
+    const opt = PALETTES[s].options.find(o => o.id === selections[s]);
+    return `${s}: ${opt.name} (${opt.accentHeading})`;
+  }).join('\n');
+  // Save to localStorage so user can see what they chose
+  try { localStorage.setItem('vania-palette-selections', JSON.stringify(selections)); } catch(e){}
+  alert('Your picks:\n\n' + summary + '\n\nTell Claude which combos you chose — they\'ll be applied across all pages.');
+}
+</script>
+</body>
+</html>

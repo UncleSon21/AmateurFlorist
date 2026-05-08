@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weddings — Vaniaflorist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="season.js"></script>
+<style>
+:root{
+  --accent:#8b7355; --accent-dark:#2c2420; --accent-light:#c8b89a;
+  --bg:#faf8f4; --bg-alt:#f5f0e8;
+  --text:#1e1a17; --text-muted:#6b5d54;
+  --border:rgba(139,115,85,0.13); --radius:2px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:var(--text);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit}
+
+.topbar{background:var(--accent-dark);color:var(--accent-light);text-align:center;padding:9px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+.nav{position:sticky;top:0;z-index:900;background:rgba(250,248,244,.96);border-bottom:.5px solid var(--border);backdrop-filter:blur(16px)}
+.nav-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:16px 48px}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);transition:color .3s}
+.nav-links a.current{color:var(--text)}
+.nav-links a:hover{color:var(--text)}
+.logo{text-align:center}
+.logo-name{font-family:'Great Vibes',cursive;font-size:2.4rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block}
+.logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:3px}
+.nav-actions{display:flex;align-items:center;gap:16px;justify-content:flex-end}
+.nav-icon-btn{background:none;border:none;color:var(--text-muted);padding:8px;display:inline-flex}
+
+/* HERO */
+.w-hero{position:relative;min-height:84vh;display:grid;grid-template-columns:1fr 1.1fr;background:var(--bg-alt)}
+.w-hero-text{display:flex;flex-direction:column;justify-content:center;padding:80px clamp(40px,6vw,100px)}
+.w-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.w-eyebrow::before{content:'';width:24px;height:.5px;background:var(--accent-light)}
+.w-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5vw,4.8rem);font-weight:300;line-height:1.04;letter-spacing:-1px;margin-bottom:20px}
+.w-h1 em{font-style:italic;color:var(--accent)}
+.w-script{font-family:'Great Vibes',cursive;color:var(--accent);font-size:1.2em;font-style:normal;letter-spacing:1px;display:block}
+.w-sub{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--text-muted);margin-bottom:32px;max-width:480px}
+.w-hero-btns{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn-dark{display:inline-flex;align-items:center;gap:8px;background:var(--accent-dark);color:var(--bg);padding:14px 30px;border-radius:var(--radius);font-size:10px;letter-spacing:2px;text-transform:uppercase;border:none;transition:background .3s}
+.btn-dark:hover{background:var(--accent)}
+.btn-ghost{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);border-bottom:.5px solid var(--border);padding-bottom:3px;transition:color .3s,gap .3s,border-color .3s}
+.btn-ghost:hover{color:var(--text);gap:12px;border-color:var(--accent)}
+.w-hero-img{position:relative;overflow:hidden}
+.w-hero-img img{width:100%;height:100%;object-fit:cover}
+.w-hero-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--bg-alt) 0%,transparent 18%);pointer-events:none}
+.w-hero-tag{position:absolute;bottom:32px;right:32px;background:rgba(28,22,18,.7);backdrop-filter:blur(8px);color:#faf8f4;padding:14px 22px;font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;border-radius:var(--radius);max-width:240px;line-height:1.5}
+
+/* SECTIONS */
+.section{padding:96px 0}
+.container{max-width:1200px;margin:0 auto;padding:0 48px}
+.eyebrow{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.eyebrow::before{content:'';display:inline-block;width:20px;height:.5px;background:var(--accent-light)}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.2vw,2.8rem);font-weight:300;letter-spacing:-.5px;line-height:1.1}
+.sec-sub{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--text-muted);margin-top:10px;max-width:560px}
+
+/* TWO PATHS — Fresh vs Forever */
+.paths-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:48px;border:.5px solid var(--border)}
+.path-card{background:#fff;padding:48px 44px;position:relative;display:flex;flex-direction:column}
+.path-img{aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;margin-bottom:28px;background:var(--bg-alt)}
+.path-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.path-card:hover .path-img img{transform:scale(1.04)}
+.path-num{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:2px;color:var(--accent-light);margin-bottom:10px}
+.path-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--text);margin-bottom:6px;letter-spacing:-.5px}
+.path-tag{font-family:'Great Vibes',cursive;color:var(--accent);font-size:1.4rem;display:block;margin-bottom:18px}
+.path-desc{font-size:14px;color:var(--text-muted);line-height:1.85;margin-bottom:24px}
+.path-feat{list-style:none;margin-bottom:28px}
+.path-feat li{font-size:13px;color:var(--text);padding:10px 0;border-bottom:.5px solid var(--border);display:flex;align-items:center;gap:10px}
+.path-feat li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.path-feat li:last-child{border-bottom:none}
+.path-cta{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:20px;border-top:.5px solid var(--border)}
+.path-from{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--text-muted);font-style:italic}
+.path-from strong{font-style:normal;font-size:1.4rem;color:var(--accent);font-weight:300;display:block;margin-top:2px}
+
+/* PACKAGES */
+.pkg-bg{background:var(--bg-alt)}
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.pkg-card{background:#fff;border:.5px solid var(--border);border-radius:var(--radius);padding:36px 32px;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s,border-color .3s;position:relative}
+.pkg-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.08)}
+.pkg-card.featured{border-color:var(--accent);background:#fff}
+.pkg-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent-dark);color:var(--bg);padding:5px 14px;border-radius:99px;font-size:9px;letter-spacing:2px;text-transform:uppercase}
+.pkg-name{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--text);margin-bottom:4px;letter-spacing:-.3px}
+.pkg-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light);margin-bottom:24px}
+.pkg-price{font-family:'Cormorant Garamond',serif;color:var(--accent);font-size:2.8rem;font-weight:300;line-height:1;margin-bottom:6px;letter-spacing:-1px}
+.pkg-price .sm{font-size:.8rem;color:var(--text-muted);font-style:italic;letter-spacing:0;margin-left:4px}
+.pkg-from{font-size:11px;color:var(--accent-light);letter-spacing:1px;margin-bottom:24px}
+.pkg-incl{list-style:none;margin-bottom:28px;flex:1}
+.pkg-incl li{font-size:13px;color:var(--text-muted);padding:9px 0;border-bottom:.5px solid var(--border);display:flex;align-items:flex-start;gap:10px;line-height:1.5}
+.pkg-incl li::before{content:'✓';color:var(--accent);flex-shrink:0;font-size:11px;margin-top:3px}
+.pkg-incl li:last-child{border-bottom:none}
+.pkg-cta{display:block;text-align:center;background:transparent;color:var(--text);border:.5px solid var(--border);padding:14px;border-radius:var(--radius);font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:all .3s}
+.pkg-cta:hover{border-color:var(--accent);background:var(--accent-dark);color:var(--bg)}
+.pkg-card.featured .pkg-cta{background:var(--accent-dark);color:var(--bg);border-color:var(--accent-dark)}
+.pkg-card.featured .pkg-cta:hover{background:var(--accent);border-color:var(--accent)}
+
+/* INCLUDED PIECES — gallery showing arrangement types */
+.pieces-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:48px}
+.piece-card{background:#fff;border:.5px solid var(--border);border-radius:var(--radius);overflow:hidden;text-align:center;transition:transform .3s}
+.piece-card:hover{transform:translateY(-4px)}
+.piece-img{aspect-ratio:1/1;overflow:hidden;background:var(--bg-alt)}
+.piece-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.piece-card:hover .piece-img img{transform:scale(1.06)}
+.piece-body{padding:16px 14px}
+.piece-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);margin-bottom:3px}
+.piece-from{font-size:10px;color:var(--accent-light);letter-spacing:1px}
+
+/* PROCESS */
+.proc-bg{background:var(--bg)}
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:48px;border:.5px solid var(--border)}
+.proc-step{background:var(--bg);padding:36px 32px;position:relative}
+.proc-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:var(--accent);font-style:italic;line-height:1;display:block;margin-bottom:18px}
+.proc-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;color:var(--text);margin-bottom:8px}
+.proc-desc{font-size:12px;color:var(--text-muted);line-height:1.7}
+
+/* COUPLE TESTIMONIAL */
+.couple-feature{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;margin-top:48px}
+.couple-photo{aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.1)}
+.couple-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.couple-quote{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;font-weight:300;color:var(--text);line-height:1.6;margin-bottom:24px}
+.couple-meta{display:flex;align-items:center;gap:14px;margin-bottom:32px}
+.couple-stars{color:var(--accent-light);font-size:13px;letter-spacing:2px}
+.couple-name{font-size:11px;letter-spacing:1.5px;color:var(--accent-light)}
+
+/* GALLERY */
+.wgal-bg{background:var(--bg-alt)}
+.wgal-grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:160px;gap:8px;margin-top:48px}
+.wgal-item{overflow:hidden;border-radius:var(--radius);position:relative}
+.wgal-item img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.wgal-item:hover img{transform:scale(1.05)}
+.wgal-1{grid-column:span 2;grid-row:span 2}
+.wgal-2{grid-column:span 2}
+.wgal-3{grid-column:span 2;grid-row:span 2}
+.wgal-4{grid-column:span 2}
+.wgal-5{grid-column:span 3}
+.wgal-6{grid-column:span 3}
+
+/* FAQ */
+.faq-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:72px;margin-top:48px;align-items:start}
+.faq-list{display:flex;flex-direction:column;border-top:.5px solid var(--border)}
+.faq-item{border-bottom:.5px solid var(--border);padding:24px 0;cursor:pointer}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:24px;font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:300;color:var(--text);transition:color .3s}
+.faq-q span:last-child{font-size:1.4rem;color:var(--accent);font-weight:300;transition:transform .35s cubic-bezier(.16,1,.3,1);flex-shrink:0}
+.faq-item.open .faq-q span:last-child{transform:rotate(45deg)}
+.faq-item.open .faq-q{color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1),margin-top .3s}
+.faq-item.open .faq-a{max-height:240px;margin-top:14px}
+.faq-a p{font-size:13px;color:var(--text-muted);line-height:1.85}
+
+/* ENQUIRE FORM */
+.enq-bg{background:var(--accent-dark);color:var(--bg)}
+.enq-bg .eyebrow{color:var(--accent-light)}
+.enq-bg .sec-title{color:var(--bg)}
+.enq-bg .sec-sub{color:rgba(250,248,244,.7)}
+.enq-card{background:rgba(250,248,244,.04);border:.5px solid rgba(250,248,244,.1);border-radius:var(--radius);padding:48px;margin-top:48px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.enq-card .field{display:flex;flex-direction:column;gap:6px}
+.enq-card .field.full{grid-column:1/-1}
+.enq-card label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light)}
+.enq-card input,.enq-card select,.enq-card textarea{padding:13px 14px;border:.5px solid rgba(250,248,244,.15);background:rgba(250,248,244,.04);border-radius:var(--radius);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;outline:none;transition:border-color .3s,background .3s}
+.enq-card input:focus,.enq-card select:focus,.enq-card textarea:focus{border-color:var(--accent-light);background:rgba(250,248,244,.07)}
+.enq-card textarea{resize:vertical;min-height:100px;font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic}
+.enq-card select option{background:var(--accent-dark);color:var(--bg)}
+.enq-submit-row{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-top:8px}
+.enq-fine{font-size:11px;color:rgba(250,248,244,.5);font-style:italic;font-family:'Cormorant Garamond',serif}
+.enq-card .btn-light{background:var(--bg);color:var(--accent-dark);padding:14px 30px;border:none;border-radius:var(--radius);font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:background .3s}
+.enq-card .btn-light:hover{background:var(--accent-light)}
+
+/* FOOTER */
+.footer{background:var(--accent-dark);padding:64px 0 28px;border-top:.5px solid rgba(250,248,244,.05)}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 48px}
+.footer-bottom{text-align:center;padding-top:24px;font-size:10px;letter-spacing:1px;color:#5a4e44}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .w-hero{grid-template-columns:1fr;min-height:auto}
+  .w-hero-img{aspect-ratio:4/3}
+  .paths-grid{grid-template-columns:1fr}
+  .pkg-grid{grid-template-columns:1fr;gap:14px}
+  .pieces-grid{grid-template-columns:repeat(2,1fr)}
+  .proc-grid{grid-template-columns:1fr 1fr}
+  .couple-feature{grid-template-columns:1fr;gap:32px}
+  .wgal-grid{grid-template-columns:repeat(4,1fr)}
+  .wgal-1,.wgal-2,.wgal-3,.wgal-4,.wgal-5,.wgal-6{grid-column:span 2}
+  .faq-grid{grid-template-columns:1fr;gap:24px}
+  .enq-card{grid-template-columns:1fr;padding:32px 28px}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}
+  .container{padding:0 20px}
+  .section{padding:64px 0}
+  .pieces-grid{grid-template-columns:1fr 1fr}
+  .proc-grid{grid-template-columns:1fr}
+  .wgal-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">Wedding consultations from $0 — book your free 30-minute discovery call</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="shop-redesign.html">Shop ⌄</a>
+      <a href="#">Occasions</a>
+      <a href="about-redesign.html">About</a>
+      <a href="weddings.html" class="current">Weddings</a>
+    </div>
+    <div class="logo">
+      <a href="Vaniaflorist Redesign.html">
+        <span class="logo-name">Vaniaflorist</span>
+        <span class="logo-sub">Sydney Florist</span>
+      </a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" aria-label="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+      <button class="nav-icon-btn" aria-label="Cart"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="w-hero">
+  <div class="w-hero-text">
+    <p class="w-eyebrow">The Ceremony Collection</p>
+    <h1 class="w-h1">A wedding day, <em>thoughtfully</em><br><span class="w-script">in bloom</span></h1>
+    <p class="w-sub">From the bouquet you carry down the aisle to the petals at every place setting — wedding flowers tailored to your story, in fresh, preserved, or both.</p>
+    <div class="w-hero-btns">
+      <a href="#enquire" class="btn-dark">Book a consultation</a>
+      <a href="#packages" class="btn-ghost">View packages →</a>
+    </div>
+  </div>
+  <div class="w-hero-img">
+    <img src="images/gallery/bouquet-white.jpg" alt="White wedding bouquet">
+    <div class="w-hero-tag">"Sarah &amp; James — November 2025, Centennial Park"</div>
+  </div>
+</section>
+
+<!-- TWO PATHS -->
+<section class="section">
+  <div class="container">
+    <p class="eyebrow">Two ways to bloom</p>
+    <h2 class="sec-title">Fresh, forever, or<br>a little of both</h2>
+    <p class="sec-sub">Some couples want the scent and softness of a bouquet picked the morning of. Others want a keepsake that lasts a lifetime. We do both — and we do them together, beautifully.</p>
+
+    <div class="paths-grid">
+      <div class="path-card">
+        <div class="path-img"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Fresh wedding flowers"></div>
+        <span class="path-num">— 01 —</span>
+        <h3 class="path-title">Fresh wedding flowers</h3>
+        <span class="path-tag">picked the morning of</span>
+        <p class="path-desc">Seasonal blooms cut and arranged the morning of your ceremony. Soft, fragrant, alive — the way wedding flowers are meant to be.</p>
+        <ul class="path-feat">
+          <li>Sourced from local Sydney growers</li>
+          <li>Same-day arrangement, refrigerated until delivery</li>
+          <li>Free on-site setup for full venues</li>
+          <li>Optional preservation service after the day</li>
+        </ul>
+        <div class="path-cta">
+          <span class="path-from">Bouquets from <strong>$280</strong></span>
+          <a href="#packages" class="btn-ghost">See packages →</a>
+        </div>
+      </div>
+
+      <div class="path-card">
+        <div class="path-img"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Forever wedding flowers"></div>
+        <span class="path-num">— 02 —</span>
+        <h3 class="path-title">Forever wedding flowers</h3>
+        <span class="path-tag">a keepsake that lasts</span>
+        <p class="path-desc">Carefully crafted artificial &amp; preserved arrangements, indistinguishable from fresh. Perfect for destination weddings, allergies, or couples who want to keep their bouquet forever.</p>
+        <ul class="path-feat">
+          <li>Premium silk &amp; preserved real flowers</li>
+          <li>Travel-safe — ships anywhere in Australia</li>
+          <li>Reusable for engagement, hens &amp; rehearsal</li>
+          <li>Custom keepsake box included</li>
+        </ul>
+        <div class="path-cta">
+          <span class="path-from">Bouquets from <strong>$220</strong></span>
+          <a href="#packages" class="btn-ghost">See packages →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="section pkg-bg" id="packages">
+  <div class="container">
+    <p class="eyebrow">Wedding packages</p>
+    <h2 class="sec-title">Three considered packages</h2>
+    <p class="sec-sub">Or build your own — every package is a starting point, fully customisable in your consultation.</p>
+
+    <div class="pkg-grid">
+      <div class="pkg-card">
+        <h3 class="pkg-name">The Intimate</h3>
+        <p class="pkg-tag">For 20–40 guests</p>
+        <p class="pkg-price">$1,450<span class="sm">+</span></p>
+        <p class="pkg-from">Starting price · Quoted per couple</p>
+        <ul class="pkg-incl">
+          <li>Bridal bouquet (signature size)</li>
+          <li>1 boutonnière</li>
+          <li>2 ceremony arrangements</li>
+          <li>1 reception centrepiece</li>
+          <li>Loose petals for aisle</li>
+        </ul>
+        <a href="#enquire" class="pkg-cta">Enquire — Intimate</a>
+      </div>
+
+      <div class="pkg-card featured">
+        <span class="pkg-badge">Most chosen</span>
+        <h3 class="pkg-name">The Considered</h3>
+        <p class="pkg-tag">For 50–100 guests</p>
+        <p class="pkg-price">$3,200<span class="sm">+</span></p>
+        <p class="pkg-from">Starting price · Quoted per couple</p>
+        <ul class="pkg-incl">
+          <li>Bridal bouquet + 3 bridesmaid posies</li>
+          <li>4 boutonnières + 2 corsages</li>
+          <li>Ceremony arch florals</li>
+          <li>6 reception centrepieces</li>
+          <li>Cake florals + signage florals</li>
+          <li>Free setup &amp; pack-down</li>
+        </ul>
+        <a href="#enquire" class="pkg-cta">Enquire — Considered</a>
+      </div>
+
+      <div class="pkg-card">
+        <h3 class="pkg-name">The Bespoke</h3>
+        <p class="pkg-tag">For 100+ guests</p>
+        <p class="pkg-price">$6,500<span class="sm">+</span></p>
+        <p class="pkg-from">Starting price · Quoted per couple</p>
+        <ul class="pkg-incl">
+          <li>Full bridal party florals</li>
+          <li>Statement ceremony installation</li>
+          <li>Hanging florals or floor pieces</li>
+          <li>10+ reception centrepieces</li>
+          <li>Cocktail &amp; signage florals</li>
+          <li>Dedicated wedding florist on the day</li>
+          <li>Day-after pickup &amp; preservation</li>
+        </ul>
+        <a href="#enquire" class="pkg-cta">Enquire — Bespoke</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INCLUDED PIECES -->
+<section class="section">
+  <div class="container">
+    <p class="eyebrow">À la carte pieces</p>
+    <h2 class="sec-title">Mix &amp; match individually</h2>
+    <p class="sec-sub">Already have a florist for the ceremony? Just need a bouquet? Take any single piece à la carte.</p>
+
+    <div class="pieces-grid">
+      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-white.jpg" alt="Bridal bouquet"></div><div class="piece-body"><div class="piece-name">Bridal bouquet</div><div class="piece-from">From $280</div></div></div>
+      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Bridesmaid posy"></div><div class="piece-body"><div class="piece-name">Bridesmaid posy</div><div class="piece-from">From $140</div></div></div>
+      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Centrepiece"></div><div class="piece-body"><div class="piece-name">Reception centrepiece</div><div class="piece-from">From $180</div></div></div>
+      <div class="piece-card"><div class="piece-img"><img src="images/gallery/flowers-market.jpg" alt="Boutonnière"></div><div class="piece-body"><div class="piece-name">Boutonnière</div><div class="piece-from">From $35</div></div></div>
+      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-workshop.jpg" alt="Ceremony arch"></div><div class="piece-body"><div class="piece-name">Ceremony arch</div><div class="piece-from">From $850</div></div></div>
+      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Cake florals"></div><div class="piece-body"><div class="piece-name">Cake florals</div><div class="piece-from">From $90</div></div></div>
+      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-white.jpg" alt="Aisle petals"></div><div class="piece-body"><div class="piece-name">Aisle petals (per bag)</div><div class="piece-from">From $40</div></div></div>
+      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Hair flowers"></div><div class="piece-body"><div class="piece-name">Hair flowers</div><div class="piece-from">From $55</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section proc-bg" style="background:var(--bg-alt)">
+  <div class="container">
+    <p class="eyebrow">How it works</p>
+    <h2 class="sec-title">From first call to last petal</h2>
+
+    <div class="proc-grid">
+      <div class="proc-step">
+        <span class="proc-num">i.</span>
+        <h3 class="proc-name">Free consultation</h3>
+        <p class="proc-desc">A 30-minute call (or in-studio visit) to talk colours, mood, venue, budget, and what makes you, you.</p>
+      </div>
+      <div class="proc-step">
+        <span class="proc-num">ii.</span>
+        <h3 class="proc-name">Tailored proposal</h3>
+        <p class="proc-desc">Within a week, we send a mood board, full quote, and a sample bouquet sketch — every piece itemised so nothing surprises.</p>
+      </div>
+      <div class="proc-step">
+        <span class="proc-num">iii.</span>
+        <h3 class="proc-name">Refining together</h3>
+        <p class="proc-desc">A second meeting two months out to refine — final flower picks, palette tweaks, walk through the venue.</p>
+      </div>
+      <div class="proc-step">
+        <span class="proc-num">iv.</span>
+        <h3 class="proc-name">The day itself</h3>
+        <p class="proc-desc">We arrive early, set up everything, and hand you a bouquet that smells like your wedding. We pack down too.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COUPLE FEATURE -->
+<section class="section">
+  <div class="container">
+    <p class="eyebrow">Real Couples</p>
+    <h2 class="sec-title">Loved by Sydney couples</h2>
+
+    <div class="couple-feature">
+      <div class="couple-photo">
+        <img src="images/gallery/customer-Leidine.jpg" alt="Couple with wedding flowers">
+      </div>
+      <div>
+        <svg width="44" height="32" viewBox="0 0 48 36" fill="none" style="margin-bottom:18px;opacity:.4"><path d="M0 36V22.5C0 15.9 2.1 10.5 6.3 6.3C10.5 2.1 16.2 0 23.4 0V6C19.8 6 16.95 7.05 14.85 9.15C12.75 11.25 11.7 14.1 11.7 17.7H21.6V36H0ZM26.4 36V22.5C26.4 15.9 28.5 10.5 32.7 6.3C36.9 2.1 42.6 0 49.8 0V6C46.2 6 43.35 7.05 41.25 9.15C39.15 11.25 38.1 14.1 38.1 17.7H48V36H26.4Z" fill="currentColor"/></svg>
+        <p class="couple-quote">"From our first consultation to the last bouquet packed away, the team made our wedding florals feel like ours. Every guest commented on the arch — it was breathtaking. We chose preserved for the bouquet so I'd have it forever, and I genuinely look at it every day."</p>
+        <div class="couple-meta">
+          <span class="couple-stars">★★★★★</span>
+          <span class="couple-name">— Sarah &amp; James, Centennial Park, Nov 2025</span>
+        </div>
+        <a href="#enquire" class="btn-dark">Start your consultation →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section wgal-bg">
+  <div class="container">
+    <p class="eyebrow">Past weddings</p>
+    <h2 class="sec-title">A look through our portfolio</h2>
+
+    <div class="wgal-grid">
+      <a href="#" class="wgal-item wgal-1"><img src="images/gallery/bouquet-white.jpg" alt=""></a>
+      <a href="#" class="wgal-item wgal-2"><img src="images/gallery/bouquet-pink-roses.jpg" alt=""></a>
+      <a href="#" class="wgal-item wgal-3"><img src="images/gallery/bouquet-pink-tulip.jpg" alt=""></a>
+      <a href="#" class="wgal-item wgal-4"><img src="images/gallery/bouquet-workshop.jpg" alt=""></a>
+      <a href="#" class="wgal-item wgal-5"><img src="images/gallery/flowers-market.jpg" alt=""></a>
+      <a href="#" class="wgal-item wgal-6"><img src="images/gallery/customer-Leidine.jpg" alt=""></a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <p class="eyebrow">Common questions</p>
+    <h2 class="sec-title">The things couples ask first</h2>
+
+    <div class="faq-grid">
+      <div>
+        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--text-muted);line-height:1.7">Can't find your question? Email us at <a href="mailto:weddings@vaniaflorist.com.au" style="color:var(--accent);border-bottom:.5px solid var(--accent-light)">weddings@vaniaflorist.com.au</a> — we usually reply within a day.</p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q"><span>How far in advance should we book?</span><span>+</span></div>
+          <div class="faq-a"><p>For Saturdays in peak season (Sep–Apr), we recommend 6–9 months ahead. Off-peak weekdays we can sometimes accommodate as little as 6 weeks. For destination/forever florals, the sooner the better — preserved orders take 4–8 weeks of lead time.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Do you mix fresh and forever in one wedding?</span><span>+</span></div>
+          <div class="faq-a"><p>All the time — it's actually one of our most-loved combinations. Fresh bouquet for the day, preserved replicas for the keepsakes. Or fresh ceremony flowers with reusable artificial centrepieces (much friendlier on the budget too).</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>What if our flower preferences are out of season?</span><span>+</span></div>
+          <div class="faq-a"><p>We'll always tell you honestly. Fresh peonies in July, for example, are imported and cost 3× — we'll suggest gorgeous in-season alternatives, or recommend our preserved range for that exact look without the seasonal price.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Do you travel outside Sydney?</span><span>+</span></div>
+          <div class="faq-a"><p>Yes — we regularly serve Blue Mountains, Southern Highlands, Central Coast, and Hunter Valley. Travel is quoted at cost. For destination weddings interstate, our forever range ships nationally and we can fly out for setup on bespoke packages.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>What's your deposit and cancellation policy?</span><span>+</span></div>
+          <div class="faq-a"><p>30% deposit secures your date. Cancellations more than 60 days out receive 80% refund of paid amount; 30–60 days, 50%; under 30 days, deposits are non-refundable but can transfer to a future date within 12 months.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Can we see and smell flowers before deciding?</span><span>+</span></div>
+          <div class="faq-a"><p>Absolutely — our Surry Hills studio is open by appointment. We'll have seasonal samples ready, and on bespoke packages we offer a paid mock-up bouquet (cost rolled into final invoice) so you can see your exact arrangement before the day.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENQUIRE FORM -->
+<section class="section enq-bg" id="enquire">
+  <div class="container">
+    <p class="eyebrow">Start your enquiry</p>
+    <h2 class="sec-title">Tell us about your day</h2>
+    <p class="sec-sub">Fill in what you can — even rough is fine. We'll be in touch within one business day with next steps.</p>
+
+    <form class="enq-card" onsubmit="handleEnquiry(event)">
+      <div class="field"><label>Your name</label><input type="text" required placeholder="Sarah Chen"></div>
+      <div class="field"><label>Partner's name</label><input type="text" placeholder="James Lee"></div>
+      <div class="field"><label>Email</label><input type="email" required placeholder="sarah@example.com"></div>
+      <div class="field"><label>Phone</label><input type="tel" placeholder="04xx xxx xxx"></div>
+      <div class="field"><label>Wedding date <span style="text-transform:none;color:rgba(250,248,244,.4);letter-spacing:0">— estimate is fine</span></label><input type="date"></div>
+      <div class="field"><label>Venue / suburb</label><input type="text" placeholder="Centennial Park, Sydney"></div>
+      <div class="field">
+        <label>Guest count</label>
+        <select><option>20–40</option><option>50–100</option><option>100–150</option><option>150+</option><option>Not sure yet</option></select>
+      </div>
+      <div class="field">
+        <label>Style preference</label>
+        <select><option>Fresh flowers only</option><option>Forever (preserved/artificial)</option><option>A mix of both</option><option>Not sure — help us decide</option></select>
+      </div>
+      <div class="field full"><label>Tell us about your vision <span style="text-transform:none;color:rgba(250,248,244,.4);letter-spacing:0">— colours, vibe, anything you love</span></label><textarea placeholder="We're imagining soft pinks and creams, lots of texture, maybe some eucalyptus..."></textarea></div>
+      <div class="enq-submit-row">
+        <p class="enq-fine">No commitment — we'll reply within one business day.</p>
+        <button type="submit" class="btn-light">Send enquiry →</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-bottom">© 2026 Vaniaflorist · Sydney, NSW · All rights reserved</div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => { if (window.VaniaSeasons) window.VaniaSeasons.init(); });
+
+// FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// Enquiry form
+function handleEnquiry(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type=submit]');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = '✓ Sent — we\'ll be in touch';
+    btn.style.background = 'var(--accent-light)';
+  }, 800);
+}
+</script>
+
+</body>
+</html>

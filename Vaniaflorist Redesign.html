@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vaniaflorist — Sydney Florist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+/* ═══════════════════════════════════════
+   VANIAFLORIST — REDESIGNED HOMEPAGE
+   Warm taupe · Cormorant + DM Sans
+   ═══════════════════════════════════════ */
+
+:root {
+  --accent:      #8b7355;
+  --accent-dark: #2c2420;
+  --accent-light:#c8b89a;
+  --bg:          #faf8f4;
+  --bg-alt:      #f5f0e8;
+  --text:        #1e1a17;
+  --text-muted:  #6b5d54;
+  --border:      rgba(139,115,85,0.13);
+  --radius:      2px;
+}
+
+/* Reset */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-weight:300;
+  font-size:15px;
+  line-height:1.7;
+  color:var(--text);
+  background:var(--bg);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit}
+
+/* ── Scroll reveal ── */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ── Top bar ── */
+.topbar{
+  background:var(--accent-dark);
+  color:var(--accent-light);
+  text-align:center;
+  padding:9px 20px;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+.topbar a{color:#d4c5a0;border-bottom:.5px solid rgba(212,197,160,.4);transition:opacity .3s}
+.topbar a:hover{opacity:.7}
+
+/* ── Nav ── */
+.nav{
+  position:sticky;top:0;z-index:900;
+  background:rgba(250,248,244,.96);
+  border-bottom:.5px solid var(--border);
+  backdrop-filter:blur(16px);
+}
+.nav-inner{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;padding:16px 48px;
+}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a,.nav-btn{
+  font-size:10px;font-weight:400;letter-spacing:2px;
+  text-transform:uppercase;color:var(--text-muted);
+  background:none;border:none;
+  position:relative;transition:color .3s;
+  padding:0;
+}
+.nav-links a::after,.nav-btn::after{
+  content:'';position:absolute;bottom:-2px;left:0;
+  width:0;height:.5px;background:var(--accent);
+  transition:width .4s cubic-bezier(.16,1,.3,1);
+}
+.nav-links a:hover,.nav-btn:hover{color:var(--text)}
+.nav-links a:hover::after,.nav-btn:hover::after{width:100%}
+.logo{text-align:center}
+.logo-name{
+  font-family:'Great Vibes',cursive;
+  font-size:2.4rem;color:var(--accent);
+  letter-spacing:2px;line-height:1;display:block;
+}
+.logo-sub{
+  font-size:9px;font-weight:300;letter-spacing:3px;
+  text-transform:uppercase;color:var(--accent-light);
+  display:block;margin-top:3px;
+}
+.nav-actions{display:flex;align-items:center;gap:16px;justify-content:flex-end}
+.nav-icon-btn{
+  background:none;border:none;color:var(--text-muted);
+  padding:8px;transition:color .3s;position:relative;
+  display:inline-flex;align-items:center;
+}
+.nav-icon-btn:hover{color:var(--text)}
+.cart-badge{
+  position:absolute;top:-4px;right:-4px;
+  background:var(--accent);color:#fff;
+  font-size:9px;width:16px;height:16px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'DM Sans',sans-serif;
+}
+
+/* ── Hero ── */
+.hero{
+  min-height:88vh;
+  display:grid;
+  grid-template-columns:52% 48%;
+  background:var(--bg);
+  overflow:hidden;
+}
+.hero-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px clamp(32px,6vw,100px) 80px clamp(40px,7vw,120px);
+  position:relative;z-index:2;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--accent);margin-bottom:20px;
+}
+.hero-eyebrow-line{width:24px;height:.5px;background:var(--accent-light);flex-shrink:0}
+.hero-h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.2rem,5.5vw,5.2rem);
+  font-weight:300;color:var(--text);
+  line-height:1.03;letter-spacing:-1px;
+  margin-bottom:0;
+}
+.hero-h1 em{font-style:italic;color:var(--accent)}
+.hero-divider{
+  display:block;width:44px;height:.5px;
+  background:linear-gradient(90deg,var(--accent-light),transparent);
+  border:none;margin:20px 0;
+}
+.hero-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;font-style:italic;font-weight:300;
+  color:var(--text-muted);margin-bottom:6px;
+}
+.hero-from{
+  font-size:11px;letter-spacing:1px;color:var(--accent-light);
+  font-weight:300;margin-bottom:28px;
+}
+.hero-btns{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.btn-dark{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent-dark);color:var(--bg);
+  padding:14px 32px;border:none;border-radius:var(--radius);
+  font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
+  transition:background .3s;
+}
+.btn-dark:hover{background:var(--accent)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
+  color:var(--text-muted);border:none;background:none;
+  border-bottom:.5px solid var(--border);padding-bottom:3px;
+  transition:color .3s,gap .35s cubic-bezier(.16,1,.3,1),border-color .3s;
+}
+.btn-ghost:hover{color:var(--text);gap:12px;border-color:var(--accent)}
+.hero-trust{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  font-size:10px;letter-spacing:.5px;color:var(--accent-light);
+  margin-bottom:16px;
+}
+.dot{font-size:8px;opacity:.4}
+.hero-review{
+  display:flex;align-items:center;gap:12px;
+  padding-top:16px;border-top:.5px solid var(--border);
+}
+.stars{color:var(--accent-light);font-size:11px;letter-spacing:2px;flex-shrink:0}
+.rev-sep{width:.5px;height:22px;background:var(--border);flex-shrink:0}
+.rev-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.85rem;font-style:italic;color:var(--text-muted);line-height:1.5;
+}
+.hero-right{position:relative;overflow:hidden}
+.hero-right img{
+  width:100%;height:100%;object-fit:cover;
+  object-position:center 20%;
+  filter:brightness(.97) contrast(1.04);
+  transition:transform 8s ease;
+}
+.hero-right:hover img{transform:scale(1.02)}
+.hero-fade{
+  position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to right, var(--bg) 0%, transparent 18%);
+}
+
+/* ── Marquee ── */
+.marquee{
+  border-top:.5px solid var(--border);
+  border-bottom:.5px solid var(--border);
+  padding:13px 0;overflow:hidden;background:var(--bg);
+}
+.marquee-track{
+  display:flex;gap:48px;
+  animation:marquee 22s linear infinite;
+  white-space:nowrap;
+}
+.marquee-item{
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;font-style:italic;
+  color:var(--accent-light);letter-spacing:1px;
+  display:inline-flex;align-items:center;gap:24px;flex-shrink:0;
+}
+.marquee-item::after{content:'·';color:var(--accent-light)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── Section shared ── */
+.section{padding:96px 0}
+.container{max-width:1200px;margin:0 auto;padding:0 48px}
+.eyebrow{
+  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--accent-light);font-weight:400;
+  display:flex;align-items:center;gap:12px;margin-bottom:14px;
+}
+.eyebrow::before{content:'';display:inline-block;width:20px;height:.5px;background:var(--accent-light)}
+.sec-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,3.2vw,2.8rem);
+  font-weight:300;color:var(--text);
+  letter-spacing:-.5px;line-height:1.1;
+}
+.sec-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem;font-weight:300;font-style:italic;
+  color:var(--text-muted);margin-top:8px;
+}
+
+/* ── Occasions ── */
+.occasions-bg{background:var(--bg-alt)}
+.occasions-header{margin-bottom:52px}
+.occasions-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.occ-card{
+  background:#fff;border-radius:var(--radius);
+  border:.5px solid var(--border);overflow:hidden;
+  text-decoration:none;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;
+}
+.occ-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,.1)}
+.occ-img{
+  height:180px;overflow:hidden;
+  background:linear-gradient(135deg,#e8ddd0,#d4c5a0);
+}
+.occ-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.occ-card:hover .occ-img img{transform:scale(1.06)}
+.occ-body{padding:20px 22px 22px}
+.occ-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;font-weight:300;color:var(--text);margin-bottom:5px;
+}
+.occ-desc{font-size:12px;color:#999;line-height:1.5;margin-bottom:14px}
+.occ-link{
+  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--accent);font-weight:400;
+  display:inline-flex;align-items:center;gap:5px;
+  transition:gap .3s cubic-bezier(.16,1,.3,1);
+}
+.occ-card:hover .occ-link{gap:10px}
+
+/* ── Best Sellers ── */
+.bestsellers-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;margin-top:52px;
+}
+.prod-card{
+  border-radius:var(--radius);overflow:hidden;
+  border:.5px solid var(--border);background:#fff;
+  transition:box-shadow .3s,transform .3s;
+}
+.prod-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.1)}
+.prod-img{
+  height:240px;overflow:hidden;position:relative;
+  background:linear-gradient(135deg,#e8ddd0,#d4c5a0);
+}
+.prod-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.prod-card:hover .prod-img img{transform:scale(1.06)}
+.prod-badge{
+  position:absolute;top:10px;left:10px;
+  padding:4px 10px;border-radius:var(--radius);
+  font-size:9px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;
+  font-family:'DM Sans',sans-serif;
+}
+.badge-bestseller{background:var(--accent-dark);color:#faf8f4}
+.badge-new{background:#fff;color:var(--accent);border:.5px solid var(--border)}
+.badge-wedding{background:var(--accent-light);color:#fff}
+/* Type badges — fresh vs forever */
+.type-badge{position:absolute;top:10px;right:10px;padding:5px 10px 5px 8px;border-radius:99px;font-size:9px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:5px;backdrop-filter:blur(10px);background:rgba(255,255,255,.85);color:var(--accent-dark)}
+.type-badge::before{content:'';width:6px;height:6px;border-radius:50%;display:inline-block}
+.type-fresh::before{background:#6b8870}
+.type-forever::before{background:#a05870}
+.prod-body{padding:16px 18px 18px}
+.prod-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:300;color:var(--text);margin-bottom:3px;
+}
+.prod-type{font-size:11px;color:#aaa;letter-spacing:.5px;margin-bottom:10px}
+.prod-foot{display:flex;align-items:center;justify-content:space-between}
+.prod-price{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:300;color:var(--accent);
+}
+.prod-add{
+  width:32px;height:32px;border-radius:var(--radius);
+  background:var(--accent-dark);color:#faf8f4;
+  border:none;display:flex;align-items:center;justify-content:center;
+  transition:background .3s;flex-shrink:0;
+}
+.prod-add:hover{background:var(--accent)}
+
+/* ── Collections ── */
+.collections-bg{background:var(--bg-alt)}
+.collections-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+  margin-top:52px;
+}
+.coll-card{
+  background:var(--bg-alt);padding:52px 40px;
+  position:relative;overflow:hidden;
+  transition:background .3s;
+}
+.coll-card::after{
+  content:'';position:absolute;bottom:0;left:0;
+  width:0;height:1.5px;background:var(--accent);
+  transition:width .5s cubic-bezier(.16,1,.3,1);
+}
+.coll-card:hover::after{width:100%}
+.coll-card:hover{background:#ede8df}
+.coll-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:10px;letter-spacing:2px;color:var(--accent-light);
+  margin-bottom:20px;display:block;
+}
+.coll-icon{
+  width:40px;height:40px;margin-bottom:20px;
+  display:flex;align-items:center;justify-content:center;
+}
+.coll-icon svg{stroke:var(--accent);transition:stroke .3s}
+.coll-card:hover .coll-icon svg{stroke:var(--text)}
+.coll-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;font-weight:300;color:var(--text);
+  margin-bottom:10px;line-height:1.2;
+}
+.coll-desc{font-size:12px;color:var(--text-muted);line-height:1.7;margin-bottom:20px}
+.text-link{
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--text-muted);display:inline-flex;align-items:center;gap:8px;
+  border-bottom:.5px solid var(--border);padding-bottom:3px;
+  transition:color .3s,gap .35s cubic-bezier(.16,1,.3,1),border-color .3s;
+}
+.text-link:hover{color:var(--text);gap:14px;border-color:var(--accent)}
+
+/* ── Testimonials ── */
+.testimonials-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;margin-top:52px;
+}
+.testi-card{
+  background:#fff;padding:32px;
+  border:.5px solid var(--border);border-radius:var(--radius);
+  transition:box-shadow .3s,border-color .3s;
+}
+.testi-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.07);border-color:rgba(139,115,85,.3)}
+.testi-stars{color:var(--accent-light);font-size:11px;letter-spacing:2px;margin-bottom:12px}
+.testi-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;font-style:italic;font-weight:300;
+  color:var(--text);line-height:1.7;margin-bottom:16px;
+}
+.testi-author{font-size:11px;color:#aaa;letter-spacing:.5px}
+
+/* Featured customer */
+.cust-feature{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:72px;align-items:center;margin-top:72px;
+  padding-top:56px;border-top:.5px solid var(--border);
+}
+.cust-photo{
+  border-radius:var(--radius);overflow:hidden;
+  aspect-ratio:4/5;
+  box-shadow:0 8px 32px rgba(0,0,0,.1);
+}
+.cust-photo img{
+  width:100%;height:100%;object-fit:cover;
+  object-position:center top;
+  filter:saturate(.9) brightness(1.05);
+  transition:transform .6s ease;
+}
+.cust-photo:hover img{transform:scale(1.03)}
+.cust-text{}
+.cust-qm{margin-bottom:20px;opacity:.35}
+.cust-blockquote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;font-style:italic;font-weight:300;
+  color:var(--text);line-height:1.65;margin-bottom:24px;
+}
+.cust-meta{display:flex;align-items:center;gap:14px;margin-bottom:32px}
+.cust-stars{color:var(--accent-light);font-size:12px;letter-spacing:2px}
+.cust-name{font-size:11px;letter-spacing:1.5px;color:var(--accent-light)}
+
+/* ── Gallery ── */
+.gallery-bg{background:var(--bg-alt)}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;margin-top:52px;
+}
+.gal-item{
+  position:relative;height:300px;border-radius:var(--radius);
+  overflow:hidden;display:block;
+}
+.gal-item img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .7s cubic-bezier(.16,1,.3,1);
+}
+.gal-item:hover img{transform:scale(1.05)}
+.gal-cap{
+  position:absolute;inset:0;
+  background:linear-gradient(transparent 50%,rgba(30,26,23,.5) 100%);
+  display:flex;align-items:flex-end;padding:22px;
+  opacity:0;transition:opacity .3s;
+}
+.gal-item:hover .gal-cap{opacity:1}
+.gal-cap span{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;font-style:italic;color:#faf8f4;
+}
+.gal-cta{
+  background:var(--accent-dark);
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:32px;
+}
+.gal-cta-sub{
+  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--accent-light);display:block;margin-bottom:10px;
+}
+.gal-cta-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;font-weight:300;font-style:italic;
+  color:#faf8f4;display:block;margin-bottom:18px;line-height:1.3;
+}
+.gal-arrow{
+  color:var(--accent-light);font-size:1.2rem;
+  transition:transform .3s cubic-bezier(.16,1,.3,1);display:block;
+}
+.gal-cta:hover .gal-arrow{transform:translateX(8px)}
+
+/* ── Trust strip ── */
+.trust-strip{
+  background:var(--accent-dark);
+  display:flex;align-items:center;justify-content:center;
+  gap:0;flex-wrap:wrap;
+}
+.trust-item{
+  padding:16px 32px;
+  font-size:10px;letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(250,248,244,.5);
+  border-right:.5px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;gap:8px;
+}
+.trust-item:last-child{border-right:none}
+.trust-dot{width:3px;height:3px;border-radius:50%;background:rgba(200,168,120,.4);flex-shrink:0}
+
+/* ── Delivery ── */
+.delivery-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:72px;align-items:start;margin-top:52px;
+}
+.del-info h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;font-weight:300;color:var(--text);margin-bottom:12px;
+}
+.del-info p{font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px}
+.postcode-row{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.postcode-row input{
+  padding:13px 16px;border:.5px solid var(--border);border-radius:var(--radius);
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;
+  width:180px;outline:none;background:#fff;color:var(--text);
+  transition:border-color .3s;
+}
+.postcode-row input:focus{border-color:var(--accent)}
+.postcode-row button{
+  padding:13px 22px;background:var(--accent-dark);color:#faf8f4;
+  border:none;border-radius:var(--radius);
+  font-family:'DM Sans',sans-serif;font-size:10px;font-weight:400;
+  letter-spacing:2px;text-transform:uppercase;
+  transition:background .3s;
+}
+.postcode-row button:hover{background:var(--accent)}
+.postcode-result{font-size:12px;font-weight:300;color:var(--text-muted);min-height:20px}
+.del-hours{
+  background:var(--bg-alt);border-radius:var(--radius);
+  border:.5px solid var(--border);padding:28px;
+}
+.del-hours h4{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:300;color:var(--text);margin-bottom:16px;
+}
+.hours-row{
+  display:flex;justify-content:space-between;
+  font-size:12px;color:var(--text-muted);
+  padding:8px 0;border-bottom:.5px solid var(--border);
+}
+.hours-row:last-child{border-bottom:none}
+.hours-day{font-weight:400;color:var(--text)}
+
+/* ── Footer ── */
+.footer{background:var(--accent-dark);padding:64px 0 28px}
+.footer-inner{
+  max-width:1200px;margin:0 auto;padding:0 48px;
+}
+.footer-cols{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr;
+  gap:48px;margin-bottom:48px;
+}
+.footer-logo-name{
+  font-family:'Great Vibes',cursive;
+  font-size:2rem;color:#d4c5a0;display:block;margin-bottom:10px;
+}
+.footer-tagline{font-size:12px;color:#7a6d60;line-height:1.7;max-width:260px}
+.footer-col h4{
+  font-size:9px;font-weight:400;letter-spacing:3px;text-transform:uppercase;
+  color:var(--accent-light);margin-bottom:18px;
+}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:9px}
+.footer-col a{font-size:12px;color:#7a6d60;letter-spacing:.5px;transition:color .3s}
+.footer-col a:hover{color:#d4c5a0}
+.footer-bottom{
+  text-align:center;padding-top:24px;
+  border-top:.5px solid rgba(255,255,255,.05);
+  font-size:10px;letter-spacing:1px;color:#5a4e44;
+}
+
+/* ── Responsive ── */
+@media(max-width:1024px){
+  .bestsellers-grid{grid-template-columns:repeat(2,1fr)}
+  .occasions-grid{grid-template-columns:repeat(2,1fr)}
+  .cust-feature{grid-template-columns:1fr;gap:40px}
+  .cust-photo{aspect-ratio:16/9}
+  .delivery-grid{grid-template-columns:1fr;gap:40px}
+  .collections-grid{grid-template-columns:1fr}
+  .footer-cols{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}
+  .nav-links{display:none}
+  .logo{grid-column:2}
+  .hero{grid-template-columns:1fr;min-height:80vh}
+  .hero-right{position:absolute;inset:0;z-index:0;opacity:.25}
+  .hero-left{padding:60px 24px 80px;z-index:2}
+  .testimonials-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  .trust-strip{flex-direction:column;gap:0}
+  .trust-item{border-right:none;border-bottom:.5px solid rgba(255,255,255,.06);width:100%;justify-content:center}
+  .footer-cols{grid-template-columns:1fr}
+  .container{padding:0 24px}
+  .occasions-grid{grid-template-columns:1fr}
+  .bestsellers-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .hero-h1{font-size:2.6rem}
+  .bestsellers-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr}
+  .hero-btns{flex-direction:column;align-items:flex-start}
+}
+</style>
+<script src="season.js"></script>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  Free delivery across Sydney on orders over $80 — <a href="#">Shop now</a>
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="shop-redesign.html" class="nav-btn">Shop &#8964;</a>
+      <a href="#">Occasions</a>
+      <a href="about-redesign.html">About</a>
+      <a href="weddings.html">Weddings</a>
+    </div>
+    <div class="logo">
+      <a href="#">
+        <span class="logo-name">Vaniaflorist</span>
+        <span class="logo-sub">Sydney Florist</span>
+      </a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" aria-label="Search" id="open-search-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="nav-icon-btn" aria-label="Wishlist">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <button class="nav-icon-btn" aria-label="Cart" style="position:relative">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-badge">2</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <p class="hero-eyebrow"><span class="hero-eyebrow-line"></span> Winter collection 2026 <span class="hero-eyebrow-line"></span></p>
+    <h1 class="hero-h1">Quiet beauty,<br>in <em>full bloom</em></h1>
+    <hr class="hero-divider">
+    <p class="hero-sub">Deep navy hues &amp; lasting warmth</p>
+    <p class="hero-from">Arrangements from $65</p>
+    <div class="hero-btns">
+      <a href="shop-redesign.html" class="btn-dark">Explore the collection</a>
+      <a href="weddings.html" class="btn-ghost">View weddings →</a>
+    </div>
+    <p class="hero-trust">
+      5★ rated
+      <span class="dot">·</span>
+      Sydney-wide delivery
+      <span class="dot">·</span>
+      Same-day available
+    </p>
+    <div class="hero-review">
+      <span class="stars">★★★★★</span>
+      <span class="rev-sep"></span>
+      <span class="rev-text">"Even more beautiful in person" — Leidine, Sydney</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="images/gallery/flowers-market.jpg" alt="Seasonal bouquet arrangement">
+    <div class="hero-fade"></div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">Same-day delivery</span>
+    <span class="marquee-item">Handcrafted bouquets</span>
+    <span class="marquee-item">Wedding specialists</span>
+    <span class="marquee-item">Fresh &amp; preserved</span>
+    <span class="marquee-item">Sydney's premier florist</span>
+    <span class="marquee-item">Same-day delivery</span>
+    <span class="marquee-item">Handcrafted bouquets</span>
+    <span class="marquee-item">Wedding specialists</span>
+    <span class="marquee-item">Fresh &amp; preserved</span>
+    <span class="marquee-item">Sydney's premier florist</span>
+  </div>
+</div>
+
+<!-- Shop by Occasion -->
+<section class="section occasions-bg reveal" id="occasions">
+  <div class="container">
+    <div class="occasions-header">
+      <p class="eyebrow">Shop by Occasion</p>
+      <h2 class="sec-title">Find the perfect bouquet<br>for any moment</h2>
+    </div>
+    <div class="occasions-grid">
+      <a href="#" class="occ-card reveal">
+        <div class="occ-img"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Birthday flowers"></div>
+        <div class="occ-body">
+          <h3 class="occ-name">Birthday</h3>
+          <p class="occ-desc">Celebratory bouquets to brighten their special day</p>
+          <span class="occ-link">Shop Birthday →</span>
+        </div>
+      </a>
+      <a href="#" class="occ-card reveal">
+        <div class="occ-img"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Anniversary flowers"></div>
+        <div class="occ-body">
+          <h3 class="occ-name">Anniversary</h3>
+          <p class="occ-desc">Romantic arrangements to celebrate your love</p>
+          <span class="occ-link">Shop Anniversary →</span>
+        </div>
+      </a>
+      <a href="#" class="occ-card reveal">
+        <div class="occ-img"><img src="images/gallery/bouquet-white.jpg" alt="Sympathy flowers"></div>
+        <div class="occ-body">
+          <h3 class="occ-name">Sympathy</h3>
+          <p class="occ-desc">Thoughtful tributes to honour cherished memories</p>
+          <span class="occ-link">Shop Sympathy →</span>
+        </div>
+      </a>
+      <a href="#" class="occ-card reveal">
+        <div class="occ-img"><img src="images/gallery/bouquet-workshop.jpg" alt="Wedding flowers"></div>
+        <div class="occ-body">
+          <h3 class="occ-name">Wedding</h3>
+          <p class="occ-desc">Exquisite ceremony flowers tailored to your vision</p>
+          <span class="occ-link">Enquire →</span>
+        </div>
+      </a>
+      <a href="#" class="occ-card reveal">
+        <div class="occ-img"><img src="images/gallery/flowers-market.jpg" alt="New baby flowers"></div>
+        <div class="occ-body">
+          <h3 class="occ-name">New Baby</h3>
+          <p class="occ-desc">Delicate arrangements to welcome new life</p>
+          <span class="occ-link">Shop New Baby →</span>
+        </div>
+      </a>
+      <a href="#" class="occ-card reveal">
+        <div class="occ-img"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Thank you flowers"></div>
+        <div class="occ-body">
+          <h3 class="occ-name">Thank You</h3>
+          <p class="occ-desc">Express your gratitude with elegant seasonal blooms</p>
+          <span class="occ-link">Shop Thank You →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Best Sellers -->
+<section class="section reveal" id="shop">
+  <div class="container">
+    <p class="eyebrow">Customer Favorites</p>
+    <h2 class="sec-title">Our best-selling arrangements</h2>
+    <div class="bestsellers-grid">
+      <a href="#" class="prod-card reveal">
+        <div class="prod-img">
+          <img src="images/gallery/bouquet-pink-roses.jpg" alt="Blush Romance">
+          <span class="prod-badge badge-bestseller">#1 Best Seller</span>
+          <span class="type-badge type-fresh">Fresh</span>
+        </div>
+        <div class="prod-body">
+          <h3 class="prod-name">Blush Romance</h3>
+          <p class="prod-type">Fresh · Pink roses &amp; peonies</p>
+          <div class="prod-foot">
+            <span class="prod-price">$85</span>
+            <button class="prod-add" aria-label="Add to cart">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="prod-card reveal">
+        <div class="prod-img">
+          <img src="images/gallery/bouquet-white.jpg" alt="Elegant White">
+          <span class="prod-badge badge-wedding">Wedding Fave</span>
+          <span class="type-badge type-forever">Forever</span>
+        </div>
+        <div class="prod-body">
+          <h3 class="prod-name">Elegant White</h3>
+          <p class="prod-type">Fresh · White orchids &amp; lilies</p>
+          <div class="prod-foot">
+            <span class="prod-price">$95</span>
+            <button class="prod-add" aria-label="Add to cart">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="prod-card reveal">
+        <div class="prod-img">
+          <img src="images/gallery/bouquet-pink-tulip.jpg" alt="Spring Tulips">
+          <span class="prod-badge badge-new">New Season</span>
+          <span class="type-badge type-fresh">Fresh</span>
+        </div>
+        <div class="prod-body">
+          <h3 class="prod-name">Spring Tulips</h3>
+          <p class="prod-type">Fresh · Mixed tulip bouquet</p>
+          <div class="prod-foot">
+            <span class="prod-price">$75</span>
+            <button class="prod-add" aria-label="Add to cart">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="prod-card reveal">
+        <div class="prod-img">
+          <img src="images/gallery/flowers-market.jpg" alt="Market Fresh">
+          <span class="type-badge type-fresh">Fresh</span>
+        </div>
+        <div class="prod-body">
+          <h3 class="prod-name">Market Fresh</h3>
+          <p class="prod-type">Fresh · Seasonal selection</p>
+          <div class="prod-foot">
+            <span class="prod-price">$65</span>
+            <button class="prod-add" aria-label="Add to cart">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Collections -->
+<section class="section collections-bg reveal" id="collections">
+  <div class="container">
+    <p class="eyebrow">What we offer</p>
+    <h2 class="sec-title">Three collections, one vision</h2>
+  </div>
+  <div class="container" style="padding-top:0">
+    <div class="collections-grid">
+      <div class="coll-card reveal">
+        <span class="coll-num">01</span>
+        <div class="coll-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22c0 0-8-4-8-10a8 8 0 0 1 16 0c0 6-8 10-8 10z"/>
+            <path d="M12 8v6M9 11l3-3 3 3"/>
+          </svg>
+        </div>
+        <h3 class="coll-name">The Living<br>Collection</h3>
+        <p class="coll-desc">Fresh seasonal flowers, handcrafted and delivered the same day across Sydney.</p>
+        <a href="#" class="text-link">Shop fresh →</a>
+      </div>
+      <div class="coll-card reveal">
+        <span class="coll-num">02</span>
+        <div class="coll-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22V12"/>
+            <path d="M12 12C12 7 8 3 3 3c0 5 4 9 9 9z"/>
+            <path d="M12 12c0-5 4-9 9-9-1 5-4 9-9 9z"/>
+          </svg>
+        </div>
+        <h3 class="coll-name">The Forever<br>Collection</h3>
+        <p class="coll-desc">Preserved &amp; artificial flowers that last a lifetime. Ships anywhere in Australia.</p>
+        <a href="#" class="text-link">Shop forever →</a>
+      </div>
+      <div class="coll-card reveal">
+        <span class="coll-num">03</span>
+        <div class="coll-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402C1 3.199 4.397 1 7.5 1c1.8 0 3.6.9 4.5 2.25C12.9 1.9 14.7 1 16.5 1 19.603 1 23 3.199 23 7.191c0 4.105-5.37 8.863-11 14.402z"/>
+          </svg>
+        </div>
+        <h3 class="coll-name">The Ceremony<br>Collection</h3>
+        <p class="coll-desc">Wedding flowers by appointment. Fresh, preserved, or both — tailored to your vision.</p>
+        <a href="#" class="text-link">Enquire →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOREVER COLLECTION — fresh vs forever education -->
+<section class="section reveal" id="forever" style="background:var(--bg-alt)">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center">
+      <div style="position:relative">
+        <div style="aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.12)">
+          <img src="images/gallery/bouquet-pink-tulip.jpg" alt="Forever flowers" style="width:100%;height:100%;object-fit:cover">
+        </div>
+        <div style="position:absolute;bottom:-20px;right:-20px;background:#fff;border:.5px solid var(--border);padding:18px 22px;border-radius:var(--radius);box-shadow:0 8px 24px rgba(0,0,0,.08);max-width:220px">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--accent);font-weight:300;line-height:1">3+ years</div>
+          <div style="font-size:11px;color:var(--text-muted);letter-spacing:1px;margin-top:4px">Average lifespan, no water needed</div>
+        </div>
+      </div>
+
+      <div>
+        <p class="eyebrow"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#a05870;margin-right:8px;vertical-align:middle"></span>The Forever Collection</p>
+        <h2 class="sec-title" style="margin-bottom:18px">Flowers that<br><em style="color:var(--accent);font-style:italic">never fade</em></h2>
+        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--text-muted);line-height:1.7;margin-bottom:32px;max-width:480px">Premium silk &amp; preserved real flowers — indistinguishable from fresh, but built to last. Perfect for offices, allergies, anniversaries, or anyone who wants their flowers to keep blooming.</p>
+
+        <!-- Comparison -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:32px">
+          <div style="background:#fff;padding:24px 22px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+              <span style="width:8px;height:8px;border-radius:50%;background:#6b8870"></span>
+              <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)">Fresh</span>
+            </div>
+            <ul style="list-style:none;padding:0;margin:0;font-size:13px;color:var(--text);line-height:1.85">
+              <li>· Lasts 7–14 days</li>
+              <li>· Real fragrance &amp; touch</li>
+              <li>· Same-day delivery</li>
+              <li>· From $65</li>
+            </ul>
+          </div>
+          <div style="background:#fff;padding:24px 22px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+              <span style="width:8px;height:8px;border-radius:50%;background:#a05870"></span>
+              <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)">Forever</span>
+            </div>
+            <ul style="list-style:none;padding:0;margin:0;font-size:13px;color:var(--text);line-height:1.85">
+              <li>· Lasts 3+ years</li>
+              <li>· Allergy &amp; pet friendly</li>
+              <li>· Ships Australia-wide</li>
+              <li>· From $95</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+          <a href="shop-redesign.html?type=forever" class="btn-dark">Shop Forever Collection →</a>
+          <a href="#" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);text-decoration:none;border-bottom:.5px solid var(--border);padding-bottom:3px">Fresh vs Forever guide</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEDDINGS TEASER -->
+<section class="section reveal" id="weddings-teaser" style="background:var(--accent-dark);color:var(--bg);padding:0;overflow:hidden">
+  <div style="display:grid;grid-template-columns:1.1fr 1fr;min-height:560px">
+    <div style="position:relative;overflow:hidden">
+      <img src="images/gallery/bouquet-white.jpg" alt="Wedding bouquet" style="width:100%;height:100%;object-fit:cover;object-position:center">
+      <div style="position:absolute;bottom:24px;left:24px;background:rgba(28,22,18,.6);backdrop-filter:blur(10px);padding:10px 18px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;border-radius:2px;color:var(--bg)">"Sarah &amp; James — Centennial Park, '25"</div>
+    </div>
+    <div style="display:flex;flex-direction:column;justify-content:center;padding:80px clamp(40px,5vw,80px)">
+      <p class="eyebrow" style="color:var(--accent-light)">— For your wedding day —</p>
+      <h2 class="sec-title" style="color:var(--bg);margin-bottom:18px">A wedding day,<br><em style="color:var(--accent-light);font-style:italic">in bloom</em></h2>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:rgba(250,248,244,.75);line-height:1.7;margin-bottom:28px;max-width:440px">From bouquets picked the morning of, to forever florals you can keep — wedding flowers tailored to your story, fresh, preserved, or both.</p>
+      <ul style="list-style:none;padding:0;margin:0 0 32px;display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;font-size:13px">
+        <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> Free consultations</li>
+        <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> Fresh &amp; forever options</li>
+        <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> Packages from $1,450</li>
+        <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> On-site setup included</li>
+      </ul>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+        <a href="weddings.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--bg);color:var(--accent-dark);padding:14px 30px;border-radius:2px;font-size:10px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:background .3s">Explore weddings →</a>
+        <a href="weddings.html#enquire" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light);text-decoration:none;border-bottom:.5px solid rgba(180,196,210,.3);padding-bottom:3px">Book consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section reveal" id="reviews">
+  <div class="container">
+    <p class="eyebrow">Real Moments</p>
+    <h2 class="sec-title">Loved by Sydney</h2>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Absolutely stunning. The bouquet was even more beautiful in person. Will definitely be ordering again for every special occasion."</p>
+        <p class="testi-author">— Leidine, Sydney</p>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Same-day delivery was a lifesaver. The flowers arrived fresh and beautifully arranged. Highly recommended for last-minute gifts."</p>
+        <p class="testi-author">— Marcus, Bondi</p>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The wedding florals were absolutely exquisite. Every detail was perfect, and our guests couldn't stop complimenting the arrangements."</p>
+        <p class="testi-author">— Sarah &amp; James, Sydney</p>
+      </div>
+    </div>
+    <!-- Featured customer — different from grid above -->
+    <div class="cust-feature reveal">
+      <div class="cust-photo">
+        <img src="images/gallery/customer-Leidine.jpg" alt="Happy customer with Vaniaflorist bouquet">
+      </div>
+      <div class="cust-text">
+        <svg class="cust-qm" width="48" height="36" viewBox="0 0 48 36" fill="none"><path d="M0 36V22.5C0 15.9 2.1 10.5 6.3 6.3C10.5 2.1 16.2 0 23.4 0V6C19.8 6 16.95 7.05 14.85 9.15C12.75 11.25 11.7 14.1 11.7 17.7H21.6V36H0ZM26.4 36V22.5C26.4 15.9 28.5 10.5 32.7 6.3C36.9 2.1 42.6 0 49.8 0V6C46.2 6 43.35 7.05 41.25 9.15C39.15 11.25 38.1 14.1 38.1 17.7H48V36H26.4Z" fill="#e8ddd0"/></svg>
+        <p class="cust-blockquote">"I ordered for my mother's birthday and she was in tears — the arrangement was so thoughtful and so fresh. These flowers made our whole week."</p>
+        <div class="cust-meta">
+          <span class="cust-stars">★★★★★</span>
+          <span class="cust-name">— Priya M., Surry Hills</span>
+        </div>
+        <a href="#" class="btn-dark" style="display:inline-flex">Shop now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="section gallery-bg reveal" id="gallery">
+  <div class="container">
+    <p class="eyebrow">Our Creations</p>
+    <h2 class="sec-title">A glimpse into our world</h2>
+    <div class="gallery-grid">
+      <a href="#" class="gal-item reveal"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Pink tulip bouquet" loading="lazy"><div class="gal-cap"><span>Pink tulips</span></div></a>
+      <a href="#" class="gal-item reveal"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Blush roses" loading="lazy"><div class="gal-cap"><span>Blush roses</span></div></a>
+      <a href="#" class="gal-item reveal"><img src="images/gallery/bouquet-workshop.jpg" alt="Fresh arrangement" loading="lazy"><div class="gal-cap"><span>Fresh flowers</span></div></a>
+      <a href="#" class="gal-item reveal"><img src="images/gallery/bouquet-white.jpg" alt="White orchids" loading="lazy"><div class="gal-cap"><span>White orchids</span></div></a>
+      <a href="#" class="gal-item reveal"><img src="images/gallery/flowers-market.jpg" alt="Market blooms" loading="lazy"><div class="gal-cap"><span>Market blooms</span></div></a>
+      <a href="#" class="gal-item gal-cta reveal">
+        <span class="gal-cta-sub">Ready to order?</span>
+        <span class="gal-cta-title">Shop the full collection</span>
+        <span class="gal-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- About teaser -->
+<section class="section reveal" style="background:var(--bg-alt)">
+  <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center">
+    <div>
+      <p class="eyebrow">Our story</p>
+      <h2 class="sec-title">A small team,<br>made with care</h2>
+      <p style="font-size:14px;color:var(--text-muted);line-height:1.85;margin:16px 0 28px;font-weight:300">We're a passionate Sydney florist — every bouquet is handcrafted the morning it ships, sourced from local growers, and made for the person receiving it. Not a template. Not a warehouse.</p>
+      <a href="about-redesign.html" class="btn-dark">Meet the team →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div style="border-radius:var(--radius);overflow:hidden;height:220px">
+        <img src="images/gallery/bouquet-workshop.jpg" alt="Flowers being arranged" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div style="border-radius:var(--radius);overflow:hidden;height:220px;margin-top:32px">
+        <img src="images/gallery/customer-Leidine.jpg" alt="Happy customer" style="width:100%;height:100%;object-fit:cover;object-position:center top">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust strip -->
+<div class="trust-strip">
+  <div class="trust-item"><span class="trust-dot"></span>Fresh &amp; Preserved</div>
+  <div class="trust-item"><span class="trust-dot"></span>Wedding Specialists</div>
+  <div class="trust-item"><span class="trust-dot"></span>Sydney-wide Delivery</div>
+  <div class="trust-item"><span class="trust-dot"></span>Handcrafted Daily</div>
+</div>
+
+<!-- Delivery -->
+<section class="section reveal" id="delivery">
+  <div class="container">
+    <p class="eyebrow">Delivery</p>
+    <h2 class="sec-title">We deliver across Greater Sydney</h2>
+    <div class="delivery-grid">
+      <div class="del-info reveal">
+        <h3>Check your postcode</h3>
+        <p>Enter your Sydney postcode below to confirm same-day or next-day availability in your area.</p>
+        <div class="postcode-row">
+          <input type="text" placeholder="e.g. 2000" maxlength="4" id="postcodeInput">
+          <button onclick="checkPostcode()">Check</button>
+        </div>
+        <p class="postcode-result" id="postcodeResult"></p>
+      </div>
+      <div class="del-hours reveal">
+        <h4>Opening hours</h4>
+        <div class="hours-row"><span class="hours-day">Monday – Friday</span><span>9:00am – 6:00pm</span></div>
+        <div class="hours-row"><span class="hours-day">Saturday</span><span>9:00am – 5:00pm</span></div>
+        <div class="hours-row"><span class="hours-day">Sunday</span><span>10:00am – 3:00pm</span></div>
+        <div class="hours-row"><span class="hours-day">Same-day cutoff</span><span>2:00pm</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div>
+        <a href="#" class="footer-logo-name">Vaniaflorist</a>
+        <p class="footer-tagline">Sydney's luxury florist. Handcrafted bouquets, wedding flowers, and preserved arrangements — delivered across Greater Sydney.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop-redesign.html">All Flowers</a></li>
+          <li><a href="product-redesign.html">Product Details</a></li>
+          <li><a href="#">The Living Collection</a></li>
+          <li><a href="#">The Forever Collection</a></li>
+          <li><a href="#">The Ceremony Collection</a></li>
+          <li><a href="#">Occasions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <ul>
+          <li><a href="about-redesign.html">About Vaniaflorist</a></li>
+          <li><a href="#">Delivery &amp; Returns</a></li>
+          <li><a href="#">Care Guide</a></li>
+          <li><a href="#">Wedding Enquiries</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vaniaflorist · Sydney, NSW · All rights reserved</div>
+  </div>
+</footer>
+
+<!-- Tweaks root -->
+<div id="tweaks-root"></div>
+
+<script>
+var TWEAK_DEFAULS = /*EDITMODE-BEGIN*/{
+  "accentScheme": "sage",
+  "heroLayout": "split",
+  "showPrices": true,
+  "cardStyle": "bordered"
+}/*EDITMODE-END*/;
+</script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+
+function applyTweaks(t) {
+  const root = document.documentElement;
+  // Accent scheme
+  // Season-aligned schemes — match season.js
+  const schemes = {
+    burgundy:   { accent:'#5a1a2a', accentDark:'#2a0d15', accentLight:'#a8606e', bg:'#fdf8f9', bgAlt:'#f5eff2' }, // Spring
+    sage:       { accent:'#6b8870', accentDark:'#1e2a22', accentLight:'#a8c0aa', bg:'#f8faf8', bgAlt:'#eef3ee' }, // Summer
+    terracotta: { accent:'#a85738', accentDark:'#3a1c12', accentLight:'#d8a48a', bg:'#faf8f4', bgAlt:'#f5f0e8' }, // Autumn
+    navy:       { accent:'#1c3656', accentDark:'#0e1d30', accentLight:'#7a96b8', bg:'#f6f8fa', bgAlt:'#eaf0f5' }, // Winter
+  };
+  const s = schemes[t.accentScheme] || schemes.navy;
+  // Sync with season pill so the bottom-left badge reflects choice
+  const seasonMap = { burgundy:'spring', sage:'summer', terracotta:'autumn', navy:'winter' };
+  if (window.VaniaSeasons && seasonMap[t.accentScheme]) {
+    try { window.VaniaSeasons.set(seasonMap[t.accentScheme]); } catch(e) {}
+  }
+  root.style.setProperty('--accent', s.accent);
+  root.style.setProperty('--accent-dark', s.accentDark);
+  root.style.setProperty('--accent-light', s.accentLight);
+  root.style.setProperty('--bg', s.bg);
+  root.style.setProperty('--bg-alt', s.bgAlt);
+
+  // Hero layout
+  const heroEl = document.querySelector('.hero');
+  if(heroEl) {
+    if(t.heroLayout === 'split') {
+      heroEl.style.gridTemplateColumns = '52% 48%';
+      const heroRight = heroEl.querySelector('.hero-right');
+      if(heroRight) { heroRight.style.position=''; heroRight.style.inset=''; heroRight.style.opacity=''; heroRight.style.zIndex=''; }
+    } else if(t.heroLayout === 'centered') {
+      heroEl.style.gridTemplateColumns = '1fr';
+      const heroRight = heroEl.querySelector('.hero-right');
+      if(heroRight) { heroRight.style.position='absolute'; heroRight.style.inset='0'; heroRight.style.opacity='.18'; heroRight.style.zIndex='0'; }
+    }
+  }
+
+  // Prices
+  document.querySelectorAll('.prod-price').forEach(el => { el.style.display = t.showPrices ? '' : 'none'; });
+
+  // Card style
+  document.querySelectorAll('.prod-card,.occ-card,.testi-card').forEach(el => {
+    if(t.cardStyle === 'borderless') { el.style.border='none'; el.style.boxShadow='0 2px 16px rgba(0,0,0,.06)'; }
+    else if(t.cardStyle === 'filled') { el.style.border='none'; el.style.background='var(--bg-alt)'; el.style.boxShadow='none'; }
+    else { el.style.border=''; el.style.boxShadow=''; el.style.background=''; }
+  });
+}
+
+function TweaksApp() {
+  const [tweaks, setTweak] = window.useTweaks(TWEAK_DEFAULS);
+  React.useEffect(() => { applyTweaks(tweaks); }, [tweaks]);
+  return (
+    <window.TweaksPanel title="Tweaks">
+      <window.TweakSection label="Season">
+        <window.TweakSelect id="accentScheme" label="Colour scheme"
+          options={[
+            {value:'burgundy',label:'Spring · Burgundy'},
+            {value:'sage',label:'Summer · Sage'},
+            {value:'terracotta',label:'Autumn · Terracotta'},
+            {value:'navy',label:'Winter · Navy'},
+          ]}
+          value={tweaks.accentScheme} onChange={v=>setTweak('accentScheme',v)}/>
+      </window.TweakSection>
+      <window.TweakSection label="Hero">
+        <window.TweakRadio id="heroLayout" label="Layout"
+          options={[{value:'split',label:'Split'},{value:'centered',label:'Overlay'}]}
+          value={tweaks.heroLayout} onChange={v=>setTweak('heroLayout',v)}/>
+      </window.TweakSection>
+      <window.TweakSection label="Products">
+        <window.TweakToggle id="showPrices" label="Show prices"
+          value={tweaks.showPrices} onChange={v=>setTweak('showPrices',v)}/>
+        <window.TweakRadio id="cardStyle" label="Card style"
+          options={[{value:'bordered',label:'Bordered'},{value:'borderless',label:'Shadow'},{value:'filled',label:'Filled'}]}
+          value={tweaks.cardStyle} onChange={v=>setTweak('cardStyle',v)}/>
+      </window.TweakSection>
+    </window.TweaksPanel>
+  );
+}
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<TweaksApp/>);
+</script>
+
+<script>
+// Seasonal colour — auto-detect Australian season
+if (window.VaniaSeasons) window.VaniaSeasons.init();
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('in'); revealObserver.unobserve(e.target); } });
+}, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+setTimeout(() => {
+  document.querySelectorAll('.reveal:not(.in)').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if(r.top < window.innerHeight) el.classList.add('in');
+  });
+}, 50);
+
+// Postcode checker
+const deliveryZones = {
+  '2000':'Inner City','2010':'Surry Hills','2011':'Potts Point','2016':'Redfern',
+  '2020':'Mascot','2021':'Paddington','2026':'Bondi','2040':'Leichhardt',
+  '2041':'Balmain','2042':'Newtown','2043':'Erskineville','2050':'Glebe',
+  '2060':'North Sydney','2065':'St Leonards','2066':'Lane Cove','2067':'Chatswood',
+  '2068':'Willoughby','2070':'Killara','2071':'Pymble','2072':'Turramurra',
+  '2076':'Wahroonga','2077':'Waitara','2100':'Manly','2101':'Narrabeen',
+  '2110':'Ryde','2111':'Meadowbank','2112':'Gladesville','2113':'Ryde',
+  '2114':'Eastwood','2115':'Epping','2116':'Burwood','2120':'Thornleigh',
+  '2121':'Pennant Hills','2125':'West Pennant Hills','2127':'Newington',
+  '2128':'Silverwater','2130':'Summer Hill','2131':'Ashfield','2132':'Croydon',
+  '2133':'Burwood','2134':'Strathfield','2135':'Homebush','2137':'Concord',
+  '2138':'Homebush West','2140':'Homebush','2141':'Granville',
+  '2144':'Auburn','2145':'Westmead','2150':'Parramatta',
+};
+function checkPostcode() {
+  const val = document.getElementById('postcodeInput').value.trim();
+  const res = document.getElementById('postcodeResult');
+  if(val.length !== 4 || isNaN(val)) { res.style.color='#c0392b'; res.textContent='Please enter a valid 4-digit postcode.'; return; }
+  if(deliveryZones[val]) { res.style.color='#5a8a5a'; res.textContent=`✓ We deliver to ${deliveryZones[val]} (${val}) — same-day available before 2pm.`; }
+  else { res.style.color='var(--text-muted)'; res.textContent=`We don't currently cover postcode ${val}. Please contact us to arrange delivery.`; }
+}
+document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e.key==='Enter') checkPostcode(); });
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FULLSCREEN SEARCH OVERLAY
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+  .vs-overlay {
+    position:fixed; inset:0; z-index:10000;
+    background:rgba(28, 22, 18, 0.55);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    opacity:0; pointer-events:none;
+    transition: opacity .35s cubic-bezier(.16,1,.3,1);
+    display:flex; flex-direction:column;
+  }
+  .vs-overlay.open { opacity:1; pointer-events:auto; }
+  .vs-overlay.open .vs-inner { transform: translateY(0); opacity:1; }
+
+  .vs-inner {
+    width:100%; max-width:880px; margin:0 auto; padding:80px 40px 40px;
+    transform: translateY(-24px); opacity:0;
+    transition: transform .45s cubic-bezier(.16,1,.3,1) .05s, opacity .35s ease .05s;
+  }
+
+  .vs-close {
+    position:absolute; top:24px; right:32px;
+    background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+    color:#faf8f4; width:44px; height:44px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    transition: background .2s, transform .2s;
+  }
+  .vs-close:hover { background:rgba(255,255,255,.2); transform:rotate(90deg); }
+
+  .vs-search-box {
+    display:flex; align-items:center; gap:18px;
+    background:#faf8f4; border-radius:6px; padding:22px 28px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.3);
+  }
+  .vs-search-box svg { color:var(--accent); flex-shrink:0; }
+  .vs-search-input {
+    flex:1; border:none; background:transparent; outline:none;
+    font-family:'Cormorant Garamond', serif; font-size:28px; font-weight:300;
+    color:var(--text-dark); letter-spacing:.3px;
+  }
+  .vs-search-input::placeholder { color:#b5a99a; font-style:italic; }
+  .vs-shortcut {
+    font-size:11px; letter-spacing:1.5px; color:#8a7d6e;
+    padding:4px 10px; border:1px solid #d4c8b8; border-radius:4px;
+    font-family:'Inter', sans-serif;
+  }
+
+  .vs-content { margin-top:48px; display:grid; grid-template-columns: 1fr 1fr; gap:48px 60px; color:#faf8f4; }
+  .vs-section-title {
+    font-family:'Inter', sans-serif; font-size:11px; letter-spacing:2.5px;
+    text-transform:uppercase; color:rgba(255,255,255,.55);
+    margin:0 0 18px; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,.12);
+  }
+  .vs-list { list-style:none; padding:0; margin:0; }
+  .vs-list li { margin-bottom:2px; }
+  .vs-link {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:11px 14px; margin:0 -14px; border-radius:6px;
+    color:rgba(255,255,255,.88); text-decoration:none;
+    font-family:'Cormorant Garamond', serif; font-size:18px; font-weight:400;
+    transition: background .2s, color .2s, padding-left .2s;
+  }
+  .vs-link:hover { background:rgba(255,255,255,.08); color:#fff; padding-left:18px; }
+  .vs-link .vs-tag {
+    font-family:'Inter', sans-serif; font-size:9px; letter-spacing:1.5px;
+    text-transform:uppercase; color:rgba(255,255,255,.45);
+  }
+  .vs-link .vs-arrow {
+    opacity:0; transition: opacity .2s, transform .2s; color:var(--accent-light);
+  }
+  .vs-link:hover .vs-arrow { opacity:1; transform: translateX(2px); }
+
+  .vs-occasions { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .vs-occ-pill {
+    display:flex; align-items:center; gap:10px;
+    padding:14px 16px; border:1px solid rgba(255,255,255,.15);
+    border-radius:6px; color:rgba(255,255,255,.85); text-decoration:none;
+    font-family:'Inter', sans-serif; font-size:12px; letter-spacing:1px; text-transform:uppercase;
+    transition: border-color .2s, background .2s, color .2s;
+  }
+  .vs-occ-pill:hover { border-color:rgba(255,255,255,.4); background:rgba(255,255,255,.06); color:#fff; }
+  .vs-occ-pill .vs-occ-icon { font-size:18px; }
+
+  .vs-trending-card {
+    display:flex; gap:14px; align-items:center;
+    padding:12px; margin:0 -12px; border-radius:8px;
+    text-decoration:none; transition: background .2s;
+  }
+  .vs-trending-card:hover { background:rgba(255,255,255,.08); }
+  .vs-trending-img {
+    width:64px; height:64px; border-radius:4px; flex-shrink:0;
+    background-size:cover; background-position:center;
+    background-color:rgba(255,255,255,.1);
+  }
+  .vs-trending-meta { flex:1; min-width:0; }
+  .vs-trending-name {
+    font-family:'Cormorant Garamond', serif; font-size:17px; font-weight:400;
+    color:#fff; margin:0 0 4px; line-height:1.2;
+  }
+  .vs-trending-price {
+    font-family:'Inter', sans-serif; font-size:11px; letter-spacing:1px;
+    color:rgba(255,255,255,.6);
+  }
+
+  .vs-footer {
+    margin-top:40px; padding-top:24px; border-top:1px solid rgba(255,255,255,.12);
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'Inter', sans-serif; font-size:11px; letter-spacing:1.5px;
+    color:rgba(255,255,255,.45); text-transform:uppercase;
+  }
+  .vs-footer kbd {
+    padding:3px 8px; border:1px solid rgba(255,255,255,.25);
+    border-radius:3px; margin:0 4px; font-family:inherit; font-size:10px;
+  }
+
+  @media (max-width: 720px) {
+    .vs-inner { padding:64px 20px 28px; }
+    .vs-content { grid-template-columns:1fr; gap:36px; }
+    .vs-search-input { font-size:22px; }
+    .vs-search-box { padding:18px 20px; }
+    .vs-occasions { grid-template-columns:1fr; }
+  }
+</style>
+
+<div class="vs-overlay" id="vs-overlay" aria-hidden="true">
+  <button class="vs-close" id="vs-close" aria-label="Close search">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+
+  <div class="vs-inner">
+    <div class="vs-search-box">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" class="vs-search-input" id="vs-input" placeholder="Search bouquets, occasions, or flowers…" autocomplete="off">
+      <span class="vs-shortcut">ESC</span>
+    </div>
+
+    <div class="vs-content">
+      <!-- LEFT: Popular searches + Occasions -->
+      <div>
+        <h3 class="vs-section-title">Popular searches</h3>
+        <ul class="vs-list">
+          <li><a class="vs-link" href="shop-redesign.html?type=forever">
+            <span>Forever roses</span>
+            <span class="vs-arrow">→</span>
+          </a></li>
+          <li><a class="vs-link" href="shop-redesign.html?q=peonies">
+            <span>Peonies</span>
+            <span class="vs-arrow">→</span>
+          </a></li>
+          <li><a class="vs-link" href="shop-redesign.html?q=white">
+            <span>White bouquets</span>
+            <span class="vs-arrow">→</span>
+          </a></li>
+          <li><a class="vs-link" href="shop-redesign.html?q=hatbox">
+            <span>Hatbox arrangements</span>
+            <span class="vs-arrow">→</span>
+          </a></li>
+          <li><a class="vs-link" href="weddings.html">
+            <span>Wedding flowers</span>
+            <span class="vs-tag">GUIDE</span>
+          </a></li>
+        </ul>
+
+        <h3 class="vs-section-title" style="margin-top:36px;">Shop by occasion</h3>
+        <div class="vs-occasions">
+          <a class="vs-occ-pill" href="shop-redesign.html?occasion=birthday"><span class="vs-occ-icon">🎂</span> Birthday</a>
+          <a class="vs-occ-pill" href="shop-redesign.html?occasion=anniversary"><span class="vs-occ-icon">💕</span> Anniversary</a>
+          <a class="vs-occ-pill" href="shop-redesign.html?occasion=sympathy"><span class="vs-occ-icon">🕊️</span> Sympathy</a>
+          <a class="vs-occ-pill" href="shop-redesign.html?occasion=thank-you"><span class="vs-occ-icon">✿</span> Thank you</a>
+          <a class="vs-occ-pill" href="shop-redesign.html?occasion=new-baby"><span class="vs-occ-icon">👶</span> New baby</a>
+          <a class="vs-occ-pill" href="shop-redesign.html?occasion=just-because"><span class="vs-occ-icon">✦</span> Just because</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Trending bouquets -->
+      <div>
+        <h3 class="vs-section-title">Trending now</h3>
+        <a class="vs-trending-card" href="product-redesign.html">
+          <div class="vs-trending-img" style="background-image:url('images/gallery/bouquet-pink-roses.jpg')"></div>
+          <div class="vs-trending-meta">
+            <p class="vs-trending-name">Blush Roses Bouquet</p>
+            <p class="vs-trending-price">From $89 · Fresh</p>
+          </div>
+        </a>
+        <a class="vs-trending-card" href="product-redesign.html">
+          <div class="vs-trending-img" style="background-image:url('images/gallery/bouquet-white.jpg')"></div>
+          <div class="vs-trending-meta">
+            <p class="vs-trending-name">White Garden Arrangement</p>
+            <p class="vs-trending-price">From $115 · Fresh</p>
+          </div>
+        </a>
+        <a class="vs-trending-card" href="product-redesign.html">
+          <div class="vs-trending-img" style="background-image:url('images/gallery/bouquet-pink-tulip.jpg')"></div>
+          <div class="vs-trending-meta">
+            <p class="vs-trending-name">Tulip Hatbox</p>
+            <p class="vs-trending-price">From $135 · Forever</p>
+          </div>
+        </a>
+        <a class="vs-trending-card" href="product-redesign.html">
+          <div class="vs-trending-img" style="background-image:url('images/gallery/flowers-market.jpg')"></div>
+          <div class="vs-trending-meta">
+            <p class="vs-trending-name">Florist's Choice</p>
+            <p class="vs-trending-price">From $75 · Fresh</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="vs-footer">
+      <span>Press <kbd>↵</kbd> to search · <kbd>ESC</kbd> to close</span>
+      <span>Free Sydney delivery over $80</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const overlay = document.getElementById('vs-overlay');
+  const input   = document.getElementById('vs-input');
+  const openBtn = document.getElementById('open-search-btn');
+  const closeBtn= document.getElementById('vs-close');
+
+  function open() {
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => input.focus(), 150);
+  }
+  function close() {
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    input.value = '';
+  }
+
+  openBtn && openBtn.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) close();
+    // Cmd/Ctrl+K to open
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      overlay.classList.contains('open') ? close() : open();
+    }
+  });
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && input.value.trim()) {
+      window.location.href = 'shop-redesign.html?q=' + encodeURIComponent(input.value.trim());
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

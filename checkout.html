@@ -1,338 +1,757 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout – vaniaflorist</title>
-    <link rel="stylesheet" href="styles/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
-    <style>
-    /* ── Checkout Page ── */
-    .checkout-page { background: #faf8f5; min-height: 80vh; padding: 50px 0 100px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Vaniaflorist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="season.js"></script>
+<style>
+:root {
+  --accent:      #8b7355;
+  --accent-dark: #2c2420;
+  --accent-light:#c8b89a;
+  --bg:          #faf8f4;
+  --bg-alt:      #f5f0e8;
+  --text:        #1e1a17;
+  --text-muted:  #6b5d54;
+  --border:      rgba(139,115,85,0.13);
+  --radius:      2px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:var(--text);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit}
 
-    .checkout-header { margin-bottom: 40px; }
-    .checkout-header h1 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: #8b7355; font-weight: 400; margin-bottom: 6px; }
-    .checkout-header p { color: #bbb; font-size: 0.9rem; }
+/* Top bar */
+.topbar{background:var(--accent-dark);color:var(--accent-light);text-align:center;padding:9px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
 
-    /* Progress steps */
-    .checkout-steps { display: flex; align-items: center; gap: 0; margin-bottom: 40px; }
-    .step { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; font-weight: 700; color: #ddd; letter-spacing: 0.5px; text-transform: uppercase; }
-    .step.active { color: #8b7355; }
-    .step.done  { color: #5a9a5a; }
-    .step-num { width: 28px; height: 28px; border-radius: 50%; border: 2px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; flex-shrink: 0; }
-    .step.done .step-num { background: #5a9a5a; border-color: #5a9a5a; color: white; }
-    .step.active .step-num { background: #8b7355; border-color: #8b7355; color: white; }
-    .step-line { flex: 1; height: 1px; background: #e8ddd4; margin: 0 14px; }
+/* Nav */
+.nav{position:sticky;top:0;z-index:900;background:rgba(250,248,244,.96);border-bottom:.5px solid var(--border);backdrop-filter:blur(16px);}
+.nav-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:16px 48px;gap:24px;}
+.back-link{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);transition:color .3s,gap .3s;}
+.back-link:hover{color:var(--text);gap:12px}
+.logo{text-align:center}
+.logo-name{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block;}
+.logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:2px;}
+.nav-secure{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light);display:flex;align-items:center;gap:8px;justify-content:flex-end}
 
-    /* Layout */
-    .checkout-layout { display: grid; grid-template-columns: 1fr 380px; gap: 30px; align-items: start; }
+/* Page */
+.checkout-page{padding:48px 0 100px;background:var(--bg);min-height:80vh;}
+.container{max-width:1180px;margin:0 auto;padding:0 48px}
 
-    /* ── Form Panel ── */
-    .checkout-form-panel { background: white; border-radius: 16px; border: 1px solid #f0e8dd; overflow: hidden; }
-    .panel-section { padding: 28px; border-bottom: 1px solid #f8f3ee; }
-    .panel-section:last-child { border-bottom: none; }
-    .panel-section-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #c8a882; margin-bottom: 20px; }
+/* Header */
+.checkout-header{margin-bottom:40px;text-align:center}
+.checkout-title{
+  font-family:'Great Vibes',cursive;
+  font-size:3rem;color:var(--accent);font-weight:400;line-height:1;margin-bottom:8px;
+}
+.checkout-sub{font-size:11px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase}
 
-    /* Form fields */
-    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-    .field-row.full { grid-template-columns: 1fr; }
+/* Stepper */
+.stepper{
+  display:flex;justify-content:center;align-items:center;
+  gap:0;margin-bottom:48px;max-width:520px;margin-left:auto;margin-right:auto;
+}
+.step{
+  display:flex;align-items:center;gap:10px;flex:1;justify-content:center;
+  position:relative;
+}
+.step-num{
+  width:30px;height:30px;border-radius:50%;
+  border:.5px solid var(--border);background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--text-muted);
+  transition:all .3s;flex-shrink:0;
+}
+.step.active .step-num{background:var(--accent-dark);color:var(--bg);border-color:var(--accent-dark)}
+.step.done .step-num{background:var(--accent);color:#fff;border-color:var(--accent)}
+.step.done .step-num::after{content:'✓';font-family:'DM Sans',sans-serif;font-size:13px}
+.step.done .step-num span{display:none}
+.step-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);transition:color .3s;white-space:nowrap}
+.step.active .step-label{color:var(--text)}
+.step-line{flex:1;height:.5px;background:var(--border);max-width:48px}
+.step.done + .step-line{background:var(--accent)}
 
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    .field label { font-size: 0.78rem; font-weight: 700; color: #6b5240; letter-spacing: 0.3px; }
-    .field label span.req { color: #e05252; margin-left: 2px; }
+/* Layout */
+.checkout-layout{display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:start;}
 
-    .field input,
-    .field select,
-    .field textarea {
-        padding: 11px 14px;
-        border: 2px solid #e8ddd4;
-        border-radius: 10px;
-        font-size: 0.92rem;
-        font-family: 'Georgia', serif;
-        color: #2b2b2b;
-        background: white;
-        transition: border-color 0.2s, box-shadow 0.2s;
-        width: 100%;
-    }
+/* Form panel */
+.form-panel{background:#fff;border:.5px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.form-step{display:none;padding:32px 36px}
+.form-step.active{display:block;animation:fadeIn .35s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-    .field input:focus,
-    .field select:focus,
-    .field textarea:focus { outline: none; border-color: #8b7355; box-shadow: 0 0 0 3px rgba(139,115,85,0.08); }
-    .field input.error, .field select.error, .field textarea.error { border-color: #e05252; }
-    .field .field-error { font-size: 0.75rem; color: #e05252; display: none; }
-    .field.has-error .field-error { display: block; }
-    .field.has-error input, .field.has-error select, .field.has-error textarea { border-color: #e05252; }
+.step-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:300;color:var(--text);
+  margin-bottom:4px;letter-spacing:-.3px;
+}
+.step-hint{font-size:12px;color:var(--text-muted);margin-bottom:28px;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1rem}
 
-    .field textarea { resize: vertical; min-height: 80px; }
+.field-group{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.field-group.single{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);font-weight:400}
+.field input,.field select,.field textarea{
+  padding:13px 14px;border:.5px solid var(--border);border-radius:var(--radius);
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;
+  background:#fff;color:var(--text);outline:none;transition:border-color .25s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+.field textarea{resize:vertical;min-height:74px;font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic}
 
-    /* Address toggle */
-    .delivery-type-toggle { display: flex; gap: 10px; margin-bottom: 20px; }
-    .delivery-type-btn {
-        flex: 1; padding: 11px; border: 2px solid #e8ddd4; background: white; border-radius: 10px;
-        font-size: 0.84rem; font-weight: 600; color: #8b7355; cursor: pointer; transition: all 0.2s;
-        font-family: 'Georgia', serif; text-align: center;
-    }
-    .delivery-type-btn.active { background: #8b7355; border-color: #8b7355; color: white; }
-    .delivery-type-btn:hover:not(.active) { border-color: #8b7355; background: #faf8f5; }
+.section-divider{
+  margin:32px 0 22px;padding-top:22px;border-top:.5px solid var(--border);
+  font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);
+}
 
-    #pickup-note { background: #faf8f5; border-radius: 10px; padding: 14px 16px; font-size: 0.85rem; color: #8b7355; display: none; border: 1px solid #f0e8dd; }
-    #pickup-note strong { display: block; margin-bottom: 4px; }
+/* Delivery option cards */
+.delivery-options{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.del-opt{
+  display:flex;align-items:center;gap:14px;padding:16px 18px;
+  border:.5px solid var(--border);border-radius:var(--radius);
+  background:#fff;cursor:pointer;transition:all .25s;
+}
+.del-opt:hover{border-color:var(--accent-light)}
+.del-opt input{position:absolute;opacity:0;pointer-events:none}
+.del-opt .radio-dot{
+  width:14px;height:14px;border-radius:50%;
+  border:.5px solid var(--border);background:#fff;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;transition:border-color .25s;
+}
+.del-opt input:checked + .radio-dot{border-color:var(--accent);border-width:1px}
+.del-opt input:checked + .radio-dot::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.del-opt:has(input:checked){border-color:var(--accent);background:var(--bg-alt)}
+.del-opt-body{flex:1}
+.del-opt-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);margin-bottom:2px}
+.del-opt-desc{font-size:11px;color:var(--text-muted)}
+.del-opt-price{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--accent)}
 
-    /* ── Order Summary Panel ── */
-    .checkout-summary-panel { background: white; border-radius: 16px; border: 1px solid #f0e8dd; overflow: hidden; position: sticky; top: 100px; }
-    .summary-panel-title { padding: 20px 24px; border-bottom: 1px solid #f0e8dd; font-size: 0.72rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #c8a882; }
+/* Payment method tabs */
+.pay-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:22px}
+.pay-tab{
+  padding:14px 12px;text-align:center;
+  border:.5px solid var(--border);border-radius:var(--radius);
+  background:#fff;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--text-muted);cursor:pointer;transition:all .25s;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.pay-tab:hover{border-color:var(--accent-light);color:var(--text)}
+.pay-tab.active{border-color:var(--accent);background:var(--bg-alt);color:var(--text)}
+.pay-tab svg{opacity:.7}
+.pay-tab.active svg{opacity:1;color:var(--accent)}
 
-    /* Loading */
-    .summary-loading { padding: 40px 24px; text-align: center; color: #bbb; }
-    .summary-spinner { width: 32px; height: 32px; border: 3px solid #f0e8dd; border-top-color: #8b7355; border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+/* Card icons row */
+.card-brands{display:flex;gap:8px;margin-bottom:14px}
+.card-brand{
+  height:22px;padding:0 10px;display:flex;align-items:center;
+  border:.5px solid var(--border);border-radius:var(--radius);
+  font-size:9px;font-weight:500;letter-spacing:1px;color:var(--text-muted);
+  background:#fff;text-transform:uppercase;
+}
 
-    /* Line items */
-    .summary-items-list { padding: 16px 24px; border-bottom: 1px solid #f8f3ee; }
-    .summary-line { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
-    .summary-line:last-child { margin-bottom: 0; }
-    .summary-line-img { width: 52px; height: 52px; border-radius: 8px; object-fit: cover; background: #faf8f5; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; overflow: hidden; }
-    .summary-line-img img { width: 100%; height: 100%; object-fit: cover; }
-    .summary-line-info { flex: 1; min-width: 0; }
-    .summary-line-name { font-size: 0.88rem; font-weight: 700; color: #1e1a17; margin-bottom: 2px; line-height: 1.3; }
-    .summary-line-meta { font-size: 0.78rem; color: #bbb; }
-    .summary-line-price { font-size: 0.92rem; font-weight: 700; color: #8b7355; flex-shrink: 0; }
+/* Review */
+.review-section{margin-bottom:24px;padding-bottom:20px;border-bottom:.5px solid var(--border)}
+.review-section:last-of-type{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.review-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.review-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light)}
+.review-edit{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);background:none;border:none;border-bottom:.5px solid var(--border);padding-bottom:2px;transition:color .3s,border-color .3s}
+.review-edit:hover{color:var(--text);border-color:var(--accent)}
+.review-body{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);line-height:1.7}
+.review-body strong{font-weight:400}
+.review-body .muted{color:var(--text-muted);font-size:.95rem}
 
-    /* Totals */
-    .summary-totals { padding: 16px 24px; }
-    .summary-row { display: flex; justify-content: space-between; font-size: 0.88rem; color: #888; margin-bottom: 10px; }
-    .summary-row.total { font-size: 1.1rem; font-weight: 700; color: #1e1a17; padding-top: 14px; border-top: 1px solid #f0e8dd; margin-top: 4px; }
-    .summary-row.total span:last-child { color: #8b7355; font-size: 1.3rem; }
+/* Step nav */
+.step-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:24px;margin-top:8px;border-top:.5px solid var(--border);
+}
+.btn-back{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);background:none;border:none;display:inline-flex;align-items:center;gap:8px;transition:color .3s,gap .3s}
+.btn-back:hover{color:var(--text);gap:12px}
+.btn-back:disabled{opacity:.3;pointer-events:none}
+.btn-next{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent-dark);color:var(--bg);
+  padding:14px 30px;border:none;border-radius:var(--radius);
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:background .3s;
+}
+.btn-next:hover{background:var(--accent)}
 
-    /* Submit */
-    .checkout-submit-wrap { padding: 20px 24px; }
-    .btn-place-order {
-        display: block; width: 100%; padding: 16px; background: #8b7355; color: white; border: none;
-        border-radius: 12px; font-size: 1rem; font-weight: 700; letter-spacing: 0.5px; cursor: pointer;
-        font-family: 'Georgia', serif; transition: all 0.25s ease; text-align: center; margin-bottom: 12px;
-    }
-    .btn-place-order:hover:not(:disabled) { background: #6d5a44; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(139,115,85,0.3); }
-    .btn-place-order:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    .btn-place-order.loading { opacity: 0.8; cursor: not-allowed; }
+/* Summary */
+.summary-panel{
+  background:#fff;border:.5px solid var(--border);border-radius:var(--radius);
+  position:sticky;top:88px;overflow:hidden;
+}
+.summary-head{padding:18px 22px;border-bottom:.5px solid var(--border);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light)}
+.summary-items{padding:18px 22px;border-bottom:.5px solid var(--border);max-height:280px;overflow-y:auto}
+.sum-item{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.sum-item:last-child{margin-bottom:0}
+.sum-thumb{width:54px;height:54px;border-radius:var(--radius);overflow:hidden;background:var(--bg-alt);flex-shrink:0;border:.5px solid var(--border);position:relative}
+.sum-thumb img{width:100%;height:100%;object-fit:cover}
+.sum-qty-bubble{
+  position:absolute;top:-6px;right:-6px;
+  background:var(--accent-dark);color:#fff;
+  width:18px;height:18px;border-radius:50%;
+  font-size:10px;display:flex;align-items:center;justify-content:center;
+}
+.sum-info{flex:1;min-width:0}
+.sum-name{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--text);margin-bottom:2px}
+.sum-meta{font-size:10px;color:var(--accent-light);letter-spacing:.5px}
+.sum-price{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--accent);flex-shrink:0}
 
-    .btn-back-cart { display: block; width: 100%; padding: 12px; background: transparent; color: #8b7355; border: 1.5px solid #e8ddd4; border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: 'Georgia', serif; transition: all 0.2s; text-align: center; text-decoration: none; }
-    .btn-back-cart:hover { border-color: #8b7355; background: #faf8f5; }
-    .btn-place-order.btn-loading { opacity: 0.8; cursor: not-allowed; }
+.summary-totals{padding:18px 22px}
+.sum-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:8px}
+.sum-row.discount{color:#5a8a5a}
+.sum-row.grand{
+  padding-top:14px;margin-top:6px;border-top:.5px solid var(--border);
+  align-items:baseline;
+}
+.sum-row.grand .label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
+.sum-row.grand .val{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--accent);font-weight:300}
 
-    .secure-note { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.75rem; color: #bbb; margin-top: 14px; }
-    .secure-note svg { color: #c8a882; }
+/* Promo */
+.promo-row{display:flex;gap:8px;padding:16px 22px;border-top:.5px solid var(--border);background:var(--bg-alt)}
+.promo-row input{
+  flex:1;padding:10px 12px;border:.5px solid var(--border);border-radius:var(--radius);
+  background:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;
+  color:var(--text);outline:none;
+}
+.promo-row input:focus{border-color:var(--accent)}
+.promo-row button{
+  padding:10px 16px;background:var(--accent-dark);color:#fff;
+  border:none;border-radius:var(--radius);
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;
+}
+.promo-row button:hover{background:var(--accent)}
+#promoMsg{padding:0 22px 14px;font-size:11px;font-style:italic;font-family:'Cormorant Garamond',serif;color:#5a8a5a;background:var(--bg-alt);min-height:0}
+#promoMsg:not(:empty){padding-bottom:14px;min-height:auto}
+#promoMsg.error{color:#c0392b}
 
-    /* Empty cart */
-    .checkout-empty { text-align: center; padding: 80px 20px; background: white; border-radius: 16px; border: 1px solid #f0e8dd; }
-    .checkout-empty-icon { font-size: 3.5rem; opacity: 0.3; margin-bottom: 18px; }
-    .checkout-empty h3 { color: #aaa; font-size: 1.2rem; margin-bottom: 8px; }
-    .checkout-empty p { color: #bbb; font-size: 0.9rem; margin-bottom: 24px; }
-    .btn-shop-now { display: inline-block; background: #8b7355; color: white; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 0.88rem; transition: all 0.2s; }
-    .btn-shop-now:hover { background: #6d5a44; transform: translateY(-2px); }
+/* Trust strip */
+.trust-strip{display:flex;justify-content:space-around;padding:16px 22px;border-top:.5px solid var(--border);font-size:10px;letter-spacing:1px;color:var(--accent-light)}
+.trust-strip > div{display:flex;align-items:center;gap:6px}
 
-    /* Responsive */
-    @media (max-width: 900px) { .checkout-layout { grid-template-columns: 1fr; } .checkout-summary-panel { position: static; order: -1; } }
-    @media (max-width: 600px) { .checkout-steps { display: none; } .field-row { grid-template-columns: 1fr; } .checkout-header h1 { font-size: 2.4rem; } .checkout-page { padding: 30px 0 80px; } }
-    </style>
+/* Footer */
+.footer{background:var(--accent-dark);padding:48px 0 24px}
+.footer-bottom{max-width:1200px;margin:0 auto;padding:0 48px;text-align:center;font-size:10px;letter-spacing:1px;color:#5a4e44}
+
+/* Responsive */
+@media(max-width:960px){.checkout-layout{grid-template-columns:1fr}.summary-panel{position:static}}
+@media(max-width:768px){
+  .nav-inner{padding:14px 20px}
+  .container{padding:0 20px}
+  .field-group{grid-template-columns:1fr}
+  .form-step{padding:24px 22px}
+  .step-label{display:none}
+  .step-line{max-width:40px}
+}
+</style>
 </head>
 <body>
 
-    <!-- Nav -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-left">
-                <a href="cart.html" style="display:flex;align-items:center;gap:8px;color:#8b7355;text-decoration:none;font-weight:600;font-size:.9rem;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                    Cart
-                </a>
+<div class="topbar">Secure checkout · Your details are protected</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="cart-redesign.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to cart
+    </a>
+    <div class="logo">
+      <a href="Vaniaflorist Redesign.html">
+        <span class="logo-name">Vaniaflorist</span>
+        <span class="logo-sub">Sydney Florist</span>
+      </a>
+    </div>
+    <div class="nav-secure">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Secure
+    </div>
+  </div>
+</nav>
+
+<main class="checkout-page">
+  <div class="container">
+    <div class="checkout-header">
+      <h1 class="checkout-title">Checkout</h1>
+      <p class="checkout-sub">Almost there — three quick steps</p>
+    </div>
+
+    <!-- Stepper -->
+    <div class="stepper" id="stepper">
+      <div class="step active" data-step="1">
+        <span class="step-num"><span>1</span></span>
+        <span class="step-label">Details</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" data-step="2">
+        <span class="step-num"><span>2</span></span>
+        <span class="step-label">Payment</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" data-step="3">
+        <span class="step-num"><span>3</span></span>
+        <span class="step-label">Review</span>
+      </div>
+    </div>
+
+    <div class="checkout-layout">
+      <!-- Form Panel -->
+      <div class="form-panel">
+        <!-- STEP 1: DETAILS -->
+        <div class="form-step active" data-step="1">
+          <h2 class="step-title">Who's it for?</h2>
+          <p class="step-hint">Tell us where to send the flowers and a little note for the recipient.</p>
+
+          <div class="section-divider" style="margin-top:0;padding-top:0;border-top:none">Your contact</div>
+          <div class="field-group">
+            <div class="field"><label>First name</label><input type="text" id="firstName" placeholder="Sarah"></div>
+            <div class="field"><label>Last name</label><input type="text" id="lastName" placeholder="Chen"></div>
+          </div>
+          <div class="field-group">
+            <div class="field"><label>Email</label><input type="email" id="email" placeholder="sarah@example.com"></div>
+            <div class="field"><label>Mobile</label><input type="tel" id="phone" placeholder="04xx xxx xxx"></div>
+          </div>
+
+          <div class="section-divider">Delivery address</div>
+          <div class="field-group single">
+            <div class="field"><label>Recipient's name</label><input type="text" id="recipientName" placeholder="Mum"></div>
+          </div>
+          <div class="field-group single">
+            <div class="field"><label>Street address</label><input type="text" id="street" placeholder="12 Oxford St"></div>
+          </div>
+          <div class="field-group" style="grid-template-columns:2fr 1fr 1fr">
+            <div class="field"><label>Suburb</label><input type="text" id="suburb" placeholder="Paddington"></div>
+            <div class="field"><label>State</label>
+              <select id="state">
+                <option>NSW</option><option>VIC</option><option>QLD</option><option>WA</option>
+                <option>SA</option><option>TAS</option><option>ACT</option><option>NT</option>
+              </select>
             </div>
-            <div class="nav-center" style="text-align:center;">
-                <a href="index.html" style="text-decoration:none;">
-                    <h1 style="font-family:'Great Vibes',cursive;font-size:2rem;color:#8b7355;margin:0;font-weight:400;">vaniaflorist</h1>
-                </a>
+            <div class="field"><label>Postcode</label><input type="text" id="postcode" placeholder="2021" maxlength="4"></div>
+          </div>
+
+          <div class="section-divider">When &amp; how</div>
+          <div class="delivery-options">
+            <label class="del-opt">
+              <input type="radio" name="delivery" value="same-day" checked>
+              <span class="radio-dot"></span>
+              <div class="del-opt-body">
+                <div class="del-opt-name">Same-day delivery</div>
+                <div class="del-opt-desc">Order before 2pm · Sydney metro</div>
+              </div>
+              <div class="del-opt-price">$12</div>
+            </label>
+            <label class="del-opt">
+              <input type="radio" name="delivery" value="standard">
+              <span class="radio-dot"></span>
+              <div class="del-opt-body">
+                <div class="del-opt-name">Standard delivery</div>
+                <div class="del-opt-desc">Choose a date · 9am – 5pm window</div>
+              </div>
+              <div class="del-opt-price">$8</div>
+            </label>
+            <label class="del-opt">
+              <input type="radio" name="delivery" value="pickup">
+              <span class="radio-dot"></span>
+              <div class="del-opt-body">
+                <div class="del-opt-name">Studio pickup</div>
+                <div class="del-opt-desc">Collect from Surry Hills studio</div>
+              </div>
+              <div class="del-opt-price">Free</div>
+            </label>
+          </div>
+
+          <div class="section-divider">Add a card message</div>
+          <div class="field-group single">
+            <div class="field">
+              <label>Message <span style="color:var(--accent-light);text-transform:none;letter-spacing:0">— optional, up to 200 characters</span></label>
+              <textarea id="cardMsg" maxlength="200" placeholder="Happy birthday Mum — wishing you a beautiful day. Love always xx"></textarea>
             </div>
-            <div class="nav-right"></div>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn-back" disabled>← Back</button>
+            <button class="btn-next" onclick="goToStep(2)">Continue to payment →</button>
+          </div>
         </div>
-    </nav>
 
-    <main class="checkout-page">
-        <div class="container">
+        <!-- STEP 2: PAYMENT -->
+        <div class="form-step" data-step="2">
+          <h2 class="step-title">How would you like to pay?</h2>
+          <p class="step-hint">Your payment is encrypted and never stored on our servers.</p>
 
-            <div class="checkout-header">
-                <h1>Checkout</h1>
-                <p>Almost there — just fill in your details below</p>
+          <div class="pay-tabs">
+            <div class="pay-tab active" data-method="card">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              Card
             </div>
-
-            <!-- Progress steps -->
-            <div class="checkout-steps">
-                <div class="step done">
-                    <div class="step-num">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                    </div>
-                    Cart
-                </div>
-                <div class="step-line"></div>
-                <div class="step active">
-                    <div class="step-num">2</div>
-                    Details
-                </div>
-                <div class="step-line"></div>
-                <div class="step">
-                    <div class="step-num">3</div>
-                    Confirmation
-                </div>
+            <div class="pay-tab" data-method="paypal">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 11l1-6h6a3 3 0 0 1 0 6h-3l-1 6H4z"/><path d="M9 13l1-6h6a3 3 0 0 1 0 6h-3"/></svg>
+              PayPal
             </div>
-
-            <!-- Empty cart state (shown if cart is empty) -->
-            <div id="checkout-empty" style="display:none;">
-                <div class="checkout-empty">
-                    <div class="checkout-empty-icon">🛒</div>
-                    <h3>Your cart is empty</h3>
-                    <p>Add some beautiful flowers before checking out.</p>
-                    <a href="shop.html" class="btn-shop-now">Browse the Shop</a>
-                </div>
+            <div class="pay-tab" data-method="afterpay">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Afterpay
             </div>
+          </div>
 
-            <!-- Main checkout layout -->
-            <div class="checkout-layout" id="checkout-main" style="display:none;">
-
-                <!-- LEFT: Form -->
-                <div class="checkout-form-panel">
-
-                    <!-- Contact -->
-                    <div class="panel-section">
-                        <div class="panel-section-title">Contact Details</div>
-                        <div class="field-row">
-                            <div class="field" id="field-name">
-                                <label for="name">Full Name <span class="req">*</span></label>
-                                <input type="text" id="name" placeholder="Jane Smith" autocomplete="name">
-                                <span class="field-error">Please enter your name</span>
-                            </div>
-                            <div class="field" id="field-phone">
-                                <label for="phone">Phone Number <span class="req">*</span></label>
-                                <input type="tel" id="phone" placeholder="04XX XXX XXX" autocomplete="tel">
-                                <span class="field-error">Please enter a valid phone number</span>
-                            </div>
-                        </div>
-                        <div class="field-row full">
-                            <div class="field" id="field-email">
-                                <label for="email">Email <span style="color:#bbb;font-weight:400;">(optional — for order updates)</span></label>
-                                <input type="email" id="email" placeholder="jane@example.com" autocomplete="email">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Delivery -->
-                    <div class="panel-section">
-                        <div class="panel-section-title">Delivery</div>
-
-                        <div class="delivery-type-toggle">
-                            <button class="delivery-type-btn active" data-type="delivery" id="btn-delivery">🚚 Deliver to me</button>
-                            <button class="delivery-type-btn" data-type="pickup" id="btn-pickup">🏪 I'll pick up</button>
-                        </div>
-
-                        <div id="delivery-fields">
-                            <div class="field-row full" style="margin-bottom:16px;">
-                                <div class="field" id="field-address">
-                                    <label for="address">Street Address <span class="req">*</span></label>
-                                    <input type="text" id="address" placeholder="123 Garden St" autocomplete="street-address">
-                                    <span class="field-error">Please enter your address</span>
-                                </div>
-                            </div>
-                            <div class="field-row">
-                                <div class="field" id="field-suburb">
-                                    <label for="suburb">Suburb <span class="req">*</span></label>
-                                    <input type="text" id="suburb" placeholder="Surry Hills" autocomplete="address-level2">
-                                    <span class="field-error">Please enter suburb</span>
-                                </div>
-                                <div class="field">
-                                    <label for="postcode">Postcode</label>
-                                    <input type="text" id="postcode" placeholder="2000" maxlength="4" autocomplete="postal-code">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="pickup-note">
-                            <strong>📍 Pickup Address</strong>
-                            123 Garden Street, Floral District, Sydney NSW 2000<br>
-                            Mon–Sat 9am–7pm · Sun 10am–5pm
-                        </div>
-                    </div>
-
-                    <!-- Date & Notes -->
-                    <div class="panel-section">
-                        <div class="panel-section-title">Delivery Date & Notes</div>
-                        <div class="field-row">
-                            <div class="field" id="field-delivery-date">
-                                <label for="delivery-date">Preferred Delivery Date <span class="req">*</span></label>
-                                <input type="date" id="delivery-date">
-                                <span class="field-error">Please select a delivery date</span>
-                            </div>
-                            <div class="field">
-                                <label for="delivery-time">Preferred Time</label>
-                                <select id="delivery-time">
-                                    <option value="">Any time</option>
-                                    <option value="morning">Morning (9am – 12pm)</option>
-                                    <option value="afternoon">Afternoon (12pm – 5pm)</option>
-                                    <option value="evening">Evening (5pm – 7pm)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="field-row full">
-                            <div class="field">
-                                <label for="notes">Special Instructions <span style="color:#bbb;font-weight:400;">(optional)</span></label>
-                                <textarea id="notes" placeholder="Recipient name, gate code, message on card…"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- RIGHT: Order Summary -->
-                <div class="checkout-summary-panel">
-                    <div class="summary-panel-title">Your Order</div>
-
-                    <div class="summary-loading" id="summary-loading">
-                        <div class="summary-spinner"></div>
-                        <p>Loading order…</p>
-                    </div>
-
-                    <div id="summary-body" style="display:none;">
-                        <div class="summary-items-list" id="summary-items"></div>
-
-                        <div class="summary-totals">
-                            <div class="summary-row">
-                                <span>Subtotal</span>
-                                <span id="co-subtotal">$0.00</span>
-                            </div>
-                            <div class="summary-row">
-                                <span>Delivery</span>
-                                <span id="co-delivery">$0.00</span>
-                            </div>
-                            <div class="summary-row total">
-                                <span>Total</span>
-                                <span id="co-total">$0.00</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="checkout-submit-wrap">
-                        <button class="btn-place-order" id="btn-place-order" disabled>
-                            Place Order
-                        </button>
-                        <a href="cart.html" class="btn-back-cart">← Back to Cart</a>
-                        <div class="secure-note">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                            Your information is safe with us
-                        </div>
-                    </div>
-                </div>
-
+          <!-- Card form -->
+          <div class="pay-method active" data-method="card">
+            <div class="card-brands">
+              <span class="card-brand">Visa</span>
+              <span class="card-brand">Mastercard</span>
+              <span class="card-brand">Amex</span>
+              <span class="card-brand">Apple Pay</span>
             </div>
+            <div class="field-group single">
+              <div class="field"><label>Cardholder name</label><input type="text" id="cardName" placeholder="Sarah Chen"></div>
+            </div>
+            <div class="field-group single">
+              <div class="field"><label>Card number</label><input type="text" id="cardNum" placeholder="1234 5678 9012 3456" maxlength="19"></div>
+            </div>
+            <div class="field-group">
+              <div class="field"><label>Expiry</label><input type="text" id="cardExp" placeholder="MM / YY" maxlength="7"></div>
+              <div class="field"><label>CVC</label><input type="text" id="cardCvc" placeholder="123" maxlength="4"></div>
+            </div>
+          </div>
+
+          <!-- PayPal -->
+          <div class="pay-method" data-method="paypal" style="display:none;padding:32px 0;text-align:center">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--text-muted);margin-bottom:16px">You'll be redirected to PayPal to complete your payment.</p>
+          </div>
+
+          <!-- Afterpay -->
+          <div class="pay-method" data-method="afterpay" style="display:none;padding:24px 0">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--text-muted);margin-bottom:14px;text-align:center">4 interest-free fortnightly payments</p>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px">
+              <div style="padding:14px;text-align:center;background:var(--bg-alt);border:.5px solid var(--border);border-radius:var(--radius)"><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--accent)">$32.50</div><div style="font-size:9px;letter-spacing:1px;color:var(--text-muted);margin-top:2px">Today</div></div>
+              <div style="padding:14px;text-align:center;background:#fff;border:.5px solid var(--border);border-radius:var(--radius)"><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-muted)">$32.50</div><div style="font-size:9px;letter-spacing:1px;color:var(--accent-light);margin-top:2px">2 weeks</div></div>
+              <div style="padding:14px;text-align:center;background:#fff;border:.5px solid var(--border);border-radius:var(--radius)"><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-muted)">$32.50</div><div style="font-size:9px;letter-spacing:1px;color:var(--accent-light);margin-top:2px">4 weeks</div></div>
+              <div style="padding:14px;text-align:center;background:#fff;border:.5px solid var(--border);border-radius:var(--radius)"><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-muted)">$32.50</div><div style="font-size:9px;letter-spacing:1px;color:var(--accent-light);margin-top:2px">6 weeks</div></div>
+            </div>
+          </div>
+
+          <div class="section-divider">Billing address</div>
+          <div class="field-group single">
+            <label class="del-opt" style="margin-bottom:0">
+              <input type="checkbox" id="sameAsDelivery" checked>
+              <span class="radio-dot" style="border-radius:3px"></span>
+              <div class="del-opt-body">
+                <div class="del-opt-name" style="font-size:.95rem">Same as delivery address</div>
+                <div class="del-opt-desc">Use the address from step 1</div>
+              </div>
+            </label>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn-back" onclick="goToStep(1)">← Back</button>
+            <button class="btn-next" onclick="goToStep(3)">Review order →</button>
+          </div>
         </div>
-    </main>
 
-    <script type="module" src="src/scripts/checkout.ts"></script>
+        <!-- STEP 3: REVIEW -->
+        <div class="form-step" data-step="3">
+          <h2 class="step-title">One last look</h2>
+          <p class="step-hint">Confirm your details below — then we'll start arranging.</p>
+
+          <div class="review-section">
+            <div class="review-head">
+              <span class="review-label">Delivering to</span>
+              <button class="review-edit" onclick="goToStep(1)">Edit</button>
+            </div>
+            <div class="review-body">
+              <strong id="rvRecipient">Mum</strong><br>
+              <span class="muted" id="rvAddress">12 Oxford St, Paddington NSW 2021</span><br>
+              <span class="muted" id="rvDelivery">Same-day delivery · Order before 2pm</span>
+            </div>
+          </div>
+
+          <div class="review-section" id="rvCardSection">
+            <div class="review-head">
+              <span class="review-label">Card message</span>
+              <button class="review-edit" onclick="goToStep(1)">Edit</button>
+            </div>
+            <div class="review-body" id="rvCardMsg" style="font-style:italic">
+              Happy birthday Mum — wishing you a beautiful day. Love always xx
+            </div>
+          </div>
+
+          <div class="review-section">
+            <div class="review-head">
+              <span class="review-label">Paying with</span>
+              <button class="review-edit" onclick="goToStep(2)">Edit</button>
+            </div>
+            <div class="review-body" id="rvPayment">
+              Card ending <strong>•••• 3456</strong>
+            </div>
+          </div>
+
+          <div class="review-section">
+            <div class="review-head">
+              <span class="review-label">Contact</span>
+              <button class="review-edit" onclick="goToStep(1)">Edit</button>
+            </div>
+            <div class="review-body">
+              <span id="rvContactName">Sarah Chen</span><br>
+              <span class="muted" id="rvContactDetails">sarah@example.com · 04xx xxx xxx</span>
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn-back" onclick="goToStep(2)">← Back</button>
+            <button class="btn-next" id="placeOrderBtn" onclick="placeOrder()">Place order — $<span id="finalTotal">0.00</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <aside class="summary-panel">
+        <div class="summary-head">Order Summary</div>
+        <div class="summary-items" id="summaryItems"></div>
+        <div class="summary-totals">
+          <div class="sum-row"><span>Subtotal</span><span id="sumSubtotal">$0.00</span></div>
+          <div class="sum-row"><span id="sumDeliveryLabel">Delivery</span><span id="sumDelivery">$0.00</span></div>
+          <div class="sum-row discount" id="sumDiscountRow" style="display:none"><span>Discount (<span id="promoCodeLabel"></span>)</span><span id="sumDiscount">-$0.00</span></div>
+          <div class="sum-row grand"><span class="label">Total</span><span class="val" id="sumTotal">$0.00</span></div>
+        </div>
+        <div class="promo-row">
+          <input type="text" id="promoInput" placeholder="Gift card or promo code">
+          <button onclick="applyPromo()">Apply</button>
+        </div>
+        <div id="promoMsg"></div>
+        <div class="trust-strip">
+          <div><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> 256-bit SSL</div>
+          <div><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg> Fresh guarantee</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-bottom">© 2026 Vaniaflorist · Sydney, NSW · All rights reserved</div>
+</footer>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.VaniaSeasons) window.VaniaSeasons.init();
+});
+
+// ─── Mock cart (would come from cart state / Supabase) ───
+const CART = [
+  { id:1, name:'Blush Romance', meta:'Classic · Wrapped',  price:85, qty:1, img:'images/gallery/bouquet-pink-roses.jpg' },
+  { id:2, name:'Spring Tulips', meta:'Petite · In Vase',   price:75, qty:1, img:'images/gallery/bouquet-pink-tulip.jpg' },
+];
+
+const PROMO_CODES = {
+  'BLOOM10': { type:'percent', value:10, label:'10% off' },
+  'WELCOME': { type:'amount',  value:15, label:'$15 off your first order' },
+};
+
+let appliedPromo = null;
+let currentStep  = 1;
+let deliveryFee  = 12; // same-day default
+
+// ─── Render summary items ───
+function renderSummaryItems() {
+  document.getElementById('summaryItems').innerHTML = CART.map(i => `
+    <div class="sum-item">
+      <div class="sum-thumb">
+        <img src="${i.img}" alt="${i.name}">
+        <span class="sum-qty-bubble">${i.qty}</span>
+      </div>
+      <div class="sum-info">
+        <div class="sum-name">${i.name}</div>
+        <div class="sum-meta">${i.meta}</div>
+      </div>
+      <div class="sum-price">$${(i.price * i.qty).toFixed(2)}</div>
+    </div>
+  `).join('');
+}
+
+// ─── Update totals ───
+function updateTotals() {
+  const subtotal = CART.reduce((s,i) => s + i.price * i.qty, 0);
+  let discount = 0;
+  if (appliedPromo) {
+    discount = appliedPromo.type === 'percent'
+      ? subtotal * appliedPromo.value / 100
+      : Math.min(appliedPromo.value, subtotal);
+  }
+  const total = Math.max(0, subtotal - discount + deliveryFee);
+
+  document.getElementById('sumSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+  document.getElementById('sumDelivery').textContent = deliveryFee === 0 ? 'Free' : `$${deliveryFee.toFixed(2)}`;
+  document.getElementById('sumTotal').textContent    = `$${total.toFixed(2)}`;
+  document.getElementById('finalTotal').textContent  = total.toFixed(2);
+
+  const dr = document.getElementById('sumDiscountRow');
+  if (discount > 0) {
+    dr.style.display = 'flex';
+    document.getElementById('sumDiscount').textContent = `-$${discount.toFixed(2)}`;
+    document.getElementById('promoCodeLabel').textContent = appliedPromo.code;
+  } else {
+    dr.style.display = 'none';
+  }
+}
+
+// ─── Stepper ───
+function goToStep(n) {
+  if (n > currentStep && !validateStep(currentStep)) return;
+  currentStep = n;
+  document.querySelectorAll('.step').forEach(s => {
+    const num = +s.dataset.step;
+    s.classList.toggle('active', num === n);
+    s.classList.toggle('done', num < n);
+  });
+  document.querySelectorAll('.step-line').forEach((l, i) => {
+    l.style.background = i < n - 1 ? 'var(--accent)' : 'var(--border)';
+  });
+  document.querySelectorAll('.form-step').forEach(s => {
+    s.classList.toggle('active', +s.dataset.step === n);
+  });
+  if (n === 3) populateReview();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function validateStep(n) {
+  // Light validation — could be stricter, but keep prototype forgiving
+  if (n === 1) {
+    const required = ['firstName','lastName','email','phone','recipientName','street','suburb','postcode'];
+    const missing = required.filter(id => !document.getElementById(id).value.trim());
+    if (missing.length) {
+      // Prefill so the user can move on if they're just exploring
+      const fills = { firstName:'Sarah', lastName:'Chen', email:'sarah@example.com', phone:'0400 123 456',
+                      recipientName:'Mum', street:'12 Oxford St', suburb:'Paddington', postcode:'2021' };
+      missing.forEach(id => { document.getElementById(id).value = fills[id] || ''; });
+    }
+  }
+  return true;
+}
+
+// ─── Delivery option ───
+document.querySelectorAll('input[name="delivery"]').forEach(r => {
+  r.addEventListener('change', e => {
+    const v = e.target.value;
+    deliveryFee = v === 'pickup' ? 0 : v === 'standard' ? 8 : 12;
+    updateTotals();
+  });
+});
+
+// ─── Payment tabs ───
+document.querySelectorAll('.pay-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.pay-tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    const m = t.dataset.method;
+    document.querySelectorAll('.pay-method').forEach(p => {
+      p.style.display = p.dataset.method === m ? 'block' : 'none';
+    });
+  });
+});
+
+// ─── Card formatting ───
+const cardNum = document.getElementById('cardNum');
+cardNum.addEventListener('input', e => {
+  e.target.value = e.target.value.replace(/\D/g,'').replace(/(.{4})/g,'$1 ').trim();
+});
+const cardExp = document.getElementById('cardExp');
+cardExp.addEventListener('input', e => {
+  let v = e.target.value.replace(/\D/g,'');
+  if (v.length >= 2) v = v.slice(0,2) + ' / ' + v.slice(2,4);
+  e.target.value = v;
+});
+
+// ─── Promo ───
+function applyPromo() {
+  const input = document.getElementById('promoInput');
+  const msg = document.getElementById('promoMsg');
+  const code = input.value.trim().toUpperCase();
+  msg.classList.remove('error');
+
+  if (!code) { msg.textContent = ''; return; }
+  if (PROMO_CODES[code]) {
+    appliedPromo = { code, ...PROMO_CODES[code] };
+    msg.textContent = `✓ ${PROMO_CODES[code].label} applied`;
+    input.value = '';
+    updateTotals();
+  } else {
+    appliedPromo = null;
+    msg.classList.add('error');
+    msg.textContent = `Sorry, "${code}" isn't a valid code.`;
+    updateTotals();
+  }
+}
+
+// ─── Review population ───
+function populateReview() {
+  const recipient = document.getElementById('recipientName').value || 'Mum';
+  const street    = document.getElementById('street').value     || '12 Oxford St';
+  const suburb    = document.getElementById('suburb').value     || 'Paddington';
+  const state     = document.getElementById('state').value      || 'NSW';
+  const postcode  = document.getElementById('postcode').value   || '2021';
+  const fName     = document.getElementById('firstName').value  || 'Sarah';
+  const lName     = document.getElementById('lastName').value   || 'Chen';
+  const email     = document.getElementById('email').value      || 'sarah@example.com';
+  const phone     = document.getElementById('phone').value      || '0400 123 456';
+  const cardMsg   = document.getElementById('cardMsg').value;
+
+  const delivery = document.querySelector('input[name="delivery"]:checked').value;
+  const delLabel = delivery === 'same-day' ? 'Same-day delivery · Order before 2pm'
+                  : delivery === 'standard' ? 'Standard delivery · 9am – 5pm'
+                  : 'Studio pickup · Surry Hills';
+
+  document.getElementById('rvRecipient').textContent     = recipient;
+  document.getElementById('rvAddress').textContent       = `${street}, ${suburb} ${state} ${postcode}`;
+  document.getElementById('rvDelivery').textContent      = delLabel;
+  document.getElementById('rvContactName').textContent   = `${fName} ${lName}`;
+  document.getElementById('rvContactDetails').textContent= `${email} · ${phone}`;
+
+  // Card msg
+  const cardSection = document.getElementById('rvCardSection');
+  if (cardMsg.trim()) {
+    cardSection.style.display = 'block';
+    document.getElementById('rvCardMsg').textContent = `"${cardMsg}"`;
+  } else {
+    cardSection.style.display = 'none';
+  }
+
+  // Payment
+  const method = document.querySelector('.pay-tab.active').dataset.method;
+  const payEl = document.getElementById('rvPayment');
+  if (method === 'card') {
+    const num = document.getElementById('cardNum').value.replace(/\s/g,'');
+    const last4 = num.slice(-4) || '3456';
+    payEl.innerHTML = `Card ending <strong>•••• ${last4}</strong>`;
+  } else if (method === 'paypal') {
+    payEl.innerHTML = `<strong>PayPal</strong> · You'll be redirected after placing order`;
+  } else {
+    payEl.innerHTML = `<strong>Afterpay</strong> · 4 fortnightly payments`;
+  }
+}
+
+function placeOrder() {
+  const btn = document.getElementById('placeOrderBtn');
+  btn.disabled = true;
+  btn.textContent = 'Placing your order…';
+  // Pass through the total + first item name for confirmation
+  const total = document.getElementById('finalTotal').textContent;
+  const recipient = document.getElementById('recipientName').value || 'Mum';
+  const params = new URLSearchParams({ total, recipient });
+  setTimeout(() => {
+    window.location.href = `order-confirmation.html?${params}`;
+  }, 900);
+}
+
+// init
+renderSummaryItems();
+updateTotals();
+</script>
 
 </body>
 </html>
