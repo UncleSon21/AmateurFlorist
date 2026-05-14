@@ -604,9 +604,12 @@ button{cursor:pointer;font-family:inherit}
   .nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}
   .nav-links{display:none}
   .logo{grid-column:2}
-  .hero{grid-template-columns:1fr;min-height:58vh}
+  .hero{grid-template-columns:1fr;min-height:50vh}
   .hero-right{position:absolute;inset:0;z-index:0;opacity:.25}
-  .hero-left{padding:60px 24px 80px;z-index:2}
+  .hero-left{padding:44px 24px 56px;z-index:2}
+  .hero-from{margin-bottom:18px}
+  .hero-trust{margin-bottom:10px}
+  .hero-review{padding-top:12px}
   .testimonials-grid{grid-template-columns:1fr}
   .gallery-grid{grid-template-columns:1fr 1fr}
   .trust-strip{flex-direction:column;gap:0}
@@ -616,6 +619,16 @@ button{cursor:pointer;font-family:inherit}
   .occasions-grid{grid-template-columns:1fr}
   .bestsellers-grid{grid-template-columns:1fr 1fr}
   .postcode-row input{font-size:16px}
+  /* ─── Mobile spacing: cuts ~600px of cumulative vertical scroll ─── */
+  .section{padding:52px 0}
+  .sec-title{font-size:1.75rem;line-height:1.15}
+  .sec-subtitle{font-size:.95rem;margin-top:6px}
+  .occasions-header{margin-bottom:28px}
+  .bestsellers-grid,.collections-grid,.testimonials-grid,.gallery-grid,.delivery-grid{margin-top:28px}
+  .marquee{padding:14px 0}
+  .hero-h1{font-size:3rem;line-height:1.05}
+  .hero-divider{margin:14px 0}
+  .hero-sub{font-size:1rem}
 }
 @media(max-width:480px){
   .hero-h1{font-size:2.6rem}
