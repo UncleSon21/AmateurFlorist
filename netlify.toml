@@ -1,4 +1,7 @@
+# Unmatched URLs serve 404.html with a real 404 status.
+# Known static files (index.html, shop.html, etc.) are served directly by
+# Netlify and do NOT hit this catch-all.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404

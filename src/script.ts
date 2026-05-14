@@ -431,10 +431,6 @@ class FlowerShopApp {
         }
     }
 
-    private handleCartClick(): void {
-        window.location.href = 'cart.html';
-    }
-
     private updateCartCount(): void {
         const cartCountElement = document.querySelector<HTMLElement>('.cart-count');
         if (cartCountElement) {

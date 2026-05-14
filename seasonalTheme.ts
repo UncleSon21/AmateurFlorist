@@ -1,11 +1,43 @@
-function getAustralianSeason(date = new Date()) {
+// ─────────────────────────────────────────────────────────────────────────────
+// TYPES
+// ─────────────────────────────────────────────────────────────────────────────
+export type Season = 'spring' | 'summer' | 'autumn' | 'winter';
+
+type SidePair = { left: string; right: string };
+
+interface Particle {
+  x: number; y: number;
+  vx: number; vy: number;
+  size: number;
+  rotation: number; rotSpeed: number;
+  alpha: number; color: string;
+  wobble: number; wobbleSpeed: number; wobbleAmp: number;
+}
+
+type DrawFn = (ctx: CanvasRenderingContext2D, p: Particle) => void;
+
+interface ParticleConfig {
+  particleCount: number;
+  colors: string[];
+  sizeRange: [number, number];
+  speedY: [number, number];
+  speedX: [number, number];
+  draw: DrawFn;
+}
+
+interface SeasonVars { accent: string; accentDark: string; accentLight: string; bg: string; bgAlt: string }
+interface HeroCopy   { eyebrow: string; headline: string; subtitle: string; cta: string }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Australian-hemisphere date → season (exported so callers can pass it as the
+// override to initSeasonalTheme. Not currently called by initSeasonalTheme —
+// see the hardcoded value there.)
+// ─────────────────────────────────────────────────────────────────────────────
+export function getAustralianSeason(date = new Date()): Season {
     const month = date.getMonth() + 1;
-    if (month >= 9 && month <= 11)
-        return 'spring';
-    if (month === 12 || month <= 2)
-        return 'summer';
-    if (month >= 3 && month <= 5)
-        return 'autumn';
+    if (month >= 9 && month <= 11) return 'spring';
+    if (month === 12 || month <= 2) return 'summer';
+    if (month >= 3 && month <= 5)   return 'autumn';
     return 'winter';
 }
 // ─────────────────────────────────────────────────────────────────────────────
@@ -13,7 +45,7 @@ function getAustralianSeason(date = new Date()) {
 // These replace the innerHTML of #nav-branch-left / #nav-branch-right divs.
 // The outer div keeps the .nav-branch CSS positioning unchanged.
 // ─────────────────────────────────────────────────────────────────────────────
-const NAV_BRANCH_CONTENT = {
+const NAV_BRANCH_CONTENT: Record<Season, SidePair> = {
     // ── Spring: sakura blossoms ───────────────────────────────────────────────
     spring: {
         left: `<svg viewBox="0 0 190 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible">
@@ -182,18 +214,16 @@ const NAV_BRANCH_CONTENT = {
     </svg>`,
     },
 };
-function updateNavBranches(season) {
-    const left = document.getElementById('nav-branch-left');
+function updateNavBranches(season: Season) {
+    const left  = document.getElementById('nav-branch-left');
     const right = document.getElementById('nav-branch-right');
-    if (left)
-        left.innerHTML = NAV_BRANCH_CONTENT[season].left;
-    if (right)
-        right.innerHTML = NAV_BRANCH_CONTENT[season].right;
+    if (left)  left.innerHTML  = NAV_BRANCH_CONTENT[season].left;
+    if (right) right.innerHTML = NAV_BRANCH_CONTENT[season].right;
 }
 // ─────────────────────────────────────────────────────────────────────────────
 // SIDE DECORATIONS — fixed botanical panels, scroll-stable
 // ─────────────────────────────────────────────────────────────────────────────
-const SIDE_SVG = {
+const SIDE_SVG: Record<Season, SidePair> = {
     spring: {
         left: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 700" fill="none" style="width:100%;height:100%">
       <path d="M85 700 Q68 610 80 520 Q92 430 70 340 Q48 250 62 160 Q76 80 58 10" stroke="#b0947a" stroke-width="1.8" stroke-linecap="round"/>
@@ -304,9 +334,9 @@ const SIDE_SVG = {
     </svg>`,
     },
 };
-let sideLeft = null;
-let sideRight = null;
-function updateSideDecorations(season) {
+let sideLeft: HTMLDivElement | null = null;
+let sideRight: HTMLDivElement | null = null;
+function updateSideDecorations(season: Season) {
     if (!sideLeft) {
         sideLeft = document.createElement('div');
         sideLeft.id = 'season-side-left';
@@ -319,10 +349,10 @@ function updateSideDecorations(season) {
         sideRight.style.cssText = 'position:fixed;top:0;right:0;width:110px;height:100vh;pointer-events:none;z-index:1;overflow:hidden;opacity:0.65;';
         document.body.appendChild(sideRight);
     }
-    sideLeft.innerHTML = SIDE_SVG[season].left;
+    sideLeft.innerHTML  = SIDE_SVG[season].left;
     sideRight.innerHTML = SIDE_SVG[season].right;
 }
-const drawSpringPetal = (ctx, p) => {
+const drawSpringPetal: DrawFn = (ctx, p) => {
     ctx.save();
     ctx.translate(p.x, p.y);
     ctx.rotate(p.rotation);
@@ -336,7 +366,7 @@ const drawSpringPetal = (ctx, p) => {
     ctx.fill();
     ctx.restore();
 };
-const drawSummerLeaf = (ctx, p) => {
+const drawSummerLeaf: DrawFn = (ctx, p) => {
     ctx.save();
     ctx.translate(p.x, p.y);
     ctx.rotate(p.rotation);
@@ -356,7 +386,7 @@ const drawSummerLeaf = (ctx, p) => {
     ctx.stroke();
     ctx.restore();
 };
-const drawAutumnLeaf = (ctx, p) => {
+const drawAutumnLeaf: DrawFn = (ctx, p) => {
     ctx.save();
     ctx.translate(p.x, p.y);
     ctx.rotate(p.rotation);
@@ -378,7 +408,7 @@ const drawAutumnLeaf = (ctx, p) => {
     ctx.stroke();
     ctx.restore();
 };
-const drawSnowflake = (ctx, p) => {
+const drawSnowflake: DrawFn = (ctx, p) => {
     ctx.save();
     ctx.translate(p.x, p.y);
     ctx.globalAlpha = p.alpha;
@@ -412,34 +442,44 @@ const drawSnowflake = (ctx, p) => {
     ctx.fill();
     ctx.restore();
 };
-const PARTICLE_CONFIGS = {
+const PARTICLE_CONFIGS: Record<Season, ParticleConfig> = {
     spring: { particleCount: 32, colors: ['#f9a8c9', '#f7cde0', '#fde0ec', '#f4b8d4', '#ffffff', '#ffc8d8'], sizeRange: [6, 13], speedY: [0.7, 1.5], speedX: [-0.4, 0.4], draw: drawSpringPetal },
     summer: { particleCount: 28, colors: ['#7cb85c', '#a5d07a', '#5a9e3a', '#8dc760', '#c8e6a0'], sizeRange: [6, 13], speedY: [0.6, 1.4], speedX: [-0.5, 0.5], draw: drawSummerLeaf },
     autumn: { particleCount: 30, colors: ['#d4772a', '#c45c1a', '#e8941a', '#b84a0a', '#8b4513', '#d2691e'], sizeRange: [8, 16], speedY: [0.7, 1.7], speedX: [-0.6, 0.6], draw: drawAutumnLeaf },
     winter: { particleCount: 40, colors: ['#e0f4ff', '#b8dff5', '#cce8f7', '#d8eefa', '#ffffff', '#a8d8ea'], sizeRange: [5, 14], speedY: [0.4, 1.0], speedX: [-0.2, 0.3], draw: drawSnowflake },
 };
-function rand(a, b) { return a + Math.random() * (b - a); }
-function makeParticle(cfg, w, h, init = false) {
-    const size = rand(...cfg.sizeRange);
-    return { x: rand(0, w), y: init ? rand(-h, 0) : rand(-size * 3, -size),
-        vx: rand(...cfg.speedX), vy: rand(...cfg.speedY),
-        size, rotation: rand(0, Math.PI * 2), rotSpeed: rand(-0.025, 0.025),
-        alpha: rand(0.55, 0.92), color: cfg.colors[Math.floor(Math.random() * cfg.colors.length)],
-        wobble: rand(0, Math.PI * 2), wobbleSpeed: rand(0.015, 0.04), wobbleAmp: rand(0.4, 1.2) };
+function rand(a: number, b: number): number { return a + Math.random() * (b - a); }
+function makeParticle(cfg: ParticleConfig, w: number, h: number, init = false): Particle {
+    const size = rand(cfg.sizeRange[0], cfg.sizeRange[1]);
+    const color = cfg.colors[Math.floor(Math.random() * cfg.colors.length)] ?? '#ffffff';
+    return {
+        x: rand(0, w),
+        y: init ? rand(-h, 0) : rand(-size * 3, -size),
+        vx: rand(cfg.speedX[0], cfg.speedX[1]),
+        vy: rand(cfg.speedY[0], cfg.speedY[1]),
+        size,
+        rotation: rand(0, Math.PI * 2),
+        rotSpeed: rand(-0.025, 0.025),
+        alpha: rand(0.55, 0.92),
+        color,
+        wobble: rand(0, Math.PI * 2),
+        wobbleSpeed: rand(0.015, 0.04),
+        wobbleAmp: rand(0.4, 1.2),
+    };
 }
-let animId = null;
+let animId: number | null = null;
 function stopParticles() {
     if (animId !== null) {
         cancelAnimationFrame(animId);
         animId = null;
     }
 }
-function startParticles(season) {
+function startParticles(season: Season) {
     stopParticles();
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-        return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     // Reuse the existing #petals-canvas if present, otherwise make one
-    let canvas = document.getElementById('petals-canvas');
+    let canvas = document.getElementById('petals-canvas') as HTMLCanvasElement | null;
     if (!canvas) {
         canvas = document.createElement('canvas');
         canvas.id = 'petals-canvas';
@@ -448,61 +488,68 @@ function startParticles(season) {
         document.body.appendChild(canvas);
     }
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
     const cfg = PARTICLE_CONFIGS[season];
-    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    const resize = () => { canvas!.width = window.innerWidth; canvas!.height = window.innerHeight; };
     resize();
     window.addEventListener('resize', resize, { passive: true });
-    const particles = Array.from({ length: cfg.particleCount }, () => makeParticle(cfg, canvas.width, canvas.height, true));
+
+    const particles: Particle[] = Array.from(
+        { length: cfg.particleCount },
+        () => makeParticle(cfg, canvas!.width, canvas!.height, true),
+    );
+
     function tick() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
         particles.forEach((p, i) => {
             p.wobble += p.wobbleSpeed;
             p.x += p.vx + Math.sin(p.wobble) * p.wobbleAmp;
             p.y += p.vy;
             p.rotation += p.rotSpeed;
-            if (p.y > canvas.height + 20)
-                particles[i] = makeParticle(cfg, canvas.width, canvas.height);
-            cfg.draw(ctx, p);
+            if (p.y > canvas!.height + 20) {
+                particles[i] = makeParticle(cfg, canvas!.width, canvas!.height);
+            }
+            cfg.draw(ctx!, p);
         });
         animId = requestAnimationFrame(tick);
     }
     tick();
 }
 // ─────────────────────────────────────────────────────────────────────────────
-// ─────────────────────────────────────────────────────────────────────────────
 // HERO SCENE — removed. Photo panel + seasonal colour wash replaces SVG art.
+// /* REMOVED: HERO_SCENES, updateHeroScene, HERO_BG, updateHeroBg */
 // ─────────────────────────────────────────────────────────────────────────────
-/* REMOVED: HERO_SCENES, updateHeroScene, HERO_BG, updateHeroBg */
-const __HERO_REMOVED__ = true; // placeholder to keep line references stable
+
 // ─────────────────────────────────────────────────────────────────────────────
 // PUBLIC API
 // ─────────────────────────────────────────────────────────────────────────────
-const ALL_SEASONS = ['spring', 'summer', 'autumn', 'winter'];
+const ALL_SEASONS: Season[] = ['spring', 'summer', 'autumn', 'winter'];
 
 // CSS variable palettes mirroring the redesign — these drive the new
 // inline-CSS-var theme system used by the redesigned pages.
-const SEASON_VARS = {
-    spring: { accent:'#5a1a2a', accentDark:'#2a0d15', accentLight:'#a8606e', bg:'#fdf8f9', bgAlt:'#f5eff2' },
-    summer: { accent:'#6b8870', accentDark:'#1e2a22', accentLight:'#a8c0aa', bg:'#f8faf8', bgAlt:'#eef3ee' },
-    autumn: { accent:'#a85738', accentDark:'#3a1c12', accentLight:'#d8a48a', bg:'#faf8f4', bgAlt:'#f5f0e8' },
-    winter: { accent:'#1c3656', accentDark:'#0e1d30', accentLight:'#7a96b8', bg:'#f6f8fa', bgAlt:'#eaf0f5' }
+const SEASON_VARS: Record<Season, SeasonVars> = {
+    spring: { accent: '#5a1a2a', accentDark: '#2a0d15', accentLight: '#a8606e', bg: '#fdf8f9', bgAlt: '#f5eff2' },
+    summer: { accent: '#6b8870', accentDark: '#1e2a22', accentLight: '#a8c0aa', bg: '#f8faf8', bgAlt: '#eef3ee' },
+    autumn: { accent: '#a85738', accentDark: '#3a1c12', accentLight: '#d8a48a', bg: '#faf8f4', bgAlt: '#f5f0e8' },
+    winter: { accent: '#1c3656', accentDark: '#0e1d30', accentLight: '#7a96b8', bg: '#f6f8fa', bgAlt: '#eaf0f5' },
 };
 
-function applyCssVars(season) {
+function applyCssVars(season: Season) {
     const v = SEASON_VARS[season];
-    if (!v) return;
     const r = document.documentElement;
     r.style.setProperty('--accent',       v.accent);
     r.style.setProperty('--accent-dark',  v.accentDark);
     r.style.setProperty('--accent-light', v.accentLight);
     r.style.setProperty('--bg',           v.bg);
     r.style.setProperty('--bg-alt',       v.bgAlt);
-    document.body.dataset.season = season;
+    document.body.dataset['season'] = season;
 }
 
-export function initSeasonalTheme(override) {
+export function initSeasonalTheme(override?: Season): Season {
     // Date-based detection is the default; pass an override (e.g. 'winter') to force.
-    const season = 'summer';
+    // NOTE: previously hardcoded to 'summer'; keep that as the fallback if no override.
+    const season: Season = override ?? 'summer';
     ALL_SEASONS.forEach(s => document.body.classList.remove(`season-${s}`));
     document.body.classList.add(`season-${season}`);
     applyCssVars(season);                 // ← bridge to redesign CSS variables
@@ -522,23 +569,26 @@ export function destroySeasonalTheme() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// AUTO-INIT + MANUAL SEASON SWITCHER
+// HERO COPY
 // ─────────────────────────────────────────────────────────────────────────────
 
-const HERO_COPY = {
+const HERO_COPY: Record<Season, HeroCopy> = {
     spring: { eyebrow: 'Spring collection', headline: 'Soft blooms,<br>in <em>full grace</em>',     subtitle: 'Blush hues &amp; tender new growth',  cta: 'Explore the collection' },
     summer: { eyebrow: 'Summer collection', headline: 'Sunlit beauty,<br>in <em>full bloom</em>',    subtitle: 'Sage greens &amp; abundant warmth',   cta: 'Explore the collection' },
     autumn: { eyebrow: 'Autumn collection', headline: 'Quiet warmth,<br>in <em>full turn</em>',      subtitle: 'Terracotta hues &amp; lasting amber', cta: 'Explore the collection' },
-    winter: { eyebrow: 'Winter collection', headline: 'Quiet beauty,<br>in <em>full bloom</em>',     subtitle: 'Deep navy hues &amp; lasting warmth', cta: 'Explore the collection' }
+    winter: { eyebrow: 'Winter collection', headline: 'Quiet beauty,<br>in <em>full bloom</em>',     subtitle: 'Deep navy hues &amp; lasting warmth', cta: 'Explore the collection' },
 };
 
-export function updateHeroCopy(season) {
+export function updateHeroCopy(season: Season) {
     const y = new Date().getFullYear();
     const c = HERO_COPY[season];
-    if (!c) return;
-    const el = (id) => document.getElementById(id);
-    if (el('hero-eyebrow-text')) el('hero-eyebrow-text').textContent = c.eyebrow + ' ' + y;
-    if (el('hero-headline'))     el('hero-headline').innerHTML       = c.headline;
-    if (el('hero-subtitle'))     el('hero-subtitle').innerHTML       = c.subtitle;
-    if (el('hero-cta-primary'))  el('hero-cta-primary').textContent  = c.cta;
+    const el = (id: string) => document.getElementById(id);
+    const eyebrow = el('hero-eyebrow-text');
+    const headline = el('hero-headline');
+    const subtitle = el('hero-subtitle');
+    const cta = el('hero-cta-primary');
+    if (eyebrow)  eyebrow.textContent  = c.eyebrow + ' ' + y;
+    if (headline) headline.innerHTML   = c.headline;
+    if (subtitle) subtitle.innerHTML   = c.subtitle;
+    if (cta)      cta.textContent      = c.cta;
 }

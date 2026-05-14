@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found — Vaniaflorist</title>
+<meta name="description" content="The page you're looking for has wilted. Browse our latest bouquets and find your way back home.">
+<meta name="robots" content="noindex,follow">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#8b7355; --accent-dark:#2c2420; --accent-light:#c8b89a;
+  --bg:#faf8f4; --bg-alt:#f5f0e8;
+  --text:#1e1a17; --text-muted:#6b5d54;
+  --border:rgba(139,115,85,0.13); --radius:2px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);background:var(--bg);
+  min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit}
+
+/* Nav */
+.nav{padding:18px 48px;border-bottom:.5px solid var(--border);display:flex;justify-content:center}
+.logo-name{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block;text-align:center}
+.logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:2px;text-align:center}
+
+/* Hero */
+.nf-main{flex:1;display:flex;align-items:center;justify-content:center;padding:64px 24px}
+.nf-card{max-width:620px;text-align:center}
+.nf-code{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,12vw,8rem);font-weight:300;
+  color:var(--accent);letter-spacing:-2px;line-height:1;margin-bottom:8px;
+}
+.nf-code em{font-style:italic;color:var(--accent-light)}
+.nf-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+.nf-title{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;
+  color:var(--text);line-height:1.1;letter-spacing:-.5px;margin-bottom:18px;
+}
+.nf-title em{font-style:italic;color:var(--accent)}
+.nf-sub{
+  font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--text-muted);
+  max-width:480px;margin:0 auto 32px;line-height:1.6;
+}
+.nf-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-dark,.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;border-radius:var(--radius);
+  font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
+  font-family:'DM Sans',sans-serif;border:none;cursor:pointer;
+}
+.btn-dark{background:var(--accent-dark);color:var(--bg);transition:background .3s}
+.btn-dark:hover{background:var(--accent)}
+.btn-ghost{color:var(--text-muted);background:transparent;border-bottom:.5px solid var(--border);padding:14px 0 6px;border-radius:0;transition:color .3s,gap .3s,border-color .3s}
+.btn-ghost:hover{color:var(--text);gap:14px;border-color:var(--accent)}
+
+/* Suggested links */
+.nf-suggestions{margin-top:48px;padding-top:32px;border-top:.5px solid var(--border)}
+.nf-suggestions-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent-light);margin-bottom:14px}
+.nf-suggestions-list{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;font-size:13px}
+.nf-suggestions-list a{color:var(--accent);border-bottom:.5px solid transparent;padding-bottom:2px;transition:border-color .3s}
+.nf-suggestions-list a:hover{border-color:var(--accent)}
+
+.footer{padding:24px;text-align:center;font-size:10px;letter-spacing:1px;color:var(--accent-light);border-top:.5px solid var(--border)}
+
+@media(max-width:600px){
+  .nav{padding:14px 20px}
+  .nf-actions{flex-direction:column;align-items:center}
+  .btn-dark,.btn-ghost{width:100%;max-width:280px;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" aria-label="Vaniaflorist home">
+    <span class="logo-name">Vaniaflorist</span>
+    <span class="logo-sub">Sydney Florist</span>
+  </a>
+</nav>
+
+<main class="nf-main">
+  <div class="nf-card">
+    <div class="nf-code">4<em>0</em>4</div>
+    <p class="nf-eyebrow">Page not found</p>
+    <h1 class="nf-title">This page has <em>wilted</em></h1>
+    <p class="nf-sub">The link you followed may be broken, or the page has been moved. Let us help you find your way back.</p>
+    <div class="nf-actions">
+      <a href="/" class="btn-dark">Back to home →</a>
+      <a href="/shop.html" class="btn-ghost">Browse the shop →</a>
+    </div>
+
+    <div class="nf-suggestions">
+      <p class="nf-suggestions-label">Popular pages</p>
+      <div class="nf-suggestions-list">
+        <a href="/shop.html">Shop bouquets</a>
+        <a href="/weddings.html">Weddings</a>
+        <a href="/about.html">Our story</a>
+        <a href="mailto:hello@vaniaflorist.com.au">Contact</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">© Vaniaflorist · Sydney, NSW</footer>
+
+</body>
+</html>
