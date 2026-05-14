@@ -508,6 +508,7 @@ setTimeout(() => {
 <!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
 <script type="module">
   import { initSeasonalTheme, updateHeroCopy } from "./seasonalTheme.ts";
+  import "./src/scripts/mobile-nav.ts";
   const current = initSeasonalTheme();
   updateHeroCopy(current);
 </script>

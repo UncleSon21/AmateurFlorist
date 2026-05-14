@@ -93,6 +93,7 @@ button{cursor:pointer;font-family:inherit}
 
 .field-group{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
 .field-group.single{grid-template-columns:1fr}
+.field-group.address{grid-template-columns:2fr 1fr 1fr}
 .field{display:flex;flex-direction:column;gap:6px}
 .field label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);font-weight:400}
 .field input,.field select,.field textarea{
@@ -243,10 +244,12 @@ button{cursor:pointer;font-family:inherit}
 @media(max-width:768px){
   .nav-inner{padding:14px 20px}
   .container{padding:0 20px}
-  .field-group{grid-template-columns:1fr}
+  .field-group,.field-group.address{grid-template-columns:1fr}
   .form-step{padding:24px 22px}
   .step-label{display:none}
   .step-line{max-width:40px}
+  /* Prevent iOS Safari zoom-on-focus: any input below 16px triggers it. */
+  .field input,.field select,.field textarea,.promo-row input{font-size:16px}
 }
 
 /* ── Seasonal theme overlays (populated by seasonalTheme.ts) ── */
@@ -356,7 +359,7 @@ button{cursor:pointer;font-family:inherit}
           <div class="field-group single">
             <div class="field"><label>Street address</label><input type="text" id="street" placeholder="12 Oxford St"></div>
           </div>
-          <div class="field-group" style="grid-template-columns:2fr 1fr 1fr">
+          <div class="field-group address">
             <div class="field"><label>Suburb</label><input type="text" id="suburb" placeholder="Paddington"></div>
             <div class="field"><label>State</label>
               <select id="state">
@@ -735,6 +738,7 @@ updateTotals();
 <!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
 <script type="module">
   import { initSeasonalTheme, updateHeroCopy } from "./seasonalTheme.ts";
+  import "./src/scripts/mobile-nav.ts";
   const current = initSeasonalTheme();
   updateHeroCopy(current);
 </script>

@@ -284,7 +284,7 @@ button{cursor:pointer;font-family:inherit}
   height:180px;overflow:hidden;
   background:linear-gradient(135deg,#e8ddd0,#d4c5a0);
 }
-.occ-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.occ-img img{width:100%;height:100%;object-fit:cover;object-position:center 30%;transition:transform .5s ease}
 .occ-card:hover .occ-img img{transform:scale(1.06)}
 .occ-body{padding:20px 22px 22px}
 .occ-name{
@@ -316,7 +316,7 @@ button{cursor:pointer;font-family:inherit}
   height:240px;overflow:hidden;position:relative;
   background:linear-gradient(135deg,#e8ddd0,#d4c5a0);
 }
-.prod-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.prod-img img{width:100%;height:100%;object-fit:cover;object-position:center 30%;transition:transform .5s ease}
 .prod-card:hover .prod-img img{transform:scale(1.06)}
 .prod-badge{
   position:absolute;top:10px;left:10px;
@@ -456,6 +456,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .gal-item img{
   width:100%;height:100%;object-fit:cover;
+  object-position:center 30%;
   transition:transform .7s cubic-bezier(.16,1,.3,1);
 }
 .gal-item:hover img{transform:scale(1.05)}
@@ -602,6 +603,7 @@ button{cursor:pointer;font-family:inherit}
   .container{padding:0 24px}
   .occasions-grid{grid-template-columns:1fr}
   .bestsellers-grid{grid-template-columns:1fr 1fr}
+  .postcode-row input{font-size:16px}
 }
 @media(max-width:480px){
   .hero-h1{font-size:2.6rem}
@@ -1159,6 +1161,7 @@ button{cursor:pointer;font-family:inherit}
      Pass an override (e.g. initSeasonalTheme('winter')) to force a season. -->
 <script type="module">
   import { initSeasonalTheme, updateHeroCopy } from "./seasonalTheme.ts";
+  import "./src/scripts/mobile-nav.ts";
   const current = initSeasonalTheme();
   updateHeroCopy(current);
 </script>

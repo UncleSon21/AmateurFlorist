@@ -198,6 +198,7 @@ button{cursor:pointer;font-family:inherit}
   .pieces-grid{grid-template-columns:1fr 1fr}
   .proc-grid{grid-template-columns:1fr}
   .wgal-grid{grid-template-columns:1fr 1fr}
+  .enq-card input,.enq-card select,.enq-card textarea{font-size:16px}
 }
 
 /* ── Seasonal theme overlays (populated by seasonalTheme.ts) ── */
@@ -654,6 +655,7 @@ function handleEnquiry(e) {
 <!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
 <script type="module">
   import { initSeasonalTheme, updateHeroCopy } from "./seasonalTheme.ts";
+  import "./src/scripts/mobile-nav.ts";
   const current = initSeasonalTheme();
   updateHeroCopy(current);
 </script>

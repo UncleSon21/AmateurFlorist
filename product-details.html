@@ -285,7 +285,7 @@ button{cursor:pointer;font-family:inherit}
 
 /* ── Responsive ── */
 @media(max-width:1024px){.pd-layout{grid-template-columns:1fr;gap:40px}.pd-images{position:static}.pd-main-img{aspect-ratio:4/3}}
-@media(max-width:768px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.container{padding:0 24px}.action-btns{grid-template-columns:1fr}.breadcrumb-inner{padding:0 24px}}
+@media(max-width:768px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.container{padding:0 24px}.action-btns{grid-template-columns:1fr}.breadcrumb-inner{padding:0 24px}.date-input,.gift-grid input,.gift-grid textarea{font-size:16px}}
 @media(max-width:480px){.pd-title{font-size:2rem}.tab-btn{padding:10px 14px}}
 
 /* ── Seasonal theme overlays (populated by seasonalTheme.ts) ── */
@@ -637,6 +637,7 @@ function renderCard() {
 <!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
 <script type="module">
   import { initSeasonalTheme, updateHeroCopy } from "./seasonalTheme.ts";
+  import "./src/scripts/mobile-nav.ts";
   const current = initSeasonalTheme();
   updateHeroCopy(current);
 </script>

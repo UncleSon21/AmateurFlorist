@@ -179,7 +179,7 @@ button{cursor:pointer;font-family:inherit}
   aspect-ratio:4/3;flex-shrink:0;
   background:linear-gradient(135deg,#ede8df,#ddd4c0);
 }
-.prod-img img{width:100%;height:100%;object-fit:cover;transition:transform .55s cubic-bezier(.16,1,.3,1);}
+.prod-img img{width:100%;height:100%;object-fit:cover;object-position:center 30%;transition:transform .55s cubic-bezier(.16,1,.3,1);}
 .prod-card:hover .prod-img img{transform:scale(1.06)}
 
 /* Hover overlay */
@@ -259,6 +259,24 @@ button{cursor:pointer;font-family:inherit}
 @media(max-width:1100px){#productsGrid{grid-template-columns:repeat(3,1fr)}#productsGrid.grid-2{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){.filterbar-inner{padding:0 24px}#productsGrid,#productsGrid.grid-3,#productsGrid.grid-2{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:768px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.nav-links{display:none}.logo{grid-column:2}.shop-container{padding:0 20px}.grid-toggle{display:none}.filterbar-inner{padding:0 20px}}
+/* Filter bar mobile stack: search on row 1, pills + occasion select on row 2, result count on row 3. */
+@media(max-width:768px){
+  .filterbar{top:65px}
+  .filterbar-inner{
+    display:grid;
+    grid-template-columns:1fr auto;
+    column-gap:10px;row-gap:10px;
+    height:auto;padding:12px 20px;
+    overflow:visible;align-items:center;
+  }
+  .filter-sep{display:none}
+  .filter-search{grid-column:1 / -1;height:40px;padding:0 14px;width:100%}
+  .filter-search input{width:100%;flex:1;font-size:16px}
+  .material-pills{grid-column:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+  .material-pills::-webkit-scrollbar{display:none}
+  .filter-select{grid-column:2;padding:7px 28px 7px 12px;font-size:11px}
+  .filter-right{grid-column:1 / -1;margin-left:0;justify-content:flex-end}
+}
 @media(max-width:480px){#productsGrid,#productsGrid.grid-3,#productsGrid.grid-2{grid-template-columns:1fr 1fr;gap:10px}.prod-desc{display:none}.shop-hero{padding:44px 0 36px}}
 @media(max-width:360px){#productsGrid{grid-template-columns:1fr}}
 
@@ -549,6 +567,7 @@ renderProducts();
 <!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
 <script type="module">
   import { initSeasonalTheme, updateHeroCopy } from "./seasonalTheme.ts";
+  import "./src/scripts/mobile-nav.ts";
   const current = initSeasonalTheme();
   updateHeroCopy(current);
 </script>
