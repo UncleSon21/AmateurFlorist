@@ -252,6 +252,30 @@ button{cursor:pointer;font-family:inherit}
 .footer{background:var(--accent-dark);padding:48px 0 24px}
 .footer-bottom{max-width:1200px;margin:0 auto;padding:0 48px;text-align:center;font-size:10px;letter-spacing:1px;color:#5a4e44}
 
+/* Copy order-ID button */
+.copy-btn{
+  background:none;border:.5px solid var(--border);border-radius:var(--radius);
+  padding:4px 10px;margin-left:6px;
+  font-size:9px;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--text-muted);font-family:'DM Sans',sans-serif;
+  transition:all .25s;
+}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+.copy-btn.copied{border-color:var(--accent);background:var(--accent);color:#fff}
+
+/* Loading + error states (TS toggles their display) */
+.conf-loading,.conf-error{
+  text-align:center;padding:120px 24px 80px;max-width:560px;margin:0 auto;
+}
+.conf-loading .spinner{
+  width:32px;height:32px;border-radius:50%;
+  border:1px solid var(--border);border-top-color:var(--accent);
+  margin:0 auto 22px;animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.conf-loading p,.conf-error p{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--text-muted);line-height:1.6}
+.conf-error h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--text);margin-bottom:8px}
+
 /* Responsive */
 @media(max-width:900px){
   .detail-grid{grid-template-columns:1fr}
@@ -322,6 +346,25 @@ button{cursor:pointer;font-family:inherit}
   </div>
 </nav>
 
+<!-- Loading state (shown until TS fetches the order) -->
+<div id="conf-loading" class="conf-loading">
+  <div class="spinner" aria-hidden="true"></div>
+  <p>Loading your confirmation…</p>
+</div>
+
+<!-- Error state (TS reveals this if order fetch fails) -->
+<div id="conf-error" class="conf-error" style="display:none">
+  <h2>We couldn't find that order</h2>
+  <p>Either the link is invalid, or your order is still being processed by Stripe. Please refresh in a moment, or contact us if the problem persists.</p>
+  <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a href="index.html" class="btn-dark">Back to home</a>
+    <a href="mailto:hello@vaniaflorist.com.au" class="btn-ghost">Contact support →</a>
+  </div>
+</div>
+
+<!-- Main content (hidden until TS fills it) -->
+<div id="conf-content" style="display:none">
+
 <!-- Hero confirmation -->
 <section class="confirm-hero">
   <div class="container">
@@ -329,13 +372,12 @@ button{cursor:pointer;font-family:inherit}
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
     </div>
     <p class="confirm-eyebrow">Order confirmed</p>
-    <h1 class="confirm-title">Thank you, <em id="customerFirstName">Sarah</em></h1>
-    <p class="confirm-sub">Your flowers are being prepared with care. We've sent a confirmation to <strong id="emailDisplay">sarah@example.com</strong> — keep an eye out for tracking updates.</p>
+    <h1 class="confirm-title">Thank you <em>—</em> your order is in</h1>
+    <p class="confirm-sub">Your flowers are being prepared with care. Keep this page for your records.</p>
     <div class="order-pill">
       <span>Order</span>
-      <strong id="order-id-display">#VF-2026-0428</strong>
-      <span style="color:var(--accent-light)">·</span>
-      <span id="orderDate">27 Apr 2026</span>
+      <strong id="order-id-display">…</strong>
+      <button id="copy-id-btn" type="button" class="copy-btn">Copy</button>
     </div>
   </div>
 </section>
@@ -381,54 +423,20 @@ button{cursor:pointer;font-family:inherit}
     <div class="detail-card">
       <p class="detail-eyebrow">Your order</p>
       <h2 class="detail-title">What's blooming for you</h2>
-      <div id="order-items-list" style="margin-top:14px">
-        <div class="conf-item">
-          <div class="conf-thumb"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Blush Romance"></div>
-          <div>
-            <div class="conf-name">Blush Romance</div>
-            <div class="conf-meta">Classic · Wrapped Bouquet</div>
-          </div>
-          <div class="conf-price">$85.00</div>
-        </div>
-        <div class="conf-item">
-          <div class="conf-thumb"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Spring Tulips"></div>
-          <div>
-            <div class="conf-name">Spring Tulips</div>
-            <div class="conf-meta">Petite · In Vase</div>
-          </div>
-          <div class="conf-price">$75.00</div>
-        </div>
-      </div>
-      <div class="conf-totals">
-        <div class="conf-row"><span>Subtotal</span><span>$160.00</span></div>
-        <div class="conf-row"><span>Delivery</span><span>$12.00</span></div>
-        <div class="conf-row grand"><span class="label">Total paid</span><span class="val" id="totalPaidVal">$172.00</span></div>
-      </div>
+      <div id="order-items-list" style="margin-top:14px"></div>
+      <div id="cost-rows" style="margin-top:16px"></div>
       <div class="action-bar" style="margin-top:24px">
         <a href="#" class="btn-dark" onclick="window.print();return false">Download receipt</a>
-        <a href="index.html" class="btn-ghost">Continue shopping →</a>
+        <a href="shop.html" class="btn-ghost">Continue shopping →</a>
       </div>
     </div>
 
-    <!-- Side details -->
+    <!-- Side details (TS populates order-details with key-value rows) -->
     <div class="detail-card">
-      <div class="side-section">
-        <p class="side-label">Delivering to</p>
-        <p class="side-body">
-          <strong id="recipientNameDisplay">Mum</strong><br>
-          <span class="muted">12 Oxford St, Paddington NSW 2021</span><br>
-          <span class="muted">Same-day delivery · Order before 2pm</span>
-        </p>
-      </div>
-      <div class="side-section" id="cardMessageSection">
-        <p class="side-label">Card message</p>
-        <div class="message-card">Happy birthday Mum — wishing you a beautiful day. Love always xx</div>
-      </div>
-      <div class="side-section">
-        <p class="side-label">Paid with</p>
-        <p class="side-body">Card ending <strong>•••• 3456</strong></p>
-      </div>
-      <div class="side-section">
+      <p class="detail-eyebrow">Order details</p>
+      <h2 class="detail-title">Your information</h2>
+      <div id="order-details" style="margin-top:14px"></div>
+      <div class="side-section" style="margin-top:24px;padding-top:20px;border-top:.5px solid var(--border)">
         <p class="side-label">Need to make a change?</p>
         <p class="side-body" style="font-size:.9rem;color:var(--text-muted);font-style:italic;line-height:1.7;margin-bottom:10px">If you spot anything wrong, our team can adjust your order — get in touch within the next hour.</p>
         <a href="mailto:hello@vaniaflorist.com.au" class="btn-ghost">Contact support →</a>
@@ -473,37 +481,11 @@ button{cursor:pointer;font-family:inherit}
   </div>
 </section>
 
+</div><!-- /#conf-content -->
+
 <footer class="footer">
   <div class="footer-bottom">© 2026 Vaniaflorist · Sydney, NSW · All rights reserved</div>
 </footer>
-
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-});
-
-// Read query params from checkout
-const params = new URLSearchParams(window.location.search);
-const total = params.get('total');
-const recipient = params.get('recipient');
-if (total) document.getElementById('totalPaidVal').textContent = `$${total}`;
-if (recipient) document.getElementById('recipientNameDisplay').textContent = recipient;
-
-// Order number — random-ish but deterministic per session
-const orderNum = '#VF-2026-' + String(Math.floor(1000 + Math.random() * 9000));
-document.getElementById('orderNumber').textContent = orderNum;
-
-// Today's date
-document.getElementById('orderDate').textContent = new Date().toLocaleDateString('en-AU', { day:'numeric', month:'short', year:'numeric' });
-
-// Animate tracker progression
-setTimeout(() => {
-  const rail = document.getElementById('trackerRail');
-  const steps = rail.querySelectorAll('.tr-step');
-  steps[0].classList.remove('active'); steps[0].classList.add('done');
-  steps[1].classList.add('active');
-  rail.style.setProperty('--progress', '0.5');
-}, 1400);
-</script>
 
 <!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
 <script type="module">
