@@ -4,4 +4,4 @@ Disallow: /cart.html
 Disallow: /checkout.html
 Disallow: /order-confirmation.html
 
-Sitemap: https://www.vaniaflorist.com.au/sitemap.xml
+Sitemap: https://vania-florist.vercel.app/sitemap.xml
