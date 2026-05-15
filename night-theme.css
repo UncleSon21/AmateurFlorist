@@ -1,0 +1,290 @@
+/* ═══════════════════════════════════════════════════════════════
+   night-theme.css — Amateur Florist
+   Overrides for hardcoded light-mode colors when [data-theme="night"]
+   is set on <html>. CSS variables are switched by night-mode.js;
+   this file only catches the things that bypass --bg / --text vars
+   (raw white card backgrounds, hardcoded grays, etc.)
+   ═══════════════════════════════════════════════════════════════ */
+
+html[data-theme="night"] {
+  color-scheme: dark;
+}
+
+/* Smooth crossfade when toggling */
+html[data-theme="night"] body,
+html[data-theme="night"] *,
+html[data-theme="night"] *::before,
+html[data-theme="night"] *::after {
+  transition: background-color .6s ease, color .5s ease,
+              border-color .5s ease, fill .5s ease, stroke .5s ease;
+}
+
+/* ── Body fallback (in case --bg isn't applied yet) ── */
+html[data-theme="night"] body { background: var(--bg); color: var(--text); }
+
+/* ── Nav: hardcoded translucent cream → translucent midnight ── */
+html[data-theme="night"] .nav,
+html[data-theme="night"] .navbar {
+  background: rgba(10, 14, 26, .82) !important;
+  border-bottom-color: rgba(212,168,87,.14) !important;
+  backdrop-filter: blur(18px) saturate(140%);
+}
+
+/* ── White card surfaces ── */
+html[data-theme="night"] .occ-card,
+html[data-theme="night"] .prod-card,
+html[data-theme="night"] .testi-card,
+html[data-theme="night"] .coll-card,
+html[data-theme="night"] .service-card,
+html[data-theme="night"] .occasion-card,
+html[data-theme="night"] .testimonial-card,
+html[data-theme="night"] .trust-badges,
+html[data-theme="night"] .marquee-wrap,
+html[data-theme="night"] .product-card {
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.14) !important;
+}
+
+html[data-theme="night"] .occ-card:hover,
+html[data-theme="night"] .prod-card:hover,
+html[data-theme="night"] .testi-card:hover,
+html[data-theme="night"] .occasion-card:hover,
+html[data-theme="night"] .product-card:hover {
+  background: #1a2138 !important;
+  border-color: rgba(212,168,87,.32) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,.45),
+              0 0 0 1px rgba(212,168,87,.08),
+              0 0 40px -10px rgba(212,168,87,.18) !important;
+}
+
+/* ── Section backgrounds that hardcode pale tints ── */
+html[data-theme="night"] .occasions-bg,
+html[data-theme="night"] .collections-bg,
+html[data-theme="night"] .shop-by-occasion,
+html[data-theme="night"] .best-sellers,
+html[data-theme="night"] .testimonials-section,
+html[data-theme="night"] .customer-love,
+html[data-theme="night"] .about,
+html[data-theme="night"] .services,
+html[data-theme="night"] .gallery,
+html[data-theme="night"] .contact { background: var(--bg-alt) !important; }
+
+/* ── Top bar ── */
+html[data-theme="night"] .topbar,
+html[data-theme="night"] .top-bar {
+  background: #050811 !important;
+  color: rgba(212,168,87,.78) !important;
+  border-bottom: .5px solid rgba(212,168,87,.12);
+}
+html[data-theme="night"] .topbar a,
+html[data-theme="night"] .top-bar a { color: #d4a857 !important; border-bottom-color: rgba(212,168,87,.4) !important; }
+
+/* ── Hardcoded grays (#aaa, #999, #fff) ── */
+html[data-theme="night"] .occ-desc,
+html[data-theme="night"] .prod-type,
+html[data-theme="night"] .testi-author,
+html[data-theme="night"] .cust-name,
+html[data-theme="night"] .occasion-card-desc { color: #6b7894 !important; }
+
+html[data-theme="night"] .badge-new {
+  background: #131829 !important;
+  color: var(--accent) !important;
+  border-color: rgba(212,168,87,.3) !important;
+}
+html[data-theme="night"] .badge-bestseller {
+  background: var(--accent) !important;
+  color: #0a0e1a !important;
+}
+html[data-theme="night"] .badge-wedding {
+  background: var(--accent-light) !important;
+  color: #0a0e1a !important;
+}
+
+/* ── Buttons ── */
+html[data-theme="night"] .btn-dark,
+html[data-theme="night"] .sticky-cta,
+html[data-theme="night"] .hero-buttons .btn-primary,
+html[data-theme="night"] .view-details-btn,
+html[data-theme="night"] [class*="cart"] button,
+html[data-theme="night"] [class*="cart"] .btn {
+  background: var(--accent) !important;
+  color: #0a0e1a !important;
+  box-shadow: 0 0 28px -8px rgba(212,168,87,.55), 0 1px 0 rgba(255,255,255,.06) inset;
+}
+html[data-theme="night"] .btn-dark:hover,
+html[data-theme="night"] .sticky-cta:hover,
+html[data-theme="night"] .hero-buttons .btn-primary:hover,
+html[data-theme="night"] .view-details-btn:hover {
+  background: #e8c074 !important;
+  box-shadow: 0 0 36px -6px rgba(232,192,116,.7), 0 1px 0 rgba(255,255,255,.08) inset;
+}
+
+html[data-theme="night"] .hero-buttons .btn-secondary,
+html[data-theme="night"] .btn-ghost {
+  color: var(--accent) !important;
+  border-color: rgba(212,168,87,.4) !important;
+}
+html[data-theme="night"] .prod-add {
+  background: var(--accent) !important;
+  color: #0a0e1a !important;
+}
+html[data-theme="night"] .prod-add:hover { background: #e8c074 !important; }
+
+/* ── Hero ── */
+html[data-theme="night"] .hero { background: var(--bg) !important; }
+html[data-theme="night"] .hero-fade {
+  background: linear-gradient(to right,
+    rgba(10,14,26,.85) 0%,
+    rgba(10,14,26,.65) 45%,
+    rgba(10,14,26,.45) 75%,
+    rgba(10,14,26,.40) 100%) !important;
+}
+html[data-theme="night"] .hero-right img {
+  filter: brightness(.62) saturate(.78) contrast(1.05);
+}
+
+/* ── Footer ── */
+html[data-theme="night"] footer {
+  background: #060912 !important;
+  color: var(--text-muted) !important;
+  border-top: .5px solid rgba(212,168,87,.1);
+}
+html[data-theme="night"] footer h3 { color: var(--accent) !important; }
+html[data-theme="night"] footer h4 { color: var(--accent-light) !important; }
+html[data-theme="night"] footer p,
+html[data-theme="night"] footer a { color: var(--text-muted) !important; }
+html[data-theme="night"] footer a:hover { color: var(--accent) !important; }
+html[data-theme="night"] .footer-bottom { border-top-color: rgba(212,168,87,.1) !important; color: #5a6378 !important; }
+
+/* ── Marquee ── */
+html[data-theme="night"] .marquee { background: var(--bg) !important; border-top-color: rgba(212,168,87,.1) !important; border-bottom-color: rgba(212,168,87,.1) !important; }
+html[data-theme="night"] .marquee-item { color: var(--accent-light) !important; }
+html[data-theme="night"] .marquee-item::after { color: var(--accent) !important; }
+
+/* ── Trust strip ── */
+html[data-theme="night"] .trust-strip { background: #050811 !important; }
+html[data-theme="night"] .trust-item { color: rgba(232,227,216,.55) !important; }
+
+/* ── Hide seasonal SVG branches (light-tuned colors clash on dark) ── */
+html[data-theme="night"] #nav-branch-left,
+html[data-theme="night"] #nav-branch-right,
+html[data-theme="night"] #season-side-left,
+html[data-theme="night"] #season-side-right { opacity: 0 !important; }
+
+/* ── Subtle vignette + moon halo ── */
+html[data-theme="night"] body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 85% -8%, rgba(212,168,87,.10), transparent 60%),
+    radial-gradient(ellipse 60% 70% at 10% 110%, rgba(138,155,184,.06), transparent 60%),
+    radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,.35) 100%);
+}
+
+/* ── Fireflies canvas ──
+   Anchored to the document (position:absolute, document-height) so fireflies
+   sit at fixed PAGE positions and don't follow the viewport when scrolling.
+   z-index:0 puts them behind all content — sections, cards & images cover them;
+   fireflies only show where the page-bg is exposed (which is everywhere in
+   night mode, since section tints below are made transparent). */
+html[data-theme="night"] body { position: relative; }
+#fireflies-canvas {
+  position: absolute; top: 0; left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+html[data-theme="night"] #fireflies-canvas { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { #fireflies-canvas { display: none; } }
+
+/* In night mode, dissolve section tints so the firefly wash is continuous.
+   Cards & images remain solid → they cover the fireflies behind them. */
+html[data-theme="night"] .occasions-bg,
+html[data-theme="night"] .collections-bg,
+html[data-theme="night"] .shop-by-occasion,
+html[data-theme="night"] .best-sellers,
+html[data-theme="night"] .testimonials-section,
+html[data-theme="night"] .customer-love,
+html[data-theme="night"] .about,
+html[data-theme="night"] .services,
+html[data-theme="night"] .gallery,
+html[data-theme="night"] .contact,
+html[data-theme="night"] .hero,
+html[data-theme="night"] .marquee { background: transparent !important; }
+
+/* Body remains the dark base color underneath the fireflies */
+html[data-theme="night"] body { background: var(--bg) !important; }
+
+/* ── Stragglers: elements with hardcoded inline background:#fff ──
+   These have inline `style="background:#fff"` so we attribute-match them.
+   Covers: #forever section's "3+ years" floating badge + the
+   Fresh/Forever comparison cards. */
+html[data-theme="night"] #forever [style*="background:#fff"],
+html[data-theme="night"] #forever [style*="background: #fff"] {
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.18) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.4) !important;
+}
+/* Bullet-list text inside the Fresh/Forever cards uses var(--text) which
+   already flips dark — but make sure the "Fresh"/"Forever" labels keep readable */
+html[data-theme="night"] #forever ul { color: var(--text) !important; }
+
+/* ── Postcode input (delivery section) ── */
+html[data-theme="night"] .postcode-row input {
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.2) !important;
+  color: var(--text) !important;
+}
+html[data-theme="night"] .postcode-row input::placeholder {
+  color: rgba(232,227,216,.35) !important;
+}
+html[data-theme="night"] .postcode-row input:focus {
+  border-color: var(--accent) !important;
+}
+html[data-theme="night"] .postcode-row button {
+  background: var(--accent) !important;
+  color: #0a0e1a !important;
+}
+html[data-theme="night"] .postcode-row button:hover {
+  background: #e8c074 !important;
+}
+
+/* ── Delivery hours block (also lives in the delivery section) ── */
+html[data-theme="night"] .del-hours {
+  background: var(--bg-alt) !important;
+  border-color: rgba(212,168,87,.14) !important;
+}
+
+/* ── Day/Night toggle pill ── */
+#night-toggle {
+  position: fixed; bottom: 24px; left: 24px; z-index: 9999;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(28,22,18,.82); backdrop-filter: blur(10px);
+  color: #faf8f4; padding: 8px 14px; border-radius: 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; letter-spacing: 1px; cursor: pointer; border: none;
+  transition: background .25s, color .25s, box-shadow .25s;
+  user-select: none;
+}
+#night-toggle:hover { background: rgba(28,22,18,.95); }
+html[data-theme="night"] #night-toggle {
+  background: rgba(19,24,41,.85);
+  color: #e8e3d8;
+  box-shadow: 0 0 24px -10px rgba(212,168,87,.45), inset 0 0 0 1px rgba(212,168,87,.18);
+}
+html[data-theme="night"] #night-toggle:hover {
+  background: rgba(26,33,56,.95);
+  box-shadow: 0 0 28px -8px rgba(212,168,87,.6), inset 0 0 0 1px rgba(212,168,87,.32);
+}
+#night-toggle .nt-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #ffd166; box-shadow: 0 0 10px rgba(255,209,102,.55);
+  flex-shrink: 0;
+}
+html[data-theme="night"] #night-toggle .nt-dot {
+  background: #ffd864; box-shadow: 0 0 12px rgba(255,216,100,.7), 0 0 4px rgba(255,242,168,.9);
+}
