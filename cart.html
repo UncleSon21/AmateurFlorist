@@ -3,6 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* Pre-paint seasonal palette — eliminates FOUC. Must stay in sync with seasonalTheme.ts SEASON_VARS. */
+(function(){
+  /* ?season=spring|summer|autumn|winter forces a palette (for previewing) */
+  var u=new URLSearchParams(location.search).get('season'),
+      ok=['spring','summer','autumn','winter'],s=ok.indexOf(u)>=0?u:null;
+  if(!s){
+    var m=new Date().getMonth()+1;s='winter';
+    if(m>=9&&m<=11)s='spring';
+    else if(m===12||m<=2)s='summer';
+    else if(m>=3&&m<=5)s='autumn';
+  }
+  var p={
+    spring:['#5a1a2a','#2a0d15','#a8606e','#fdf8f9','#f5eff2'],
+    summer:['#6b8870','#1e2a22','#a8c0aa','#f8faf8','#eef3ee'],
+    autumn:['#a85738','#3a1c12','#d8a48a','#faf8f4','#f5f0e8'],
+    winter:['#1c3656','#0e1d30','#7a96b8','#f6f8fa','#eaf0f5']
+  }[s],r=document.documentElement.style;
+  r.setProperty('--accent',p[0]);r.setProperty('--accent-dark',p[1]);
+  r.setProperty('--accent-light',p[2]);r.setProperty('--bg',p[3]);
+  r.setProperty('--bg-alt',p[4]);
+  document.documentElement.dataset.season=s;
+})();
+</script>
+
 <title>Your Cart — Amateur Florist</title>
 <meta name="description" content="Review your bouquet selection before checkout.">
 <meta name="robots" content="noindex,follow">

@@ -547,9 +547,14 @@ function applyCssVars(season: Season) {
 }
 
 export function initSeasonalTheme(override?: Season): Season {
-    // Date-based detection is the default; pass an override (e.g. 'winter') to force.
-    // NOTE: previously hardcoded to 'summer'; keep that as the fallback if no override.
-    const season: Season = override ?? 'spring';
+    // Resolution order: explicit override → ?season= URL param → date-based.
+    // The pre-paint head-script in each HTML file MUST stay in sync with
+    // SEASON_VARS + getAustralianSeason() + this URL-param logic — otherwise
+    // FOUC returns when the TS picks a different season than the inline script.
+    const urlParam = new URLSearchParams(window.location.search).get('season');
+    const urlSeason: Season | null =
+        ALL_SEASONS.includes(urlParam as Season) ? (urlParam as Season) : null;
+    const season: Season = override ?? urlSeason ?? getAustralianSeason();
     ALL_SEASONS.forEach(s => document.body.classList.remove(`season-${s}`));
     document.body.classList.add(`season-${season}`);
     applyCssVars(season);                 // ← bridge to redesign CSS variables
