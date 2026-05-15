@@ -171,6 +171,145 @@ function buildOwnerEmail(order: any, items: any[]): string {
   `;
 }
 
+// ─── Shared order-creation pipeline ───
+// Called from both checkout.session.completed (redirect flow) and
+// payment_intent.succeeded (embedded flow). Idempotent: if an order already
+// exists for the same Stripe ID, returns early.
+async function fulfillOrder(opts: {
+  meta: Record<string, string>;
+  stripeSessionId: string | null;
+  stripePaymentIntent: string;
+  source: "redirect" | "embedded";
+}) {
+  const { meta, stripeSessionId, stripePaymentIntent, source } = opts;
+  const orderItems = JSON.parse(meta.order_items);
+  const totalCents = parseInt(meta.total_cents, 10);
+  const isPickup = meta.is_pickup === "true";
+
+  // ─── Idempotency guard ───
+  // Stripe may re-deliver webhooks. Check whether we already created an order
+  // for this payment intent (the most stable key — present in both flows).
+  const { data: existing } = await supabase
+    .from("orders")
+    .select("id")
+    .eq("stripe_payment_intent", stripePaymentIntent)
+    .maybeSingle();
+
+  if (existing) {
+    console.log(`Order already exists for PI ${stripePaymentIntent}; skipping.`);
+    return existing.id;
+  }
+
+  // ─── 1. Create order ───
+  const { data: order, error: e1 } = await supabase
+    .from("orders")
+    .insert([{
+      customer_name: meta.customer_name,
+      customer_phone: meta.customer_phone,
+      customer_email: meta.customer_email || null,
+      delivery_date: meta.delivery_date,
+      notes: meta.notes || null,
+      total_cents: totalCents,
+      status: "paid",
+      stripe_session_id: stripeSessionId,
+      stripe_payment_intent: stripePaymentIntent,
+    }])
+    .select("id")
+    .single();
+
+  if (e1) {
+    console.error("Failed to create order:", e1);
+    throw new Error(`DB error: ${e1.message}`);
+  }
+
+  // ─── 2. Create order items ───
+  const itemsForEmail: any[] = [];
+  for (const it of orderItems) {
+    const { data: prod } = await supabase
+      .from("products")
+      .select("name")
+      .eq("id", it.product_id)
+      .single();
+
+    const { data: oi, error: e2 } = await supabase
+      .from("order_items")
+      .insert([{
+        order_id: order.id,
+        product_id: it.product_id,
+        variant_code: it.variant_code,
+        qty: it.qty,
+        line_cents: it.line_cents,
+      }])
+      .select("id")
+      .single();
+
+    if (e2) {
+      console.error("Failed to create order item:", e2);
+      continue;
+    }
+
+    if (it.add_on_ids?.length) {
+      const rows = it.add_on_ids.map((aid: number) => ({
+        order_item_id: oi.id,
+        add_on_id: aid,
+      }));
+      await supabase.from("order_item_add_ons").insert(rows);
+    }
+
+    itemsForEmail.push({
+      product_name: prod?.name || "Flower Arrangement",
+      variant_code: it.variant_code,
+      qty: it.qty,
+      line_cents: it.line_cents,
+    });
+  }
+
+  // ─── 3. Emails ───
+  const emailData = {
+    id: order.id,
+    customer_name: meta.customer_name,
+    customer_phone: meta.customer_phone,
+    customer_email: meta.customer_email,
+    delivery_date: meta.delivery_date,
+    notes: meta.notes,
+    total_cents: totalCents,
+    is_pickup: isPickup,
+  };
+
+  await sendEmail(
+    OWNER_EMAIL,
+    `New Order from ${meta.customer_name} — ${formatPrice(totalCents)}`,
+    buildOwnerEmail(emailData, itemsForEmail)
+  );
+
+  if (meta.customer_email) {
+    await sendEmail(
+      meta.customer_email,
+      "Your Amateur Florist Order Confirmation",
+      buildCustomerEmail(emailData, itemsForEmail)
+    );
+  }
+
+  // ─── 4. Optional SMS ───
+  if (TWILIO_CONFIGURED) {
+    if (OWNER_PHONE) {
+      await sendSMS(
+        OWNER_PHONE,
+        `New order from ${meta.customer_name} — ${formatPrice(totalCents)}. Delivery: ${meta.delivery_date}. Call: ${meta.customer_phone}`
+      );
+    }
+    if (meta.customer_phone) {
+      await sendSMS(
+        meta.customer_phone,
+        `Hi ${meta.customer_name}! Your Amateur Florist order is confirmed for ${meta.delivery_date}. Total: ${formatPrice(totalCents)}. We'll be in touch shortly.`
+      );
+    }
+  }
+
+  console.log(`Order ${order.id} created via ${source} for PI ${stripePaymentIntent}`);
+  return order.id;
+}
+
 Deno.serve(async (req) => {
   try {
     // ─── Verify Stripe signature ───
@@ -185,128 +324,34 @@ Deno.serve(async (req) => {
       return new Response(`Webhook Error: ${err.message}`, { status: 400 });
     }
 
-    // ─── Handle checkout.session.completed ───
+    // ─── Redirect flow: Stripe Checkout (hosted) ───
     if (event.type === "checkout.session.completed") {
       const session = event.data.object as Stripe.Checkout.Session;
-      const meta = session.metadata!;
-
-      // Parse order data from session metadata
-      const orderItems = JSON.parse(meta.order_items);
-      const totalCents = parseInt(meta.total_cents, 10);
-      const isPickup = meta.is_pickup === "true";
-
-      // ─── 1. Create order in Supabase ───
-      const { data: order, error: e1 } = await supabase
-        .from("orders")
-        .insert([{
-          customer_name: meta.customer_name,
-          customer_phone: meta.customer_phone,
-          customer_email: meta.customer_email || null,
-          delivery_date: meta.delivery_date,
-          notes: meta.notes || null,
-          total_cents: totalCents,
-          status: "paid",
-          stripe_session_id: session.id,
-          stripe_payment_intent: session.payment_intent as string,
-        }])
-        .select("id")
-        .single();
-
-      if (e1) {
-        console.error("Failed to create order:", e1);
-        return new Response("DB error", { status: 500 });
-      }
-
-      // ─── 2. Create order items ───
-      const itemsForEmail: any[] = [];
-
-      for (const it of orderItems) {
-        // Fetch product name for email
-        const { data: prod } = await supabase
-          .from("products")
-          .select("name")
-          .eq("id", it.product_id)
-          .single();
-
-        const { data: oi, error: e2 } = await supabase
-          .from("order_items")
-          .insert([{
-            order_id: order.id,
-            product_id: it.product_id,
-            variant_code: it.variant_code,
-            qty: it.qty,
-            line_cents: it.line_cents,
-          }])
-          .select("id")
-          .single();
-
-        if (e2) {
-          console.error("Failed to create order item:", e2);
-          continue;
-        }
-
-        // Insert add-on links
-        if (it.add_on_ids?.length) {
-          const rows = it.add_on_ids.map((aid: number) => ({
-            order_item_id: oi.id,
-            add_on_id: aid,
-          }));
-          await supabase.from("order_item_add_ons").insert(rows);
-        }
-
-        itemsForEmail.push({
-          product_name: prod?.name || "Flower Arrangement",
-          variant_code: it.variant_code,
-          qty: it.qty,
-          line_cents: it.line_cents,
+      const meta = session.metadata as Record<string, string>;
+      if (meta?.order_items) {
+        await fulfillOrder({
+          meta,
+          stripeSessionId: session.id,
+          stripePaymentIntent: session.payment_intent as string,
+          source: "redirect",
         });
       }
+    }
 
-      // ─── 3. Send emails via Resend ───
-      const emailData = {
-        id: order.id,
-        customer_name: meta.customer_name,
-        customer_phone: meta.customer_phone,
-        customer_email: meta.customer_email,
-        delivery_date: meta.delivery_date,
-        notes: meta.notes,
-        total_cents: totalCents,
-        is_pickup: isPickup,
-      };
-
-      // Owner notification (always)
-      await sendEmail(
-        OWNER_EMAIL,
-        `New Order from ${meta.customer_name} — ${formatPrice(totalCents)}`,
-        buildOwnerEmail(emailData, itemsForEmail)
-      );
-
-      // Customer confirmation (if email provided)
-      if (meta.customer_email) {
-        await sendEmail(
-          meta.customer_email,
-          "Your Vania Florist Order Confirmation",
-          buildCustomerEmail(emailData, itemsForEmail)
-        );
+    // ─── Embedded flow: Stripe Elements (Apple Pay / Google Pay / Card on-page) ───
+    // PaymentIntent metadata carries everything we need. We skip if metadata is
+    // missing (i.e. PIs created outside our app — manual dashboard charges, etc).
+    if (event.type === "payment_intent.succeeded") {
+      const pi = event.data.object as Stripe.PaymentIntent;
+      const meta = pi.metadata as Record<string, string>;
+      if (meta?.order_items && meta.source === "embedded-checkout") {
+        await fulfillOrder({
+          meta,
+          stripeSessionId: null,
+          stripePaymentIntent: pi.id,
+          source: "embedded",
+        });
       }
-
-      // Optional SMS — only sends if Twilio env vars are set
-      if (TWILIO_CONFIGURED) {
-        if (OWNER_PHONE) {
-          await sendSMS(
-            OWNER_PHONE,
-            `New order from ${meta.customer_name} — ${formatPrice(totalCents)}. Delivery: ${meta.delivery_date}. Call: ${meta.customer_phone}`
-          );
-        }
-        if (meta.customer_phone) {
-          await sendSMS(
-            meta.customer_phone,
-            `Hi ${meta.customer_name}! Your Amateur Florist order is confirmed for ${meta.delivery_date}. Total: ${formatPrice(totalCents)}. We'll be in touch shortly.`
-          );
-        }
-      }
-
-      console.log(`Order ${order.id} created for session ${session.id}`);
     }
 
     return new Response(JSON.stringify({ received: true }), {

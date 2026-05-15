@@ -80,6 +80,28 @@ async function fetchOrderBySessionId(sessionId: string, retries = 8): Promise<{ 
   throw new Error("Order not found — the payment was successful but the order is still being processed. Please check back in a moment.");
 }
 
+/* ── Fetch order by Stripe PaymentIntent ID (embedded flow) ── */
+async function fetchOrderByPaymentIntent(piId: string, retries = 8): Promise<{ order: any; items: any[] }> {
+  for (let i = 0; i < retries; i++) {
+    const { data: order } = await supabase
+      .from("orders")
+      .select("id, customer_name, customer_phone, delivery_date, notes, total_cents, status, created_at")
+      .eq("stripe_payment_intent", piId)
+      .maybeSingle();
+
+    if (order) {
+      const items = await fetchOrderItems(order.id);
+      return { order, items };
+    }
+
+    if (i < retries - 1) {
+      await new Promise(r => setTimeout(r, 1500));
+    }
+  }
+
+  throw new Error("Order not found — the payment was successful but the order is still being processed. Please check back in a moment.");
+}
+
 /* ── Format date nicely ── */
 function fmtDate(iso: string) {
   const d = new Date(iso + "T00:00:00");
@@ -178,11 +200,12 @@ function render(order: any, items: any[]) {
 
 /* ── Boot ── */
 async function main() {
-  const params    = new URLSearchParams(window.location.search);
-  const orderId   = params.get("id");
-  const sessionId = params.get("session_id");
+  const params       = new URLSearchParams(window.location.search);
+  const orderId      = params.get("id");
+  const sessionId    = params.get("session_id");           // redirect flow (legacy)
+  const paymentIntent = params.get("payment_intent");      // embedded flow (current)
 
-  if (!orderId && !sessionId) {
+  if (!orderId && !sessionId && !paymentIntent) {
     $("conf-loading").style.display = "none";
     $("conf-error").style.display   = "block";
     return;
@@ -193,13 +216,22 @@ async function main() {
 
     if (orderId) {
       result = await fetchOrderById(orderId);
+    } else if (paymentIntent) {
+      result = await fetchOrderByPaymentIntent(paymentIntent);
     } else {
       result = await fetchOrderBySessionId(sessionId!);
     }
 
+    // Clear cart now that payment succeeded + order is in DB
+    try {
+      localStorage.removeItem("vf_cart_v1");
+      window.dispatchEvent(new CustomEvent("cart:changed"));
+    } catch (e) { /* ignore */ }
+
     render(result.order, result.items);
 
-    if (sessionId && result.order.id) {
+    // Replace the URL with a clean ?id=… (hides Stripe's payment_intent params)
+    if ((sessionId || paymentIntent) && result.order.id) {
       window.history.replaceState({}, "", `order-confirmation.html?id=${result.order.id}`);
     }
   } catch (err: any) {

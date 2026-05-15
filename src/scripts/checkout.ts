@@ -1,20 +1,34 @@
 // src/scripts/checkout.ts
-// UPDATED: Now redirects to Stripe Checkout instead of writing orders directly.
-// The order is created server-side by the Stripe webhook after payment succeeds.
+// EMBEDDED Stripe payment flow — two-step single-page checkout.
+//   1. User fills form (name, address, date, etc.) and clicks "Continue to payment".
+//   2. Form validates → PaymentIntent created server-side with the form data
+//      locked into metadata → Apple Pay / Google Pay / Link + card form mount
+//      below the form.
+//   3. User pays. Order is created server-side by stripe-webhook when
+//      `payment_intent.succeeded` fires.
+// No redirect to Stripe's hosted page.
 
 import { fetchProductById } from "./db";
-import { loadCart, saveCart } from "./cart";
+import { loadCart } from "./cart";
 import { formatPrice } from "./utils";
 
 const FREE_DELIVERY_THRESHOLD_CENTS = 5000; // $50
 const DELIVERY_FEE_CENTS            = 1500; // $15
 
-// ─── UPDATE THIS after deploying the Edge Function ───
-const CHECKOUT_FUNCTION_URL = `${import.meta.env['VITE_SUPABASE_URL']}/functions/v1/create-checkout-session`;
-/* ─── Helpers ─── */
+const SUPABASE_URL = import.meta.env['VITE_SUPABASE_URL'] as string;
+const SUPABASE_ANON_KEY = import.meta.env['VITE_SUPABASE_ANON_KEY'] as string;
+const STRIPE_PK = import.meta.env['VITE_STRIPE_PUBLISHABLE_KEY'] as string | undefined;
+
+const PI_ENDPOINT = `${SUPABASE_URL}/functions/v1/create-payment-intent`;
+
+// ─── Helpers ───
 function $(id: string) { return document.getElementById(id) as HTMLElement; }
 function inp(id: string) { return document.getElementById(id) as HTMLInputElement; }
 function fmt(cents: number) { return formatPrice(cents / 100); }
+
+// Stripe.js is loaded via a CDN <script> tag in checkout.html. Type as `any`
+// to avoid pulling in @stripe/stripe-js (handles its own typing at runtime).
+const StripeGlobal: any = (window as any).Stripe;
 
 /* ─── Set minimum delivery date to today ─── */
 function initDeliveryDate() {
@@ -26,25 +40,39 @@ function initDeliveryDate() {
 }
 
 /* ─── Delivery / Pickup toggle ─── */
-function initDeliveryToggle() {
+function initDeliveryToggle(onChange: () => void) {
   const btnDelivery = $("btn-delivery");
   const btnPickup   = $("btn-pickup");
   const fields      = $("delivery-fields");
   const note        = $("pickup-note");
 
   btnDelivery.addEventListener("click", () => {
+    if (btnDelivery.hasAttribute("data-locked")) return;
     btnDelivery.classList.add("active");
     btnPickup.classList.remove("active");
     fields.style.display = "block";
     note.style.display   = "none";
+    onChange();
   });
 
   btnPickup.addEventListener("click", () => {
+    if (btnPickup.hasAttribute("data-locked")) return;
     btnPickup.classList.add("active");
     btnDelivery.classList.remove("active");
     fields.style.display = "none";
     note.style.display   = "block";
+    onChange();
   });
+}
+
+function lockDeliveryToggle() {
+  $("btn-delivery").setAttribute("data-locked", "true");
+  $("btn-pickup").setAttribute("data-locked", "true");
+  // Visually communicate the lock
+  $("btn-delivery").style.opacity = "0.6";
+  $("btn-pickup").style.opacity = "0.6";
+  $("btn-delivery").style.cursor = "not-allowed";
+  $("btn-pickup").style.cursor = "not-allowed";
 }
 
 /* ─── Enrich cart items from Supabase ─── */
@@ -52,7 +80,7 @@ type EnrichedLine = {
   name: string;
   variantName: string;
   image: string;
-  priceCents: number;   // per unit
+  priceCents: number;
   qty: number;
   productId: string;
   variantCode: string;
@@ -102,8 +130,7 @@ function renderSummary(lines: EnrichedLine[]) {
   const delivery  = (isFree || isPickup) ? 0 : DELIVERY_FEE_CENTS;
   const total     = subtotal + delivery;
 
-  const itemsEl = $("summary-items");
-  itemsEl.innerHTML = lines.map(l => `
+  $("summary-items").innerHTML = lines.map(l => `
     <div class="summary-line">
       <div class="summary-line-img">
         ${l.image
@@ -118,15 +145,12 @@ function renderSummary(lines: EnrichedLine[]) {
     </div>
   `).join("");
 
-  $("co-subtotal").textContent  = fmt(subtotal);
-  $("co-delivery").textContent  = (isFree || isPickup) ? "FREE" : fmt(delivery);
-  $("co-total").textContent     = fmt(total);
+  $("co-subtotal").textContent = fmt(subtotal);
+  $("co-delivery").textContent = (isFree || isPickup) ? "FREE" : fmt(delivery);
+  $("co-total").textContent    = fmt(total);
 
   $("summary-loading").style.display = "none";
   $("summary-body").style.display    = "block";
-
-  const placeBtn = $("btn-place-order") as HTMLButtonElement;
-  placeBtn.disabled = false;
 
   return { subtotal, delivery, total };
 }
@@ -159,57 +183,22 @@ function validate(): boolean {
   return results.every(Boolean);
 }
 
-/* ─── Inline error banner ─── */
-function showOrderError(message: string) {
-  const existing = document.getElementById("order-error-banner");
-  if (existing) existing.remove();
-
-  const banner = document.createElement("div");
-  banner.id = "order-error-banner";
-  banner.style.cssText = `
-    background: #fff5f5;
-    border: 1px solid #f0c0c0;
-    border-radius: 12px;
-    padding: 16px 20px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    animation: fadeSlideIn 0.3s ease;
-  `;
-  banner.innerHTML = `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e05252" stroke-width="2" style="flex-shrink:0;margin-top:2px;">
-      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-    </svg>
-    <div>
-      <div style="font-weight:700;color:#c53030;font-size:0.9rem;margin-bottom:4px;">Payment could not be started</div>
-      <div style="color:#9b2c2c;font-size:0.85rem;line-height:1.5;">${message}</div>
-    </div>
-    <button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;color:#ccc;font-size:1.2rem;margin-left:auto;padding:0;" aria-label="Dismiss">✕</button>
-  `;
-
-  const formPanel = document.querySelector(".checkout-form-panel");
-  if (formPanel && formPanel.parentElement) {
-    formPanel.parentElement.insertBefore(banner, formPanel);
-    banner.scrollIntoView({ behavior: "smooth", block: "center" });
-  }
+/* ─── Inline error display ─── */
+function showError(message: string) {
+  const el = $("pay-error");
+  el.textContent = message;
+  el.classList.add("show");
+  el.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+function clearError() {
+  const el = $("pay-error");
+  el.textContent = "";
+  el.classList.remove("show");
 }
 
-/* ─── Submit → Redirect to Stripe Checkout ─── */
-async function handleSubmit(lines: EnrichedLine[]) {
-  if (!validate()) return;
-
-  // Clear any previous error
-  const existing = document.getElementById("order-error-banner");
-  if (existing) existing.remove();
-
-  const btn = $("btn-place-order") as HTMLButtonElement;
-  btn.disabled    = true;
-  btn.textContent = "Redirecting to payment…";
-  btn.classList.add("btn-loading");
-
+/* ─── Build payload for create-payment-intent ─── */
+function buildOrderPayload(lines: EnrichedLine[]) {
   const pickup = isPickupMode();
-
   const addressParts = pickup
     ? "Pickup"
     : [inp("address").value, inp("suburb").value, inp("postcode").value].filter(Boolean).join(", ");
@@ -223,7 +212,6 @@ async function handleSubmit(lines: EnrichedLine[]) {
     pickup ? "Customer will pick up." : `Deliver to: ${addressParts}`,
   ].filter(Boolean).join("\n");
 
-  // Build items payload (product IDs + variant codes — prices verified server-side)
   const items = lines.map(l => ({
     product_id:   l.productId,
     variant_code: l.variantCode,
@@ -231,59 +219,198 @@ async function handleSubmit(lines: EnrichedLine[]) {
     add_on_ids:   l.addOnIds.map(Number).filter(Boolean),
   }));
 
-  // Get optional email
   const emailEl = document.getElementById("email") as HTMLInputElement | null;
-  const customerEmail = emailEl?.value.trim() || "";
 
+  return {
+    items,
+    customer_name:  inp("name").value.trim(),
+    customer_phone: inp("phone").value.trim(),
+    customer_email: emailEl?.value.trim() || "",
+    delivery_date:  inp("delivery-date").value,
+    notes,
+    is_pickup: pickup,
+  };
+}
+
+/* ─── Backend call: create PaymentIntent ─── */
+async function createPaymentIntent(lines: EnrichedLine[]) {
+  const payload = buildOrderPayload(lines);
+  const res = await fetch(PI_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+      "apikey": SUPABASE_ANON_KEY,
+    },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json();
+  if (!res.ok || !data.clientSecret) {
+    throw new Error(data.error || "Failed to start payment");
+  }
+  return data as {
+    clientSecret: string;
+    paymentIntentId: string;
+    totalCents: number;
+    subtotalCents: number;
+    deliveryCents: number;
+  };
+}
+
+/* ─── Mount Stripe Elements (Express Checkout + Payment Element) ─── */
+async function mountStripeElements(lines: EnrichedLine[]) {
+  if (!STRIPE_PK) {
+    showError("Payment is not configured (missing Stripe key). Please call us directly at (02) 9123-4567.");
+    return false;
+  }
+  if (!StripeGlobal) {
+    showError("Could not load Stripe. Check your connection and refresh.");
+    return false;
+  }
+
+  let intent;
   try {
-    // ─── Call Edge Function to create Stripe Checkout Session ───
-    const res = await fetch(CHECKOUT_FUNCTION_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json",
-        "Authorization": `Bearer ${import.meta.env['VITE_SUPABASE_ANON_KEY']}`,
-        "apikey": import.meta.env['VITE_SUPABASE_ANON_KEY'],
+    intent = await createPaymentIntent(lines);
+  } catch (err: any) {
+    showError(err.message || "Could not start payment. Please try again.");
+    $("pay-loading").style.display = "none";
+    $("pay-form").style.display = "block";
+    return false;
+  }
+
+  const stripe = StripeGlobal(STRIPE_PK, { locale: "en-AU" });
+  const elements = stripe.elements({
+    clientSecret: intent.clientSecret,
+    appearance: {
+      theme: "stripe",
+      variables: {
+        colorPrimary: "#8b7355",
+        colorBackground: "#ffffff",
+        colorText: "#1e1a17",
+        colorDanger: "#c0392b",
+        fontFamily: '"DM Sans", system-ui, sans-serif',
+        borderRadius: "2px",
+        fontSizeBase: "14px",
       },
-      body: JSON.stringify({
-        items,
-        customer_name:  inp("name").value.trim(),
-        customer_phone: inp("phone").value.trim(),
-        customer_email: customerEmail,
-        delivery_date:  inp("delivery-date").value,
-        notes,
-        is_pickup: pickup,
-        success_url: `${window.location.origin}/order-confirmation.html`,
-        cancel_url:  `${window.location.origin}/checkout.html`,
-      }),
+    },
+  });
+
+  // ─── Express Checkout (Apple Pay / Google Pay / Link buttons) ───
+  const expressEl = elements.create("expressCheckout", { buttonHeight: 48 });
+  expressEl.mount("#express-checkout-element");
+
+  expressEl.on("ready", (event: any) => {
+    const methods = event.availablePaymentMethods || {};
+    const anyMethod = methods.applePay || methods.googlePay || methods.link || methods.paypal;
+    if (anyMethod) $("pay-divider").style.display = "flex";
+  });
+
+  expressEl.on("confirm", async () => {
+    clearError();
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: `${window.location.origin}/order-confirmation.html`,
+      },
     });
+    if (error) {
+      showError(error.message || "Payment failed. Please try a different method.");
+    }
+    // Success case: Stripe navigates away. The user lands on
+    // /order-confirmation.html?payment_intent=... which loads the order via
+    // the webhook-created row in Supabase.
+  });
 
-    const data = await res.json();
+  // ─── Payment Element (card form) ───
+  const paymentEl = elements.create("payment", { layout: { type: "tabs" } });
+  paymentEl.mount("#payment-element");
 
-    if (!res.ok || !data.url) {
-      throw new Error(data.error || "Failed to create payment session");
+  const btn = $("btn-place-order") as HTMLButtonElement;
+  const btnLabel = document.getElementById("btn-place-order-label") as HTMLElement | null;
+  paymentEl.on("ready", () => {
+    btn.disabled = false;
+    if (btnLabel) btnLabel.textContent = `Pay ${fmt(intent.totalCents)}`;
+  });
+
+  // ─── Manual submit (card flow) ───
+  btn.addEventListener("click", async () => {
+    clearError();
+    btn.disabled = true;
+    if (btnLabel) btnLabel.textContent = "Processing…";
+    btn.classList.add("btn-loading");
+
+    try {
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/order-confirmation.html`,
+        },
+      });
+      // confirmPayment only returns here on error; success causes a redirect.
+      if (error) {
+        showError(error.message || "Payment failed. Please check your details.");
+        btn.disabled = false;
+        if (btnLabel) btnLabel.textContent = `Pay ${fmt(intent.totalCents)}`;
+        btn.classList.remove("btn-loading");
+      }
+    } catch (err: any) {
+      showError(err.message || "Something went wrong. Please try again.");
+      btn.disabled = false;
+      if (btnLabel) btnLabel.textContent = `Pay ${fmt(intent.totalCents)}`;
+      btn.classList.remove("btn-loading");
+    }
+  });
+
+  $("pay-loading").style.display = "none";
+  $("pay-form").style.display = "block";
+  return true;
+}
+
+/* ─── Continue-to-payment button handler ─── */
+function setupContinueButton(lines: EnrichedLine[]) {
+  const continueBtn = $("btn-continue") as HTMLButtonElement;
+  const paySection  = $("pay-section");
+
+  continueBtn.addEventListener("click", async () => {
+    if (!validate()) {
+      // Scroll to the first error
+      const firstError = document.querySelector(".field.has-error") as HTMLElement | null;
+      firstError?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
     }
 
-    // ─── Clear cart and redirect to Stripe ───
-    saveCart([]);
-    window.location.href = data.url;
+    continueBtn.disabled = true;
+    continueBtn.classList.add("btn-loading");
+    const label = continueBtn.querySelector("span");
+    if (label) label.textContent = "Preparing payment…";
 
-  } catch (err: any) {
-    console.error("Checkout failed:", err);
-    btn.disabled    = false;
-    btn.textContent = "Pay with Stripe";
-    btn.classList.remove("btn-loading");
-    showOrderError(
-      "Something went wrong starting the payment. Please try again, or call us directly at <strong>(02) 9123-4567</strong>."
-    );
-  }
+    // Reveal payment section and lock the form's pickup/delivery toggle
+    // (PI amount is set at creation; toggling after this point would mismatch).
+    paySection.style.display = "block";
+    lockDeliveryToggle();
+
+    const ok = await mountStripeElements(lines);
+    if (!ok) {
+      // Mount failed — let user try again
+      continueBtn.disabled = false;
+      continueBtn.classList.remove("btn-loading");
+      if (label) label.textContent = "Continue to payment";
+      return;
+    }
+
+    // Hide the continue button — payment area is now in control
+    continueBtn.style.display = "none";
+
+    // Scroll to payment
+    paySection.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 }
 
 /* ─── Boot ─── */
 async function main() {
   initDeliveryDate();
-  initDeliveryToggle();
 
   const cart = loadCart();
-
   if (cart.length === 0) {
     $("checkout-empty").style.display = "block";
     $("checkout-main").style.display  = "none";
@@ -296,14 +423,10 @@ async function main() {
   const lines = await enrichCart();
   renderSummary(lines);
 
-  // Re-render delivery cost when pickup/delivery toggled
-  $("btn-delivery").addEventListener("click", () => renderSummary(lines));
-  $("btn-pickup").addEventListener("click",   () => renderSummary(lines));
+  initDeliveryToggle(() => renderSummary(lines));
+  setupContinueButton(lines);
 
-  // Submit — redirect to Stripe
-  $("btn-place-order").addEventListener("click", () => handleSubmit(lines));
-
-  // Live validation on blur
+  // Live validation on blur (clears red borders as they fix mistakes)
   ["name", "phone", "delivery-date", "address", "suburb"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener("blur", () => validate());
