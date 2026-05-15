@@ -259,6 +259,291 @@ html[data-theme="night"] .del-hours {
   border-color: rgba(212,168,87,.14) !important;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   PAGE-SPECIFIC OVERRIDES (multi-page night theme rollout)
+   Each block targets a different page's white/cream surfaces.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── /index.html: weddings-teaser section ──
+   This section uses inline `style="background:var(--accent-dark);color:var(--bg)"`
+   which works in day (dark brown bg + cream text) but in night both become
+   navy and the text vanishes. We override the section + its inline-styled
+   descendants to use the night palette properly. */
+html[data-theme="night"] #weddings-teaser {
+  background: var(--bg-alt) !important;
+  color: var(--text) !important;
+}
+html[data-theme="night"] #weddings-teaser h2,
+html[data-theme="night"] #weddings-teaser [style*="color:var(--bg)"] {
+  color: var(--text) !important;
+}
+html[data-theme="night"] #weddings-teaser [style*="color:rgba(250,248,244"] {
+  color: rgba(232,227,216,.78) !important;
+}
+/* Photo caption pill ("Sarah & James — …") needs the cream text restored */
+html[data-theme="night"] #weddings-teaser [style*="rgba(28,22,18"] {
+  background: rgba(10,14,26,.75) !important;
+  color: var(--text) !important;
+}
+/* "Explore weddings →" CTA: inline-styled as bg=var(--bg) color=var(--accent-dark)
+   — both go dark in night. Swap to the gold accent treatment. */
+html[data-theme="night"] #weddings-teaser a[href="weddings.html"] {
+  background: var(--accent) !important;
+  color: #0a0e1a !important;
+  box-shadow: 0 0 28px -8px rgba(212,168,87,.55), 0 1px 0 rgba(255,255,255,.06) inset;
+}
+html[data-theme="night"] #weddings-teaser a[href="weddings.html"]:hover {
+  background: #e8c074 !important;
+}
+/* Bullet checkmarks + the secondary "Book consultation" link */
+html[data-theme="night"] #weddings-teaser .eyebrow,
+html[data-theme="night"] #weddings-teaser em {
+  color: var(--accent) !important;
+}
+
+/* ── /checkout.html ── */
+html[data-theme="night"] .form-panel,
+html[data-theme="night"] .checkout-empty {
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.14) !important;
+}
+html[data-theme="night"] .field input,
+html[data-theme="night"] .field select,
+html[data-theme="night"] .field textarea {
+  background: #0a0e1a !important;
+  border-color: rgba(212,168,87,.2) !important;
+  color: var(--text) !important;
+}
+html[data-theme="night"] .field input::placeholder,
+html[data-theme="night"] .field textarea::placeholder {
+  color: rgba(232,227,216,.35) !important;
+}
+html[data-theme="night"] .field input:focus,
+html[data-theme="night"] .field select:focus,
+html[data-theme="night"] .field textarea:focus {
+  border-color: var(--accent) !important;
+}
+html[data-theme="night"] .field.has-error input,
+html[data-theme="night"] .field.has-error select {
+  background: rgba(192,57,43,.12) !important;
+  border-color: #c0392b !important;
+}
+html[data-theme="night"] .mode-btn {
+  background: #0a0e1a !important;
+  border-color: rgba(212,168,87,.2) !important;
+  color: var(--text-muted) !important;
+}
+html[data-theme="night"] .mode-btn.active {
+  background: #1a2138 !important;
+  border-color: var(--accent) !important;
+  color: var(--text) !important;
+}
+html[data-theme="night"] .pickup-note {
+  background: #0a0e1a !important;
+  border-color: rgba(212,168,87,.14) !important;
+}
+html[data-theme="night"] .secure-pay-card {
+  background: #0a0e1a !important;
+  border-color: rgba(212,168,87,.14) !important;
+}
+html[data-theme="night"] .card-brand {
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.18) !important;
+  color: var(--text-muted) !important;
+}
+/* Embedded Stripe Elements: Stripe iframes have their own theming via the
+   `appearance` prop in checkout.ts. We just style the wrappers. */
+html[data-theme="night"] .pay-section { border-top-color: rgba(212,168,87,.14) !important; }
+
+/* ── /cart.html ── */
+html[data-theme="night"] .cart-item,
+html[data-theme="night"] .summary-panel {
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.14) !important;
+}
+html[data-theme="night"] .item-qty-row {
+  background: #0a0e1a !important;
+  border-color: rgba(212,168,87,.18) !important;
+}
+html[data-theme="night"] .btn-checkout {
+  background: var(--accent) !important;
+  color: #0a0e1a !important;
+}
+html[data-theme="night"] .btn-checkout:hover { background: #e8c074 !important; }
+html[data-theme="night"] .btn-continue {
+  background: transparent !important;
+  border-color: rgba(212,168,87,.3) !important;
+  color: var(--text-muted) !important;
+}
+html[data-theme="night"] .btn-continue:hover {
+  border-color: var(--accent) !important;
+  color: var(--text) !important;
+}
+
+/* ── /product-details.html ── */
+html[data-theme="night"] .gift-toggle,
+html[data-theme="night"] .date-input,
+html[data-theme="night"] .qty-stepper,
+html[data-theme="night"] .size-box,
+html[data-theme="night"] .pres-box,
+html[data-theme="night"] .card-preview {
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.18) !important;
+  color: var(--text) !important;
+}
+html[data-theme="night"] .size-opt input:checked + .size-box,
+html[data-theme="night"] .pres-opt input:checked + .pres-box {
+  background: #1a2138 !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 1px var(--accent) !important;
+}
+html[data-theme="night"] .gift-grid input,
+html[data-theme="night"] .gift-grid textarea {
+  background: #0a0e1a !important;
+  border-color: rgba(212,168,87,.18) !important;
+  color: var(--text) !important;
+}
+html[data-theme="night"] .date-quick button {
+  background: #0a0e1a !important;
+  border-color: rgba(212,168,87,.18) !important;
+  color: var(--text) !important;
+}
+html[data-theme="night"] .date-quick button.active {
+  background: var(--accent) !important;
+  color: #0a0e1a !important;
+  border-color: var(--accent) !important;
+}
+html[data-theme="night"] .pd-thumb { background: #0a0e1a !important; }
+html[data-theme="night"] .pd-thumb.active { border-color: var(--accent) !important; }
+html[data-theme="night"] .order-summary {
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.14) !important;
+}
+html[data-theme="night"] .breadcrumb {
+  background: #0a0e1a !important;
+  border-bottom-color: rgba(212,168,87,.1) !important;
+}
+
+/* ── /order-confirmation.html ── */
+html[data-theme="night"] .tracker-card,
+html[data-theme="night"] .detail-card,
+html[data-theme="night"] .next-card {
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.14) !important;
+}
+html[data-theme="night"] .order-pill {
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.18) !important;
+}
+html[data-theme="night"] .tr-dot {
+  background: #0a0e1a !important;
+  border-color: rgba(212,168,87,.18) !important;
+}
+html[data-theme="night"] .tr-step.active .tr-dot {
+  background: #131829 !important;
+  border-color: var(--accent) !important;
+}
+html[data-theme="night"] .copy-btn {
+  border-color: rgba(212,168,87,.3) !important;
+  color: var(--text-muted) !important;
+}
+html[data-theme="night"] .copy-btn:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+html[data-theme="night"] .copy-btn.copied {
+  background: var(--accent) !important;
+  color: #0a0e1a !important;
+}
+html[data-theme="night"] .message-card {
+  background: #0a0e1a !important;
+  border-color: rgba(212,168,87,.14) !important;
+}
+html[data-theme="night"] .next-section { background: var(--bg-alt) !important; }
+html[data-theme="night"] .conf-loading,
+html[data-theme="night"] .conf-error { color: var(--text-muted) !important; }
+
+/* ── /shop.html ── */
+html[data-theme="night"] .filterbar {
+  background: rgba(10,14,26,.92) !important;
+  border-bottom-color: rgba(212,168,87,.14) !important;
+}
+html[data-theme="night"] .filter-search,
+html[data-theme="night"] .filter-select {
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.18) !important;
+  color: var(--text) !important;
+}
+html[data-theme="night"] .filter-search input {
+  background: transparent !important;
+  color: var(--text) !important;
+}
+html[data-theme="night"] .filter-search input::placeholder {
+  color: rgba(232,227,216,.35) !important;
+}
+html[data-theme="night"] .material-pill {
+  background: transparent !important;
+  border-color: rgba(212,168,87,.2) !important;
+  color: var(--text-muted) !important;
+}
+html[data-theme="night"] .material-pill.active {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #0a0e1a !important;
+}
+html[data-theme="night"] .grid-btn {
+  background: transparent !important;
+  border-color: rgba(212,168,87,.2) !important;
+  color: var(--text-muted) !important;
+}
+html[data-theme="night"] .grid-btn.active,
+html[data-theme="night"] .grid-btn:hover {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #0a0e1a !important;
+}
+html[data-theme="night"] .shop-hero { background: var(--bg-alt) !important; }
+
+/* ── /weddings.html ── */
+html[data-theme="night"] .path-card,
+html[data-theme="night"] .pkg-card,
+html[data-theme="night"] .piece-card,
+html[data-theme="night"] .featured,
+html[data-theme="night"] .faq-card,
+html[data-theme="night"] .enq-card,
+html[data-theme="night"] .proc-step,
+html[data-theme="night"] .couple-card {
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.14) !important;
+}
+html[data-theme="night"] .w-hero { background: var(--bg-alt) !important; }
+html[data-theme="night"] .enq-card input,
+html[data-theme="night"] .enq-card select,
+html[data-theme="night"] .enq-card textarea {
+  background: #0a0e1a !important;
+  border-color: rgba(212,168,87,.2) !important;
+  color: var(--text) !important;
+}
+
+/* ── /about.html ── */
+html[data-theme="night"] .page-hero { background: var(--bg-alt) !important; }
+html[data-theme="night"] .stats { background: #050811 !important; }
+html[data-theme="night"] .stat-item { border-color: rgba(212,168,87,.08) !important; }
+html[data-theme="night"] .value-card,
+html[data-theme="night"] .team-card,
+html[data-theme="night"] .process-step {
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.14) !important;
+}
+
+/* ── Shared: generic select dropdown arrow color in night ── */
+html[data-theme="night"] .filter-select,
+html[data-theme="night"] .field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23d4a857' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 8px center !important;
+}
+
 /* ── Day/Night toggle pill ── */
 #night-toggle {
   position: fixed; bottom: 24px; left: 24px; z-index: 9999;

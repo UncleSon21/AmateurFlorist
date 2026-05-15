@@ -21,9 +21,24 @@
     autumn:['#a85738','#3a1c12','#d8a48a','#faf8f4','#f5f0e8'],
     winter:['#1c3656','#0e1d30','#7a96b8','#f6f8fa','#eaf0f5']
   }[s],r=document.documentElement.style;
-  r.setProperty('--accent',p[0]);r.setProperty('--accent-dark',p[1]);
-  r.setProperty('--accent-light',p[2]);r.setProperty('--bg',p[3]);
-  r.setProperty('--bg-alt',p[4]);
+  /* Night-mode pre-paint (must mirror night-mode.js NIGHT_VARS to avoid FOUC).
+     Resolution: ?night=on|off → localStorage('night-mode') → clock 18:00–06:00. */
+  var nq=new URLSearchParams(location.search).get('night'),
+      nl=null;try{nl=localStorage.getItem('night-mode');}catch(e){}
+  var nm=(nq==='on'||nq==='off'||nq==='auto')?nq:(nl||'auto'),
+      h=new Date().getHours(),
+      isN=nm==='night'||(nm==='auto'&&(h>=18||h<6));
+  if(isN){
+    r.setProperty('--accent','#d4a857');r.setProperty('--accent-dark','#050811');
+    r.setProperty('--accent-light','#8a9bb8');r.setProperty('--bg','#0a0e1a');
+    r.setProperty('--bg-alt','#131829');r.setProperty('--text','#e8e3d8');
+    r.setProperty('--text-muted','#8a8578');r.setProperty('--border','rgba(212,168,87,.16)');
+    document.documentElement.dataset.theme='night';
+  } else {
+    r.setProperty('--accent',p[0]);r.setProperty('--accent-dark',p[1]);
+    r.setProperty('--accent-light',p[2]);r.setProperty('--bg',p[3]);
+    r.setProperty('--bg-alt',p[4]);
+  }
   document.documentElement.dataset.season=s;
 })();
 </script>
@@ -35,6 +50,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/night-theme.css">
 <style>
 :root{
   --accent:#8b7355; --accent-dark:#2c2420; --accent-light:#c8b89a;
@@ -133,6 +149,9 @@ a{text-decoration:none;color:inherit}
 </main>
 
 <footer class="footer">© Amateur Florist · Sydney, NSW</footer>
+
+<!-- Night theme toggle + fireflies (shared across all pages) -->
+<script src="/night-mode.js" defer></script>
 
 </body>
 </html>
