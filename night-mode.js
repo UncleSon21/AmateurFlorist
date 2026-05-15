@@ -28,10 +28,33 @@
     '--text-muted':   '#8a8578',
     '--border':       'rgba(212,168,87,.16)',
   };
-
-  // Vars we'll override; snapshot original values so we can restore.
   const VAR_KEYS = Object.keys(NIGHT_VARS);
-  let _savedVars = null;
+
+  // Day-palette restoration. Must mirror seasonalTheme.ts SEASON_VARS + the
+  // pre-paint head-script. When toggling back to day we re-compute the
+  // current season's palette rather than snapshot/restore (head-script may
+  // have already written night vars by the time we'd snapshot).
+  const SEASON_VARS_DAY = {
+    spring: ['#5a1a2a','#2a0d15','#a8606e','#fdf8f9','#f5eff2'],
+    summer: ['#6b8870','#1e2a22','#a8c0aa','#f8faf8','#eef3ee'],
+    autumn: ['#a85738','#3a1c12','#d8a48a','#faf8f4','#f5f0e8'],
+    winter: ['#1c3656','#0e1d30','#7a96b8','#f6f8fa','#eaf0f5'],
+  };
+  // Vars that have day equivalents (5 seasonal). The other 3 (text/text-muted
+  // /border) live only in inline :root defaults; we removeProperty so those reign.
+  const SEASONAL_VAR_KEYS = ['--accent','--accent-dark','--accent-light','--bg','--bg-alt'];
+  const NIGHT_ONLY_VARS   = ['--text','--text-muted','--border'];
+
+  function currentDaySeason() {
+    const u = new URLSearchParams(location.search).get('season');
+    const ok = ['spring','summer','autumn','winter'];
+    if (ok.indexOf(u) >= 0) return u;
+    const m = new Date().getMonth() + 1;
+    if (m >= 9 && m <= 11) return 'spring';
+    if (m === 12 || m <= 2) return 'summer';
+    if (m >= 3 && m <= 5)   return 'autumn';
+    return 'winter';
+  }
 
   // ── State ────────────────────────────────────────────────────────────
   // mode: 'auto' (clock-based) | 'day' | 'night'
@@ -63,10 +86,6 @@
   // ── Apply / remove night palette ─────────────────────────────────────
   function applyNight() {
     const r = document.documentElement;
-    if (!_savedVars) {
-      _savedVars = {};
-      VAR_KEYS.forEach(k => { _savedVars[k] = r.style.getPropertyValue(k); });
-    }
     VAR_KEYS.forEach(k => r.style.setProperty(k, NIGHT_VARS[k]));
     r.dataset.theme = 'night';
     startFireflies();
@@ -74,13 +93,11 @@
 
   function removeNight() {
     const r = document.documentElement;
-    if (_savedVars) {
-      VAR_KEYS.forEach(k => {
-        const v = _savedVars[k];
-        if (v) r.style.setProperty(k, v);
-        else   r.style.removeProperty(k);
-      });
-    }
+    // Re-apply the current season's day palette (5 vars)
+    const dayPalette = SEASON_VARS_DAY[currentDaySeason()];
+    SEASONAL_VAR_KEYS.forEach((k, i) => r.style.setProperty(k, dayPalette[i]));
+    // Drop the night-only vars so the inline :root defaults take over
+    NIGHT_ONLY_VARS.forEach(k => r.style.removeProperty(k));
     delete r.dataset.theme;
     stopFireflies();
   }
