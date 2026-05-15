@@ -549,7 +549,7 @@ function applyCssVars(season: Season) {
 export function initSeasonalTheme(override?: Season): Season {
     // Date-based detection is the default; pass an override (e.g. 'winter') to force.
     // NOTE: previously hardcoded to 'summer'; keep that as the fallback if no override.
-    const season: Season = override ?? 'summer';
+    const season: Season = override ?? 'winter';
     ALL_SEASONS.forEach(s => document.body.classList.remove(`season-${s}`));
     document.body.classList.add(`season-${season}`);
     applyCssVars(season);                 // ← bridge to redesign CSS variables

@@ -149,18 +149,19 @@ button{cursor:pointer;font-family:inherit}
   font-family:'DM Sans',sans-serif;
 }
 
-/* ── Hero ── */
+/* ── Hero — unified backdrop (photo fills, text overlays) ── */
 .hero{
+  position:relative;
   min-height:62vh;
-  display:grid;
-  grid-template-columns:52% 48%;
   background:var(--bg);
   overflow:hidden;
+  display:flex;align-items:center;
 }
 .hero-left{
-  display:flex;flex-direction:column;justify-content:center;
-  padding:48px clamp(32px,6vw,100px) 48px clamp(40px,7vw,120px);
   position:relative;z-index:2;
+  display:flex;flex-direction:column;justify-content:center;
+  width:100%;max-width:640px;
+  padding:64px clamp(40px,7vw,100px);
 }
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:10px;
@@ -223,17 +224,22 @@ button{cursor:pointer;font-family:inherit}
   font-family:'Cormorant Garamond',serif;
   font-size:.85rem;font-style:italic;color:var(--text-muted);line-height:1.5;
 }
-.hero-right{position:relative;overflow:hidden}
+.hero-right{position:absolute;inset:0;z-index:0;overflow:hidden}
 .hero-right img{
   width:100%;height:100%;object-fit:cover;
   object-position:center 20%;
   filter:brightness(.97) contrast(1.04);
-  transition:transform 8s ease;
+  opacity:.45;
+  transition:transform 8s ease,opacity .4s ease;
 }
 .hero-right:hover img{transform:scale(1.02)}
 .hero-fade{
-  position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(to right, var(--bg) 0%, transparent 18%);
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to right,
+    rgba(250,248,244,.92) 0%,
+    rgba(250,248,244,.78) 30%,
+    rgba(250,248,244,.25) 65%,
+    transparent 100%);
 }
 
 /* ── Marquee ── */
@@ -604,9 +610,10 @@ button{cursor:pointer;font-family:inherit}
   .nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}
   .nav-links{display:none}
   .logo{grid-column:2}
-  .hero{grid-template-columns:1fr;min-height:50vh}
-  .hero-right{position:absolute;inset:0;z-index:0;opacity:.25}
-  .hero-left{padding:44px 24px 56px;z-index:2}
+  .hero{min-height:50vh}
+  .hero-left{padding:44px 24px 56px;max-width:none}
+  .hero-right img{opacity:.25}
+  .hero-fade{background:linear-gradient(to bottom,rgba(250,248,244,.55) 0%,rgba(250,248,244,.85) 100%)}
   .hero-from{margin-bottom:18px}
   .hero-trust{margin-bottom:10px}
   .hero-review{padding-top:12px}

@@ -212,6 +212,16 @@ button{cursor:pointer;font-family:inherit}
   .proc-grid{grid-template-columns:1fr}
   .wgal-grid{grid-template-columns:1fr 1fr}
   .enq-card input,.enq-card select,.enq-card textarea{font-size:16px}
+  /* Hero unified-backdrop on mobile only — photo fills, text overlays */
+  .w-hero{display:flex;align-items:center;min-height:60vh;position:relative;overflow:hidden}
+  .w-hero-text{position:relative;z-index:2;padding:56px 24px;width:100%}
+  .w-hero-img{position:absolute;inset:0;z-index:0;aspect-ratio:auto}
+  .w-hero-img img{opacity:.28;width:100%;height:100%;object-fit:cover}
+  .w-hero-img::after{
+    content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(to bottom,rgba(245,240,232,.55) 0%,rgba(245,240,232,.85) 100%);
+  }
+  .w-hero-tag{display:none}
 }
 
 /* ── Seasonal theme overlays (populated by seasonalTheme.ts) ── */
