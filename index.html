@@ -684,6 +684,15 @@ button{cursor:pointer;font-family:inherit}
   .gallery-grid{grid-template-columns:1fr}
   .hero-btns{flex-direction:column;align-items:flex-start}
 }
+/* Stack the inline-styled 2-column grids in #forever (Fresh vs Forever
+   comparison cards) and #weddings-teaser (4-bullet feature list) on narrow
+   mobile — at <600px the text wraps mid-word inside the squeezed columns. */
+@media(max-width:600px){
+  #forever [style*="grid-template-columns:1fr 1fr"],
+  #weddings-teaser [style*="grid-template-columns:1fr 1fr"]{
+    grid-template-columns:1fr !important;
+  }
+}
 
 /* ── Seasonal theme system overlays (populated by seasonalTheme.ts) ── */
 #petals-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:8888}
@@ -1326,7 +1335,9 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
   }
 
   .vs-close {
-    position:absolute; top:24px; right:32px;
+    /* position:fixed (not absolute) so it stays visible while the overlay
+       scrolls on mobile — absolute would scroll off with the content. */
+    position:fixed; top:24px; right:32px; z-index:10001;
     background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
     color:#faf8f4; width:44px; height:44px; border-radius:50%;
     display:flex; align-items:center; justify-content:center; cursor:pointer;
@@ -1438,7 +1449,6 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
     <div class="vs-search-box">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input type="text" class="vs-search-input" id="vs-input" placeholder="Search bouquets, occasions, or flowers…" autocomplete="off">
-      <span class="vs-shortcut">ESC</span>
     </div>
 
     <div class="vs-content">

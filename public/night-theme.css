@@ -264,6 +264,35 @@ html[data-theme="night"] .del-hours {
    Each block targets a different page's white/cream surfaces.
    ═══════════════════════════════════════════════════════════════ */
 
+/* ── Fullscreen search overlay (.vs-*) ──
+   Lives in index.html. In day mode the search box is a cream pill on a dark
+   translucent backdrop. In night mode we keep the dark-backdrop pattern but
+   swap the box itself to the dark slate palette. */
+html[data-theme="night"] .vs-overlay {
+  background: rgba(5,8,17,.78) !important;
+}
+html[data-theme="night"] .vs-search-box {
+  background: #131829 !important;
+  box-shadow: 0 30px 80px rgba(0,0,0,.55),
+              inset 0 0 0 1px rgba(212,168,87,.14) !important;
+}
+html[data-theme="night"] .vs-search-input {
+  color: var(--text) !important;
+  caret-color: var(--accent) !important;
+}
+html[data-theme="night"] .vs-search-input::placeholder {
+  color: rgba(232,227,216,.40) !important;
+}
+/* X button — stays semi-transparent white but a touch dimmer to match night vibe */
+html[data-theme="night"] .vs-close {
+  background: rgba(212,168,87,.12) !important;
+  border-color: rgba(212,168,87,.28) !important;
+  color: var(--text) !important;
+}
+html[data-theme="night"] .vs-close:hover {
+  background: rgba(212,168,87,.22) !important;
+}
+
 /* ── /index.html: weddings-teaser section ──
    This section uses inline `style="background:var(--accent-dark);color:var(--bg)"`
    which works in day (dark brown bg + cream text) but in night both become
