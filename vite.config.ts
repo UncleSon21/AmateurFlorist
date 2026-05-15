@@ -15,6 +15,7 @@ export default defineConfig({
         productDetails:    resolve(__dirname, "product-details.html"),
         orderConfirmation: resolve(__dirname, "order-confirmation.html"),
         weddings:          resolve(__dirname, "weddings.html"),
+        notFound:          resolve(__dirname, "404.html"),
       },
     },
   },
