@@ -5,7 +5,7 @@
 //
 // Required secrets (set with: supabase secrets set KEY=value):
 //   RESEND_API_KEY  — Resend API key
-//   FROM_EMAIL      — verified sender (e.g. enquiries@vaniaflorist.com.au)
+//   FROM_EMAIL      — verified sender (e.g. enquiries@amateurflorist.com.au)
 //   OWNER_EMAIL     — where to deliver the enquiry
 //
 // Optional:
@@ -56,7 +56,7 @@ function buildEnquiryEmail(e: Enquiry): string {
   return `
     <div style="font-family:'Georgia',serif;max-width:600px;margin:0 auto;padding:24px;background:#faf8f4;color:#1e1a17">
       <h1 style="font-size:1.6rem;font-weight:300;color:#1c3656;margin:0 0 8px 0">New wedding enquiry</h1>
-      <p style="color:#6b5d54;margin:0 0 24px 0">From the Vaniaflorist website.</p>
+      <p style="color:#6b5d54;margin:0 0 24px 0">From the Amateur Florist website.</p>
       <table style="width:100%;border-collapse:collapse">
         ${row("Name",         e.name)}
         ${row("Partner",      e.partnerName)}
@@ -160,10 +160,10 @@ Deno.serve(async (req: Request) => {
           Your wedding enquiry has reached us. We reply to every enquiry personally within 1–2 business days
           and will share next steps for your consultation.
         </p>
-        <p style="color:#6b5d54;font-style:italic;margin:0">— The Vaniaflorist team</p>
+        <p style="color:#6b5d54;font-style:italic;margin:0">— The Amateur Florist team</p>
       </div>
     `;
-    await sendEmail(data.email, "We've received your wedding enquiry · Vaniaflorist", ack);
+    await sendEmail(data.email, "We've received your wedding enquiry · Amateur Florist", ack);
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,

@@ -198,7 +198,7 @@ function injectDrawer(): HTMLElement | null {
       </button>
       <p class="vf-drawer-eyebrow">Menu</p>
       <div class="vf-drawer-links" id="vf-drawer-links"></div>
-      <p class="vf-drawer-foot">Vaniaflorist &middot; Sydney</p>
+      <p class="vf-drawer-foot">Amateur Florist &middot; Sydney</p>
     </nav>
   `;
   document.body.appendChild(drawer);

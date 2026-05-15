@@ -11,7 +11,7 @@ export const SUPABASE_CONFIGURED = !!(SUPABASE_URL && SUPABASE_ANON_KEY);
 
 if (!SUPABASE_CONFIGURED) {
   console.warn(
-    "[Vaniaflorist] Supabase env vars missing. Pages that fetch products/orders will render empty states.\n" +
+    "[Amateur Florist] Supabase env vars missing. Pages that fetch products/orders will render empty states.\n" +
     "Add .env file with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to enable backend. See ENV_SETUP.md."
   );
 }

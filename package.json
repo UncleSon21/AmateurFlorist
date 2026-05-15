@@ -1,7 +1,7 @@
 {
-  "name": "vaniaflorsit-website",
+  "name": "amateur-florist-website",
   "version": "1.0.0",
-  "description": "Local flower shop website in Sydney",
+  "description": "Amateur Florist — Sydney flower shop website",
   "main": "dist/script.js",
   "type": "module",
   "scripts": {

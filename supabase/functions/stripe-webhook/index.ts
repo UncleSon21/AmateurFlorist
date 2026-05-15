@@ -8,7 +8,7 @@
 //   STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET
 //   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
 //   RESEND_API_KEY      — optional; emails skipped if missing
-//   FROM_EMAIL          — verified Resend sender (e.g. orders@vaniaflorist.com.au)
+//   FROM_EMAIL          — verified Resend sender (e.g. orders@amateurflorist.com.au)
 //   OWNER_EMAIL         — where order alerts go
 //   TWILIO_*            — optional; SMS skipped if missing
 
@@ -301,7 +301,7 @@ Deno.serve(async (req) => {
         if (meta.customer_phone) {
           await sendSMS(
             meta.customer_phone,
-            `Hi ${meta.customer_name}! Your Vaniaflorist order is confirmed for ${meta.delivery_date}. Total: ${formatPrice(totalCents)}. We'll be in touch shortly.`
+            `Hi ${meta.customer_name}! Your Amateur Florist order is confirmed for ${meta.delivery_date}. Total: ${formatPrice(totalCents)}. We'll be in touch shortly.`
           );
         }
       }
