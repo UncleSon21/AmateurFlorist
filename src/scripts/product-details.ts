@@ -2,6 +2,40 @@
 import { fetchProductById } from "./db";
 import { loadCart, addToCart } from "./cart";
 
+// ── Care guides ────────────────────────────────────────────────────────────────
+// Rendered per product.material. Silk/preserved products must NEVER be told to
+// water or re-trim stems — the box arrives and the customer can tell it's silk,
+// so wrong care copy reads as dishonest and hurts reviews.
+const CARE_GUIDES: Record<string, string> = {
+  fresh: `
+    <ol>
+      <li>Remove flowers from packaging immediately</li>
+      <li>Cut 2–3cm off stems at a 45° angle</li>
+      <li>Remove any leaves below the water line</li>
+      <li>Place in a clean vase with fresh, cool water</li>
+      <li>Add flower food if provided</li>
+      <li>Change water every 2–3 days</li>
+      <li>Keep away from direct sunlight and heating vents</li>
+    </ol>`,
+  silk: `
+    <ol>
+      <li>Unwrap gently and reshape petals by hand</li>
+      <li>Never place in water</li>
+      <li>Dust every few weeks with a soft brush or hairdryer on cool</li>
+      <li>Keep out of direct sunlight to prevent fading</li>
+      <li>Store upright in the original box between uses</li>
+    </ol>`,
+  preserved: `
+    <ol>
+      <li>Never place in water</li>
+      <li>Keep in a dry room — humidity causes wilting</li>
+      <li>Avoid direct sunlight</li>
+      <li>Dust lightly with a soft brush only</li>
+      <li>Handle by the stems, not the petals</li>
+    </ol>`,
+};
+CARE_GUIDES["artificial"] = CARE_GUIDES["silk"]!;
+
 // ── Helpers ──────────────────────────────────────────────────────────────────
 function qs<T extends Element>(sel: string, ctx: Document | Element = document) {
   return ctx.querySelector<T>(sel);
@@ -296,6 +330,13 @@ async function main() {
     if (badgeEl) {
       badgeEl.textContent = product.material === "fresh" ? "Fresh" : "Artificial";
       badgeEl.className = `material-badge-detail ${product.material}`;
+    }
+
+    // Care guide — conditional on material so silk/preserved are never told
+    // to change water (see CARE_GUIDES).
+    const careEl = qs<HTMLElement>("#care-content");
+    if (careEl) {
+      careEl.innerHTML = CARE_GUIDES[product.material] ?? CARE_GUIDES["fresh"]!;
     }
 
     // Images
