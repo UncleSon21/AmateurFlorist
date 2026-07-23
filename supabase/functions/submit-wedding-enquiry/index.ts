@@ -31,6 +31,7 @@ const corsHeaders: Record<string, string> = {
 type Enquiry = {
   name?: string;
   partnerName?: string;
+  interest?: string;
   email?: string;
   phone?: string;
   weddingDate?: string;
@@ -58,6 +59,7 @@ function buildEnquiryEmail(e: Enquiry): string {
       <h1 style="font-size:1.6rem;font-weight:300;color:#1c3656;margin:0 0 8px 0">New wedding enquiry</h1>
       <p style="color:#6b5d54;margin:0 0 24px 0">From the Amateur Florist website.</p>
       <table style="width:100%;border-collapse:collapse">
+        ${row("Interested in", e.interest)}
         ${row("Name",         e.name)}
         ${row("Partner",      e.partnerName)}
         ${row("Email",        e.email)}
