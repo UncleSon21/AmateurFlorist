@@ -46,20 +46,21 @@
 <title>Wedding Flower Hire & Bouquets — Amateur Florist Sydney</title>
 <meta name="description" content="Sydney wedding flowers to hire or buy — silk & preserved bridal bouquets, bridesmaid posies and ceremony pieces. Hire for the day or keep as a keepsake; fresh flowers too. Book a consultation.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://amateurflorist.vercel.app/weddings.html">
+<link rel="canonical" href="https://vaniaflorist.netlify.app/weddings.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Amateur Florist">
 <meta property="og:title" content="Wedding Flower Hire & Bouquets — Amateur Florist Sydney">
 <meta property="og:description" content="Sydney wedding flowers to hire or buy — silk & preserved bouquets and ceremony pieces, or fresh for the day.">
-<meta property="og:url" content="https://amateurflorist.vercel.app/weddings.html">
-<meta property="og:image" content="https://amateurflorist.vercel.app/images/gallery/bouquet-white.jpg">
+<meta property="og:url" content="https://vaniaflorist.netlify.app/weddings.html">
+<meta property="og:image" content="https://vaniaflorist.netlify.app/og/bouquet-white.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Wedding Flower Hire & Bouquets — Amateur Florist Sydney">
 <meta name="twitter:description" content="Sydney wedding flowers to hire or buy — silk & preserved bouquets and ceremony pieces, or fresh for the day.">
-<meta name="twitter:image" content="https://amateurflorist.vercel.app/images/gallery/bouquet-white.jpg">
+<meta name="twitter:image" content="https://vaniaflorist.netlify.app/og/bouquet-white.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="/night-theme.css">
 <style>
 :root{
@@ -242,7 +243,9 @@ button{cursor:pointer;font-family:inherit}
   .wgal-grid{grid-template-columns:repeat(4,1fr)}
   .wgal-1,.wgal-2,.wgal-3,.wgal-4,.wgal-5,.wgal-6{grid-column:span 2}
   .faq-grid{grid-template-columns:1fr;gap:24px}
-  .enq-card{grid-template-columns:1fr;padding:32px 28px}
+  /* minmax(0,1fr): a bare 1fr track was stretched by the select's long option text, pushing the form past the right edge of a phone. */
+  .enq-card{grid-template-columns:minmax(0,1fr);padding:32px 28px}
+  .enq-card input,.enq-card select,.enq-card textarea{width:100%;min-width:0;box-sizing:border-box}
 }
 @media(max-width:768px){
   .nav-links{display:none}
@@ -251,6 +254,9 @@ button{cursor:pointer;font-family:inherit}
   .section{padding:64px 0}
   .pieces-grid{grid-template-columns:1fr 1fr}
   .proc-grid{grid-template-columns:1fr}
+  /* "If you choose to hire" steps use an inline 3-col grid, so !important is needed to stack them on phones. */
+  .hire-steps-grid{grid-template-columns:1fr !important}
+  .proc-step{padding:28px 24px}
   .wgal-grid{grid-template-columns:1fr 1fr}
   .enq-card input,.enq-card select,.enq-card textarea{font-size:16px}
   /* Hero unified-backdrop on mobile only — photo fills, text overlays */
@@ -327,7 +333,7 @@ button{cursor:pointer;font-family:inherit}
           <a href="weddings.html" role="menuitem">The Ceremony Collection</a>
         </div>
       </div>
-      <a href="shop.html#occasions" >Occasions</a>
+      <a href="index.html#occasions" >Occasions</a>
       <a href="about.html" >About</a>
       <a href="weddings.html" class="active">Weddings</a>
     </div>
@@ -410,7 +416,7 @@ button{cursor:pointer;font-family:inherit}
     <!-- How hire works — only applies to path 02 -->
     <div style="margin-top:56px">
       <p class="eyebrow" id="hire-steps">If you choose to hire</p>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:20px;border:.5px solid var(--border)">
+      <div class="hire-steps-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:20px;border:.5px solid var(--border)">
         <div class="proc-step">
           <span class="proc-num">i.</span>
           <h3 class="proc-name">Reserve your date</h3>
@@ -464,7 +470,7 @@ button{cursor:pointer;font-family:inherit}
         <span class="path-num">— 02 —</span>
         <h3 class="path-title">Forever wedding flowers</h3>
         <span class="path-tag">a keepsake that lasts</span>
-        <p class="path-desc">Carefully crafted artificial &amp; preserved arrangements, indistinguishable from fresh. Perfect for destination weddings, allergies, or couples who want to keep their bouquet forever.</p>
+        <p class="path-desc">Carefully crafted silk (artificial) &amp; preserved arrangements, made to last — nothing wilts on the day. Perfect for destination weddings, allergies, or couples who want to keep their bouquet forever.</p>
         <ul class="path-feat">
           <li>Premium silk &amp; preserved real flowers</li>
           <li>Travel-safe — ships anywhere in Australia</li>
@@ -788,17 +794,6 @@ document.querySelectorAll('.faq-item').forEach(item => {
   });
 });
 
-// Enquiry form
-function handleEnquiry(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('button[type=submit]');
-  btn.textContent = 'Sending…';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.textContent = '✓ Sent — we\'ll be in touch';
-    btn.style.background = 'var(--accent-light)';
-  }, 800);
-}
 </script>
 
 <!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->

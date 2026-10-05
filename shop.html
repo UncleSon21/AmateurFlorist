@@ -46,20 +46,21 @@
 <title>Shop Bouquets — Amateur Florist Sydney</title>
 <meta name="description" content="Browse handcrafted bouquets, fresh and preserved flower arrangements from Sydney's luxury florist. Same-day delivery available across Sydney metro.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://amateurflorist.vercel.app/shop.html">
+<link rel="canonical" href="https://vaniaflorist.netlify.app/shop.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Amateur Florist">
 <meta property="og:title" content="Shop Bouquets — Amateur Florist Sydney">
 <meta property="og:description" content="Handcrafted bouquets and arrangements, same-day delivery across Sydney.">
-<meta property="og:url" content="https://amateurflorist.vercel.app/shop.html">
-<meta property="og:image" content="https://amateurflorist.vercel.app/images/gallery/bouquet-pink-roses.jpg">
+<meta property="og:url" content="https://vaniaflorist.netlify.app/shop.html">
+<meta property="og:image" content="https://vaniaflorist.netlify.app/og/bouquet-pink-roses.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Shop Bouquets — Amateur Florist Sydney">
 <meta name="twitter:description" content="Handcrafted bouquets and arrangements, same-day delivery across Sydney.">
-<meta name="twitter:image" content="https://amateurflorist.vercel.app/images/gallery/bouquet-pink-roses.jpg">
+<meta name="twitter:image" content="https://vaniaflorist.netlify.app/og/bouquet-pink-roses.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="/night-theme.css">
 <style>
 /* ═══════════════════════════════════════
@@ -313,9 +314,11 @@ button{cursor:pointer;font-family:inherit}
 @media(max-width:1100px){#productsGrid{grid-template-columns:repeat(3,1fr)}#productsGrid.grid-2{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){.filterbar-inner{padding:0 24px}#productsGrid,#productsGrid.grid-3,#productsGrid.grid-2{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:768px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.nav-links{display:none}.logo{grid-column:2}.shop-container{padding:0 20px}.grid-toggle{display:none}.filterbar-inner{padding:0 20px}}
-/* Filter bar mobile stack: search on row 1, pills + occasion select on row 2, result count on row 3. */
+/* Filter bar mobile stack: search on row 1, material pills (full width) on row 2,
+   occasion select + result count on row 3. Not sticky on phones: stacked, it was
+   ~135px on top of the header and covered a quarter of the screen while scrolling. */
 @media(max-width:768px){
-  .filterbar{top:65px}
+  .filterbar{position:static}
   .filterbar-inner{
     display:grid;
     grid-template-columns:1fr auto;
@@ -324,14 +327,15 @@ button{cursor:pointer;font-family:inherit}
     overflow:visible;align-items:center;
   }
   .filter-sep{display:none}
-  .filter-search{grid-column:1 / -1;height:40px;padding:0 14px;width:100%}
+  .filter-search{grid-column:1 / -1;height:44px;padding:0 14px;width:100%}
   .filter-search input{width:100%;flex:1;font-size:16px}
-  .material-pills{grid-column:1;min-width:0;overflow-x:auto;scrollbar-width:none}
-  .material-pills::-webkit-scrollbar{display:none}
-  .filter-select{grid-column:2;padding:7px 28px 7px 12px;font-size:11px}
-  .filter-right{grid-column:1 / -1;margin-left:0;justify-content:flex-end}
+  .material-pills{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .material-pill{min-height:40px;padding:8px 6px;font-size:11px;letter-spacing:1px}
+  .filter-select{grid-column:1;min-height:40px;width:100%;padding:8px 28px 8px 12px;font-size:16px;letter-spacing:.3px;text-transform:none}
+  .filter-right{grid-column:2;margin-left:0;justify-content:flex-end}
+  .shop-hero{padding-left:24px;padding-right:24px}
 }
-@media(max-width:480px){#productsGrid,#productsGrid.grid-3,#productsGrid.grid-2{grid-template-columns:1fr 1fr;gap:10px}.prod-desc{display:none}.shop-hero{padding:44px 0 36px}}
+@media(max-width:480px){#productsGrid,#productsGrid.grid-3,#productsGrid.grid-2{grid-template-columns:1fr 1fr;gap:10px}.prod-desc{display:none}.view-details-btn{display:none}.shop-hero{padding:44px 24px 36px}}
 @media(max-width:360px){#productsGrid{grid-template-columns:1fr}}
 
 /* ── Seasonal theme overlays (populated by seasonalTheme.ts) ── */
@@ -400,7 +404,7 @@ button{cursor:pointer;font-family:inherit}
           <a href="weddings.html" role="menuitem">The Ceremony Collection</a>
         </div>
       </div>
-      <a href="shop.html#occasions" >Occasions</a>
+      <a href="index.html#occasions" >Occasions</a>
       <a href="about.html" >About</a>
       <a href="weddings.html" >Weddings</a>
     </div>
@@ -440,7 +444,7 @@ button{cursor:pointer;font-family:inherit}
     <div class="material-pills" id="materialPills">
       <button class="material-pill active" data-material="all">All</button>
       <button class="material-pill" data-material="fresh">Fresh</button>
-      <button class="material-pill" data-material="artificial">Preserved</button>
+      <button class="material-pill" data-material="artificial">Silk</button>
     </div>
     <div class="filter-sep"></div>
     <select class="filter-select" id="categorySelect">
@@ -452,7 +456,7 @@ button{cursor:pointer;font-family:inherit}
       <option value="newbaby">New Baby</option>
     </select>
     <div class="filter-right">
-      <span class="filter-results"><strong id="resultsCount">12</strong> arrangements</span>
+      <span class="filter-results"><strong id="resultsCount"></strong></span>
       <div class="grid-toggle">
         <button class="grid-btn" id="grid4btn" title="4 columns">
           <svg width="12" height="12" viewBox="0 0 12 12"><rect x="0" y="0" width="5" height="5" rx=".5" fill="currentColor"/><rect x="7" y="0" width="5" height="5" rx=".5" fill="currentColor"/><rect x="0" y="7" width="5" height="5" rx=".5" fill="currentColor"/><rect x="7" y="7" width="5" height="5" rx=".5" fill="currentColor"/></svg>

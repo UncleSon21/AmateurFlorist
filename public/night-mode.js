@@ -14,6 +14,7 @@
     nightStartHour: 18,   // 6pm
     nightEndHour:   6,    // 6am
     firefliesCount: 90,
+    firefliesCountSmall: 18,   // phones: drawn on a viewport-sized canvas, see canvasHeight()
     firefliesPulse: 1,
     firefliesPalette: ['#fff2a8', '#ffd864', '#c8e87a', '#9ad4ff'],
   };
@@ -143,6 +144,14 @@
     );
   }
 
+  // Phones: a document-height canvas (e.g. 375 x 15,600 CSS px at 2x = ~23M px on
+  // the homepage) is past iOS Safari's ~16.7M-pixel canvas limit and is cleared and
+  // redrawn every frame. There we use a fixed, viewport-sized canvas and fewer
+  // fireflies instead; desktop keeps the document-anchored canvas.
+  const SMALL_SCREEN = window.matchMedia('(max-width: 768px)');
+  function canvasHeight() { return SMALL_SCREEN.matches ? window.innerHeight : docHeight(); }
+  function fireflyCount() { return SMALL_SCREEN.matches ? CFG.firefliesCountSmall : CFG.firefliesCount; }
+
   function hexA(hex, a) {
     if (hex[0] !== '#') return hex;
     const v = hex.length === 4
@@ -171,7 +180,8 @@
 
     function resize() {
       const w = window.innerWidth;
-      const h = docHeight();
+      const h = canvasHeight();
+      canvas.style.position = SMALL_SCREEN.matches ? 'fixed' : '';
       if (w === lastW && h === lastH) return;
       canvas.width  = Math.floor(w * dpr);
       canvas.height = Math.floor(h * dpr);
@@ -180,7 +190,7 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       if (h > lastH && _fireflies.length) {
         const newBand = h - lastH;
-        const extra = Math.min(8, Math.floor(CFG.firefliesCount * (newBand / h)));
+        const extra = Math.min(8, Math.floor(fireflyCount() * (newBand / h)));
         for (let i = 0; i < extra; i++) {
           const f = makeFirefly(w, h);
           f.y = lastH + Math.random() * newBand;
@@ -198,17 +208,18 @@
       if (document.body) _resizeObserver.observe(document.body);
     }
 
-    _fireflies = Array.from({ length: CFG.firefliesCount },
-      () => makeFirefly(window.innerWidth, docHeight()));
+    _fireflies = Array.from({ length: fireflyCount() },
+      () => makeFirefly(window.innerWidth, canvasHeight()));
 
     let tick = 0;
     function frame() {
-      const w = window.innerWidth, h = docHeight();
+      const w = window.innerWidth, h = canvasHeight();
       ctx.clearRect(0, 0, w, h);
       tick++;
 
-      while (_fireflies.length < CFG.firefliesCount) _fireflies.push(makeFirefly(w, h));
-      while (_fireflies.length > CFG.firefliesCount) _fireflies.pop();
+      const count = fireflyCount();
+      while (_fireflies.length < count) _fireflies.push(makeFirefly(w, h));
+      while (_fireflies.length > count) _fireflies.pop();
 
       for (let i = 0; i < _fireflies.length; i++) {
         const f = _fireflies[i];

@@ -46,19 +46,20 @@
 <title>Product Details — Amateur Florist Sydney</title>
 <meta name="description" content="Premium handcrafted bouquet, hand-tied and delivered fresh across Sydney. Choose your size, presentation and delivery date.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://amateurflorist.vercel.app/product-details.html">
+<link rel="canonical" href="https://vaniaflorist.netlify.app/product-details.html">
 <meta property="og:type" content="product">
 <meta property="og:site_name" content="Amateur Florist">
 <meta property="og:title" content="Bouquet — Amateur Florist Sydney">
 <meta property="og:description" content="Premium handcrafted bouquet, delivered fresh across Sydney.">
-<meta property="og:image" content="https://amateurflorist.vercel.app/images/gallery/bouquet-pink-roses.jpg">
+<meta property="og:image" content="https://vaniaflorist.netlify.app/og/bouquet-pink-roses.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Bouquet — Amateur Florist Sydney">
 <meta name="twitter:description" content="Premium handcrafted bouquet, delivered fresh across Sydney.">
-<meta name="twitter:image" content="https://amateurflorist.vercel.app/images/gallery/bouquet-pink-roses.jpg">
+<meta name="twitter:image" content="https://vaniaflorist.netlify.app/og/bouquet-pink-roses.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="/night-theme.css">
 <style>
 :root {
@@ -337,7 +338,8 @@ button{cursor:pointer;font-family:inherit}
 .footer-bottom{max-width:1200px;margin:0 auto;padding:0 48px;text-align:center;font-size:10px;letter-spacing:1px;color:#5a4e44}
 
 /* ── Responsive ── */
-@media(max-width:1024px){.pd-layout{grid-template-columns:1fr;gap:40px}.pd-images{position:static}.pd-main-img{aspect-ratio:4/3}}
+/* minmax(0,1fr), not 1fr: a bare 1fr track grows to its widest child's min-content, which pushed the whole page to ~426px on a 375px phone. */
+@media(max-width:1024px){.pd-layout{grid-template-columns:minmax(0,1fr);gap:40px}.pd-images{position:static}.pd-main-img{aspect-ratio:4/3}}
 @media(max-width:768px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.container{padding:0 24px}.action-btns{grid-template-columns:1fr}.breadcrumb-inner{padding:0 24px}.date-input,.gift-grid input,.gift-grid textarea{font-size:16px}}
 @media(max-width:480px){.pd-title{font-size:2rem}.tab-btn{padding:10px 14px}}
 
@@ -397,7 +399,7 @@ button{cursor:pointer;font-family:inherit}
     <span class="breadcrumb-sep">›</span>
     <a href="shop.html">Shop</a>
     <span class="breadcrumb-sep">›</span>
-    <span>Blush Romance</span>
+    <span id="crumb-name">Product</span>
   </div>
 </div>
 
@@ -416,10 +418,10 @@ button{cursor:pointer;font-family:inherit}
       <!-- RIGHT: Info -->
       <div class="pd-info">
         <div class="pd-top">
-          <span class="mat-badge fresh" id="material-badge">Fresh</span>
+          <span class="mat-badge" id="material-badge"></span>
         </div>
         <h1 class="pd-title" id="p-title">Loading…</h1>
-        <p class="pd-subtitle product-subtitle">Lush pink roses and seasonal peonies, hand-tied in our signature wrap. Made the morning it ships.</p>
+        <p class="pd-subtitle product-subtitle"></p>
 
         <div class="pd-divider"></div>
 
@@ -427,27 +429,14 @@ button{cursor:pointer;font-family:inherit}
         <div class="size-section">
           <span class="sec-label">Choose your size</span>
           <p class="size-note">All prices in AUD · Free delivery over $80</p>
-          <div class="size-opts size-options">
-            <label class="size-opt">
-              <input type="radio" name="size" value="65">
-              <div class="size-box"><span class="sz-price">$65</span><span class="sz-label">Petite</span></div>
-            </label>
-            <label class="size-opt">
-              <input type="radio" name="size" value="85" checked>
-              <div class="size-box"><span class="sz-price">$85</span><span class="sz-label">Classic</span></div>
-            </label>
-            <label class="size-opt">
-              <input type="radio" name="size" value="115">
-              <div class="size-box"><span class="sz-price">$115</span><span class="sz-label">Luxe</span></div>
-            </label>
-            <label class="size-opt">
-              <input type="radio" name="size" value="165">
-              <div class="size-box"><span class="sz-price">$165</span><span class="sz-label">Grand</span></div>
-            </label>
-          </div>
+          <!-- Filled from the products table by product-details.ts. No static sizes here: they showed invented prices until (or unless) the data loaded. -->
+          <div class="size-opts size-options"></div>
         </div>
 
-        <!-- Presentation -->
+        <!-- Presentation ("In Vase +$30") is switched off: the choice changed the on-page
+             total but was never sent to the cart, checkout or Stripe, so customers would
+             have expected a vase they were not charged for or given. Re-enable only once
+             it is carried through cart.ts, create-checkout-session and create-payment-intent.
         <div class="pres-section">
           <span class="sec-label">Presentation</span>
           <div class="pres-opts">
@@ -468,6 +457,7 @@ button{cursor:pointer;font-family:inherit}
             </label>
           </div>
         </div>
+        -->
 
         <!-- Quantity -->
         <div class="qty-section">
@@ -573,14 +563,7 @@ button{cursor:pointer;font-family:inherit}
       </div>
       <div class="tab-pane tab-content active" data-tab="details">
         <h3>About this arrangement</h3>
-        <p>Our Blush Romance bouquet is built around the season's finest pink roses and peonies — selected fresh from Sydney Basin growers the morning of your delivery. Every stem is chosen by hand, and the bouquet is tied on the day it ships.</p>
-        <ul>
-          <li>Premium seasonal roses and peonies</li>
-          <li>Fresh daily from local Sydney growers</li>
-          <li>Hand-tied by our florist team</li>
-          <li>Presented with seasonal greenery and tissue wrap</li>
-          <li>Available in four sizes — petite to grand</li>
-        </ul>
+        <div id="details-content"></div>
       </div>
       <div class="tab-pane tab-content" data-tab="delivery">
         <h3>Delivery information</h3>
@@ -589,7 +572,6 @@ button{cursor:pointer;font-family:inherit}
           <li><strong>Next-day delivery:</strong> Order anytime — delivery guaranteed the following day</li>
           <li><strong>Scheduled delivery:</strong> Choose your preferred date at checkout</li>
           <li><strong>Free delivery:</strong> On all orders over $80 within Sydney</li>
-          <li><strong>Express:</strong> Within 3 hours for urgent orders (+$15)</li>
         </ul>
       </div>
       <div class="tab-pane tab-content" data-tab="care">

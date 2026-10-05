@@ -48,6 +48,16 @@ These cost real debugging time; don't rediscover them:
 - Resend will not deliver to arbitrary recipients until a custom domain is
   verified. A `.com.au` domain requires an ABN, so this is blocked until the
   owner takes over.
+- Root-level files not referenced from HTML (robots, sitemap, OG images) are
+  **not deployed**. Put them in `public/`.
+- Every page carries its own inline `<style>`; `styles/*.css` is not imported
+  anywhere. Header/drawer CSS shared by all pages lives in
+  `src/scripts/mobile-nav.ts`.
+- Single-column mobile grids must use `minmax(0,1fr)`, not `1fr` — a bare `1fr`
+  track grows to its widest child and pushed whole pages past a phone's width.
+- Shop filter URLs: `?type=fresh|forever`, `?material=`, `?category=`,
+  `?occasion=` (only if that category exists), `?q=`.
+- Most phone traffic: check every layout change at 375px and 320px.
 
 ## Design system
 
@@ -86,13 +96,24 @@ Schema in `002_rental.sql`, frontend helpers in `src/scripts/rental.ts`.
 
 ## Current state
 
-- Site is live on Netlify
-- Rental schema written and tested; **not yet applied to the live database**
-- Redesign files (`Vaniaflorist_Redesign.html`, `shop-redesign.html`,
-  `product-redesign.html`, `cart-redesign.html`, `about-redesign.html`) are
-  mid-integration
-- SEO partially done: meta tags and JSON-LD Florist schema in place.
-  Outstanding: Google Business Profile, image alt text, sitemap, Search Console
+Checked 2026-10-06:
+
+- Site is live on Netlify (`vaniaflorist.netlify.app`). An identical copy is also
+  live at `amateurflorist.vercel.app`; canonical/OG/sitemap URLs point at Netlify.
+- The site brands itself **"Amateur Florist"** (commit a2ec499); the repo, Netlify
+  site and this file say "Vania". Unresolved — ask before renaming either way.
+- Rental schema **is applied** to the live database (`rental_units`,
+  `rental_availability`, `products.is_rentable` all respond), but no product is
+  marked rentable yet.
+- `wedding_enquiries` exists live but was created outside the repo;
+  `003_wedding_enquiries.sql` records it and adds `interest`. Run it before
+  relying on that column.
+- Redesign is integrated; the `*.original-bak` files are the pre-redesign pages.
+- SEO: meta + OG tags in place; **no JSON-LD on any page** (needs real business
+  address/phone first). Outstanding: Google Business Profile, Search Console.
+- Known inconsistencies awaiting the owner: free delivery is **$50** in code
+  (cart, checkout, both payment functions) but **$80** in site copy; the product
+  page "In Vase +$30" option is switched off because it was never charged.
 
 ## Don't
 
