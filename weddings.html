@@ -44,19 +44,19 @@
 </script>
 
 <title>Wedding Flower Hire & Bouquets — Amateur Florist Sydney</title>
-<meta name="description" content="Sydney wedding flowers to hire or buy — silk & preserved bridal bouquets, bridesmaid posies and ceremony pieces. Hire for the day or keep as a keepsake; fresh flowers too. Book a consultation.">
+<meta name="description" content="Sydney wedding flowers to hire or buy — silk & preserved bridal bouquets, bridesmaid posies and ceremony pieces. Hire for the day or keep as a keepsake; fresh flowers too.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://vaniaflorist.netlify.app/weddings.html">
+<link rel="canonical" href="https://www.amateurflorist.co/weddings.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Amateur Florist">
 <meta property="og:title" content="Wedding Flower Hire & Bouquets — Amateur Florist Sydney">
 <meta property="og:description" content="Sydney wedding flowers to hire or buy — silk & preserved bouquets and ceremony pieces, or fresh for the day.">
-<meta property="og:url" content="https://vaniaflorist.netlify.app/weddings.html">
-<meta property="og:image" content="https://vaniaflorist.netlify.app/og/bouquet-white.jpg">
+<meta property="og:url" content="https://www.amateurflorist.co/weddings.html">
+<meta property="og:image" content="https://www.amateurflorist.co/og/bouquet-white.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Wedding Flower Hire & Bouquets — Amateur Florist Sydney">
 <meta name="twitter:description" content="Sydney wedding flowers to hire or buy — silk & preserved bouquets and ceremony pieces, or fresh for the day.">
-<meta name="twitter:image" content="https://vaniaflorist.netlify.app/og/bouquet-white.jpg">
+<meta name="twitter:image" content="https://www.amateurflorist.co/og/bouquet-white.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -86,6 +86,18 @@ button{cursor:pointer;font-family:inherit}
 .logo{text-align:center}
 .logo-name{font-family:'Great Vibes',cursive;font-size:2.4rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block}
 .logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:3px}
+/* Logo: tied-heart mark (public/brand/mark.svg) beside the script name */
+.logo a{display:inline-flex;align-items:center;gap:10px}
+.logo-mark{flex-shrink:0;color:var(--accent);--sw:2.8}
+.logo-text{display:flex;flex-direction:column;align-items:center}
+/* Smaller name so mark + name sit clear of the nav links; steps down with width */
+.logo .logo-name{font-size:1.9rem}
+.logo-mark{width:32px;height:32px}
+@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}}
+@media(max-width:960px){.logo-mark{width:24px;height:24px}.logo .logo-name{font-size:1.5rem}}
+/* Tablets use the hamburger header (src/scripts/mobile-nav.ts): the desktop links did not fit beside the logo */
+@media(max-width:1023px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.nav-links{display:none}.logo{grid-column:2}}
+
 .nav-actions{display:flex;align-items:center;gap:16px;justify-content:flex-end}
 .nav-icon-btn{background:none;border:none;color:var(--text-muted);padding:8px;display:inline-flex}
 
@@ -229,7 +241,7 @@ button{cursor:pointer;font-family:inherit}
 /* FOOTER */
 .footer{background:var(--accent-dark);padding:64px 0 28px;border-top:.5px solid rgba(250,248,244,.05)}
 .footer-inner{max-width:1200px;margin:0 auto;padding:0 48px}
-.footer-bottom{text-align:center;padding-top:24px;font-size:10px;letter-spacing:1px;color:#5a4e44}
+.footer-bottom{text-align:center;padding-top:24px;font-size:10px;letter-spacing:1px;color:rgba(250,248,244,.6)}
 
 /* RESPONSIVE */
 @media(max-width:1024px){
@@ -315,7 +327,7 @@ button{cursor:pointer;font-family:inherit}
 </head>
 <body>
 
-<div class="topbar">Wedding consultations from $0 — book your free 30-minute discovery call</div>
+<div class="topbar">Wedding flowers to hire or buy — <a href="#enquire">tell us about your day</a></div>
 
 <nav class="nav">
   <!-- Seasonal SVG branches injected by seasonalTheme.ts -->
@@ -339,8 +351,11 @@ button{cursor:pointer;font-family:inherit}
     </div>
     <div class="logo">
       <a href="index.html">
-        <span class="logo-name">Amateur Florist</span>
-        <span class="logo-sub">Sydney Florist</span>
+        <svg class="logo-mark" width="34" height="34" aria-hidden="true" focusable="false"><use href="/brand/mark.svg#heart"/></svg>
+        <span class="logo-text">
+          <span class="logo-name">Amateur Florist</span>
+          <span class="logo-sub">Sydney Florist</span>
+        </span>
       </a>
     </div>
     <div class="nav-actions">
@@ -368,7 +383,6 @@ button{cursor:pointer;font-family:inherit}
   </div>
   <div class="w-hero-img">
     <img src="images/gallery/bouquet-white.jpg" alt="White wedding bouquet" width="1170" height="1556" loading="eager" decoding="async" fetchpriority="high">
-    <div class="w-hero-tag">"Sarah &amp; James — November 2025, Centennial Park"</div>
   </div>
 </section>
 
@@ -388,7 +402,7 @@ button{cursor:pointer;font-family:inherit}
         <ul class="path-feat">
           <li>Designed around your story, not a catalogue</li>
           <li>Choose fresh, silk, or preserved flowers</li>
-          <li>A sketch and quote before anything is made</li>
+          <li>A quote before anything is made</li>
         </ul>
         <div class="path-cta">
           <a href="#process" style="font-size:11px;color:var(--text-muted);border-bottom:.5px solid var(--border);padding-bottom:2px">See our process →</a>
@@ -451,17 +465,15 @@ button{cursor:pointer;font-family:inherit}
         <div class="path-img"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Fresh wedding flowers" width="1092" height="1056" loading="lazy" decoding="async"></div>
         <span class="path-num">— 01 —</span>
         <h3 class="path-title">Fresh wedding flowers</h3>
-        <span class="path-tag">picked the morning of</span>
-        <p class="path-desc">Seasonal blooms cut and arranged the morning of your ceremony. Soft, fragrant, alive — the way wedding flowers are meant to be.</p>
+        <span class="path-tag">fresh for the day</span>
+        <p class="path-desc">Seasonal blooms arranged fresh for your ceremony. Soft, fragrant, alive — the way wedding flowers are meant to be.</p>
         <ul class="path-feat">
-          <li>Sourced from local Sydney growers</li>
-          <li>Same-day arrangement, refrigerated until delivery</li>
-          <li>Free on-site setup for full venues</li>
-          <li>Optional preservation service after the day</li>
+          <li>Seasonal flowers, arranged for your day</li>
+          <li>Real scent and softness</li>
+          <li>Pair with silk pieces you can keep</li>
         </ul>
         <div class="path-cta">
-          <span class="path-from">Bouquets from <strong>$280</strong></span>
-          <a href="#packages" class="btn-ghost">See packages →</a>
+          <a href="#enquire" class="btn-ghost">Enquire →</a>
         </div>
       </div>
 
@@ -472,96 +484,14 @@ button{cursor:pointer;font-family:inherit}
         <span class="path-tag">a keepsake that lasts</span>
         <p class="path-desc">Carefully crafted silk (artificial) &amp; preserved arrangements, made to last — nothing wilts on the day. Perfect for destination weddings, allergies, or couples who want to keep their bouquet forever.</p>
         <ul class="path-feat">
-          <li>Premium silk &amp; preserved real flowers</li>
+          <li>Silk &amp; preserved — nothing wilts on the day</li>
           <li>Travel-safe — ships anywhere in Australia</li>
           <li>Reusable for engagement, hens &amp; rehearsal</li>
-          <li>Custom keepsake box included</li>
         </ul>
         <div class="path-cta">
-          <span class="path-from">Bouquets from <strong>$220</strong></span>
-          <a href="#packages" class="btn-ghost">See packages →</a>
+          <a href="#enquire" class="btn-ghost">Enquire →</a>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- PACKAGES -->
-<section class="section pkg-bg" id="packages">
-  <div class="container">
-    <p class="eyebrow">Wedding packages</p>
-    <h2 class="sec-title">Three considered packages</h2>
-    <p class="sec-sub">Or build your own — every package is a starting point, fully customisable in your consultation.</p>
-
-    <div class="pkg-grid">
-      <div class="pkg-card">
-        <h3 class="pkg-name">The Intimate</h3>
-        <p class="pkg-tag">For 20–40 guests</p>
-        <p class="pkg-price">$1,450<span class="sm">+</span></p>
-        <p class="pkg-from">Starting price · Quoted per couple</p>
-        <ul class="pkg-incl">
-          <li>Bridal bouquet (signature size)</li>
-          <li>1 boutonnière</li>
-          <li>2 ceremony arrangements</li>
-          <li>1 reception centrepiece</li>
-          <li>Loose petals for aisle</li>
-        </ul>
-        <a href="#enquire" class="pkg-cta">Enquire — Intimate</a>
-      </div>
-
-      <div class="pkg-card featured">
-        <span class="pkg-badge">Most chosen</span>
-        <h3 class="pkg-name">The Considered</h3>
-        <p class="pkg-tag">For 50–100 guests</p>
-        <p class="pkg-price">$3,200<span class="sm">+</span></p>
-        <p class="pkg-from">Starting price · Quoted per couple</p>
-        <ul class="pkg-incl">
-          <li>Bridal bouquet + 3 bridesmaid posies</li>
-          <li>4 boutonnières + 2 corsages</li>
-          <li>Ceremony arch florals</li>
-          <li>6 reception centrepieces</li>
-          <li>Cake florals + signage florals</li>
-          <li>Free setup &amp; pack-down</li>
-        </ul>
-        <a href="#enquire" class="pkg-cta">Enquire — Considered</a>
-      </div>
-
-      <div class="pkg-card">
-        <h3 class="pkg-name">The Bespoke</h3>
-        <p class="pkg-tag">For 100+ guests</p>
-        <p class="pkg-price">$6,500<span class="sm">+</span></p>
-        <p class="pkg-from">Starting price · Quoted per couple</p>
-        <ul class="pkg-incl">
-          <li>Full bridal party florals</li>
-          <li>Statement ceremony installation</li>
-          <li>Hanging florals or floor pieces</li>
-          <li>10+ reception centrepieces</li>
-          <li>Cocktail &amp; signage florals</li>
-          <li>Dedicated wedding florist on the day</li>
-          <li>Day-after pickup &amp; preservation</li>
-        </ul>
-        <a href="#enquire" class="pkg-cta">Enquire — Bespoke</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- INCLUDED PIECES -->
-<section class="section">
-  <div class="container">
-    <p class="eyebrow">À la carte pieces</p>
-    <h2 class="sec-title">Mix &amp; match individually</h2>
-    <p class="sec-sub">Already have a florist for the ceremony? Just need a bouquet? Take any single piece à la carte.</p>
-
-    <div class="pieces-grid">
-      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-white.jpg" alt="Bridal bouquet" width="1170" height="1556" loading="lazy" decoding="async"></div><div class="piece-body"><div class="piece-name">Bridal bouquet</div><div class="piece-from">From $280</div></div></div>
-      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Bridesmaid posy" width="1092" height="1056" loading="lazy" decoding="async"></div><div class="piece-body"><div class="piece-name">Bridesmaid posy</div><div class="piece-from">From $140</div></div></div>
-      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Centrepiece" width="1170" height="1060" loading="lazy" decoding="async"></div><div class="piece-body"><div class="piece-name">Reception centrepiece</div><div class="piece-from">From $180</div></div></div>
-      <div class="piece-card"><div class="piece-img"><img src="images/gallery/flowers-market.jpg" alt="Boutonnière" width="1170" height="1974" loading="lazy" decoding="async"></div><div class="piece-body"><div class="piece-name">Boutonnière</div><div class="piece-from">From $35</div></div></div>
-      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-workshop.jpg" alt="Ceremony arch" width="1125" height="1500" loading="lazy" decoding="async"></div><div class="piece-body"><div class="piece-name">Ceremony arch</div><div class="piece-from">From $850</div></div></div>
-      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Cake florals" width="1092" height="1056" loading="lazy" decoding="async"></div><div class="piece-body"><div class="piece-name">Cake florals</div><div class="piece-from">From $90</div></div></div>
-      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-white.jpg" alt="Aisle petals" width="1170" height="1556" loading="lazy" decoding="async"></div><div class="piece-body"><div class="piece-name">Aisle petals (per bag)</div><div class="piece-from">From $40</div></div></div>
-      <div class="piece-card"><div class="piece-img"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Hair flowers" width="1170" height="1060" loading="lazy" decoding="async"></div><div class="piece-body"><div class="piece-name">Hair flowers</div><div class="piece-from">From $55</div></div></div>
     </div>
   </div>
 </section>
@@ -570,51 +500,28 @@ button{cursor:pointer;font-family:inherit}
 <section class="section proc-bg" id="process" style="background:var(--bg-alt)">
   <div class="container">
     <p class="eyebrow">How it works</p>
-    <h2 class="sec-title">From first call to last petal</h2>
+    <h2 class="sec-title">From your story to your bouquet</h2>
 
     <div class="proc-grid">
       <div class="proc-step">
         <span class="proc-num">i.</span>
-        <h3 class="proc-name">Free consultation</h3>
-        <p class="proc-desc">A 30-minute call (or in-studio visit) to talk colours, mood, venue, budget, and what makes you, you.</p>
+        <h3 class="proc-name">Tell us about your day</h3>
+        <p class="proc-desc">Your date, colours, venue and story — send it through the form below. Rough is fine.</p>
       </div>
       <div class="proc-step">
         <span class="proc-num">ii.</span>
-        <h3 class="proc-name">Tailored proposal</h3>
-        <p class="proc-desc">Within a week, we send a mood board, full quote, and a sample bouquet sketch — every piece itemised so nothing surprises.</p>
+        <h3 class="proc-name">Ideas and a quote</h3>
+        <p class="proc-desc">We reply personally with ideas for your flowers and a quote, so you know the cost before anything is made.</p>
       </div>
       <div class="proc-step">
         <span class="proc-num">iii.</span>
-        <h3 class="proc-name">Refining together</h3>
-        <p class="proc-desc">A second meeting two months out to refine — final flower picks, palette tweaks, walk through the venue.</p>
+        <h3 class="proc-name">Confirm your booking</h3>
+        <p class="proc-desc">Enquiring is free. Confirming is what secures your flowers for your date.</p>
       </div>
       <div class="proc-step">
         <span class="proc-num">iv.</span>
-        <h3 class="proc-name">The day itself</h3>
-        <p class="proc-desc">We arrive early, set up everything, and hand you a bouquet that smells like your wedding. We pack down too.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COUPLE FEATURE -->
-<section class="section">
-  <div class="container">
-    <p class="eyebrow">Real Couples</p>
-    <h2 class="sec-title">Loved by Sydney couples</h2>
-
-    <div class="couple-feature">
-      <div class="couple-photo">
-        <img src="images/gallery/customer-Leidine.jpg" alt="Couple with wedding flowers" width="1170" height="1409" loading="lazy" decoding="async">
-      </div>
-      <div>
-        <svg width="44" height="32" viewBox="0 0 48 36" fill="none" style="margin-bottom:18px;opacity:.4"><path d="M0 36V22.5C0 15.9 2.1 10.5 6.3 6.3C10.5 2.1 16.2 0 23.4 0V6C19.8 6 16.95 7.05 14.85 9.15C12.75 11.25 11.7 14.1 11.7 17.7H21.6V36H0ZM26.4 36V22.5C26.4 15.9 28.5 10.5 32.7 6.3C36.9 2.1 42.6 0 49.8 0V6C46.2 6 43.35 7.05 41.25 9.15C39.15 11.25 38.1 14.1 38.1 17.7H48V36H26.4Z" fill="currentColor"/></svg>
-        <p class="couple-quote">"From our first consultation to the last bouquet packed away, the team made our wedding florals feel like ours. Every guest commented on the arch — it was breathtaking. We chose preserved for the bouquet so I'd have it forever, and I genuinely look at it every day."</p>
-        <div class="couple-meta">
-          <span class="couple-stars">★★★★★</span>
-          <span class="couple-name">— Sarah &amp; James, Centennial Park, Nov 2025</span>
-        </div>
-        <a href="#enquire" class="btn-dark">Start your consultation →</a>
+        <h3 class="proc-name">Your flowers arrive</h3>
+        <p class="proc-desc">Hired pieces arrive two days early in a protective case, so there's time to check everything before the day.</p>
       </div>
     </div>
   </div>
@@ -623,8 +530,8 @@ button{cursor:pointer;font-family:inherit}
 <!-- GALLERY -->
 <section class="section wgal-bg">
   <div class="container">
-    <p class="eyebrow">Past weddings</p>
-    <h2 class="sec-title">A look through our portfolio</h2>
+    <p class="eyebrow">Our work</p>
+    <h2 class="sec-title">A few of our bouquets</h2>
 
     <div class="wgal-grid">
       <a href="shop.html" class="wgal-item wgal-1"><img src="images/gallery/bouquet-white.jpg" alt="" width="1170" height="1556" loading="lazy" decoding="async"></a>
@@ -645,33 +552,21 @@ button{cursor:pointer;font-family:inherit}
 
     <div class="faq-grid">
       <div>
-        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--text-muted);line-height:1.7">Can't find your question? Email us at <a href="mailto:weddings@amateurflorist.com.au" style="color:var(--accent);border-bottom:.5px solid var(--accent-light)">weddings@amateurflorist.com.au</a> — we usually reply within a day.</p>
+        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--text-muted);line-height:1.7">Can't find your question? Ask it in the form below, or email us at <a href="mailto:hello@amateurflorist.co" style="color:var(--accent);border-bottom:.5px solid var(--accent-light)">hello@amateurflorist.co</a>.</p>
       </div>
 
       <div class="faq-list">
         <div class="faq-item">
           <div class="faq-q"><span>How far in advance should we book?</span><span>+</span></div>
-          <div class="faq-a"><p>For Saturdays in peak season (Sep–Apr), we recommend 6–9 months ahead. Off-peak weekdays we can sometimes accommodate as little as 6 weeks. For destination/forever florals, the sooner the better — preserved orders take 4–8 weeks of lead time.</p></div>
+          <div class="faq-a"><p>As early as you can — Saturdays from September to April go first. Hire bookings need to be made at least two weeks before the day. Enquiring doesn't hold a bouquet; confirming your booking does.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q"><span>Do you mix fresh and forever in one wedding?</span><span>+</span></div>
-          <div class="faq-a"><p>All the time — it's actually one of our most-loved combinations. Fresh bouquet for the day, preserved replicas for the keepsakes. Or fresh ceremony flowers with reusable artificial centrepieces (much friendlier on the budget too).</p></div>
+          <div class="faq-a"><p>Yes — for example, a fresh bouquet for the day with silk pieces you keep, or fresh ceremony flowers with reusable silk centrepieces.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q"><span>What if our flower preferences are out of season?</span><span>+</span></div>
-          <div class="faq-a"><p>We'll always tell you honestly. Fresh peonies in July, for example, are imported and cost 3× — we'll suggest gorgeous in-season alternatives, or recommend our preserved range for that exact look without the seasonal price.</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q"><span>Do you travel outside Sydney?</span><span>+</span></div>
-          <div class="faq-a"><p>Yes — we regularly serve Blue Mountains, Southern Highlands, Central Coast, and Hunter Valley. Travel is quoted at cost. For destination weddings interstate, our forever range ships nationally and we can fly out for setup on bespoke packages.</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q"><span>What's your deposit and cancellation policy?</span><span>+</span></div>
-          <div class="faq-a"><p>30% deposit secures your date. Cancellations more than 60 days out receive 80% refund of paid amount; 30–60 days, 50%; under 30 days, deposits are non-refundable but can transfer to a future date within 12 months.</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q"><span>Can we see and smell flowers before deciding?</span><span>+</span></div>
-          <div class="faq-a"><p>Absolutely — our Surry Hills studio is open by appointment. We'll have seasonal samples ready, and on bespoke packages we offer a paid mock-up bouquet (cost rolled into final invoice) so you can see your exact arrangement before the day.</p></div>
+          <div class="faq-a"><p>We'll always tell you honestly what's in season and suggest alternatives — or a silk version of the look you want, which doesn't depend on the season at all.</p></div>
         </div>
       </div>
     </div>
@@ -683,7 +578,7 @@ button{cursor:pointer;font-family:inherit}
   <div class="container">
     <p class="eyebrow">Start your enquiry</p>
     <h2 class="sec-title">Tell us about your day</h2>
-    <p class="sec-sub">We'd love to hear all about your wedding day and help bring your floral dreams to life. Fill in what you can — even rough is fine. We'll be in touch within one business day with next steps.</p>
+    <p class="sec-sub">We'd love to hear all about your wedding day and help bring your floral dreams to life. Fill in what you can — even rough is fine. We'll reply personally with ideas and next steps.</p>
 
     <form class="enq-card" id="weddingEnquiryForm" novalidate>
       <div class="field full">
@@ -711,7 +606,7 @@ button{cursor:pointer;font-family:inherit}
       </div>
       <div class="field full"><label>Tell us your story <span style="text-transform:none;color:rgba(250,248,244,.4);letter-spacing:0">— how you met, your venue, colours, anything that makes your day yours</span></label><textarea name="message" id="enq-message" placeholder="We met at a share-house in Newtown... soft pinks and creams, lots of texture, maybe some eucalyptus..."></textarea></div>
       <div class="enq-submit-row">
-        <p class="enq-fine" id="enq-msg">No commitment — we'll reply within one business day.</p>
+        <p class="enq-fine" id="enq-msg">No commitment — enquiring is free.</p>
         <button type="submit" class="btn-light" id="enq-submit">Send enquiry →</button>
       </div>
     </form>
@@ -753,7 +648,7 @@ button{cursor:pointer;font-family:inherit}
           });
           if (!res.ok) throw new Error(`${res.status}`);
           form.reset();
-          msgEl.textContent = "Thank you — we'll be in touch within one business day.";
+          msgEl.textContent = "Thank you — we'll be in touch soon.";
           msgEl.style.color = "var(--accent-light)";
           submit.textContent = "Sent ✓";
         } catch (err) {

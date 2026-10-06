@@ -78,6 +78,16 @@ button{cursor:pointer;font-family:inherit}
 .logo{text-align:center;grid-column:2}
 .logo-name{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block}
 .logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:2px}
+/* Logo: tied-heart mark (public/brand/mark.svg) beside the script name */
+.logo a{display:inline-flex;align-items:center;gap:10px}
+.logo-mark{flex-shrink:0;color:var(--accent);--sw:2.8}
+.logo-text{display:flex;flex-direction:column;align-items:center}
+/* Smaller name so mark + name sit clear of the nav links; steps down with width */
+.logo .logo-name{font-size:1.9rem}
+.logo-mark{width:32px;height:32px}
+@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}}
+@media(max-width:960px){.logo-mark{width:24px;height:24px}.logo .logo-name{font-size:1.5rem}}
+
 
 /* Hero confirmation */
 .confirm-hero{
@@ -270,7 +280,7 @@ button{cursor:pointer;font-family:inherit}
   background:var(--bg-alt);padding:64px 0;
 }
 .next-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px;
+  display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:36px;
 }
 .next-card{
   background:#fff;border:.5px solid var(--border);border-radius:var(--radius);
@@ -294,7 +304,7 @@ button{cursor:pointer;font-family:inherit}
 
 /* Footer */
 .footer{background:var(--accent-dark);padding:48px 0 24px}
-.footer-bottom{max-width:1200px;margin:0 auto;padding:0 48px;text-align:center;font-size:10px;letter-spacing:1px;color:#5a4e44}
+.footer-bottom{max-width:1200px;margin:0 auto;padding:0 48px;text-align:center;font-size:10px;letter-spacing:1px;color:rgba(250,248,244,.6)}
 
 /* Copy order-ID button */
 .copy-btn{
@@ -383,8 +393,11 @@ button{cursor:pointer;font-family:inherit}
   <div class="nav-inner">
     <div class="logo">
       <a href="index.html">
-        <span class="logo-name">Amateur Florist</span>
-        <span class="logo-sub">Sydney Florist</span>
+        <svg class="logo-mark" width="34" height="34" aria-hidden="true" focusable="false"><use href="/brand/mark.svg#heart"/></svg>
+        <span class="logo-text">
+          <span class="logo-name">Amateur Florist</span>
+          <span class="logo-sub">Sydney Florist</span>
+        </span>
       </a>
     </div>
   </div>
@@ -402,7 +415,7 @@ button{cursor:pointer;font-family:inherit}
   <p>Either the link is invalid, or your order is still being processed by Stripe. Please refresh in a moment, or contact us if the problem persists.</p>
   <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
     <a href="index.html" class="btn-dark">Back to home</a>
-    <a href="mailto:hello@amateurflorist.com.au" class="btn-ghost">Contact support →</a>
+    <a href="mailto:hello@amateurflorist.co" class="btn-ghost">Contact support →</a>
   </div>
 </div>
 
@@ -483,7 +496,7 @@ button{cursor:pointer;font-family:inherit}
       <div class="side-section" style="margin-top:24px;padding-top:20px;border-top:.5px solid var(--border)">
         <p class="side-label">Need to make a change?</p>
         <p class="side-body" style="font-size:.9rem;color:var(--text-muted);font-style:italic;line-height:1.7;margin-bottom:10px">If you spot anything wrong, our team can adjust your order — get in touch within the next hour.</p>
-        <a href="mailto:hello@amateurflorist.com.au" class="btn-ghost">Contact support →</a>
+        <a href="mailto:hello@amateurflorist.co" class="btn-ghost">Contact support →</a>
       </div>
     </div>
   </div>
@@ -495,16 +508,8 @@ button{cursor:pointer;font-family:inherit}
     <p style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);margin-bottom:12px;display:flex;align-items:center;gap:12px">
       <span style="width:20px;height:.5px;background:var(--accent-light)"></span>While you wait
     </p>
-    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:300;color:var(--text);letter-spacing:-.5px;line-height:1.1">A few things you might love</h2>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:300;color:var(--text);letter-spacing:-.5px;line-height:1.1">A couple of things to know</h2>
     <div class="next-grid">
-      <div class="next-card">
-        <div class="next-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
-        <h3 class="next-name">Track in real time</h3>
-        <p class="next-desc">We'll text you when your bouquet leaves the studio. Reply STOP at any time to opt out.</p>
-        <a href="order-confirmation.html" class="next-link">Track this order →</a>
-      </div>
       <div class="next-card">
         <div class="next-icon">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg>
@@ -517,9 +522,9 @@ button{cursor:pointer;font-family:inherit}
         <div class="next-icon">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         </div>
-        <h3 class="next-name">Refer a friend, save $20</h3>
-        <p class="next-desc">Share Amateur Florist with someone special — they get $20 off their first order, and so do you.</p>
-        <a href="shop.html" class="next-link">Get your code →</a>
+        <h3 class="next-name">Planning a wedding?</h3>
+        <p class="next-desc">Hire a silk bridal bouquet for the day, or keep it forever. Tell us about your day and we'll put ideas together.</p>
+        <a href="weddings.html" class="next-link">Wedding flowers →</a>
       </div>
     </div>
   </div>

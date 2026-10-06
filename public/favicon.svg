@@ -1,29 +1,13 @@
-<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#8b7355"/>
-      <stop offset="100%" style="stop-color:#6d5a44"/>
-    </linearGradient>
-  </defs>
-  
-  <!-- Background circle -->
-  <circle cx="16" cy="16" r="15" fill="url(#bg)" stroke="#f5f0e8" stroke-width="1"/>
-  
-  <!-- Flower petals -->
-  <g transform="translate(16,16)">
-    <!-- 5 petals around center -->
-    <ellipse cx="0" cy="-8" rx="3" ry="6" fill="#e8dcc6" transform="rotate(0)"/>
-    <ellipse cx="0" cy="-8" rx="3" ry="6" fill="#e8dcc6" transform="rotate(72)"/>
-    <ellipse cx="0" cy="-8" rx="3" ry="6" fill="#e8dcc6" transform="rotate(144)"/>
-    <ellipse cx="0" cy="-8" rx="3" ry="6" fill="#e8dcc6" transform="rotate(216)"/>
-    <ellipse cx="0" cy="-8" rx="3" ry="6" fill="#e8dcc6" transform="rotate(288)"/>
-    
-    <!-- Center -->
-    <circle cx="0" cy="0" r="3" fill="#8b7355"/>
-    <circle cx="0" cy="0" r="1.5" fill="#a89477"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Amateur Florist tied-heart favicon: champagne (#d4c5a0) on spring accent-dark (#2a0d15).
+       seasonalTheme.ts swaps the background to the current season at runtime. -->
+  <rect width="64" height="64" rx="14" fill="#2a0d15"/>
+  <g transform="translate(4.1 -0.2) scale(.56)" fill="none" stroke="#d4c5a0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M54 92 C42 80 16 66 15 44 C14 28 25 19 36 20.5 C42 21.4 45.6 25.6 47 31"/>
+    <path d="M46 92 C58 80 84 66 85 44 C86 28 75 19 64 20.5 C58 21.4 54.4 25.6 53 31"/>
+    <path d="M47 31 C43.6 29 43 24 45.6 20.6 C47.4 23.4 48.4 27.4 47 31 Z"/>
+    <path d="M53 31 C56.4 29 57 24 54.4 20.6 C52.6 23.4 51.6 27.4 53 31 Z"/>
+    <path d="M50 86.5 C45 82 40 84 42.5 88 C44.5 90.5 48 89.5 50 86.5 Z"/>
+    <path d="M50 86.5 C55 82 60 84 57.5 88 C55.5 90.5 52 89.5 50 86.5 Z"/>
   </g>
-  
-  <!-- Letter V -->
-  <text x="16" y="25" font-family="Georgia,serif" font-size="24" font-weight="bold" 
-        text-anchor="middle" fill="grey">V</text>
 </svg>

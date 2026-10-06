@@ -191,8 +191,7 @@ html[data-theme="night"] body::before {
    night mode, since section tints below are made transparent). */
 html[data-theme="night"] body { position: relative; }
 #fireflies-canvas {
-  position: absolute; top: 0; left: 0;
-  width: 100%;
+  position: fixed; top: 0; left: 0;
   pointer-events: none;
   z-index: 0;
   opacity: 0;
@@ -602,3 +601,36 @@ html[data-theme="night"] #night-toggle:hover {
 html[data-theme="night"] #night-toggle .nt-dot {
   background: #ffd864; box-shadow: 0 0 12px rgba(255,216,100,.7), 0 0 4px rgba(255,242,168,.9);
 }
+
+/* ── Inverted elements that went dark-on-dark at night ──
+   These use --accent-dark as a background with --bg as text (or the reverse);
+   the night palette makes both of those dark. Found with a contrast audit. */
+html[data-theme="night"] .btn-place-order {          /* checkout: "Continue to payment" */
+  background: var(--accent) !important;
+  color: #0a0e1a !important;
+}
+html[data-theme="night"] .btn-place-order:hover:not(:disabled) { background: #e8c074 !important; }
+html[data-theme="night"] .btn-cart {                 /* product page: secondary action */
+  background: transparent !important;
+  color: var(--accent) !important;
+  border-color: rgba(212,168,87,.5) !important;
+}
+html[data-theme="night"] .btn-cart:hover { background: rgba(212,168,87,.08) !important; }
+html[data-theme="night"] .btn-cart.added {
+  background: var(--accent) !important;
+  color: #0a0e1a !important;
+}
+html[data-theme="night"] .items-panel {              /* cart: was a white box */
+  background: #131829 !important;
+  border-color: rgba(212,168,87,.16) !important;
+}
+html[data-theme="night"] .enq-bg .sec-title { color: var(--text) !important; }   /* weddings enquiry */
+html[data-theme="night"] .enq-card .btn-light {
+  background: var(--accent) !important;
+  color: #0a0e1a !important;
+}
+html[data-theme="night"] .enq-card .btn-light:hover { background: #e8c074 !important; }
+
+/* Footer brand stays gold at night (the footer `a`/`p` rules above would turn it grey) */
+html[data-theme="night"] .footer-logo-name,
+html[data-theme="night"] .footer-definition { color: var(--accent) !important; }

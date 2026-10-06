@@ -3,9 +3,40 @@
 // to its product page. Silk first — it is the line the business is leaning into
 // (see docs/BUSINESS_VISION.md). Labels state the material plainly.
 
-import { fetchCatalog } from "./db";
+// The homepage only reads a handful of products, so it calls Supabase's REST API
+// directly instead of importing supabase-js (~140 KB, 37 KB gzipped) on the page
+// most phone visitors land on. Same env vars as db.ts.
+// @ts-ignore
+const SUPABASE_URL: string = (window as any).SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL;
+// @ts-ignore
+const SUPABASE_ANON_KEY: string = (window as any).SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 const MAX_CARDS = 4;
+
+type Product = {
+  id: string; name: string; material: string; inStock: boolean;
+  images: string[]; variants: { priceCents: number }[];
+};
+
+async function fetchProducts(): Promise<Product[]> {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return [];
+  const select = "id,name,material,in_stock,product_images(image_url,sort_order),variants(price_cents)";
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/products?select=${encodeURIComponent(select)}&order=name.asc`, {
+    headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
+  });
+  if (!res.ok) throw new Error(`products request failed: ${res.status}`);
+  const rows: any[] = await res.json();
+  return rows.map(p => ({
+    id: p.id,
+    name: p.name,
+    material: p.material,
+    inStock: p.in_stock,
+    images: (p.product_images || [])
+      .sort((a: any, b: any) => a.sort_order - b.sort_order)
+      .map((x: any) => x.image_url),
+    variants: (p.variants || []).map((v: any) => ({ priceCents: v.price_cents })),
+  }));
+}
 
 function esc(s: string): string {
   return String(s ?? "")
@@ -63,7 +94,7 @@ async function main() {
   const overlay = document.getElementById("vs-trending");
   if (!grid && !overlay) return;
   try {
-    const all = await fetchCatalog();
+    const all = await fetchProducts();
     const featured = all
       .filter((p: any) => p.inStock && p.variants.length > 0)
       .sort((a: any, b: any) =>
@@ -75,6 +106,16 @@ async function main() {
       else fallback(grid);
     }
     if (overlay) overlay.innerHTML = featured.map(overlayRow).join("");
+
+    // Hero "Arrangements from $X": the real lowest in-stock price, never a
+    // hard-coded one (it said $65 when the cheapest product was $79).
+    const heroFrom = document.getElementById("hero-from");
+    const prices = all
+      .filter((p: any) => p.inStock)
+      .flatMap((p: any) => p.variants.map((v: any) => v.priceCents));
+    if (heroFrom && prices.length) {
+      heroFrom.textContent = `Arrangements ${formatFrom(Math.min(...prices)).toLowerCase()}`;
+    }
   } catch (err) {
     console.error("Featured products failed to load:", err);
     if (grid) fallback(grid);

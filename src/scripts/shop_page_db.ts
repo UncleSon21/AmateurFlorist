@@ -138,6 +138,17 @@ async function main() {
     apply();
   });
 
+  // Desktop 4/3/2-column toggle (hidden on phones). Its handlers used to live in
+  // the old inline mock script, which was commented out — so the buttons did nothing.
+  const grid = qs<HTMLDivElement>("#productsGrid");
+  const layouts: Record<string, string> = { grid4btn: "", grid3btn: "grid-3", grid2btn: "grid-2" };
+  Object.entries(layouts).forEach(([id, cls]) => {
+    qs<HTMLButtonElement>(`#${id}`)?.addEventListener("click", () => {
+      if (grid) grid.className = cls;
+      qsa<HTMLButtonElement>(".grid-btn").forEach(b => b.classList.toggle("active", b.id === id));
+    });
+  });
+
   apply();
   mountCartDrawer();
 }

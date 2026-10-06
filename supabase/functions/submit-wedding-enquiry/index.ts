@@ -5,7 +5,7 @@
 //
 // Required secrets (set with: supabase secrets set KEY=value):
 //   RESEND_API_KEY  — Resend API key
-//   FROM_EMAIL      — verified sender (e.g. enquiries@amateurflorist.com.au)
+//   FROM_EMAIL      — verified sender (e.g. hello@amateurflorist.co)
 //   OWNER_EMAIL     — where to deliver the enquiry
 //
 // Optional:

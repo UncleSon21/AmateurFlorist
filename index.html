@@ -45,17 +45,17 @@
 
 <meta name="description" content="Amateur Florist — Sydney silk, artificial & keepsake flower bouquets for gifts and events, plus wedding flowers to hire or buy. Fresh arrangements with same-day Sydney delivery.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://vaniaflorist.netlify.app/">
+<link rel="canonical" href="https://www.amateurflorist.co/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Amateur Florist">
 <meta property="og:title" content="Amateur Florist — Sydney Florist">
 <meta property="og:description" content="Silk & keepsake bouquets for gifts and events, plus wedding flowers to hire or buy — with same-day Sydney delivery.">
-<meta property="og:url" content="https://vaniaflorist.netlify.app/">
-<meta property="og:image" content="https://vaniaflorist.netlify.app/og/bouquet-pink-roses.jpg">
+<meta property="og:url" content="https://www.amateurflorist.co/">
+<meta property="og:image" content="https://www.amateurflorist.co/og/bouquet-pink-roses.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Amateur Florist — Sydney Florist">
 <meta name="twitter:description" content="Silk & keepsake bouquets for gifts and events, plus wedding flowers to hire or buy — with same-day Sydney delivery.">
-<meta name="twitter:image" content="https://vaniaflorist.netlify.app/og/bouquet-pink-roses.jpg">
+<meta name="twitter:image" content="https://www.amateurflorist.co/og/bouquet-pink-roses.jpg">
 <title>Amateur Florist — Sydney Florist</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="/night-theme.css">
@@ -175,6 +175,18 @@ button{cursor:pointer;font-family:inherit}
   text-transform:uppercase;color:var(--accent-light);
   display:block;margin-top:3px;
 }
+/* Logo: tied-heart mark (public/brand/mark.svg) beside the script name */
+.logo a{display:inline-flex;align-items:center;gap:10px}
+.logo-mark{flex-shrink:0;color:var(--accent);--sw:2.8}
+.logo-text{display:flex;flex-direction:column;align-items:center}
+/* Smaller name so mark + name sit clear of the nav links; steps down with width */
+.logo .logo-name{font-size:1.9rem}
+.logo-mark{width:32px;height:32px}
+@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}}
+@media(max-width:960px){.logo-mark{width:24px;height:24px}.logo .logo-name{font-size:1.5rem}}
+/* Tablets use the hamburger header (src/scripts/mobile-nav.ts): the desktop links did not fit beside the logo */
+@media(max-width:1023px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.nav-links{display:none}.logo{grid-column:2}}
+
 .nav-actions{display:flex;align-items:center;gap:16px;justify-content:flex-end}
 .nav-icon-btn{
   background:none;border:none;color:var(--text-muted);
@@ -350,7 +362,7 @@ button{cursor:pointer;font-family:inherit}
   font-family:'Cormorant Garamond',serif;
   font-size:1.2rem;font-weight:300;color:var(--text);margin-bottom:5px;
 }
-.occ-desc{font-size:12px;color:#999;line-height:1.5;margin-bottom:14px}
+.occ-desc{font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
 .occ-link{
   font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
   color:var(--accent);font-weight:400;
@@ -396,7 +408,7 @@ button{cursor:pointer;font-family:inherit}
   font-family:'Cormorant Garamond',serif;
   font-size:1.1rem;font-weight:300;color:var(--text);margin-bottom:3px;
 }
-.prod-type{font-size:11px;color:#aaa;letter-spacing:.5px;margin-bottom:10px}
+.prod-type{font-size:11px;color:var(--text-muted);letter-spacing:.5px;margin-bottom:10px}
 .prod-foot{display:flex;align-items:center;justify-content:space-between}
 .prod-price{
   font-family:'Cormorant Garamond',serif;
@@ -622,19 +634,24 @@ button{cursor:pointer;font-family:inherit}
   font-family:'Great Vibes',cursive;
   font-size:2rem;color:#d4c5a0;display:block;margin-bottom:10px;
 }
-.footer-tagline{font-size:12px;color:#7a6d60;line-height:1.7;max-width:260px}
+/* Footer brand: mark + name + the meaning of "amateur" */
+.footer-logo-name{display:inline-flex;align-items:center;gap:10px}
+.footer-logo-mark{flex-shrink:0;--sw:2.4}
+.footer-definition{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:#d4c5a0;opacity:.8;margin:0 0 14px}
+
+.footer-tagline{font-size:12px;color:#b5a99a;line-height:1.7;max-width:260px}
 .footer-col h4{
   font-size:9px;font-weight:400;letter-spacing:3px;text-transform:uppercase;
   color:var(--accent-light);margin-bottom:18px;
 }
 .footer-col ul{list-style:none}
 .footer-col li{margin-bottom:9px}
-.footer-col a{font-size:12px;color:#7a6d60;letter-spacing:.5px;transition:color .3s}
+.footer-col a{font-size:12px;color:#b5a99a;letter-spacing:.5px;transition:color .3s}
 .footer-col a:hover{color:#d4c5a0}
 .footer-bottom{
   text-align:center;padding-top:24px;
   border-top:.5px solid rgba(255,255,255,.05);
-  font-size:10px;letter-spacing:1px;color:#5a4e44;
+  font-size:10px;letter-spacing:1px;color:rgba(250,248,244,.6);
 }
 
 /* ── Responsive ── */
@@ -706,11 +723,6 @@ button{cursor:pointer;font-family:inherit}
   #weddings-teaser > div > div:first-child{aspect-ratio:4/3}
   #weddings-teaser > div > div:last-child{padding:48px 24px !important}
 }
-/* Customer photo is portrait (subject in the lower half). A 16:9 crop at top showed only a car-park ceiling. */
-@media(max-width:1024px){
-  .cust-photo{aspect-ratio:1/1}
-  .cust-photo img{object-position:center 80%}
-}
 
 /* ── Seasonal theme system overlays (populated by seasonalTheme.ts) ── */
 #petals-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:8888}
@@ -753,7 +765,7 @@ button{cursor:pointer;font-family:inherit}
 
 <!-- Top Bar -->
 <div class="topbar">
-  Free delivery across Sydney on orders over $80 — <a href="shop.html">Shop now</a>
+  Free delivery across Sydney on orders over $50 — <a href="shop.html">Shop now</a>
 </div>
 
 <!-- Nav -->
@@ -779,8 +791,11 @@ button{cursor:pointer;font-family:inherit}
     </div>
     <div class="logo">
       <a href="index.html">
-        <span class="logo-name">Amateur Florist</span>
-        <span class="logo-sub">Sydney Florist</span>
+        <svg class="logo-mark" width="34" height="34" aria-hidden="true" focusable="false"><use href="/brand/mark.svg#heart"/></svg>
+        <span class="logo-text">
+          <span class="logo-name">Amateur Florist</span>
+          <span class="logo-sub">Sydney Florist</span>
+        </span>
       </a>
     </div>
     <div class="nav-actions">
@@ -802,23 +817,32 @@ button{cursor:pointer;font-family:inherit}
     <h1 class="hero-h1" id="hero-headline">Quiet beauty,<br>in <em>full bloom</em></h1>
     <hr class="hero-divider">
     <p class="hero-sub" id="hero-subtitle">Deep navy hues &amp; lasting warmth</p>
-    <p class="hero-from">Arrangements from $65</p>
+    <script>
+    /* Seasonal hero copy before first paint. The static text above is winter's, so in
+       other seasons phones flashed it until the module loaded. Must match HERO_COPY in
+       seasonalTheme.ts (and the season logic in the pre-paint script in <head>). */
+    (function(){
+      var u=new URLSearchParams(location.search).get('season'),ok=['spring','summer','autumn','winter'],s=ok.indexOf(u)>=0?u:null;
+      if(!s){var m=new Date().getMonth()+1;s='winter';if(m>=9&&m<=11)s='spring';else if(m===12||m<=2)s='summer';else if(m>=3&&m<=5)s='autumn';}
+      var c={spring:['Spring collection','Soft blooms,<br>in <em>full grace</em>','Blush hues &amp; tender new growth'],
+             summer:['Summer collection','Sunlit beauty,<br>in <em>full bloom</em>','Sage greens &amp; abundant warmth'],
+             autumn:['Autumn collection','Quiet warmth,<br>in <em>full turn</em>','Terracotta hues &amp; lasting amber'],
+             winter:['Winter collection','Quiet beauty,<br>in <em>full bloom</em>','Deep navy hues &amp; lasting warmth']}[s];
+      document.getElementById('hero-eyebrow-text').textContent=c[0]+' '+new Date().getFullYear();
+      document.getElementById('hero-headline').innerHTML=c[1];
+      document.getElementById('hero-subtitle').innerHTML=c[2];
+    })();
+    </script>
+    <p class="hero-from" id="hero-from">Fresh &amp; silk arrangements</p>
     <div class="hero-btns">
       <a href="shop.html" class="btn-dark" id="hero-cta-primary">Explore the collection</a>
       <a href="weddings.html" class="btn-ghost">Wedding flowers →</a>
     </div>
     <p class="hero-trust">
-      5★ rated
-      <span class="dot">·</span>
       Sydney-wide delivery
       <span class="dot">·</span>
       Same-day available
     </p>
-    <div class="hero-review">
-      <span class="stars">★★★★★</span>
-      <span class="rev-sep"></span>
-      <span class="rev-text">"Even more beautiful in person" — Leidine, Sydney</span>
-    </div>
   </div>
   <div class="hero-right">
     <img src="images/gallery/flowers-market.jpg" alt="Seasonal bouquet arrangement" width="1170" height="1974" loading="eager" decoding="async" fetchpriority="high">
@@ -833,12 +857,12 @@ button{cursor:pointer;font-family:inherit}
     <span class="marquee-item">Hire or buy</span>
     <span class="marquee-item">Custom or hired bouquets</span>
     <span class="marquee-item">Fresh, silk &amp; preserved</span>
-    <span class="marquee-item">Sydney's premier florist</span>
+    <span class="marquee-item">Made in Sydney</span>
     <span class="marquee-item">Same-day delivery</span>
     <span class="marquee-item">Hire or buy</span>
     <span class="marquee-item">Custom or hired bouquets</span>
     <span class="marquee-item">Fresh, silk &amp; preserved</span>
-    <span class="marquee-item">Sydney's premier florist</span>
+    <span class="marquee-item">Made in Sydney</span>
   </div>
 </div>
 
@@ -1001,8 +1025,8 @@ button{cursor:pointer;font-family:inherit}
           <img src="images/gallery/bouquet-pink-tulip.jpg" alt="Forever flowers" style="width:100%;height:100%;object-fit:cover" width="1170" height="1060" loading="lazy" decoding="async">
         </div>
         <div style="position:absolute;bottom:-20px;right:-20px;background:#fff;border:.5px solid var(--border);padding:18px 22px;border-radius:var(--radius);box-shadow:0 8px 24px rgba(0,0,0,.08);max-width:220px">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--accent);font-weight:300;line-height:1">3+ years</div>
-          <div style="font-size:11px;color:var(--text-muted);letter-spacing:1px;margin-top:4px">Average lifespan, no water needed</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--accent);font-weight:300;line-height:1">Years, not days</div>
+          <div style="font-size:11px;color:var(--text-muted);letter-spacing:1px;margin-top:4px">Made to last, no water needed</div>
         </div>
       </div>
 
@@ -1022,7 +1046,6 @@ button{cursor:pointer;font-family:inherit}
               <li>· Lasts 7–14 days</li>
               <li>· Real fragrance &amp; touch</li>
               <li>· Same-day delivery</li>
-              <li>· From $65</li>
             </ul>
           </div>
           <div style="background:#fff;padding:24px 22px">
@@ -1031,10 +1054,9 @@ button{cursor:pointer;font-family:inherit}
               <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)">Forever</span>
             </div>
             <ul style="list-style:none;padding:0;margin:0;font-size:13px;color:var(--text);line-height:1.85">
-              <li>· Lasts 3+ years</li>
+              <li>· Lasts for years</li>
               <li>· Allergy &amp; pet friendly</li>
               <li>· Ships Australia-wide</li>
-              <li>· From $95</li>
             </ul>
           </div>
         </div>
@@ -1053,61 +1075,20 @@ button{cursor:pointer;font-family:inherit}
   <div style="display:grid;grid-template-columns:1.1fr 1fr;min-height:560px">
     <div style="position:relative;overflow:hidden">
       <img src="images/gallery/bouquet-white.jpg" alt="Wedding bouquet" style="width:100%;height:100%;object-fit:cover;object-position:center" width="1170" height="1556" loading="lazy" decoding="async">
-      <div style="position:absolute;bottom:24px;left:24px;background:rgba(28,22,18,.6);backdrop-filter:blur(10px);padding:10px 18px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;border-radius:2px;color:var(--bg)">"Sarah &amp; James — Centennial Park, '25"</div>
     </div>
     <div style="display:flex;flex-direction:column;justify-content:center;padding:80px clamp(40px,5vw,80px)">
       <p class="eyebrow" style="color:var(--accent-light)">— For your wedding day —</p>
       <h2 class="sec-title" style="color:var(--bg);margin-bottom:18px">A wedding day,<br><em style="color:var(--accent-light);font-style:italic">in bloom</em></h2>
       <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:rgba(250,248,244,.75);line-height:1.7;margin-bottom:28px;max-width:440px">From bouquets picked the morning of, to forever florals you can keep — wedding flowers tailored to your story, fresh, preserved, or both.</p>
       <ul style="list-style:none;padding:0;margin:0 0 32px;display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;font-size:13px">
-        <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> Free consultations</li>
-        <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> Fresh &amp; forever options</li>
-        <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> Packages from $1,450</li>
-        <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> On-site setup included</li>
+        <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> Custom or ready-made</li>
+        <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> Fresh, silk, or both</li>
+        <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> Hire it, or keep it</li>
+        <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> Arrives two days early</li>
       </ul>
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
         <a href="weddings.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--bg);color:var(--accent-dark);padding:14px 30px;border-radius:2px;font-size:10px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:background .3s">Explore weddings →</a>
-        <a href="weddings.html#enquire" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light);text-decoration:none;border-bottom:.5px solid rgba(180,196,210,.3);padding-bottom:3px">Book consultation</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Testimonials -->
-<section class="section reveal" id="reviews">
-  <div class="container">
-    <p class="eyebrow">Real Moments</p>
-    <h2 class="sec-title">Loved by Sydney</h2>
-    <div class="testimonials-grid">
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"Absolutely stunning. The bouquet was even more beautiful in person. Will definitely be ordering again for every special occasion."</p>
-        <p class="testi-author">— Leidine, Sydney</p>
-      </div>
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"Same-day delivery was a lifesaver. The flowers arrived fresh and beautifully arranged. Highly recommended for last-minute gifts."</p>
-        <p class="testi-author">— Marcus, Bondi</p>
-      </div>
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"The wedding florals were absolutely exquisite. Every detail was perfect, and our guests couldn't stop complimenting the arrangements."</p>
-        <p class="testi-author">— Sarah &amp; James, Sydney</p>
-      </div>
-    </div>
-    <!-- Featured customer — different from grid above -->
-    <div class="cust-feature reveal">
-      <div class="cust-photo">
-        <img src="images/gallery/customer-Leidine.jpg" alt="Happy customer with Amateur Florist bouquet" width="1170" height="1409" loading="lazy" decoding="async">
-      </div>
-      <div class="cust-text">
-        <svg class="cust-qm" width="48" height="36" viewBox="0 0 48 36" fill="none"><path d="M0 36V22.5C0 15.9 2.1 10.5 6.3 6.3C10.5 2.1 16.2 0 23.4 0V6C19.8 6 16.95 7.05 14.85 9.15C12.75 11.25 11.7 14.1 11.7 17.7H21.6V36H0ZM26.4 36V22.5C26.4 15.9 28.5 10.5 32.7 6.3C36.9 2.1 42.6 0 49.8 0V6C46.2 6 43.35 7.05 41.25 9.15C39.15 11.25 38.1 14.1 38.1 17.7H48V36H26.4Z" fill="#e8ddd0"/></svg>
-        <p class="cust-blockquote">"I ordered for my mother's birthday and she was in tears — the arrangement was so thoughtful and so fresh. These flowers made our whole week."</p>
-        <div class="cust-meta">
-          <span class="cust-stars">★★★★★</span>
-          <span class="cust-name">— Priya M., Surry Hills</span>
-        </div>
-        <a href="shop.html" class="btn-dark" style="display:inline-flex">Shop now →</a>
+        <a href="weddings.html#enquire" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light);text-decoration:none;border-bottom:.5px solid rgba(180,196,210,.3);padding-bottom:3px">Send an enquiry</a>
       </div>
     </div>
   </div>
@@ -1138,16 +1119,16 @@ button{cursor:pointer;font-family:inherit}
   <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center">
     <div>
       <p class="eyebrow">Our story</p>
-      <h2 class="sec-title">A small team,<br>made with care</h2>
-      <p style="font-size:14px;color:var(--text-muted);line-height:1.85;margin:16px 0 28px;font-weight:300">We're a passionate Sydney florist — every bouquet is handcrafted the morning it ships, sourced from local growers, and made for the person receiving it. Not a template. Not a warehouse.</p>
-      <a href="about.html" class="btn-dark">Meet the team →</a>
+      <h2 class="sec-title">Small, local,<br>made with care</h2>
+      <p style="font-size:14px;color:var(--text-muted);line-height:1.85;margin:16px 0 28px;font-weight:300">We're a small Sydney florist, just getting started. Every arrangement is made by hand for the person receiving it — not a template, not a warehouse.</p>
+      <a href="about.html" class="btn-dark">Our story →</a>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div style="border-radius:var(--radius);overflow:hidden;height:220px">
         <img src="images/gallery/bouquet-workshop.jpg" alt="Flowers being arranged" style="width:100%;height:100%;object-fit:cover" width="1125" height="1500" loading="lazy" decoding="async">
       </div>
       <div style="border-radius:var(--radius);overflow:hidden;height:220px;margin-top:32px">
-        <img src="images/gallery/customer-Leidine.jpg" alt="Happy customer" style="width:100%;height:100%;object-fit:cover;object-position:center top" width="1170" height="1409" loading="lazy" decoding="async">
+        <img src="images/gallery/customer-Leidine.jpg" alt="One of our bouquets" style="width:100%;height:100%;object-fit:cover;object-position:center top" width="1170" height="1409" loading="lazy" decoding="async">
       </div>
     </div>
   </div>
@@ -1177,11 +1158,9 @@ button{cursor:pointer;font-family:inherit}
         <p class="postcode-result" id="postcodeResult"></p>
       </div>
       <div class="del-hours reveal">
-        <h4>Opening hours</h4>
-        <div class="hours-row"><span class="hours-day">Monday – Friday</span><span>9:00am – 6:00pm</span></div>
-        <div class="hours-row"><span class="hours-day">Saturday</span><span>9:00am – 5:00pm</span></div>
-        <div class="hours-row"><span class="hours-day">Sunday</span><span>10:00am – 3:00pm</span></div>
-        <div class="hours-row"><span class="hours-day">Same-day cutoff</span><span>2:00pm</span></div>
+        <h4>Same-day delivery</h4>
+        <div class="hours-row"><span class="hours-day">Order by</span><span>2:00pm</span></div>
+        <div class="hours-row"><span class="hours-day">Free delivery</span><span>Orders over $50</span></div>
       </div>
     </div>
   </div>
@@ -1192,7 +1171,8 @@ button{cursor:pointer;font-family:inherit}
   <div class="footer-inner">
     <div class="footer-cols">
       <div>
-        <a href="index.html" class="footer-logo-name">Amateur Florist</a>
+        <a href="index.html" class="footer-logo-name"><svg class="footer-logo-mark" width="40" height="40" aria-hidden="true" focusable="false"><use href="/brand/mark.svg#heart"/></svg>Amateur Florist</a>
+        <p class="footer-definition">from the Latin <em>amātor</em> — one who loves</p>
         <p class="footer-tagline">Wedding flower hire and keepsake bouquets made to last — plus fresh arrangements delivered across Greater Sydney.</p>
       </div>
       <div class="footer-col">
@@ -1482,7 +1462,7 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
 
     <div class="vs-footer">
       <span>Press <kbd>↵</kbd> to search · <kbd>ESC</kbd> to close</span>
-      <span>Free Sydney delivery over $80</span>
+      <span>Free Sydney delivery over $50</span>
     </div>
   </div>
 </div>

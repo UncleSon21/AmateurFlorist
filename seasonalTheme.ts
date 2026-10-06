@@ -487,6 +487,10 @@ function startParticles(season: Season) {
         canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:8888;';
         document.body.appendChild(canvas);
     }
+    // The pages hide #petals-canvas with CSS (the "DEV TOGGLE" blocks). Don't run an
+    // invisible animation loop every frame on every page — that was pure battery drain.
+    // Remove the CSS toggle and the particles start again.
+    if (getComputedStyle(canvas).display === 'none') return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -535,6 +539,20 @@ const SEASON_VARS: Record<Season, SeasonVars> = {
     winter: { accent: '#1c3656', accentDark: '#0e1d30', accentLight: '#7a96b8', bg: '#f6f8fa', bgAlt: '#eaf0f5' },
 };
 
+// The favicon follows the season: public/favicon.svg is the spring version
+// (champagne mark on spring accentDark); other seasons swap only its background.
+async function updateFavicon(season: Season) {
+    const link = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+    if (!link || season === 'spring') return;
+    try {
+        const svg = await (await fetch('/favicon.svg')).text();
+        link.href = 'data:image/svg+xml,' + encodeURIComponent(
+            svg.replace('#2a0d15', SEASON_VARS[season].accentDark));
+    } catch {
+        // keep the default (spring) favicon
+    }
+}
+
 function applyCssVars(season: Season) {
     const v = SEASON_VARS[season];
     const r = document.documentElement;
@@ -558,6 +576,7 @@ export function initSeasonalTheme(override?: Season): Season {
     ALL_SEASONS.forEach(s => document.body.classList.remove(`season-${s}`));
     document.body.classList.add(`season-${season}`);
     applyCssVars(season);                 // ← bridge to redesign CSS variables
+    void updateFavicon(season);
     updateNavBranches(season);
     updateSideDecorations(season);
     startParticles(season);

@@ -44,19 +44,19 @@
 </script>
 
 <title>About — Amateur Florist Sydney</title>
-<meta name="description" content="Meet the Sydney florist behind Amateur Florist. Our story, our team, and the craft behind every handcrafted bouquet.">
+<meta name="description" content="The story behind Amateur Florist — a small Sydney florist making fresh and silk arrangements, and wedding flowers to hire or buy.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://vaniaflorist.netlify.app/about.html">
+<link rel="canonical" href="https://www.amateurflorist.co/about.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Amateur Florist">
 <meta property="og:title" content="About — Amateur Florist Sydney">
-<meta property="og:description" content="The story behind Sydney's luxury florist.">
-<meta property="og:url" content="https://vaniaflorist.netlify.app/about.html">
-<meta property="og:image" content="https://vaniaflorist.netlify.app/og/bouquet-workshop.jpg">
+<meta property="og:description" content="The story behind Amateur Florist, a small Sydney florist.">
+<meta property="og:url" content="https://www.amateurflorist.co/about.html">
+<meta property="og:image" content="https://www.amateurflorist.co/og/bouquet-workshop.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="About — Amateur Florist Sydney">
-<meta name="twitter:description" content="The story behind Sydney's luxury florist.">
-<meta name="twitter:image" content="https://vaniaflorist.netlify.app/og/bouquet-workshop.jpg">
+<meta name="twitter:description" content="The story behind Amateur Florist, a small Sydney florist.">
+<meta name="twitter:image" content="https://www.amateurflorist.co/og/bouquet-workshop.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -144,6 +144,18 @@ button{cursor:pointer;font-family:inherit}
   text-transform:uppercase;color:var(--accent-light);
   display:block;margin-top:3px;
 }
+/* Logo: tied-heart mark (public/brand/mark.svg) beside the script name */
+.logo a{display:inline-flex;align-items:center;gap:10px}
+.logo-mark{flex-shrink:0;color:var(--accent);--sw:2.8}
+.logo-text{display:flex;flex-direction:column;align-items:center}
+/* Smaller name so mark + name sit clear of the nav links; steps down with width */
+.logo .logo-name{font-size:1.9rem}
+.logo-mark{width:32px;height:32px}
+@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}}
+@media(max-width:960px){.logo-mark{width:24px;height:24px}.logo .logo-name{font-size:1.5rem}}
+/* Tablets use the hamburger header (src/scripts/mobile-nav.ts): the desktop links did not fit beside the logo */
+@media(max-width:1023px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.nav-links{display:none}.logo{grid-column:2}}
+
 .nav-actions{display:flex;align-items:center;gap:16px;justify-content:flex-end}
 .nav-icon-btn{
   background:none;border:none;color:var(--text-muted);
@@ -388,12 +400,12 @@ button{cursor:pointer;font-family:inherit}
    ═══════════════════════════════════════ */
 .process-header{margin-bottom:52px}
 .process-steps{
-  display:grid;grid-template-columns:repeat(4,1fr);
+  display:grid;grid-template-columns:repeat(3,1fr);
   gap:0;position:relative;
 }
 .process-steps::before{
   content:'';position:absolute;
-  top:28px;left:calc(12.5%);right:calc(12.5%);
+  top:28px;left:calc(100% / 6);right:calc(100% / 6);
   height:.5px;background:var(--border);z-index:0;
 }
 .process-step{
@@ -489,19 +501,24 @@ button{cursor:pointer;font-family:inherit}
   font-family:'Great Vibes',cursive;
   font-size:2rem;color:#d4c5a0;display:block;margin-bottom:10px;
 }
-.footer-tagline{font-size:12px;color:#7a6d60;line-height:1.7;max-width:260px}
+/* Footer brand: mark + name + the meaning of "amateur" */
+.footer-logo-name{display:inline-flex;align-items:center;gap:10px}
+.footer-logo-mark{flex-shrink:0;--sw:2.4}
+.footer-definition{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:#d4c5a0;opacity:.8;margin:0 0 14px}
+
+.footer-tagline{font-size:12px;color:#b5a99a;line-height:1.7;max-width:260px}
 .footer-col h4{
   font-size:9px;font-weight:400;letter-spacing:3px;text-transform:uppercase;
   color:var(--accent-light);margin-bottom:18px;
 }
 .footer-col ul{list-style:none}
 .footer-col li{margin-bottom:9px}
-.footer-col a{font-size:12px;color:#7a6d60;letter-spacing:.5px;transition:color .3s}
+.footer-col a{font-size:12px;color:#b5a99a;letter-spacing:.5px;transition:color .3s}
 .footer-col a:hover{color:#d4c5a0}
 .footer-bottom{
   text-align:center;padding-top:24px;
   border-top:.5px solid rgba(255,255,255,.05);
-  font-size:10px;letter-spacing:1px;color:#5a4e44;
+  font-size:10px;letter-spacing:1px;color:rgba(250,248,244,.6);
 }
 
 /* ── Responsive ── */
@@ -514,7 +531,7 @@ button{cursor:pointer;font-family:inherit}
   .stat-item:nth-child(2){border-right:none}
   .stat-item:nth-child(3){border-top:.5px solid rgba(255,255,255,.08)}
   .stat-item:nth-child(4){border-top:.5px solid rgba(255,255,255,.08);border-right:none}
-  .process-steps{grid-template-columns:repeat(2,1fr);gap:32px}
+  .process-steps{grid-template-columns:1fr;gap:32px}
   .process-steps::before{display:none}
   .footer-cols{grid-template-columns:1fr 1fr}
 }
@@ -582,7 +599,7 @@ button{cursor:pointer;font-family:inherit}
 
 <!-- Top Bar -->
 <div class="topbar">
-  Free delivery across Sydney on orders over $80 — <a href="shop.html">Shop now</a>
+  Free delivery across Sydney on orders over $50 — <a href="shop.html">Shop now</a>
 </div>
 
 <!-- Nav -->
@@ -608,8 +625,11 @@ button{cursor:pointer;font-family:inherit}
     </div>
     <div class="logo">
       <a href="index.html">
-        <span class="logo-name">Amateur Florist</span>
-        <span class="logo-sub">Sydney Florist</span>
+        <svg class="logo-mark" width="34" height="34" aria-hidden="true" focusable="false"><use href="/brand/mark.svg#heart"/></svg>
+        <span class="logo-text">
+          <span class="logo-name">Amateur Florist</span>
+          <span class="logo-sub">Sydney Florist</span>
+        </span>
       </a>
     </div>
     <div class="nav-actions">
@@ -634,8 +654,7 @@ button{cursor:pointer;font-family:inherit}
       <a href="#story" class="text-link">Read our story →</a>
     </div>
     <div class="page-hero-img reveal">
-      <img src="images/gallery/bouquet-workshop.jpg" alt="Amateur Florist studio — flowers being arranged" width="1125" height="1500" loading="eager" decoding="async" fetchpriority="high">
-      <span class="page-hero-img-label">Our studio, Sydney</span>
+      <img src="images/gallery/bouquet-workshop.jpg" alt="Flowers being arranged" width="1125" height="1500" loading="eager" decoding="async" fetchpriority="high">
     </div>
   </div>
 </div>
@@ -643,10 +662,6 @@ button{cursor:pointer;font-family:inherit}
 <!-- Stats -->
 <div class="stats-bg" id="stats-bar">
   <div class="stats-inner">
-    <div class="stat-item reveal">
-      <span class="stat-num">100%</span>
-      <span class="stat-label">Handcrafted daily</span>
-    </div>
     <div class="stat-item reveal">
       <span class="stat-num" style="font-size:2rem">Sydney</span>
       <span class="stat-label">Wide delivery</span>
@@ -656,8 +671,12 @@ button{cursor:pointer;font-family:inherit}
       <span class="stat-label">Available before 2pm</span>
     </div>
     <div class="stat-item reveal">
-      <span class="stat-num" style="font-size: 32px">5★</span>
-      <span class="stat-label">Rated by customers</span>
+      <span class="stat-num" style="font-size:2rem">Fresh &amp; silk</span>
+      <span class="stat-label">Two collections</span>
+    </div>
+    <div class="stat-item reveal">
+      <span class="stat-num" style="font-size:2rem">Hire or buy</span>
+      <span class="stat-label">Wedding flowers</span>
     </div>
   </div>
 </div>
@@ -668,15 +687,15 @@ button{cursor:pointer;font-family:inherit}
     <div class="story-grid">
       <div class="story-text reveal">
         <p class="eyebrow">How it began</p>
-        <h2 class="sec-title">A small family dream<br>that blossomed</h2>
-        <p>Amateur Florist started with a simple belief: that beautiful, fresh flowers should be accessible to everyone in Sydney — not just for weddings or grand occasions, but for the everyday moments that deserve something special.</p>
-        <p>We're a small, passionate team. Every bouquet is made the morning it ships, sourced from local growers where possible, and built around the person receiving it — not a template.</p>
-        <p>We're still growing, still learning, and genuinely proud of every arrangement that leaves our studio. Your support means everything to us.</p>
-        <a href="index.html" class="btn-dark">Shop the collection →</a>
+        <h2 class="sec-title">A small business,<br>just getting started</h2>
+        <p>Amateur Florist started with a simple belief: that beautiful flowers should be accessible to everyone in Sydney — not just for weddings or grand occasions, but for the everyday moments that deserve something special.</p>
+        <p>We're a small, self-run Sydney business. Every arrangement is made by hand and built around the person receiving it — not a template. Fresh flowers for the moment, silk ones made to last, and wedding flowers you can hire or keep.</p>
+        <p>We're still growing, still learning, and genuinely proud of every arrangement we make. Your support means everything to us.</p>
+        <a href="shop.html" class="btn-dark">Shop the collection →</a>
       </div>
       <div class="story-img reveal">
         <div class="story-img-main">
-          <img src="images/gallery/customer-Leidine.jpg" alt="A Amateur Florist customer with her bouquet" width="1170" height="1409" loading="lazy" decoding="async">
+          <img src="images/gallery/customer-Leidine.jpg" alt="One of our bouquets" width="1170" height="1409" loading="lazy" decoding="async">
         </div>
         <div class="story-img-accent">
           <img src="images/gallery/bouquet-pink-roses.jpg" alt="Detail of a pink rose bouquet" width="1092" height="1056" loading="lazy" decoding="async">
@@ -702,8 +721,8 @@ button{cursor:pointer;font-family:inherit}
             <path d="M12 8v4M9 11l3-3 3 3"/>
           </svg>
         </div>
-        <h3 class="value-name">Freshness<br>above all</h3>
-        <p class="value-desc">Every arrangement is made the morning it ships. We never pre-build, never refrigerate overnight. If it's not fresh enough to give to our own family, we don't send it.</p>
+        <h3 class="value-name">Honest about<br>materials</h3>
+        <p class="value-desc">Fresh is fresh and silk is silk. We always tell you which you're getting, and how to care for it.</p>
       </div>
       <div class="value-card reveal">
         <span class="value-num">02</span>
@@ -724,63 +743,8 @@ button{cursor:pointer;font-family:inherit}
             <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402C1 3.199 4.397 1 7.5 1c1.8 0 3.6.9 4.5 2.25C12.9 1.9 14.7 1 16.5 1 19.603 1 23 3.199 23 7.191c0 4.105-5.37 8.863-11 14.402z"/>
           </svg>
         </div>
-        <h3 class="value-name">Local<br>at heart</h3>
-        <p class="value-desc">We source from Sydney Basin growers first. Supporting local means our flowers travel less, arrive fresher, and our community stays stronger. It's not a marketing point — it's just the right thing.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Team -->
-<section class="section team-bg reveal" id="team">
-  <div class="container">
-    <div class="team-header">
-      <div>
-        <p class="eyebrow">The people</p>
-        <h2 class="sec-title">Meet the team</h2>
-      </div>
-      <a href="mailto:hello@amateurflorist.com.au" class="text-link" style="white-space:nowrap">Work with us →</a>
-    </div>
-    <div class="team-grid">
-      <div class="team-card reveal">
-        <div class="team-photo">
-          <!-- Replace with real photo: <img src="images/team/vania.jpg" alt="Vania"> -->
-          <div class="team-photo-placeholder">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-            <span>portrait photo</span>
-          </div>
-        </div>
-        <div class="team-body">
-          <h3 class="team-name">Vania</h3>
-          <p class="team-role">Founder &amp; Head Florist</p>
-          <p class="team-bio">Inspired by nature and led by instinct, Vania has spent over a decade perfecting the balance between wild and refined. Every collection begins with her.</p>
-        </div>
-      </div>
-      <div class="team-card reveal">
-        <div class="team-photo">
-          <div class="team-photo-placeholder">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-            <span>portrait photo</span>
-          </div>
-        </div>
-        <div class="team-body">
-          <h3 class="team-name">Sophie</h3>
-          <p class="team-role">Design Lead</p>
-          <p class="team-bio">Sophie brings structure to beauty. She oversees the wedding collection and ensures every arrangement has an architectural quality that photographs — and feels — exquisite.</p>
-        </div>
-      </div>
-      <div class="team-card reveal">
-        <div class="team-photo">
-          <div class="team-photo-placeholder">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-            <span>portrait photo</span>
-          </div>
-        </div>
-        <div class="team-body">
-          <h3 class="team-name">James</h3>
-          <p class="team-role">Delivery &amp; Operations</p>
-          <p class="team-bio">James runs our Sydney delivery network. Same-day cut-offs, fresh flowers, happy recipients — he's the reason the magic actually lands at your door.</p>
-        </div>
+        <h3 class="value-name">Nothing<br>goes to waste</h3>
+        <p class="value-desc">Silk pieces can be hired for a day, kept for years, or passed on. Nothing wilts, and nothing ends up in the bin.</p>
       </div>
     </div>
   </div>
@@ -797,22 +761,17 @@ button{cursor:pointer;font-family:inherit}
       <div class="process-step reveal">
         <div class="step-num">01</div>
         <h3 class="step-title">You order</h3>
-        <p class="step-desc">Browse the collection, choose your arrangement and a delivery date. Add a message card or extras if you like.</p>
+        <p class="step-desc">Choose your arrangement and a delivery date. Add a card message if you like.</p>
       </div>
       <div class="process-step reveal">
         <div class="step-num">02</div>
-        <h3 class="step-title">We source</h3>
-        <p class="step-desc">We select the freshest available stems from our Sydney growers — aligned with the season and your arrangement choice.</p>
+        <h3 class="step-title">We make it</h3>
+        <p class="step-desc">Every arrangement is made by hand — fresh flowers for the moment, or silk ones made to last.</p>
       </div>
       <div class="process-step reveal">
         <div class="step-num">03</div>
-        <h3 class="step-title">We craft</h3>
-        <p class="step-desc">Each bouquet is hand-tied the morning of delivery. No shortcuts, no pre-builds — made fresh, every time.</p>
-      </div>
-      <div class="process-step reveal">
-        <div class="step-num">04</div>
         <h3 class="step-title">It arrives</h3>
-        <p class="step-desc">Delivered carefully across Greater Sydney. You'll receive a confirmation when it's on its way.</p>
+        <p class="step-desc">Delivered across Greater Sydney on the date you choose.</p>
       </div>
     </div>
   </div>
@@ -823,9 +782,9 @@ button{cursor:pointer;font-family:inherit}
   <div class="container">
     <p class="cta-eyebrow">Ready when you are</p>
     <h2 class="cta-title">Every occasion deserves<br><em>something beautiful</em></h2>
-    <p class="cta-sub">Sydney-wide delivery · Same-day available · Arrangements from $65</p>
+    <p class="cta-sub">Sydney-wide delivery · Same-day available · Fresh &amp; silk</p>
     <div class="cta-btns">
-      <a href="index.html" class="btn-light">Shop the collection</a>
+      <a href="shop.html" class="btn-light">Shop the collection</a>
       <a href="weddings.html" class="btn-outline-light">Wedding enquiries →</a>
     </div>
   </div>
@@ -836,8 +795,9 @@ button{cursor:pointer;font-family:inherit}
   <div class="footer-inner">
     <div class="footer-cols">
       <div>
-        <a href="index.html" class="footer-logo-name">Amateur Florist</a>
-        <p class="footer-tagline">Sydney's luxury florist. Handcrafted bouquets, wedding flowers, and preserved arrangements — delivered across Greater Sydney.</p>
+        <a href="index.html" class="footer-logo-name"><svg class="footer-logo-mark" width="40" height="40" aria-hidden="true" focusable="false"><use href="/brand/mark.svg#heart"/></svg>Amateur Florist</a>
+        <p class="footer-definition">from the Latin <em>amātor</em> — one who loves</p>
+        <p class="footer-tagline">Wedding flower hire and keepsake bouquets made to last — plus fresh arrangements delivered across Greater Sydney.</p>
       </div>
       <div class="footer-col">
         <h4>Shop</h4>

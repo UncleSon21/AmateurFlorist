@@ -1,4 +1,5 @@
-// Injects a hamburger button + slide-in drawer for screens <= 768px.
+// Injects a hamburger button + slide-in drawer for screens <= 1023px.
+// (Below 1024px the four desktop links ran into the centred logo.)
 // Desktop is untouched: the hamburger and drawer are display:none above the breakpoint.
 
 const STYLE_ID = "vf-mobile-nav-styles";
@@ -10,7 +11,7 @@ const CSS = `
   #${HAMBURGER_ID} { display: none; }
   #${DRAWER_ID} { display: none; }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1023px) {
     #${HAMBURGER_ID} {
       display: inline-flex;
       align-items: center;
@@ -79,8 +80,10 @@ const CSS = `
     }
     .nav-inner .back-link:hover { gap: 0; }
     .nav-inner .back-link svg { width: 18px; height: 18px; }
+    .nav-inner .logo a { gap: 6px; }
+    .nav-inner .logo-mark { width: 26px; height: 26px; --sw: 3.4; }
     .nav-inner .logo .logo-name {
-      font-size: clamp(1.25rem, 6.4vw, 1.9rem);
+      font-size: clamp(1.15rem, 5.6vw, 1.8rem);
       letter-spacing: 1px;
       white-space: nowrap;
     }
@@ -157,6 +160,11 @@ const CSS = `
     }
 
     body.${BODY_OPEN_CLASS} { overflow: hidden; }
+  }
+
+  /* Narrowest phones on pages with a back arrow: no room for mark + name. */
+  @media (max-width: 360px) {
+    .nav-inner.vf-has-back .logo-mark { display: none; }
   }
 `;
 
@@ -320,9 +328,9 @@ function setupHandlers(): void {
   document.addEventListener("keydown", (e: KeyboardEvent) => {
     if (e.key === "Escape" && drawer.classList.contains("open")) close();
   });
-  // If the viewport crosses back above 768px while the drawer is open, close it.
+  // If the viewport crosses back above 1023px while the drawer is open, close it.
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 768 && drawer.classList.contains("open")) close();
+    if (window.innerWidth > 1023 && drawer.classList.contains("open")) close();
   });
 }
 

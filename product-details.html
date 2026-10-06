@@ -44,18 +44,18 @@
 </script>
 
 <title>Product Details — Amateur Florist Sydney</title>
-<meta name="description" content="Premium handcrafted bouquet, hand-tied and delivered fresh across Sydney. Choose your size, presentation and delivery date.">
+<meta name="description" content="Handcrafted fresh and silk arrangements, delivered across Sydney. Choose your size and delivery date.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://vaniaflorist.netlify.app/product-details.html">
+<link rel="canonical" href="https://www.amateurflorist.co/product-details.html">
 <meta property="og:type" content="product">
 <meta property="og:site_name" content="Amateur Florist">
 <meta property="og:title" content="Bouquet — Amateur Florist Sydney">
-<meta property="og:description" content="Premium handcrafted bouquet, delivered fresh across Sydney.">
-<meta property="og:image" content="https://vaniaflorist.netlify.app/og/bouquet-pink-roses.jpg">
+<meta property="og:description" content="Handcrafted fresh and silk arrangements, delivered across Sydney.">
+<meta property="og:image" content="https://www.amateurflorist.co/og/bouquet-pink-roses.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Bouquet — Amateur Florist Sydney">
-<meta name="twitter:description" content="Premium handcrafted bouquet, delivered fresh across Sydney.">
-<meta name="twitter:image" content="https://vaniaflorist.netlify.app/og/bouquet-pink-roses.jpg">
+<meta name="twitter:description" content="Handcrafted fresh and silk arrangements, delivered across Sydney.">
+<meta name="twitter:image" content="https://www.amateurflorist.co/og/bouquet-pink-roses.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -93,6 +93,16 @@ button{cursor:pointer;font-family:inherit}
 .logo{text-align:center}
 .logo-name{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block;}
 .logo-sub{font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:2px;}
+/* Logo: tied-heart mark (public/brand/mark.svg) beside the script name */
+.logo a{display:inline-flex;align-items:center;gap:10px}
+.logo-mark{flex-shrink:0;color:var(--accent);--sw:2.8}
+.logo-text{display:flex;flex-direction:column;align-items:center}
+/* Smaller name so mark + name sit clear of the nav links; steps down with width */
+.logo .logo-name{font-size:1.9rem}
+.logo-mark{width:32px;height:32px}
+@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}}
+@media(max-width:960px){.logo-mark{width:24px;height:24px}.logo .logo-name{font-size:1.5rem}}
+
 .nav-actions{display:flex;align-items:center;gap:16px;justify-content:flex-end}
 .nav-icon-btn{background:none;border:none;color:var(--text-muted);padding:8px;transition:color .3s;display:inline-flex;align-items:center;}
 .nav-icon-btn:hover{color:var(--text)}
@@ -335,7 +345,7 @@ button{cursor:pointer;font-family:inherit}
 
 /* ── Footer ── */
 .footer{background:var(--accent-dark);padding:48px 0 24px}
-.footer-bottom{max-width:1200px;margin:0 auto;padding:0 48px;text-align:center;font-size:10px;letter-spacing:1px;color:#5a4e44}
+.footer-bottom{max-width:1200px;margin:0 auto;padding:0 48px;text-align:center;font-size:10px;letter-spacing:1px;color:rgba(250,248,244,.6)}
 
 /* ── Responsive ── */
 /* minmax(0,1fr), not 1fr: a bare 1fr track grows to its widest child's min-content, which pushed the whole page to ~426px on a 375px phone. */
@@ -369,7 +379,7 @@ button{cursor:pointer;font-family:inherit}
 <body>
 
 <div class="topbar">
-  Free delivery across Sydney on orders over $80 — <a href="shop.html">Shop now</a>
+  Free delivery across Sydney on orders over $50 — <a href="shop.html">Shop now</a>
 </div>
 
 <nav class="nav">
@@ -380,8 +390,11 @@ button{cursor:pointer;font-family:inherit}
     </a>
     <div class="logo">
       <a href="index.html">
-        <span class="logo-name">Amateur Florist</span>
-        <span class="logo-sub">Sydney Florist</span>
+        <svg class="logo-mark" width="34" height="34" aria-hidden="true" focusable="false"><use href="/brand/mark.svg#heart"/></svg>
+        <span class="logo-text">
+          <span class="logo-name">Amateur Florist</span>
+          <span class="logo-sub">Sydney Florist</span>
+        </span>
       </a>
     </div>
     <div class="nav-actions">
@@ -428,7 +441,7 @@ button{cursor:pointer;font-family:inherit}
         <!-- Size -->
         <div class="size-section">
           <span class="sec-label">Choose your size</span>
-          <p class="size-note">All prices in AUD · Free delivery over $80</p>
+          <p class="size-note">All prices in AUD · Free delivery over $50</p>
           <!-- Filled from the products table by product-details.ts. No static sizes here: they showed invented prices until (or unless) the data loaded. -->
           <div class="size-opts size-options"></div>
         </div>
@@ -548,7 +561,7 @@ button{cursor:pointer;font-family:inherit}
           </div>
           <div class="trust-row">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-            Free delivery within Sydney over $80
+            Free delivery within Sydney over $50
           </div>
         </div>
       </div>
@@ -571,7 +584,7 @@ button{cursor:pointer;font-family:inherit}
           <li><strong>Same-day delivery:</strong> Order before 2pm for delivery today across Greater Sydney</li>
           <li><strong>Next-day delivery:</strong> Order anytime — delivery guaranteed the following day</li>
           <li><strong>Scheduled delivery:</strong> Choose your preferred date at checkout</li>
-          <li><strong>Free delivery:</strong> On all orders over $80 within Sydney</li>
+          <li><strong>Free delivery:</strong> On all orders over $50 within Sydney</li>
         </ul>
       </div>
       <div class="tab-pane tab-content" data-tab="care">

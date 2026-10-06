@@ -44,19 +44,19 @@
 </script>
 
 <title>Shop Bouquets — Amateur Florist Sydney</title>
-<meta name="description" content="Browse handcrafted bouquets, fresh and preserved flower arrangements from Sydney's luxury florist. Same-day delivery available across Sydney metro.">
+<meta name="description" content="Browse fresh and silk flower arrangements from Amateur Florist in Sydney. Same-day delivery available across Sydney metro.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://vaniaflorist.netlify.app/shop.html">
+<link rel="canonical" href="https://www.amateurflorist.co/shop.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Amateur Florist">
 <meta property="og:title" content="Shop Bouquets — Amateur Florist Sydney">
 <meta property="og:description" content="Handcrafted bouquets and arrangements, same-day delivery across Sydney.">
-<meta property="og:url" content="https://vaniaflorist.netlify.app/shop.html">
-<meta property="og:image" content="https://vaniaflorist.netlify.app/og/bouquet-pink-roses.jpg">
+<meta property="og:url" content="https://www.amateurflorist.co/shop.html">
+<meta property="og:image" content="https://www.amateurflorist.co/og/bouquet-pink-roses.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Shop Bouquets — Amateur Florist Sydney">
 <meta name="twitter:description" content="Handcrafted bouquets and arrangements, same-day delivery across Sydney.">
-<meta name="twitter:image" content="https://vaniaflorist.netlify.app/og/bouquet-pink-roses.jpg">
+<meta name="twitter:image" content="https://www.amateurflorist.co/og/bouquet-pink-roses.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -102,6 +102,18 @@ button{cursor:pointer;font-family:inherit}
 .logo{text-align:center}
 .logo-name{font-family:'Great Vibes',cursive;font-size:2.4rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block;}
 .logo-sub{font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:3px;}
+/* Logo: tied-heart mark (public/brand/mark.svg) beside the script name */
+.logo a{display:inline-flex;align-items:center;gap:10px}
+.logo-mark{flex-shrink:0;color:var(--accent);--sw:2.8}
+.logo-text{display:flex;flex-direction:column;align-items:center}
+/* Smaller name so mark + name sit clear of the nav links; steps down with width */
+.logo .logo-name{font-size:1.9rem}
+.logo-mark{width:32px;height:32px}
+@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}}
+@media(max-width:960px){.logo-mark{width:24px;height:24px}.logo .logo-name{font-size:1.5rem}}
+/* Tablets use the hamburger header (src/scripts/mobile-nav.ts): the desktop links did not fit beside the logo */
+@media(max-width:1023px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.nav-links{display:none}.logo{grid-column:2}}
+
 .nav-actions{display:flex;align-items:center;gap:16px;justify-content:flex-end}
 .nav-icon-btn{background:none;border:none;color:var(--text-muted);padding:8px;transition:color .3s;position:relative;display:inline-flex;align-items:center;}
 .nav-icon-btn:hover{color:var(--text)}
@@ -384,7 +396,7 @@ button{cursor:pointer;font-family:inherit}
 
 <!-- Top Bar -->
 <div class="topbar">
-  Free delivery across Sydney on orders over $80 — <a href="shop.html">Shop now</a>
+  Free delivery across Sydney on orders over $50 — <a href="shop.html">Shop now</a>
 </div>
 
 <!-- Nav -->
@@ -410,8 +422,11 @@ button{cursor:pointer;font-family:inherit}
     </div>
     <div class="logo">
       <a href="index.html">
-        <span class="logo-name">Amateur Florist</span>
-        <span class="logo-sub">Sydney Florist</span>
+        <svg class="logo-mark" width="34" height="34" aria-hidden="true" focusable="false"><use href="/brand/mark.svg#heart"/></svg>
+        <span class="logo-text">
+          <span class="logo-name">Amateur Florist</span>
+          <span class="logo-sub">Sydney Florist</span>
+        </span>
       </a>
     </div>
     <div class="nav-actions">
@@ -478,149 +493,6 @@ button{cursor:pointer;font-family:inherit}
     <div id="productsGrid" class="grid-3"></div>
   </div>
 </section>
-
-<!-- DISABLED: inline mock products replaced by shop_page_db.ts. Uncomment to fall back.
-<script>
-var SHOP_TWEAKS = /*EDITMODE-BEGIN*/{
-  "accentScheme": "sage",
-  "cardStyle": "bordered",
-  "showPrices": true,
-  "imageCrop": "landscape"
-}/*EDITMODE-END*/;
-
-// ── Product data (mock — replace with Supabase fetch) ──
-const PRODUCTS = [
-  { id:1, name:'Blush Romance',       desc:'Lush pink roses and peonies, hand-tied in our signature wrap.',                   price:85,  material:'fresh',      occasion:'anniversary', img:'images/gallery/bouquet-pink-roses.jpg',  isNew:true  },
-  { id:2, name:'Elegant White',       desc:'White orchids and lilies — serene, timeless, and endlessly elegant.',             price:95,  material:'fresh',      occasion:'wedding',     img:'images/gallery/bouquet-white.jpg',        isNew:false },
-  { id:3, name:'Spring Tulips',       desc:'A generous mix of seasonal tulips in the freshest colours of the moment.',        price:75,  material:'fresh',      occasion:'birthday',    img:'images/gallery/bouquet-pink-tulip.jpg',   isNew:true  },
-  { id:4, name:'Market Fresh',        desc:'Our florist selects the best stems at the market that morning. Seasonal surprise.',price:65,  material:'fresh',      occasion:'birthday',    img:'images/gallery/flowers-market.jpg',       isNew:false },
-  { id:5, name:'Studio Arrangement',  desc:'A structured, generous arrangement built for a table or statement space.',        price:120, material:'fresh',      occasion:'anniversary', img:'images/gallery/bouquet-workshop.jpg',     isNew:false },
-  { id:6, name:'Forever Rose',        desc:'Preserved roses that last for years — no water required. A lasting gift.',        price:110, material:'artificial', occasion:'anniversary', img:'images/gallery/bouquet-pink-roses.jpg',   isNew:false },
-  { id:7, name:'White Preserved',     desc:'Preserved white orchids. Perfect for the home — beautiful, effortless.',          price:130, material:'artificial', occasion:'wedding',     img:'images/gallery/bouquet-white.jpg',        isNew:false },
-  { id:8, name:'Tulip Preserved',     desc:'Preserved tulips in a soft blush palette — made to be admired for years.',        price:95,  material:'artificial', occasion:'newbaby',     img:'images/gallery/bouquet-pink-tulip.jpg',   isNew:true  },
-  { id:9, name:'Sympathy White',      desc:'Elegant white arrangement — a thoughtful and meaningful tribute.',                price:85,  material:'fresh',      occasion:'sympathy',    img:'images/gallery/bouquet-white.jpg',        isNew:false },
-  { id:10,name:'Baby Blush',          desc:'Soft pinks and creams to celebrate a new arrival. Delicate and sweet.',           price:70,  material:'fresh',      occasion:'newbaby',     img:'images/gallery/bouquet-pink-roses.jpg',   isNew:false },
-  { id:11,name:'Birthday Burst',      desc:'A joyful burst of seasonal blooms — vibrant, generous, and celebratory.',         price:80,  material:'fresh',      occasion:'birthday',    img:'images/gallery/flowers-market.jpg',       isNew:false },
-  { id:12,name:'Workshop Collection', desc:'A bespoke, oversized arrangement crafted by our head florist. Limited.',          price:145, material:'fresh',      occasion:'wedding',     img:'images/gallery/bouquet-workshop.jpg',     isNew:true  },
-];
-
-let activeMaterial = 'all';
-let activeCategory = 'all';
-let searchQuery = '';
-let showPrices = SHOP_TWEAKS.showPrices;
-let imageCrop = SHOP_TWEAKS.imageCrop;
-
-// Pre-filter from URL params (e.g. ?type=forever from landing page)
-(function readUrlFilters() {
-  const params = new URLSearchParams(window.location.search);
-  const typeParam = params.get('type');
-  if (typeParam === 'forever' || typeParam === 'artificial') {
-    activeMaterial = 'artificial';
-  } else if (typeParam === 'fresh') {
-    activeMaterial = 'fresh';
-  }
-  const occParam = params.get('occasion');
-  if (occParam) activeCategory = occParam;
-})();
-
-function getFiltered() {
-  return PRODUCTS.filter(p => {
-    const matOk = activeMaterial === 'all' || p.material === activeMaterial;
-    const catOk = activeCategory === 'all' || p.occasion === activeCategory;
-    const q = searchQuery.toLowerCase();
-    const searchOk = !q || p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
-    return matOk && catOk && searchOk;
-  });
-}
-
-function renderProducts() {
-  const grid = document.getElementById('productsGrid');
-  const filtered = getFiltered();
-  document.getElementById('resultCount').textContent = filtered.length;
-
-  if (!filtered.length) {
-    grid.innerHTML = `<div class="shop-empty">
-      <svg class="shop-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      <h3>No arrangements found</h3>
-      <p>Try adjusting your search or filters</p>
-    </div>`;
-    return;
-  }
-
-  const aspectStyle = imageCrop === 'portrait' ? 'aspect-ratio:3/4' : imageCrop === 'square' ? 'aspect-ratio:1/1' : 'aspect-ratio:4/3';
-
-  grid.innerHTML = filtered.map((p, i) => `
-    <a href="shop.html" class="prod-card" style="animation-delay:${i * 0.04}s">
-      <div class="prod-img" style="${aspectStyle}">
-        <img src="${p.img}" alt="${p.name}" loading="${i < 4 ? 'eager' : 'lazy'}">
-        <span class="prod-badge ${p.material === 'fresh' ? 'badge-fresh' : 'badge-artificial'}">${p.material === 'fresh' ? 'Fresh' : 'Preserved'}</span>
-        ${p.isNew ? '<span class="badge-new">New</span>' : ''}
-        <div class="prod-overlay">
-          <button class="quick-view">Quick view</button>
-        </div>
-      </div>
-      <div class="prod-body">
-        <h3 class="prod-name">${p.name}</h3>
-        <p class="prod-desc">${p.desc}</p>
-        <div class="prod-footer">
-          <div class="prod-price-wrap" style="display:${showPrices ? 'block' : 'none'}">
-            <span class="prod-price-from">From</span>
-            <span class="prod-price">$${p.price}</span>
-          </div>
-          <button class="prod-add" aria-label="Add to cart" onclick="event.preventDefault()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
-        </div>
-      </div>
-    </a>
-  `).join('');
-}
-
-// Filter pills
-document.getElementById('materialPills').addEventListener('click', e => {
-  const btn = e.target.closest('.material-pill');
-  if (!btn) return;
-  document.querySelectorAll('.material-pill').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  activeMaterial = btn.dataset.material;
-  renderProducts();
-});
-
-// Category
-document.getElementById('categorySelect').addEventListener('change', e => {
-  activeCategory = e.target.value;
-  renderProducts();
-});
-
-// Search
-let searchTimer;
-document.getElementById('searchInput').addEventListener('input', e => {
-  clearTimeout(searchTimer);
-  searchTimer = setTimeout(() => { searchQuery = e.target.value; renderProducts(); }, 200);
-});
-
-// Grid toggle
-const grid = document.getElementById('productsGrid');
-document.getElementById('grid4btn').addEventListener('click', () => {
-  grid.className = ''; document.querySelectorAll('.grid-btn').forEach(b=>b.classList.remove('active')); document.getElementById('grid4btn').classList.add('active');
-});
-document.getElementById('grid3btn').addEventListener('click', () => {
-  grid.className = 'grid-3'; document.querySelectorAll('.grid-btn').forEach(b=>b.classList.remove('active')); document.getElementById('grid3btn').classList.add('active');
-});
-document.getElementById('grid2btn').addEventListener('click', () => {
-  grid.className = 'grid-2'; document.querySelectorAll('.grid-btn').forEach(b=>b.classList.remove('active')); document.getElementById('grid2btn').classList.add('active');
-});
-// Sync filter UI with URL-derived defaults
-document.querySelectorAll('#materialPills .material-pill').forEach(b => {
-  b.classList.toggle('active', b.dataset.material === activeMaterial);
-});
-const catSel = document.getElementById('categorySelect');
-if (catSel && catSel.querySelector(`option[value="${activeCategory}"]`)) catSel.value = activeCategory;
-
-renderProducts();
-</script>
--->
-
 
 <!-- Seasonal theme system (CSS vars, hero copy, body class, decorations) -->
 <script type="module">
