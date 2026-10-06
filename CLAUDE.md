@@ -32,9 +32,9 @@ The short version:
 - Stripe — **test mode on purpose**; live activation needs the real owner's
   business details. Do not attempt to switch it.
 - Resend for email
-- Production: **Vercel** at `www.amateurflorist.co` (apex redirects to `www`).
-  An identical copy also deploys to Netlify (`vaniaflorist.netlify.app`); all
-  canonical/OG/sitemap URLs point at `www.amateurflorist.co`.
+- Hosting: **Vercel** only, at `www.amateurflorist.co` (apex redirects to `www`),
+  deployed from `master`. Vercel serves `404.html` for unknown URLs with a real
+  404 status. (Netlify was removed on 2026-10-06; `netlify.toml` is gone.)
 
 ## Environment gotchas
 
@@ -117,7 +117,7 @@ Schema in `002_rental.sql`, frontend helpers in `src/scripts/rental.ts`.
 Checked 2026-10-06:
 
 - Brand is **Amateur Florist** (owner confirmed). "Vania" survives only in the
-  repo folder and Netlify site name.
+  local repo folder name.
 - Rental schema **is applied** to the live database (`rental_units`,
   `rental_availability`, `products.is_rentable` all respond), but no product is
   marked rentable yet.
