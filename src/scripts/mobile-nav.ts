@@ -1,4 +1,5 @@
-// Injects a hamburger button + slide-in drawer for screens <= 768px.
+// Injects a hamburger button + slide-in drawer for screens <= 1023px.
+// (Below 1024px the four desktop links ran into the centred logo.)
 // Desktop is untouched: the hamburger and drawer are display:none above the breakpoint.
 
 const STYLE_ID = "vf-mobile-nav-styles";
@@ -10,7 +11,7 @@ const CSS = `
   #${HAMBURGER_ID} { display: none; }
   #${DRAWER_ID} { display: none; }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1023px) {
     #${HAMBURGER_ID} {
       display: inline-flex;
       align-items: center;
@@ -41,22 +42,55 @@ const CSS = `
       opacity: 0;
       transition: opacity .3s ease;
     }
+    /* Closed state: no shadow (it bled ~40px of grey onto the right edge of every
+       page) and visibility:hidden so the off-screen links can't be tabbed to. */
     #${DRAWER_ID} .vf-drawer-panel {
       position: absolute; top: 0; right: 0; bottom: 0;
       width: min(82vw, 340px);
       background: var(--bg, #faf8f4);
       border-left: .5px solid var(--border, rgba(0,0,0,.1));
       transform: translateX(100%);
-      transition: transform .35s cubic-bezier(.16,1,.3,1);
+      visibility: hidden;
+      transition: transform .35s cubic-bezier(.16,1,.3,1), visibility 0s linear .35s;
       display: flex; flex-direction: column;
       padding: 22px 26px 32px;
-      box-shadow: -10px 0 40px rgba(0,0,0,.12);
+      box-shadow: none;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
     #${DRAWER_ID}.open { pointer-events: auto; }
     #${DRAWER_ID}.open .vf-drawer-backdrop { opacity: 1; }
-    #${DRAWER_ID}.open .vf-drawer-panel { transform: translateX(0); }
+    #${DRAWER_ID}.open .vf-drawer-panel {
+      transform: translateX(0);
+      visibility: visible;
+      box-shadow: -10px 0 40px rgba(0,0,0,.12);
+      transition: transform .35s cubic-bezier(.16,1,.3,1), visibility 0s;
+    }
+
+    /* ── Mobile header ──────────────────────────────────────────────
+       Each page carries its own inline nav CSS, so the shared fixes live here.
+       The script-injected hamburger is a 4th item in a 3-column grid on pages
+       that also have a back link (product, cart, checkout): the cart icon used
+       to wrap onto a second row and the sticky header grew to ~175px. */
+    .nav-inner.vf-has-back { grid-template-columns: auto auto 1fr auto; gap: 4px; }
+    .nav-inner .back-link {
+      font-size: 0; gap: 0;
+      min-width: 44px; min-height: 44px;
+      justify-content: center;
+    }
+    .nav-inner .back-link:hover { gap: 0; }
+    .nav-inner .back-link svg { width: 18px; height: 18px; }
+    .nav-inner .logo a { gap: 6px; }
+    .nav-inner .logo-mark { width: 26px; height: 26px; --sw: 3.4; }
+    .nav-inner .logo .logo-name {
+      font-size: clamp(1.15rem, 5.6vw, 1.8rem);
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+    .nav-inner .logo .logo-sub { font-size: 10px; letter-spacing: 2.5px; }
+    .nav-inner .nav-icon-btn { min-width: 44px; min-height: 44px; }
+    .nav-inner .nav-actions { gap: 0; }
+    #${HAMBURGER_ID} { min-width: 44px; min-height: 44px; }
 
     #${DRAWER_ID} .vf-drawer-close {
       align-self: flex-end;
@@ -96,6 +130,27 @@ const CSS = `
       padding-left: 8px;
     }
 
+    /* Day/night control lives in the menu on phones; the floating pill
+       (public/night-mode.js) covered text and checkout fields there. */
+    #night-toggle { display: none !important; }
+    #${DRAWER_ID} .vf-drawer-theme {
+      display: inline-flex; align-items: center; gap: 10px;
+      align-self: flex-start;
+      margin-top: 24px; min-height: 44px; padding: 0 18px;
+      background: none;
+      border: .5px solid var(--border, rgba(0,0,0,.12));
+      border-radius: 22px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--text-muted, #6b5d54);
+      cursor: pointer;
+    }
+    #${DRAWER_ID} .vf-drawer-theme[hidden] { display: none; }
+    #${DRAWER_ID} .vf-drawer-theme-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #ffd166; box-shadow: 0 0 10px rgba(255,209,102,.55);
+    }
+
     #${DRAWER_ID} .vf-drawer-foot {
       margin-top: auto;
       padding-top: 24px;
@@ -106,13 +161,18 @@ const CSS = `
 
     body.${BODY_OPEN_CLASS} { overflow: hidden; }
   }
+
+  /* Narrowest phones on pages with a back arrow: no room for mark + name. */
+  @media (max-width: 360px) {
+    .nav-inner.vf-has-back .logo-mark { display: none; }
+  }
 `;
 
 interface NavItem { href: string; label: string; }
 
 const DEFAULT_LINKS: NavItem[] = [
   { href: "shop.html", label: "Shop" },
-  { href: "shop.html#occasions", label: "Occasions" },
+  { href: "index.html#occasions", label: "Occasions" },
   { href: "about.html", label: "About" },
   { href: "weddings.html", label: "Weddings" },
 ];
@@ -174,6 +234,8 @@ function injectHamburger(): HTMLButtonElement | null {
   `;
   // Insert as the first child so it occupies the left grid cell (where .nav-links normally sits).
   navInner.insertBefore(btn, navInner.firstChild);
+  // Pages with a back link already use that cell; give the grid a 4th column.
+  if (navInner.querySelector(":scope > .back-link")) navInner.classList.add("vf-has-back");
   return btn;
 }
 
@@ -198,6 +260,10 @@ function injectDrawer(): HTMLElement | null {
       </button>
       <p class="vf-drawer-eyebrow">Menu</p>
       <div class="vf-drawer-links" id="vf-drawer-links"></div>
+      <button class="vf-drawer-theme" type="button" aria-label="Toggle day/night theme" hidden>
+        <span class="vf-drawer-theme-dot" aria-hidden="true"></span>
+        <span class="vf-drawer-theme-label">Auto</span>
+      </button>
       <p class="vf-drawer-foot">Amateur Florist &middot; Sydney</p>
     </nav>
   `;
@@ -211,7 +277,8 @@ function injectDrawer(): HTMLElement | null {
     a.href = href;
     a.textContent = label;
     const hrefFile = ((href.split("/").pop() || "").split("#")[0] || "").toLowerCase();
-    if (hrefFile && hrefFile === current) a.classList.add("active");
+    // Section links (index.html#occasions) aren't "the current page" even on the homepage.
+    if (hrefFile && hrefFile === current && !href.includes("#")) a.classList.add("active");
     container.appendChild(a);
   });
 
@@ -223,7 +290,25 @@ function setupHandlers(): void {
   const drawer = document.getElementById(DRAWER_ID);
   if (!btn || !drawer) return;
 
+  // Mirror of the floating day/night pill from public/night-mode.js, which is hidden
+  // on phones. Clicking it clicks the real pill so the mode logic stays in one place;
+  // looked up lazily because the two scripts load independently.
+  const themeBtn = drawer.querySelector<HTMLButtonElement>(".vf-drawer-theme");
+  const syncThemeBtn = (): void => {
+    const pill = document.getElementById("night-toggle");
+    if (!themeBtn) return;
+    themeBtn.hidden = !pill;
+    const label = pill?.querySelector(".nt-label")?.textContent;
+    const themeLabel = themeBtn.querySelector(".vf-drawer-theme-label");
+    if (label && themeLabel) themeLabel.textContent = label;
+  };
+  themeBtn?.addEventListener("click", () => {
+    document.getElementById("night-toggle")?.click();
+    syncThemeBtn();
+  });
+
   const open = (): void => {
+    syncThemeBtn();
     drawer.classList.add("open");
     drawer.setAttribute("aria-hidden", "false");
     btn.setAttribute("aria-expanded", "true");
@@ -243,9 +328,9 @@ function setupHandlers(): void {
   document.addEventListener("keydown", (e: KeyboardEvent) => {
     if (e.key === "Escape" && drawer.classList.contains("open")) close();
   });
-  // If the viewport crosses back above 768px while the drawer is open, close it.
+  // If the viewport crosses back above 1023px while the drawer is open, close it.
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 768 && drawer.classList.contains("open")) close();
+    if (window.innerWidth > 1023 && drawer.classList.contains("open")) close();
   });
 }
 

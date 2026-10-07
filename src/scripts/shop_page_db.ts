@@ -78,8 +78,15 @@ async function main() {
 
   // ✅ FIX: Read URL params to pre-filter
   const params = new URLSearchParams(window.location.search);
-  const urlCategory = params.get("category") || "all";
-  const urlMaterial = params.get("material") || "all";
+  const knownCategories = new Set(all.flatMap((p: any) => p.categories));
+  // ?occasion= (search overlay) is an alias for ?category=, honoured only when the
+  // catalog actually has that category — otherwise an empty "No flowers found" page.
+  const occasion = params.get("occasion");
+  const urlCategory = params.get("category") || (occasion && knownCategories.has(occasion) ? occasion : "all");
+  // ?type=fresh|forever is what the nav, footer and collection links use
+  // (The Living / The Forever Collection); it maps onto the material column.
+  const TYPE_TO_MATERIAL: Record<string, MaterialFilter> = { fresh: "fresh", forever: "artificial" };
+  const urlMaterial = params.get("material") || TYPE_TO_MATERIAL[params.get("type") ?? ""] || "all";
   const urlSearch   = params.get("q") || "";
 
   const categorySel = qs<HTMLSelectElement>("#categorySelect");
@@ -129,6 +136,17 @@ async function main() {
   searchInput?.addEventListener("input", e => {
     q = (e.currentTarget as HTMLInputElement).value.trim().toLowerCase();
     apply();
+  });
+
+  // Desktop 4/3/2-column toggle (hidden on phones). Its handlers used to live in
+  // the old inline mock script, which was commented out — so the buttons did nothing.
+  const grid = qs<HTMLDivElement>("#productsGrid");
+  const layouts: Record<string, string> = { grid4btn: "", grid3btn: "grid-3", grid2btn: "grid-2" };
+  Object.entries(layouts).forEach(([id, cls]) => {
+    qs<HTMLButtonElement>(`#${id}`)?.addEventListener("click", () => {
+      if (grid) grid.className = cls;
+      qsa<HTMLButtonElement>(".grid-btn").forEach(b => b.classList.toggle("active", b.id === id));
+    });
   });
 
   apply();

@@ -95,6 +95,11 @@ export function mountCartDrawer() {
       color: var(--text, #1e1a17);
       transition: opacity 0.2s ease, transform 0.2s ease, background 0.4s, border-color 0.4s;
     }
+    /* Phones: this floating panel covered the product grid and fought the theme
+       toggle for the bottom corner. The nav cart icon + badge covers it there. */
+    @media (max-width: 768px) {
+      #cart-drawer { display: none; }
+    }
     #cart-drawer .drawer-header {
       display: flex;
       align-items: center;

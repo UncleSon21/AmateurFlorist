@@ -8,7 +8,7 @@
 //   STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET
 //   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
 //   RESEND_API_KEY      — optional; emails skipped if missing
-//   FROM_EMAIL          — verified Resend sender (e.g. orders@amateurflorist.com.au)
+//   FROM_EMAIL          — verified Resend sender (e.g. orders@amateurflorist.co)
 //   OWNER_EMAIL         — where order alerts go
 //   TWILIO_*            — optional; SMS skipped if missing
 
@@ -84,7 +84,7 @@ async function sendEmail(to: string, subject: string, html: string) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: `Vania Florist <${FROM_EMAIL}>`,
+        from: `Amateur Florist <${FROM_EMAIL}>`,
         to: [to],
         subject,
         html,
@@ -112,7 +112,7 @@ function buildCustomerEmail(order: any, items: any[]): string {
   return `
     <div style="max-width:560px;margin:0 auto;font-family:Georgia,'Times New Roman',serif;color:#3d3d3a;">
       <div style="text-align:center;padding:32px 0 24px;">
-        <h1 style="font-size:24px;margin:0;color:#8b6f6f;">Vania Florist</h1>
+        <h1 style="font-size:24px;margin:0;color:#8b6f6f;">Amateur Florist</h1>
         <p style="color:#a08b7e;margin:4px 0 0;">Thank you for your order</p>
       </div>
       <div style="background:#faf8f5;border-radius:12px;padding:24px;margin-bottom:20px;">

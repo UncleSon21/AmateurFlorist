@@ -39,8 +39,8 @@ Deno.serve(async (req) => {
       delivery_date,
       notes,
       is_pickup,
-      success_url,    // e.g. "https://vaniaflorsit.com.au/order-confirmation.html"
-      cancel_url,     // e.g. "https://vaniaflorsit.com.au/checkout.html"
+      success_url,    // e.g. "https://www.amateurflorist.co/order-confirmation.html"
+      cancel_url,     // e.g. "https://www.amateurflorist.co/checkout.html"
     } = body;
 
     // ─── Validate required fields ───

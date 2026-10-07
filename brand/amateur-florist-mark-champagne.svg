@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="5 13 90 90" width="900" height="900">
+  <!-- Tied-heart mark, champagne #d4c5a0, transparent background. For dark backgrounds. -->
+  <g fill="none" stroke="#d4c5a0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M54 92 C42 80 16 66 15 44 C14 28 25 19 36 20.5 C42 21.4 45.6 25.6 47 31"/>
+    <path d="M46 92 C58 80 84 66 85 44 C86 28 75 19 64 20.5 C58 21.4 54.4 25.6 53 31"/>
+    <path d="M47 31 C43.6 29 43 24 45.6 20.6 C47.4 23.4 48.4 27.4 47 31 Z"/>
+    <path d="M53 31 C56.4 29 57 24 54.4 20.6 C52.6 23.4 51.6 27.4 53 31 Z"/>
+    <g transform="translate(21 63) rotate(-58)"><path d="M0 -6 C3 -3 3 3 0 6 C-3 3 -3 -3 0 -6 Z"/><path d="M0 -4.5 L0 5"/></g>
+    <g transform="translate(13.6 36) rotate(-18)"><path d="M0 -6 C3 -3 3 3 0 6 C-3 3 -3 -3 0 -6 Z"/><path d="M0 -4.5 L0 5"/></g>
+    <g transform="translate(79 63) rotate(58)"><path d="M0 -6 C3 -3 3 3 0 6 C-3 3 -3 -3 0 -6 Z"/><path d="M0 -4.5 L0 5"/></g>
+    <g transform="translate(86.4 36) rotate(18)"><path d="M0 -6 C3 -3 3 3 0 6 C-3 3 -3 -3 0 -6 Z"/><path d="M0 -4.5 L0 5"/></g>
+    <path d="M50 86.5 C45 82 40 84 42.5 88 C44.5 90.5 48 89.5 50 86.5 Z"/>
+    <path d="M50 86.5 C55 82 60 84 57.5 88 C55.5 90.5 52 89.5 50 86.5 Z"/>
+    <path d="M49.4 87.4 C48 91 46.5 94 44.5 97"/>
+    <path d="M50.6 87.4 C52 91 53.5 94 55.5 97"/>
+  </g>
+</svg>

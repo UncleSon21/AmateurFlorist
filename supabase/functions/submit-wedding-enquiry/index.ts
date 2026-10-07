@@ -5,12 +5,17 @@
 //
 // Required secrets (set with: supabase secrets set KEY=value):
 //   RESEND_API_KEY  — Resend API key
-//   FROM_EMAIL      — verified sender (e.g. enquiries@amateurflorist.com.au)
+//   FROM_EMAIL      — verified sender (e.g. hello@amateurflorist.co)
 //   OWNER_EMAIL     — where to deliver the enquiry
 //
 // Optional:
 //   SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY — if set, the enquiry is also
-//   written to a `wedding_enquiries` table for record-keeping.
+//   written to a `wedding_enquiries` table for record-keeping
+//   (schema: 003_wedding_enquiries.sql).
+//
+// The request only succeeds if the enquiry landed somewhere durable — the table
+// or the owner's inbox. If both fail the couple gets an error and can retry,
+// instead of a "thank you" for a lead nobody will ever see.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
@@ -81,23 +86,65 @@ function buildEnquiryEmail(e: Enquiry): string {
   `;
 }
 
-async function sendEmail(to: string, subject: string, html: string, replyTo?: string) {
+/** Returns true only if Resend accepted the email. */
+async function sendEmail(to: string, subject: string, html: string, replyTo?: string): Promise<boolean> {
   if (!RESEND_API_KEY) {
     console.warn("RESEND_API_KEY missing — email skipped");
-    return;
+    return false;
   }
   const body: Record<string, any> = { from: FROM_EMAIL, to, subject, html };
   if (replyTo) body.reply_to = replyTo;
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${RESEND_API_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) console.error("Resend failed:", await res.text());
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      console.error("Resend failed:", await res.text());
+      return false;
+    }
+    return true;
+  } catch (e) {
+    console.error("Resend request error:", e);
+    return false;
+  }
+}
+
+/** Returns true only if the row was written. */
+async function saveEnquiry(data: Enquiry): Promise<boolean> {
+  if (!SAVE_TO_DB) return false;
+  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+  const row: Record<string, string | null> = {
+    name:         data.name ?? null,
+    partner_name: data.partnerName ?? null,
+    email:        data.email ?? null,
+    phone:        data.phone ?? null,
+    wedding_date: data.weddingDate || null,
+    venue:        data.venue ?? null,
+    guest_count:  data.guestCount ?? null,
+    style:        data.style ?? null,
+    message:      data.message ?? null,
+    // Custom design vs hire/buy — the demand signal the hire model needs.
+    interest:     data.interest ?? null,
+  };
+  // supabase-js reports failures in `error`; it does not throw.
+  let { error } = await supabase.from("wedding_enquiries").insert(row);
+  if (error && /interest/i.test(error.message)) {
+    // Live table predates the `interest` column (added by 003_wedding_enquiries.sql).
+    // Keep the lead rather than lose it; the email still carries the answer.
+    const { interest: _interest, ...withoutInterest } = row;
+    ({ error } = await supabase.from("wedding_enquiries").insert(withoutInterest));
+  }
+  if (error) {
+    console.error("wedding_enquiries insert failed:", error);
+    return false;
+  }
+  return true;
 }
 
 Deno.serve(async (req: Request) => {
@@ -123,34 +170,23 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Optional: persist to DB for record-keeping
-    if (SAVE_TO_DB) {
-      try {
-        const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-        await supabase.from("wedding_enquiries").insert({
-          name:         data.name,
-          partner_name: data.partnerName ?? null,
-          email:        data.email,
-          phone:        data.phone ?? null,
-          wedding_date: data.weddingDate ?? null,
-          venue:        data.venue ?? null,
-          guest_count:  data.guestCount ?? null,
-          style:        data.style ?? null,
-          message:      data.message ?? null,
-        });
-      } catch (e) {
-        // Don't fail the whole request if the table doesn't exist yet
-        console.warn("DB insert skipped:", e);
-      }
-    }
+    const saved = await saveEnquiry(data);
 
     // Notify owner
-    if (OWNER_EMAIL) {
-      await sendEmail(
-        OWNER_EMAIL,
-        `New wedding enquiry — ${data.name}${data.weddingDate ? ` (${data.weddingDate})` : ""}`,
-        buildEnquiryEmail(data),
-        data.email,
+    const notified = OWNER_EMAIL
+      ? await sendEmail(
+          OWNER_EMAIL,
+          `New wedding enquiry — ${data.name}${data.weddingDate ? ` (${data.weddingDate})` : ""}`,
+          buildEnquiryEmail(data),
+          data.email,
+        )
+      : false;
+
+    if (!saved && !notified) {
+      console.error("Enquiry neither saved nor emailed — returning 500 so the form shows an error");
+      return new Response(
+        JSON.stringify({ error: "Your enquiry could not be recorded. Please try again." }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 

@@ -1,6 +1,7 @@
-# Vania Florist
+# Amateur Florist
 
-Multi-page static site for a Sydney florist. Built as a gift for the business
+Multi-page static site for **Amateur Florist**, a small self-run Sydney florist
+just starting to trade (`www.amateurflorist.co`). Built as a gift for the
 owner, who will take it over once trading begins.
 
 ## Business model
@@ -31,7 +32,9 @@ The short version:
 - Stripe — **test mode on purpose**; live activation needs the real owner's
   business details. Do not attempt to switch it.
 - Resend for email
-- Deployed to Netlify at `vaniaflorist.netlify.app`
+- Hosting: **Vercel** only, at `www.amateurflorist.co` (apex redirects to `www`),
+  deployed from `master`. Vercel serves `404.html` for unknown URLs with a real
+  404 status. (Netlify was removed on 2026-10-06; `netlify.toml` is gone.)
 
 ## Environment gotchas
 
@@ -46,8 +49,33 @@ These cost real debugging time; don't rediscover them:
 - `SUPABASE_SERVICE_ROLE_KEY` is auto-injected. Setting it manually as a secret
   fails.
 - Resend will not deliver to arbitrary recipients until a custom domain is
-  verified. A `.com.au` domain requires an ABN, so this is blocked until the
-  owner takes over.
+  verified. `amateurflorist.co` needs no ABN, so this is now unblocked: add
+  Resend's DNS records for it, then set `FROM_EMAIL` to an `@amateurflorist.co`
+  address. Public contact address on the site: `hello@amateurflorist.co`.
+- Root-level files not referenced from HTML (robots, sitemap, OG images) are
+  **not deployed**. Put them in `public/`.
+- Every page carries its own inline `<style>`; `styles/*.css` is not imported
+  anywhere. Header/drawer CSS shared by all pages lives in
+  `src/scripts/mobile-nav.ts`. The hamburger header is used **below 1024px**
+  (the four desktop links don't fit beside the logo on tablets).
+- Logo: one drawing, `public/brand/mark.svg#heart`, referenced from every header
+  (and the index/about footers) with `<use>`. It is `currentColor`, so it takes
+  the season's colour; line weight via the `--sw` custom property. Print/social
+  files are in `brand/` (see `brand/README.md`). **No `--` inside SVG comments** —
+  it makes the file invalid XML and the external `<use>` silently draws nothing.
+- Seasonal decorations (petals, branches, side art) are switched off by the
+  owner via the "DEV TOGGLE" CSS blocks; `startParticles` checks that CSS and
+  doesn't run its animation loop while hidden. Season colours/hero copy still
+  follow the date.
+- Night-mode fireflies draw on a viewport-sized canvas; count scales with
+  screen area (`firefliesAreaPer` in `public/night-mode.js`, ~8 on a phone).
+- The homepage reads products via plain `fetch` to Supabase REST
+  (`home-featured.ts`) so it doesn't ship supabase-js (~37 KB gzipped).
+- Single-column mobile grids must use `minmax(0,1fr)`, not `1fr` — a bare `1fr`
+  track grows to its widest child and pushed whole pages past a phone's width.
+- Shop filter URLs: `?type=fresh|forever`, `?material=`, `?category=`,
+  `?occasion=` (only if that category exists), `?q=`.
+- Most phone traffic: check every layout change at 375px and 320px.
 
 ## Design system
 
@@ -86,13 +114,26 @@ Schema in `002_rental.sql`, frontend helpers in `src/scripts/rental.ts`.
 
 ## Current state
 
-- Site is live on Netlify
-- Rental schema written and tested; **not yet applied to the live database**
-- Redesign files (`Vaniaflorist_Redesign.html`, `shop-redesign.html`,
-  `product-redesign.html`, `cart-redesign.html`, `about-redesign.html`) are
-  mid-integration
-- SEO partially done: meta tags and JSON-LD Florist schema in place.
-  Outstanding: Google Business Profile, image alt text, sitemap, Search Console
+Checked 2026-10-06:
+
+- Brand is **Amateur Florist** (owner confirmed). "Vania" survives only in the
+  local repo folder name.
+- Rental schema **is applied** to the live database (`rental_units`,
+  `rental_availability`, `products.is_rentable` all respond), but no product is
+  marked rentable yet.
+- `wedding_enquiries` exists live but was created outside the repo;
+  `003_wedding_enquiries.sql` records it and adds `interest`. Run it before
+  relying on that column.
+- Redesign is integrated; the `*.original-bak` files are the pre-redesign pages.
+- SEO: meta + OG tags in place; **no JSON-LD on any page** (needs real business
+  details first). Outstanding: Google Business Profile, Search Console.
+- Free delivery threshold is **$50** (owner confirmed) — code and copy agree.
+- The product page "In Vase +$30" option is switched off: it was never charged.
+- The redesign mockup shipped invented testimonials, star ratings, "best
+  seller" badges, wedding package and à la carte prices, deposit/cancellation
+  terms, a Surry Hills studio and street address, opening hours, a team, SMS
+  tracking and a referral offer. **The owner confirmed none of it was real**;
+  it has been removed.
 
 ## Don't
 
@@ -105,3 +146,6 @@ Schema in `002_rental.sql`, frontend helpers in `src/scripts/rental.ts`.
 - Don't switch Stripe out of test mode.
 - Don't write care instructions involving water for silk or preserved products.
 - Don't invent prices. Ask.
+- Don't add testimonials, ratings, team members, addresses, opening hours,
+  policies, turnaround promises or offers unless the owner supplies them.
+  Placeholder copy from mockups has shipped as fact here before.

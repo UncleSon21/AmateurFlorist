@@ -4,4 +4,4 @@ Disallow: /cart.html
 Disallow: /checkout.html
 Disallow: /order-confirmation.html
 
-Sitemap: https://amateurflorist.vercel.app/sitemap.xml
+Sitemap: https://www.amateurflorist.co/sitemap.xml

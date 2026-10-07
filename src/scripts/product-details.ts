@@ -36,6 +36,27 @@ const CARE_GUIDES: Record<string, string> = {
 };
 CARE_GUIDES["artificial"] = CARE_GUIDES["silk"]!;
 
+// ── Details copy ──────────────────────────────────────────────────────────────
+// The description comes from the products table. These bullets state only what
+// is true of every product of that material — never product-specific claims
+// (growers, same-morning cutting, etc.), which used to leak onto silk pieces.
+const DETAILS_POINTS: Record<string, string[]> = {
+  fresh: [
+    "Fresh flowers, arranged and delivered across Greater Sydney",
+    "Choose your delivery date at checkout",
+    "See the Care Guide tab to keep them at their best",
+  ],
+  artificial: [
+    "Artificial (silk) flowers: no water, no wilting, made to last",
+    "A keepsake you can display for years",
+    "See the Care Guide tab to keep them looking their best",
+  ],
+};
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 // ── Helpers ──────────────────────────────────────────────────────────────────
 function qs<T extends Element>(sel: string, ctx: Document | Element = document) {
   return ctx.querySelector<T>(sel);
@@ -220,6 +241,7 @@ function buildCartItem() {
 }
 
 function handleAddToCart() {
+  if (!product) return; // data failed to load: nothing valid to add
   addToCart(buildCartItem());
   updateNavCount();
 
@@ -236,6 +258,7 @@ function handleAddToCart() {
 }
 
 function handleBuyNow() {
+  if (!product) return;
   handleAddToCart();
   window.location.href = "checkout.html";
 }
@@ -310,7 +333,8 @@ async function main() {
   const id = params.get("id");
 
   if (!id) {
-    qs<HTMLElement>("#p-title")!.textContent = "Product not found";
+    // Nothing to show without a product id (stale link or bookmark): send them to the shop.
+    window.location.replace("shop.html");
     return;
   }
 
@@ -320,16 +344,26 @@ async function main() {
     // Title & subtitle
     const titleEl = qs<HTMLElement>("#p-title");
     const subtitleEl = qs<HTMLElement>(".product-subtitle");
-    const pageTitleEl = qs<HTMLElement>("#page-title", document);
+    const crumbEl = qs<HTMLElement>("#crumb-name");
     if (titleEl) titleEl.textContent = product.name;
     if (subtitleEl) subtitleEl.textContent = product.description ?? "";
-    if (pageTitleEl) pageTitleEl.textContent = `${product.name} — Vaniaflorsit`;
+    if (crumbEl) crumbEl.textContent = product.name;
+    document.title = `${product.name} — Amateur Florist`;
 
-    // Material badge
+    // Material badge (keep .mat-badge: replacing the whole className dropped its styling)
     const badgeEl = qs<HTMLElement>("#material-badge");
     if (badgeEl) {
       badgeEl.textContent = product.material === "fresh" ? "Fresh" : "Artificial";
-      badgeEl.className = `material-badge-detail ${product.material}`;
+      badgeEl.className = `mat-badge ${product.material}`;
+    }
+
+    // About tab — description + only material-level statements
+    const detailsEl = qs<HTMLElement>("#details-content");
+    if (detailsEl) {
+      const points = DETAILS_POINTS[product.material] ?? DETAILS_POINTS["fresh"]!;
+      detailsEl.innerHTML =
+        (product.description ? `<p>${escapeHtml(product.description)}</p>` : "") +
+        `<ul>${points.map(p => `<li>${p}</li>`).join("")}</ul>`;
     }
 
     // Care guide — conditional on material so silk/preserved are never told
@@ -357,7 +391,9 @@ async function main() {
   } catch (err) {
     console.error("Failed to load product:", err);
     const titleEl = qs<HTMLElement>("#p-title");
-    if (titleEl) titleEl.textContent = "Failed to load product";
+    const subtitleEl = qs<HTMLElement>(".product-subtitle");
+    if (titleEl) titleEl.textContent = "We couldn't load this product";
+    if (subtitleEl) subtitleEl.innerHTML = `Please refresh the page, or <a href="shop.html" style="text-decoration:underline">browse the shop</a>.`;
   }
 }
 
