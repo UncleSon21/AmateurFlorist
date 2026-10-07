@@ -30,7 +30,10 @@ The short version:
 - Vite static site, plain HTML + CSS + TypeScript (no framework)
 - Supabase (Postgres + Edge Functions), project ref `pflbjnviblravzgvfnvu`
 - Stripe — **test mode on purpose**; live activation needs the real owner's
-  business details. Do not attempt to switch it.
+  business details. Do not attempt to switch it. Checkout only shows the card
+  form with a `pk_live_` key (`VITE_STRIPE_PUBLISHABLE_KEY`, set in Vercel);
+  otherwise it's "Email this order" to hello@amateurflorist.co. Add `?testpay`
+  to the checkout URL to exercise the Stripe test flow.
 - Resend for email
 - Hosting: **Vercel** only, at `www.amateurflorist.co` (apex redirects to `www`),
   deployed from `master`. Vercel serves `404.html` for unknown URLs with a real
@@ -69,6 +72,11 @@ These cost real debugging time; don't rediscover them:
   follow the date.
 - Night-mode fireflies draw on a viewport-sized canvas; count scales with
   screen area (`firefliesAreaPer` in `public/night-mode.js`, ~8 on a phone).
+- Site photos in `images/gallery/` have WebP versions (480 / 800 / full) used via
+  `<img srcset sizes>`; the JPEG stays as `src`. After adding or replacing a
+  photo, run `python tools/make_webp.py` and give its `<img>` a `srcset`. Set
+  `sizes` to how wide it really shows (two-up tiles `50vw` on phones, full-width
+  `100vw`) or phones download the wrong file.
 - The homepage reads products via plain `fetch` to Supabase REST
   (`home-featured.ts`) so it doesn't ship supabase-js (~37 KB gzipped).
 - Single-column mobile grids must use `minmax(0,1fr)`, not `1fr` — a bare `1fr`

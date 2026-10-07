@@ -110,7 +110,7 @@ export function mountCartDrawer() {
     }
     #cart-drawer .drawer-header h3 {
       margin: 0;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 500;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -213,7 +213,7 @@ export function mountCartDrawer() {
       padding: 12px;
       border-radius: var(--radius, 2px);
       font-weight: 500;
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 2px;
       text-transform: uppercase;
       transition: background 0.3s;

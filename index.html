@@ -128,7 +128,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .nav-links{display:flex;align-items:center;gap:32px}
 .nav-links a,.nav-btn{
-  font-size:10px;font-weight:400;letter-spacing:2px;
+  font-size:11px;font-weight:400;letter-spacing:2px;
   text-transform:uppercase;color:var(--text-muted);
   background:none;border:none;
   position:relative;transition:color .3s;
@@ -158,7 +158,7 @@ button{cursor:pointer;font-family:inherit}
   opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);
 }
 .nav-shop-menu a{
-  display:block;padding:9px 22px;font-size:10px;letter-spacing:2px;
+  display:block;padding:9px 22px;font-size:11px;letter-spacing:2px;
   text-transform:uppercase;color:var(--text-muted);text-decoration:none;
   transition:background .2s,color .2s;
 }
@@ -171,7 +171,7 @@ button{cursor:pointer;font-family:inherit}
   letter-spacing:2px;line-height:1;display:block;
 }
 .logo-sub{
-  font-size:9px;font-weight:300;letter-spacing:3px;
+  font-size:11px;font-weight:300;letter-spacing:3px;
   text-transform:uppercase;color:var(--accent-light);
   display:block;margin-top:3px;
 }
@@ -182,7 +182,7 @@ button{cursor:pointer;font-family:inherit}
 /* Smaller name so mark + name sit clear of the nav links; steps down with width */
 .logo .logo-name{font-size:1.9rem}
 .logo-mark{width:32px;height:32px}
-@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}}
+@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}.nav-inner .nav-links{gap:22px}.nav-inner .nav-links a,.nav-inner .nav-links .nav-btn{letter-spacing:1.4px}}
 @media(max-width:960px){.logo-mark{width:24px;height:24px}.logo .logo-name{font-size:1.5rem}}
 /* Tablets use the hamburger header (src/scripts/mobile-nav.ts): the desktop links did not fit beside the logo */
 @media(max-width:1023px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.nav-links{display:none}.logo{grid-column:2}}
@@ -197,7 +197,7 @@ button{cursor:pointer;font-family:inherit}
 .cart-badge{
   position:absolute;top:-4px;right:-4px;
   background:var(--accent);color:#fff;
-  font-size:9px;width:16px;height:16px;
+  font-size:11px;width:16px;height:16px;
   border-radius:50%;display:flex;align-items:center;justify-content:center;
   font-family:'DM Sans',sans-serif;
 }
@@ -218,7 +218,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:10px;
-  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
   color:var(--accent);margin-bottom:20px;
 }
 .hero-eyebrow-line{width:24px;height:.5px;background:var(--accent-light);flex-shrink:0}
@@ -249,13 +249,13 @@ button{cursor:pointer;font-family:inherit}
   display:inline-flex;align-items:center;gap:8px;
   background:var(--accent-dark);color:var(--bg);
   padding:14px 32px;border:none;border-radius:var(--radius);
-  font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
+  font-size:11px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
   transition:background .3s;
 }
 .btn-dark:hover{background:var(--accent)}
 .btn-ghost{
   display:inline-flex;align-items:center;gap:6px;
-  font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
+  font-size:11px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
   color:var(--text-muted);border:none;background:none;
   border-bottom:.5px solid var(--border);padding-bottom:3px;
   transition:color .3s,gap .35s cubic-bezier(.16,1,.3,1),border-color .3s;
@@ -263,7 +263,7 @@ button{cursor:pointer;font-family:inherit}
 .btn-ghost:hover{color:var(--text);gap:12px;border-color:var(--accent)}
 .hero-trust{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-  font-size:10px;letter-spacing:.5px;color:var(--accent-light);
+  font-size:11px;letter-spacing:.5px;color:var(--accent-light);
   margin-bottom:16px;
 }
 .dot{font-size:8px;opacity:.4}
@@ -319,7 +319,7 @@ button{cursor:pointer;font-family:inherit}
 .section{padding:96px 0}
 .container{max-width:1200px;margin:0 auto;padding:0 48px}
 .eyebrow{
-  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
   color:var(--accent-light);font-weight:400;
   display:flex;align-items:center;gap:12px;margin-bottom:14px;
 }
@@ -364,7 +364,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .occ-desc{font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
 .occ-link{
-  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
   color:var(--accent);font-weight:400;
   display:inline-flex;align-items:center;gap:5px;
   transition:gap .3s cubic-bezier(.16,1,.3,1);
@@ -392,14 +392,14 @@ button{cursor:pointer;font-family:inherit}
 .prod-badge{
   position:absolute;top:10px;left:10px;
   padding:4px 10px;border-radius:var(--radius);
-  font-size:9px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;
+  font-size:11px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;
   font-family:'DM Sans',sans-serif;
 }
 .badge-bestseller{background:var(--accent-dark);color:#faf8f4}
 .badge-new{background:#fff;color:var(--accent);border:.5px solid var(--border)}
 .badge-wedding{background:var(--accent-light);color:#fff}
 /* Type badges — fresh vs forever */
-.type-badge{position:absolute;top:10px;right:10px;padding:5px 10px 5px 8px;border-radius:99px;font-size:9px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:5px;backdrop-filter:blur(10px);background:rgba(255,255,255,.85);color:var(--accent-dark)}
+.type-badge{position:absolute;top:10px;right:10px;padding:5px 10px 5px 8px;border-radius:99px;font-size:11px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:5px;backdrop-filter:blur(10px);background:rgba(255,255,255,.85);color:var(--accent-dark)}
 .type-badge::before{content:'';width:6px;height:6px;border-radius:50%;display:inline-block}
 .type-fresh::before{background:#6b8870}
 .type-forever::before{background:#a05870}
@@ -443,7 +443,7 @@ button{cursor:pointer;font-family:inherit}
 .coll-card:hover{background:#ede8df}
 .coll-num{
   font-family:'Cormorant Garamond',serif;
-  font-size:10px;letter-spacing:2px;color:var(--accent-light);
+  font-size:11px;letter-spacing:2px;color:var(--accent-light);
   margin-bottom:20px;display:block;
 }
 .coll-icon{
@@ -459,7 +459,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .coll-desc{font-size:12px;color:var(--text-muted);line-height:1.7;margin-bottom:20px}
 .text-link{
-  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
   color:var(--text-muted);display:inline-flex;align-items:center;gap:8px;
   border-bottom:.5px solid var(--border);padding-bottom:3px;
   transition:color .3s,gap .35s cubic-bezier(.16,1,.3,1),border-color .3s;
@@ -548,7 +548,7 @@ button{cursor:pointer;font-family:inherit}
   text-align:center;padding:32px;
 }
 .gal-cta-sub{
-  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
   color:var(--accent-light);display:block;margin-bottom:10px;
 }
 .gal-cta-title{
@@ -570,7 +570,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .trust-item{
   padding:16px 32px;
-  font-size:10px;letter-spacing:2.5px;text-transform:uppercase;
+  font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
   color:rgba(250,248,244,.5);
   border-right:.5px solid rgba(255,255,255,.06);
   display:flex;align-items:center;gap:8px;
@@ -599,7 +599,7 @@ button{cursor:pointer;font-family:inherit}
 .postcode-row button{
   padding:13px 22px;background:var(--accent-dark);color:#faf8f4;
   border:none;border-radius:var(--radius);
-  font-family:'DM Sans',sans-serif;font-size:10px;font-weight:400;
+  font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;
   letter-spacing:2px;text-transform:uppercase;
   transition:background .3s;
 }
@@ -641,7 +641,7 @@ button{cursor:pointer;font-family:inherit}
 
 .footer-tagline{font-size:12px;color:#b5a99a;line-height:1.7;max-width:260px}
 .footer-col h4{
-  font-size:9px;font-weight:400;letter-spacing:3px;text-transform:uppercase;
+  font-size:11px;font-weight:400;letter-spacing:3px;text-transform:uppercase;
   color:var(--accent-light);margin-bottom:18px;
 }
 .footer-col ul{list-style:none}
@@ -651,7 +651,7 @@ button{cursor:pointer;font-family:inherit}
 .footer-bottom{
   text-align:center;padding-top:24px;
   border-top:.5px solid rgba(255,255,255,.05);
-  font-size:10px;letter-spacing:1px;color:rgba(250,248,244,.6);
+  font-size:11px;letter-spacing:1px;color:rgba(250,248,244,.6);
 }
 
 /* ── Responsive ── */
@@ -704,11 +704,9 @@ button{cursor:pointer;font-family:inherit}
   .gallery-grid{grid-template-columns:1fr}
   .hero-btns{flex-direction:column;align-items:flex-start}
 }
-/* Stack the inline-styled 2-column grids in #forever (Fresh vs Forever
-   comparison cards) and #weddings-teaser (4-bullet feature list) on narrow
-   mobile — at <600px the text wraps mid-word inside the squeezed columns. */
+/* Stack the inline-styled 2-column grid in #weddings-teaser (4-bullet feature
+   list) on narrow mobile — at <600px the text wraps mid-word in squeezed columns. */
 @media(max-width:600px){
-  #forever [style*="grid-template-columns:1fr 1fr"],
   #weddings-teaser [style*="grid-template-columns:1fr 1fr"]{
     grid-template-columns:1fr !important;
   }
@@ -722,6 +720,36 @@ button{cursor:pointer;font-family:inherit}
   }
   #weddings-teaser > div > div:first-child{aspect-ratio:4/3}
   #weddings-teaser > div > div:last-child{padding:48px 24px !important}
+}
+
+/* ── Phones: shorter homepage (it was ~16 screens on a 375px phone) ──
+   Occasions and gallery two-up, tighter step/collection cards, footer links
+   side by side. The whole occasion card is the link, so its desc/link line go. */
+@media(max-width:600px){
+  .occasions-header{margin-bottom:24px}
+  .occasions-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .occ-img{height:110px}
+  .occ-body{padding:12px 12px 14px}
+  .occ-name{font-size:1.05rem;margin-bottom:0}
+  .occ-desc,.occ-link{display:none}
+  .collections-grid{margin-top:28px}
+  .coll-card{padding:26px 22px}
+  .coll-name br{display:none}
+  .coll-num,.coll-icon{margin-bottom:12px}
+  .gallery-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .gal-item{height:160px}
+  .gal-cap{opacity:1;padding:12px}
+  .gal-cta{padding:16px;flex-direction:column}
+  .gal-cta-sub{letter-spacing:1.5px;margin-bottom:6px}
+  .gal-cta-title{font-size:1.05rem;margin-bottom:8px}
+  .footer-cols{grid-template-columns:1fr 1fr;gap:28px}
+  .footer-cols > :first-child{grid-column:1/-1}
+}
+/* "Our story" teaser: inline two-column grid never stacked, so on phones the text was
+   128px wide and the photos 58px. */
+@media(max-width:768px){
+  #story-teaser > .container{grid-template-columns:1fr !important;gap:28px !important}
+  #story-teaser > .container > div:last-child > div{height:180px !important}
 }
 
 /* ── Seasonal theme system overlays (populated by seasonalTheme.ts) ── */
@@ -755,7 +783,7 @@ button{cursor:pointer;font-family:inherit}
 .nav-branch                          { display: none !important; }
 
 /* ── Cart badge ── */
-.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
+.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:11px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
 </style>
 </head>
 <body>
@@ -845,7 +873,7 @@ button{cursor:pointer;font-family:inherit}
     </p>
   </div>
   <div class="hero-right">
-    <img src="images/gallery/flowers-market.jpg" alt="Seasonal bouquet arrangement" width="1170" height="1974" loading="eager" decoding="async" fetchpriority="high">
+    <img src="images/gallery/flowers-market.jpg" srcset="images/gallery/flowers-market-480.webp 480w, images/gallery/flowers-market-800.webp 800w, images/gallery/flowers-market.webp 1170w" sizes="100vw" alt="Seasonal bouquet arrangement" width="1170" height="1974" loading="eager" decoding="async" fetchpriority="high">
     <div class="hero-fade"></div>
   </div>
 </section>
@@ -875,7 +903,7 @@ button{cursor:pointer;font-family:inherit}
     </div>
     <div class="occasions-grid">
       <a href="shop.html" class="occ-card reveal">
-        <div class="occ-img"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Birthday flowers" width="1092" height="1056" loading="lazy" decoding="async"></div>
+        <div class="occ-img"><img src="images/gallery/bouquet-pink-roses.jpg" srcset="images/gallery/bouquet-pink-roses-480.webp 480w, images/gallery/bouquet-pink-roses-800.webp 800w, images/gallery/bouquet-pink-roses.webp 1092w" sizes="(max-width: 600px) 50vw, 33vw" alt="Birthday flowers" width="1092" height="1056" loading="lazy" decoding="async"></div>
         <div class="occ-body">
           <h3 class="occ-name">Birthday</h3>
           <p class="occ-desc">Celebratory bouquets to brighten their special day</p>
@@ -883,7 +911,7 @@ button{cursor:pointer;font-family:inherit}
         </div>
       </a>
       <a href="shop.html" class="occ-card reveal">
-        <div class="occ-img"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Anniversary flowers" width="1170" height="1060" loading="lazy" decoding="async"></div>
+        <div class="occ-img"><img src="images/gallery/bouquet-pink-tulip.jpg" srcset="images/gallery/bouquet-pink-tulip-480.webp 480w, images/gallery/bouquet-pink-tulip-800.webp 800w, images/gallery/bouquet-pink-tulip.webp 1170w" sizes="(max-width: 600px) 50vw, 33vw" alt="Anniversary flowers" width="1170" height="1060" loading="lazy" decoding="async"></div>
         <div class="occ-body">
           <h3 class="occ-name">Anniversary</h3>
           <p class="occ-desc">Romantic arrangements to celebrate your love</p>
@@ -891,7 +919,7 @@ button{cursor:pointer;font-family:inherit}
         </div>
       </a>
       <a href="shop.html" class="occ-card reveal">
-        <div class="occ-img"><img src="images/gallery/bouquet-white.jpg" alt="Sympathy flowers" width="1170" height="1556" loading="lazy" decoding="async"></div>
+        <div class="occ-img"><img src="images/gallery/bouquet-white.jpg" srcset="images/gallery/bouquet-white-480.webp 480w, images/gallery/bouquet-white-800.webp 800w, images/gallery/bouquet-white.webp 1170w" sizes="(max-width: 600px) 50vw, 33vw" alt="Sympathy flowers" width="1170" height="1556" loading="lazy" decoding="async"></div>
         <div class="occ-body">
           <h3 class="occ-name">Sympathy</h3>
           <p class="occ-desc">Thoughtful tributes to honour cherished memories</p>
@@ -899,7 +927,7 @@ button{cursor:pointer;font-family:inherit}
         </div>
       </a>
       <a href="shop.html" class="occ-card reveal">
-        <div class="occ-img"><img src="images/gallery/bouquet-workshop.jpg" alt="Wedding flowers" width="1125" height="1500" loading="lazy" decoding="async"></div>
+        <div class="occ-img"><img src="images/gallery/bouquet-workshop.jpg" srcset="images/gallery/bouquet-workshop-480.webp 480w, images/gallery/bouquet-workshop-800.webp 800w, images/gallery/bouquet-workshop.webp 1125w" sizes="(max-width: 600px) 50vw, 33vw" alt="Wedding flowers" width="1125" height="1500" loading="lazy" decoding="async"></div>
         <div class="occ-body">
           <h3 class="occ-name">Wedding</h3>
           <p class="occ-desc">Exquisite ceremony flowers tailored to your vision</p>
@@ -907,7 +935,7 @@ button{cursor:pointer;font-family:inherit}
         </div>
       </a>
       <a href="shop.html" class="occ-card reveal">
-        <div class="occ-img"><img src="images/gallery/flowers-market.jpg" alt="New baby flowers" width="1170" height="1974" loading="lazy" decoding="async"></div>
+        <div class="occ-img"><img src="images/gallery/flowers-market.jpg" srcset="images/gallery/flowers-market-480.webp 480w, images/gallery/flowers-market-800.webp 800w, images/gallery/flowers-market.webp 1170w" sizes="(max-width: 600px) 50vw, 33vw" alt="New baby flowers" width="1170" height="1974" loading="lazy" decoding="async"></div>
         <div class="occ-body">
           <h3 class="occ-name">New Baby</h3>
           <p class="occ-desc">Delicate arrangements to welcome new life</p>
@@ -915,7 +943,7 @@ button{cursor:pointer;font-family:inherit}
         </div>
       </a>
       <a href="shop.html" class="occ-card reveal">
-        <div class="occ-img"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Thank you flowers" width="1092" height="1056" loading="lazy" decoding="async"></div>
+        <div class="occ-img"><img src="images/gallery/bouquet-pink-roses.jpg" srcset="images/gallery/bouquet-pink-roses-480.webp 480w, images/gallery/bouquet-pink-roses-800.webp 800w, images/gallery/bouquet-pink-roses.webp 1092w" sizes="(max-width: 600px) 50vw, 33vw" alt="Thank you flowers" width="1092" height="1056" loading="lazy" decoding="async"></div>
         <div class="occ-body">
           <h3 class="occ-name">Thank You</h3>
           <p class="occ-desc">Express your gratitude with elegant seasonal blooms</p>
@@ -937,17 +965,17 @@ button{cursor:pointer;font-family:inherit}
     <div class="collections-grid">
       <div class="coll-card reveal">
         <span class="coll-num">01</span>
-        <h3 class="coll-name">Custom<br>design</h3>
+        <h3 class="coll-name">Custom <br>design</h3>
         <p class="coll-desc">Tell us your colours, your venue, how you met — we'll design a bouquet around your story.</p>
       </div>
       <div class="coll-card reveal">
         <span class="coll-num">02</span>
-        <h3 class="coll-name">Hire, or<br>keep it</h3>
+        <h3 class="coll-name">Hire, or <br>keep it</h3>
         <p class="coll-desc">Choose a ready-made favourite. Hire it for your day and return it, or buy it outright to keep forever.</p>
       </div>
       <div class="coll-card reveal">
         <span class="coll-num">03</span>
-        <h3 class="coll-name">Arrives<br>ready</h3>
+        <h3 class="coll-name">Arrives <br>ready</h3>
         <p class="coll-desc">Hired pieces arrive two days early in a protective case and are returned within four — nothing to worry about on the day.</p>
       </div>
     </div>
@@ -984,8 +1012,8 @@ button{cursor:pointer;font-family:inherit}
             <path d="M12 8v6M9 11l3-3 3 3"/>
           </svg>
         </div>
-        <h3 class="coll-name">The Living<br>Collection</h3>
-        <p class="coll-desc">Fresh seasonal flowers, handcrafted and delivered the same day across Sydney.</p>
+        <h3 class="coll-name">The Living <br>Collection</h3>
+        <p class="coll-desc">Fresh seasonal flowers, handcrafted and delivered the same day across Sydney. Real fragrance; lasts 7–14 days.</p>
         <a href="shop.html?type=fresh" class="text-link">Shop fresh →</a>
       </div>
       <div class="coll-card reveal">
@@ -997,8 +1025,8 @@ button{cursor:pointer;font-family:inherit}
             <path d="M12 12c0-5 4-9 9-9-1 5-4 9-9 9z"/>
           </svg>
         </div>
-        <h3 class="coll-name">The Forever<br>Collection</h3>
-        <p class="coll-desc">Preserved &amp; artificial flowers that last a lifetime. Ships anywhere in Australia.</p>
+        <h3 class="coll-name">The Forever <br>Collection</h3>
+        <p class="coll-desc">Silk (artificial) &amp; preserved flowers, made to last for years — no water, no wilting. Allergy and pet friendly; ships anywhere in Australia.</p>
         <a href="shop.html?type=forever" class="text-link">Shop forever →</a>
       </div>
       <div class="coll-card reveal">
@@ -1008,63 +1036,9 @@ button{cursor:pointer;font-family:inherit}
             <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402C1 3.199 4.397 1 7.5 1c1.8 0 3.6.9 4.5 2.25C12.9 1.9 14.7 1 16.5 1 19.603 1 23 3.199 23 7.191c0 4.105-5.37 8.863-11 14.402z"/>
           </svg>
         </div>
-        <h3 class="coll-name">The Ceremony<br>Collection</h3>
+        <h3 class="coll-name">The Ceremony <br>Collection</h3>
         <p class="coll-desc">Wedding flowers to hire or buy. Bridal bouquets, bridesmaids and ceremony pieces — reserved for your date.</p>
         <a href="weddings.html" class="text-link">View hire collection →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOREVER COLLECTION — fresh vs forever education -->
-<section class="section reveal" id="forever" style="background:var(--bg-alt)">
-  <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center">
-      <div style="position:relative">
-        <div style="aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.12)">
-          <img src="images/gallery/bouquet-pink-tulip.jpg" alt="Forever flowers" style="width:100%;height:100%;object-fit:cover" width="1170" height="1060" loading="lazy" decoding="async">
-        </div>
-        <div style="position:absolute;bottom:-20px;right:-20px;background:#fff;border:.5px solid var(--border);padding:18px 22px;border-radius:var(--radius);box-shadow:0 8px 24px rgba(0,0,0,.08);max-width:220px">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--accent);font-weight:300;line-height:1">Years, not days</div>
-          <div style="font-size:11px;color:var(--text-muted);letter-spacing:1px;margin-top:4px">Made to last, no water needed</div>
-        </div>
-      </div>
-
-      <div>
-        <p class="eyebrow"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#a05870;margin-right:8px;vertical-align:middle"></span>The Forever Collection</p>
-        <h2 class="sec-title" style="margin-bottom:18px">Flowers that<br><em style="color:var(--accent);font-style:italic">never fade</em></h2>
-        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--text-muted);line-height:1.7;margin-bottom:32px;max-width:480px">Premium silk &amp; preserved flowers, made to last for years — no water, no wilting. Perfect for offices, allergies, anniversaries, or anyone who wants their flowers to keep blooming.</p>
-
-        <!-- Comparison -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:32px">
-          <div style="background:#fff;padding:24px 22px">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
-              <span style="width:8px;height:8px;border-radius:50%;background:#6b8870"></span>
-              <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)">Fresh</span>
-            </div>
-            <ul style="list-style:none;padding:0;margin:0;font-size:13px;color:var(--text);line-height:1.85">
-              <li>· Lasts 7–14 days</li>
-              <li>· Real fragrance &amp; touch</li>
-              <li>· Same-day delivery</li>
-            </ul>
-          </div>
-          <div style="background:#fff;padding:24px 22px">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
-              <span style="width:8px;height:8px;border-radius:50%;background:#a05870"></span>
-              <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)">Forever</span>
-            </div>
-            <ul style="list-style:none;padding:0;margin:0;font-size:13px;color:var(--text);line-height:1.85">
-              <li>· Lasts for years</li>
-              <li>· Allergy &amp; pet friendly</li>
-              <li>· Ships Australia-wide</li>
-            </ul>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
-          <a href="shop.html?type=forever" class="btn-dark">Shop Forever Collection →</a>
-          <a href="shop.html">Fresh vs Forever guide</a>
-        </div>
       </div>
     </div>
   </div>
@@ -1074,7 +1048,7 @@ button{cursor:pointer;font-family:inherit}
 <section class="section reveal" id="weddings-teaser" style="background:var(--accent-dark);color:var(--bg);padding:0;overflow:hidden">
   <div style="display:grid;grid-template-columns:1.1fr 1fr;min-height:560px">
     <div style="position:relative;overflow:hidden">
-      <img src="images/gallery/bouquet-white.jpg" alt="Wedding bouquet" style="width:100%;height:100%;object-fit:cover;object-position:center" width="1170" height="1556" loading="lazy" decoding="async">
+      <img src="images/gallery/bouquet-white.jpg" srcset="images/gallery/bouquet-white-480.webp 480w, images/gallery/bouquet-white-800.webp 800w, images/gallery/bouquet-white.webp 1170w" sizes="(max-width: 768px) 100vw, 50vw" alt="Wedding bouquet" style="width:100%;height:100%;object-fit:cover;object-position:center" width="1170" height="1556" loading="lazy" decoding="async">
     </div>
     <div style="display:flex;flex-direction:column;justify-content:center;padding:80px clamp(40px,5vw,80px)">
       <p class="eyebrow" style="color:var(--accent-light)">— For your wedding day —</p>
@@ -1087,8 +1061,8 @@ button{cursor:pointer;font-family:inherit}
         <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> Arrives two days early</li>
       </ul>
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
-        <a href="weddings.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--bg);color:var(--accent-dark);padding:14px 30px;border-radius:2px;font-size:10px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:background .3s">Explore weddings →</a>
-        <a href="weddings.html#enquire" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light);text-decoration:none;border-bottom:.5px solid rgba(180,196,210,.3);padding-bottom:3px">Send an enquiry</a>
+        <a href="weddings.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--bg);color:var(--accent-dark);padding:14px 30px;border-radius:2px;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:background .3s">Explore weddings →</a>
+        <a href="weddings.html#enquire" style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light);text-decoration:none;border-bottom:.5px solid rgba(180,196,210,.3);padding-bottom:3px">Send an enquiry</a>
       </div>
     </div>
   </div>
@@ -1100,11 +1074,11 @@ button{cursor:pointer;font-family:inherit}
     <p class="eyebrow">Our Creations</p>
     <h2 class="sec-title">A glimpse into our world</h2>
     <div class="gallery-grid">
-      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Pink tulip bouquet" loading="lazy" width="1170" height="1060" decoding="async"><div class="gal-cap"><span>Pink tulips</span></div></a>
-      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Blush roses" loading="lazy" width="1092" height="1056" decoding="async"><div class="gal-cap"><span>Blush roses</span></div></a>
-      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/bouquet-workshop.jpg" alt="Fresh arrangement" loading="lazy" width="1125" height="1500" decoding="async"><div class="gal-cap"><span>Fresh flowers</span></div></a>
-      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/bouquet-white.jpg" alt="White orchids" loading="lazy" width="1170" height="1556" decoding="async"><div class="gal-cap"><span>White orchids</span></div></a>
-      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/flowers-market.jpg" alt="Market blooms" loading="lazy" width="1170" height="1974" decoding="async"><div class="gal-cap"><span>Market blooms</span></div></a>
+      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/bouquet-pink-tulip.jpg" srcset="images/gallery/bouquet-pink-tulip-480.webp 480w, images/gallery/bouquet-pink-tulip-800.webp 800w, images/gallery/bouquet-pink-tulip.webp 1170w" sizes="(max-width: 600px) 50vw, 33vw" alt="Pink tulip bouquet" loading="lazy" width="1170" height="1060" decoding="async"><div class="gal-cap"><span>Pink tulips</span></div></a>
+      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/bouquet-pink-roses.jpg" srcset="images/gallery/bouquet-pink-roses-480.webp 480w, images/gallery/bouquet-pink-roses-800.webp 800w, images/gallery/bouquet-pink-roses.webp 1092w" sizes="(max-width: 600px) 50vw, 33vw" alt="Blush roses" loading="lazy" width="1092" height="1056" decoding="async"><div class="gal-cap"><span>Blush roses</span></div></a>
+      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/bouquet-workshop.jpg" srcset="images/gallery/bouquet-workshop-480.webp 480w, images/gallery/bouquet-workshop-800.webp 800w, images/gallery/bouquet-workshop.webp 1125w" sizes="(max-width: 600px) 50vw, 33vw" alt="Pink tulip arrangement in a vase" loading="lazy" width="1125" height="1500" decoding="async"><div class="gal-cap"><span>Tulips in a vase</span></div></a>
+      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/bouquet-white.jpg" srcset="images/gallery/bouquet-white-480.webp 480w, images/gallery/bouquet-white-800.webp 800w, images/gallery/bouquet-white.webp 1170w" sizes="(max-width: 600px) 50vw, 33vw" alt="White bouquet in sheer wrapping" loading="lazy" width="1170" height="1556" decoding="async"><div class="gal-cap"><span>White bouquet</span></div></a>
+      <a href="shop.html" class="gal-item reveal"><img src="images/gallery/flowers-market.jpg" srcset="images/gallery/flowers-market-480.webp 480w, images/gallery/flowers-market-800.webp 800w, images/gallery/flowers-market.webp 1170w" sizes="(max-width: 600px) 50vw, 33vw" alt="Market blooms" loading="lazy" width="1170" height="1974" decoding="async"><div class="gal-cap"><span>Market blooms</span></div></a>
       <a href="shop.html" class="gal-item gal-cta reveal">
         <span class="gal-cta-sub">Ready to order?</span>
         <span class="gal-cta-title">Shop the full collection</span>
@@ -1115,7 +1089,7 @@ button{cursor:pointer;font-family:inherit}
 </section>
 
 <!-- About teaser -->
-<section class="section reveal" style="background:var(--bg-alt)">
+<section class="section reveal" id="story-teaser" style="background:var(--bg-alt)">
   <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center">
     <div>
       <p class="eyebrow">Our story</p>
@@ -1125,10 +1099,10 @@ button{cursor:pointer;font-family:inherit}
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div style="border-radius:var(--radius);overflow:hidden;height:220px">
-        <img src="images/gallery/bouquet-workshop.jpg" alt="Flowers being arranged" style="width:100%;height:100%;object-fit:cover" width="1125" height="1500" loading="lazy" decoding="async">
+        <img src="images/gallery/bouquet-workshop.jpg" srcset="images/gallery/bouquet-workshop-480.webp 480w, images/gallery/bouquet-workshop-800.webp 800w, images/gallery/bouquet-workshop.webp 1125w" sizes="(max-width: 768px) 50vw, 25vw" alt="Flowers being arranged" style="width:100%;height:100%;object-fit:cover" width="1125" height="1500" loading="lazy" decoding="async">
       </div>
       <div style="border-radius:var(--radius);overflow:hidden;height:220px;margin-top:32px">
-        <img src="images/gallery/customer-Leidine.jpg" alt="One of our bouquets" style="width:100%;height:100%;object-fit:cover;object-position:center top" width="1170" height="1409" loading="lazy" decoding="async">
+        <img src="images/gallery/customer-Leidine.jpg" srcset="images/gallery/customer-Leidine-480.webp 480w, images/gallery/customer-Leidine-800.webp 800w, images/gallery/customer-Leidine.webp 1170w" sizes="(max-width: 768px) 50vw, 25vw" alt="One of our bouquets" style="width:100%;height:100%;object-fit:cover;object-position:center top" width="1170" height="1409" loading="lazy" decoding="async">
       </div>
     </div>
   </div>
@@ -1343,7 +1317,7 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
   }
   .vs-link:hover { background:rgba(255,255,255,.08); color:#fff; padding-left:18px; }
   .vs-link .vs-tag {
-    font-family:'Inter', sans-serif; font-size:9px; letter-spacing:1.5px;
+    font-family:'Inter', sans-serif; font-size:11px; letter-spacing:1.5px;
     text-transform:uppercase; color:rgba(255,255,255,.45);
   }
   .vs-link .vs-arrow {
@@ -1391,7 +1365,7 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
   }
   .vs-footer kbd {
     padding:3px 8px; border:1px solid rgba(255,255,255,.25);
-    border-radius:3px; margin:0 4px; font-family:inherit; font-size:10px;
+    border-radius:3px; margin:0 4px; font-family:inherit; font-size:11px;
   }
 
   @media (max-width: 720px) {

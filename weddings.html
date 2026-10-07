@@ -80,12 +80,12 @@ button{cursor:pointer;font-family:inherit}
 .nav{position:sticky;top:0;z-index:900;background:rgba(250,248,244,.96);border-bottom:.5px solid var(--border);backdrop-filter:blur(16px)}
 .nav-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:16px 48px}
 .nav-links{display:flex;align-items:center;gap:32px}
-.nav-links a{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);transition:color .3s}
+.nav-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);transition:color .3s}
 .nav-links a.current{color:var(--text)}
 .nav-links a:hover{color:var(--text)}
 .logo{text-align:center}
 .logo-name{font-family:'Great Vibes',cursive;font-size:2.4rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block}
-.logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:3px}
+.logo-sub{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:3px}
 /* Logo: tied-heart mark (public/brand/mark.svg) beside the script name */
 .logo a{display:inline-flex;align-items:center;gap:10px}
 .logo-mark{flex-shrink:0;color:var(--accent);--sw:2.8}
@@ -93,7 +93,7 @@ button{cursor:pointer;font-family:inherit}
 /* Smaller name so mark + name sit clear of the nav links; steps down with width */
 .logo .logo-name{font-size:1.9rem}
 .logo-mark{width:32px;height:32px}
-@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}}
+@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}.nav-inner .nav-links{gap:22px}.nav-inner .nav-links a,.nav-inner .nav-links .nav-btn{letter-spacing:1.4px}}
 @media(max-width:960px){.logo-mark{width:24px;height:24px}.logo .logo-name{font-size:1.5rem}}
 /* Tablets use the hamburger header (src/scripts/mobile-nav.ts): the desktop links did not fit beside the logo */
 @media(max-width:1023px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.nav-links{display:none}.logo{grid-column:2}}
@@ -104,16 +104,16 @@ button{cursor:pointer;font-family:inherit}
 /* HERO */
 .w-hero{position:relative;min-height:84vh;display:grid;grid-template-columns:1fr 1.1fr;background:var(--bg-alt)}
 .w-hero-text{display:flex;flex-direction:column;justify-content:center;padding:80px clamp(40px,6vw,100px)}
-.w-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.w-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
 .w-eyebrow::before{content:'';width:24px;height:.5px;background:var(--accent-light)}
 .w-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5vw,4.8rem);font-weight:300;line-height:1.04;letter-spacing:-1px;margin-bottom:20px}
 .w-h1 em{font-style:italic;color:var(--accent)}
 .w-script{font-family:'Great Vibes',cursive;color:var(--accent);font-size:1.2em;font-style:normal;letter-spacing:1px;display:block}
 .w-sub{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--text-muted);margin-bottom:32px;max-width:480px}
 .w-hero-btns{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-.btn-dark{display:inline-flex;align-items:center;gap:8px;background:var(--accent-dark);color:var(--bg);padding:14px 30px;border-radius:var(--radius);font-size:10px;letter-spacing:2px;text-transform:uppercase;border:none;transition:background .3s}
+.btn-dark{display:inline-flex;align-items:center;gap:8px;background:var(--accent-dark);color:var(--bg);padding:14px 30px;border-radius:var(--radius);font-size:11px;letter-spacing:2px;text-transform:uppercase;border:none;transition:background .3s}
 .btn-dark:hover{background:var(--accent)}
-.btn-ghost{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);border-bottom:.5px solid var(--border);padding-bottom:3px;transition:color .3s,gap .3s,border-color .3s}
+.btn-ghost{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);border-bottom:.5px solid var(--border);padding-bottom:3px;transition:color .3s,gap .3s,border-color .3s}
 .btn-ghost:hover{color:var(--text);gap:12px;border-color:var(--accent)}
 .w-hero-img{position:relative;overflow:hidden}
 .w-hero-img img{width:100%;height:100%;object-fit:cover}
@@ -123,7 +123,7 @@ button{cursor:pointer;font-family:inherit}
 /* SECTIONS */
 .section{padding:96px 0}
 .container{max-width:1200px;margin:0 auto;padding:0 48px}
-.eyebrow{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .eyebrow::before{content:'';display:inline-block;width:20px;height:.5px;background:var(--accent-light)}
 .sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.2vw,2.8rem);font-weight:300;letter-spacing:-.5px;line-height:1.1}
 .sec-sub{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--text-muted);margin-top:10px;max-width:560px}
@@ -152,7 +152,7 @@ button{cursor:pointer;font-family:inherit}
 .pkg-card{background:#fff;border:.5px solid var(--border);border-radius:var(--radius);padding:36px 32px;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s,border-color .3s;position:relative}
 .pkg-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.08)}
 .pkg-card.featured{border-color:var(--accent);background:#fff}
-.pkg-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent-dark);color:var(--bg);padding:5px 14px;border-radius:99px;font-size:9px;letter-spacing:2px;text-transform:uppercase}
+.pkg-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent-dark);color:var(--bg);padding:5px 14px;border-radius:99px;font-size:11px;letter-spacing:2px;text-transform:uppercase}
 .pkg-name{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--text);margin-bottom:4px;letter-spacing:-.3px}
 .pkg-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light);margin-bottom:24px}
 .pkg-price{font-family:'Cormorant Garamond',serif;color:var(--accent);font-size:2.8rem;font-weight:300;line-height:1;margin-bottom:6px;letter-spacing:-1px}
@@ -162,7 +162,7 @@ button{cursor:pointer;font-family:inherit}
 .pkg-incl li{font-size:13px;color:var(--text-muted);padding:9px 0;border-bottom:.5px solid var(--border);display:flex;align-items:flex-start;gap:10px;line-height:1.5}
 .pkg-incl li::before{content:'✓';color:var(--accent);flex-shrink:0;font-size:11px;margin-top:3px}
 .pkg-incl li:last-child{border-bottom:none}
-.pkg-cta{display:block;text-align:center;background:transparent;color:var(--text);border:.5px solid var(--border);padding:14px;border-radius:var(--radius);font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:all .3s}
+.pkg-cta{display:block;text-align:center;background:transparent;color:var(--text);border:.5px solid var(--border);padding:14px;border-radius:var(--radius);font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:all .3s}
 .pkg-cta:hover{border-color:var(--accent);background:var(--accent-dark);color:var(--bg)}
 .pkg-card.featured .pkg-cta{background:var(--accent-dark);color:var(--bg);border-color:var(--accent-dark)}
 .pkg-card.featured .pkg-cta:hover{background:var(--accent);border-color:var(--accent)}
@@ -176,7 +176,7 @@ button{cursor:pointer;font-family:inherit}
 .piece-card:hover .piece-img img{transform:scale(1.06)}
 .piece-body{padding:16px 14px}
 .piece-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);margin-bottom:3px}
-.piece-from{font-size:10px;color:var(--accent-light);letter-spacing:1px}
+.piece-from{font-size:11px;color:var(--accent-light);letter-spacing:1px}
 
 /* PROCESS */
 .proc-bg{background:var(--bg)}
@@ -228,20 +228,20 @@ button{cursor:pointer;font-family:inherit}
 .enq-card{background:rgba(250,248,244,.04);border:.5px solid rgba(250,248,244,.1);border-radius:var(--radius);padding:48px;margin-top:48px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .enq-card .field{display:flex;flex-direction:column;gap:6px}
 .enq-card .field.full{grid-column:1/-1}
-.enq-card label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light)}
+.enq-card label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light)}
 .enq-card input,.enq-card select,.enq-card textarea{padding:13px 14px;border:.5px solid rgba(250,248,244,.15);background:rgba(250,248,244,.04);border-radius:var(--radius);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;outline:none;transition:border-color .3s,background .3s}
 .enq-card input:focus,.enq-card select:focus,.enq-card textarea:focus{border-color:var(--accent-light);background:rgba(250,248,244,.07)}
 .enq-card textarea{resize:vertical;min-height:100px;font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic}
 .enq-card select option{background:var(--accent-dark);color:var(--bg)}
 .enq-submit-row{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-top:8px}
 .enq-fine{font-size:11px;color:rgba(250,248,244,.5);font-style:italic;font-family:'Cormorant Garamond',serif}
-.enq-card .btn-light{background:var(--bg);color:var(--accent-dark);padding:14px 30px;border:none;border-radius:var(--radius);font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:background .3s}
+.enq-card .btn-light{background:var(--bg);color:var(--accent-dark);padding:14px 30px;border:none;border-radius:var(--radius);font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:background .3s}
 .enq-card .btn-light:hover{background:var(--accent-light)}
 
 /* FOOTER */
 .footer{background:var(--accent-dark);padding:64px 0 28px;border-top:.5px solid rgba(250,248,244,.05)}
 .footer-inner{max-width:1200px;margin:0 auto;padding:0 48px}
-.footer-bottom{text-align:center;padding-top:24px;font-size:10px;letter-spacing:1px;color:rgba(250,248,244,.6)}
+.footer-bottom{text-align:center;padding-top:24px;font-size:11px;letter-spacing:1px;color:rgba(250,248,244,.6)}
 
 /* RESPONSIVE */
 @media(max-width:1024px){
@@ -292,7 +292,7 @@ button{cursor:pointer;font-family:inherit}
 .nav-branch{position:absolute;top:0;width:190px;height:64px;pointer-events:none;opacity:.55;z-index:0}
 .nav-branch--left{left:0} .nav-branch--right{right:0;transform:scaleX(-1)}
 @media(max-width:900px){ .nav-branch{display:none} }
-.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
+.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:11px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
 
 /* ── DEV TOGGLE: hide decorative SVGs + seasonal animations (keep nav icons) ── */
 /* Hide only seasonal-theme injected decorations (canvas particles, nav branches, side panels) */
@@ -307,7 +307,7 @@ button{cursor:pointer;font-family:inherit}
 
 /* Shop dropdown (consistent across pages) */
 .nav-shop{position:relative;padding-bottom:14px;margin-bottom:-14px}
-.nav-shop > .nav-btn{cursor:pointer;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);background:none;border:none;padding:0;transition:color .3s}
+.nav-shop > .nav-btn{cursor:pointer;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);background:none;border:none;padding:0;transition:color .3s}
 .nav-shop > .nav-btn:hover,.nav-shop > .nav-btn.active{color:var(--text)}
 .nav-shop-menu{
   position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(-8px);
@@ -320,7 +320,7 @@ button{cursor:pointer;font-family:inherit}
 .nav-shop:hover > .nav-shop-menu,.nav-shop:focus-within > .nav-shop-menu{
   opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);
 }
-.nav-shop-menu a{display:block;padding:9px 22px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:background .2s,color .2s}
+.nav-shop-menu a{display:block;padding:9px 22px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:background .2s,color .2s}
 .nav-shop-menu a:hover{background:var(--bg-alt);color:var(--accent)}
 .nav-shop-menu a::after{display:none}
 </style>
@@ -382,7 +382,7 @@ button{cursor:pointer;font-family:inherit}
     </div>
   </div>
   <div class="w-hero-img">
-    <img src="images/gallery/bouquet-white.jpg" alt="White wedding bouquet" width="1170" height="1556" loading="eager" decoding="async" fetchpriority="high">
+    <img src="images/gallery/bouquet-white.jpg" srcset="images/gallery/bouquet-white-480.webp 480w, images/gallery/bouquet-white-800.webp 800w, images/gallery/bouquet-white.webp 1170w" sizes="(max-width: 768px) 100vw, 50vw" alt="White wedding bouquet" width="1170" height="1556" loading="eager" decoding="async" fetchpriority="high">
   </div>
 </section>
 
@@ -462,7 +462,7 @@ button{cursor:pointer;font-family:inherit}
 
     <div class="paths-grid">
       <div class="path-card">
-        <div class="path-img"><img src="images/gallery/bouquet-pink-roses.jpg" alt="Fresh wedding flowers" width="1092" height="1056" loading="lazy" decoding="async"></div>
+        <div class="path-img"><img src="images/gallery/bouquet-pink-roses.jpg" srcset="images/gallery/bouquet-pink-roses-480.webp 480w, images/gallery/bouquet-pink-roses-800.webp 800w, images/gallery/bouquet-pink-roses.webp 1092w" sizes="(max-width: 768px) 100vw, 50vw" alt="Fresh wedding flowers" width="1092" height="1056" loading="lazy" decoding="async"></div>
         <span class="path-num">— 01 —</span>
         <h3 class="path-title">Fresh wedding flowers</h3>
         <span class="path-tag">fresh for the day</span>
@@ -478,7 +478,7 @@ button{cursor:pointer;font-family:inherit}
       </div>
 
       <div class="path-card">
-        <div class="path-img"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="Forever wedding flowers" width="1170" height="1060" loading="lazy" decoding="async"></div>
+        <div class="path-img"><img src="images/gallery/bouquet-pink-tulip.jpg" srcset="images/gallery/bouquet-pink-tulip-480.webp 480w, images/gallery/bouquet-pink-tulip-800.webp 800w, images/gallery/bouquet-pink-tulip.webp 1170w" sizes="(max-width: 768px) 100vw, 50vw" alt="Forever wedding flowers" width="1170" height="1060" loading="lazy" decoding="async"></div>
         <span class="path-num">— 02 —</span>
         <h3 class="path-title">Forever wedding flowers</h3>
         <span class="path-tag">a keepsake that lasts</span>
@@ -534,12 +534,12 @@ button{cursor:pointer;font-family:inherit}
     <h2 class="sec-title">A few of our bouquets</h2>
 
     <div class="wgal-grid">
-      <a href="shop.html" class="wgal-item wgal-1"><img src="images/gallery/bouquet-white.jpg" alt="" width="1170" height="1556" loading="lazy" decoding="async"></a>
-      <a href="shop.html" class="wgal-item wgal-2"><img src="images/gallery/bouquet-pink-roses.jpg" alt="" width="1092" height="1056" loading="lazy" decoding="async"></a>
-      <a href="shop.html" class="wgal-item wgal-3"><img src="images/gallery/bouquet-pink-tulip.jpg" alt="" width="1170" height="1060" loading="lazy" decoding="async"></a>
-      <a href="shop.html" class="wgal-item wgal-4"><img src="images/gallery/bouquet-workshop.jpg" alt="" width="1125" height="1500" loading="lazy" decoding="async"></a>
-      <a href="shop.html" class="wgal-item wgal-5"><img src="images/gallery/flowers-market.jpg" alt="" width="1170" height="1974" loading="lazy" decoding="async"></a>
-      <a href="shop.html" class="wgal-item wgal-6"><img src="images/gallery/customer-Leidine.jpg" alt="" width="1170" height="1409" loading="lazy" decoding="async"></a>
+      <a href="shop.html" class="wgal-item wgal-1"><img src="images/gallery/bouquet-white.jpg" srcset="images/gallery/bouquet-white-480.webp 480w, images/gallery/bouquet-white-800.webp 800w, images/gallery/bouquet-white.webp 1170w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw" alt="White bouquet in sheer wrapping, tied with a pearl ribbon" width="1170" height="1556" loading="lazy" decoding="async"></a>
+      <a href="shop.html" class="wgal-item wgal-2"><img src="images/gallery/bouquet-pink-roses.jpg" srcset="images/gallery/bouquet-pink-roses-480.webp 480w, images/gallery/bouquet-pink-roses-800.webp 800w, images/gallery/bouquet-pink-roses.webp 1092w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw" alt="Pink, white and red rose bouquet in white wrapping" width="1092" height="1056" loading="lazy" decoding="async"></a>
+      <a href="shop.html" class="wgal-item wgal-3"><img src="images/gallery/bouquet-pink-tulip.jpg" srcset="images/gallery/bouquet-pink-tulip-480.webp 480w, images/gallery/bouquet-pink-tulip-800.webp 800w, images/gallery/bouquet-pink-tulip.webp 1170w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw" alt="Pink tulip and rose bouquet" width="1170" height="1060" loading="lazy" decoding="async"></a>
+      <a href="shop.html" class="wgal-item wgal-4"><img src="images/gallery/bouquet-workshop.jpg" srcset="images/gallery/bouquet-workshop-480.webp 480w, images/gallery/bouquet-workshop-800.webp 800w, images/gallery/bouquet-workshop.webp 1125w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw" alt="Pink tulip arrangement in a vase" width="1125" height="1500" loading="lazy" decoding="async"></a>
+      <a href="shop.html" class="wgal-item wgal-5"><img src="images/gallery/flowers-market.jpg" srcset="images/gallery/flowers-market-480.webp 480w, images/gallery/flowers-market-800.webp 800w, images/gallery/flowers-market.webp 1170w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw" alt="Pink roses and white stock flowers" width="1170" height="1974" loading="lazy" decoding="async"></a>
+      <a href="shop.html" class="wgal-item wgal-6"><img src="images/gallery/customer-Leidine.jpg" srcset="images/gallery/customer-Leidine-480.webp 480w, images/gallery/customer-Leidine-800.webp 800w, images/gallery/customer-Leidine.webp 1170w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw" alt="Someone holding a wrapped pink rose bouquet" width="1170" height="1409" loading="lazy" decoding="async"></a>
     </div>
   </div>
 </section>

@@ -93,7 +93,7 @@ button{cursor:pointer;font-family:inherit}
 .nav{position:sticky;top:0;z-index:900;background:rgba(250,248,244,.96);border-bottom:.5px solid var(--border);backdrop-filter:blur(16px);}
 .nav-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:16px 48px;}
 .nav-links{display:flex;align-items:center;gap:32px}
-.nav-links a,.nav-btn{font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);background:none;border:none;position:relative;transition:color .3s;}
+.nav-links a,.nav-btn{font-size:11px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);background:none;border:none;position:relative;transition:color .3s;}
 .nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:.5px;background:var(--accent);transition:width .4s cubic-bezier(.16,1,.3,1);}
 .nav-links a:hover,.nav-btn:hover{color:var(--text)}
 .nav-links a:hover::after{width:100%}
@@ -101,7 +101,7 @@ button{cursor:pointer;font-family:inherit}
 .nav-links a.active::after{width:100%}
 .logo{text-align:center}
 .logo-name{font-family:'Great Vibes',cursive;font-size:2.4rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block;}
-.logo-sub{font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:3px;}
+.logo-sub{font-size:11px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:3px;}
 /* Logo: tied-heart mark (public/brand/mark.svg) beside the script name */
 .logo a{display:inline-flex;align-items:center;gap:10px}
 .logo-mark{flex-shrink:0;color:var(--accent);--sw:2.8}
@@ -109,7 +109,7 @@ button{cursor:pointer;font-family:inherit}
 /* Smaller name so mark + name sit clear of the nav links; steps down with width */
 .logo .logo-name{font-size:1.9rem}
 .logo-mark{width:32px;height:32px}
-@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}}
+@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}.nav-inner .nav-links{gap:22px}.nav-inner .nav-links a,.nav-inner .nav-links .nav-btn{letter-spacing:1.4px}}
 @media(max-width:960px){.logo-mark{width:24px;height:24px}.logo .logo-name{font-size:1.5rem}}
 /* Tablets use the hamburger header (src/scripts/mobile-nav.ts): the desktop links did not fit beside the logo */
 @media(max-width:1023px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.nav-links{display:none}.logo{grid-column:2}}
@@ -117,7 +117,7 @@ button{cursor:pointer;font-family:inherit}
 .nav-actions{display:flex;align-items:center;gap:16px;justify-content:flex-end}
 .nav-icon-btn{background:none;border:none;color:var(--text-muted);padding:8px;transition:color .3s;position:relative;display:inline-flex;align-items:center;}
 .nav-icon-btn:hover{color:var(--text)}
-.cart-badge{position:absolute;top:-4px;right:-4px;background:var(--accent);color:#fff;font-size:9px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.cart-badge{position:absolute;top:-4px;right:-4px;background:var(--accent);color:#fff;font-size:11px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
 
 /* ── Shop hero ── */
 .shop-hero{
@@ -126,7 +126,7 @@ button{cursor:pointer;font-family:inherit}
   padding:64px 0 52px;text-align:center;
 }
 .shop-hero-eyebrow{
-  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
   color:var(--accent-light);margin-bottom:16px;
   display:flex;align-items:center;justify-content:center;gap:12px;
 }
@@ -182,7 +182,7 @@ button{cursor:pointer;font-family:inherit}
   padding:5px 16px;
   border:.5px solid var(--border);border-radius:var(--radius);
   background:transparent;
-  font-size:10px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;
+  font-size:11px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;
   color:var(--text-muted);transition:all .25s;
   white-space:nowrap;
 }
@@ -193,7 +193,7 @@ button{cursor:pointer;font-family:inherit}
 .filter-select{
   border:.5px solid var(--border);border-radius:var(--radius);
   padding:5px 28px 5px 12px;
-  font-size:10px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;
+  font-size:11px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;
   color:var(--text-muted);background:#fff;
   outline:none;appearance:none;cursor:pointer;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238b7355' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
@@ -258,7 +258,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .prod-card:hover .prod-overlay{opacity:1}
 .quick-view{
-  font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
   background:#fff;color:var(--accent-dark);
   padding:7px 16px;border-radius:var(--radius);border:none;
   transform:translateY(6px);transition:transform .3s cubic-bezier(.16,1,.3,1),background .3s;
@@ -271,12 +271,12 @@ button{cursor:pointer;font-family:inherit}
 .prod-badge{
   position:absolute;top:10px;left:10px;
   padding:4px 10px;border-radius:var(--radius);
-  font-size:9px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;
+  font-size:11px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;
   font-family:'DM Sans',sans-serif;
 }
 .badge-fresh{background:rgba(240,255,240,.92);color:#3a7a3a;border:.5px solid rgba(90,154,90,.25)}
 .badge-artificial{background:rgba(255,252,248,.92);color:var(--text-muted);border:.5px solid var(--border)}
-.badge-new{position:absolute;top:10px;right:10px;background:var(--accent-dark);color:#faf8f4;padding:4px 10px;border-radius:var(--radius);font-size:9px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;}
+.badge-new{position:absolute;top:10px;right:10px;background:var(--accent-dark);color:#faf8f4;padding:4px 10px;border-radius:var(--radius);font-size:11px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;}
 
 /* Card body */
 .prod-body{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1}
@@ -295,7 +295,7 @@ button{cursor:pointer;font-family:inherit}
   padding-top:12px;border-top:.5px solid var(--border);
 }
 .prod-price-wrap{}
-.prod-price-from{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--accent-light);display:block;margin-bottom:1px}
+.prod-price-from{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--accent-light);display:block;margin-bottom:1px}
 .prod-price{
   font-family:'Cormorant Garamond',serif;
   font-size:1.2rem;font-weight:300;color:var(--accent);
@@ -359,7 +359,7 @@ button{cursor:pointer;font-family:inherit}
 .nav-branch{position:absolute;top:0;width:190px;height:64px;pointer-events:none;opacity:.55;z-index:0}
 .nav-branch--left{left:0} .nav-branch--right{right:0;transform:scaleX(-1)}
 @media(max-width:900px){ .nav-branch{display:none} }
-.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
+.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:11px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
 
 /* ── DEV TOGGLE: hide decorative SVGs + seasonal animations (keep nav icons) ── */
 /* Hide only seasonal-theme injected decorations (canvas particles, nav branches, side panels) */
@@ -374,7 +374,7 @@ button{cursor:pointer;font-family:inherit}
 
 /* Shop dropdown (consistent across pages) */
 .nav-shop{position:relative;padding-bottom:14px;margin-bottom:-14px}
-.nav-shop > .nav-btn{cursor:pointer;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);background:none;border:none;padding:0;transition:color .3s}
+.nav-shop > .nav-btn{cursor:pointer;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);background:none;border:none;padding:0;transition:color .3s}
 .nav-shop > .nav-btn:hover,.nav-shop > .nav-btn.active{color:var(--text)}
 .nav-shop-menu{
   position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(-8px);
@@ -387,7 +387,7 @@ button{cursor:pointer;font-family:inherit}
 .nav-shop:hover > .nav-shop-menu,.nav-shop:focus-within > .nav-shop-menu{
   opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);
 }
-.nav-shop-menu a{display:block;padding:9px 22px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:background .2s,color .2s}
+.nav-shop-menu a{display:block;padding:9px 22px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:background .2s,color .2s}
 .nav-shop-menu a:hover{background:var(--bg-alt);color:var(--accent)}
 .nav-shop-menu a::after{display:none}
 </style>
