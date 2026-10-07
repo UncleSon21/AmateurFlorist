@@ -184,18 +184,19 @@ html[data-theme="night"] body::before {
 }
 
 /* ── Fireflies canvas ──
-   Anchored to the document (position:absolute, document-height) so fireflies
-   sit at fixed PAGE positions and don't follow the viewport when scrolling.
-   z-index:0 puts them behind all content — sections, cards & images cover them;
-   fireflies only show where the page-bg is exposed (which is everywhere in
-   night mode, since section tints below are made transparent). */
+   Anchored to the page so fireflies scroll away with the content.
+   z-index:-1 paints them just above the page background and behind everything
+   else: text, cards, images, buttons, solid bands and the footer all cover
+   them. (z-index:0 drew them on top of any element that isn't positioned.)
+   They show wherever the page background is exposed, so the light section
+   tints below are made transparent at night. */
 html[data-theme="night"] body { position: relative; }
 /* Anchored to the page; night-mode.js moves it with translateY and switches
    it to position: fixed when CFG.firefliesAnchor is 'screen'. */
 #fireflies-canvas {
   position: absolute; top: 0; left: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
   opacity: 0;
   transition: opacity 1.2s ease;
 }
@@ -215,7 +216,13 @@ html[data-theme="night"] .services,
 html[data-theme="night"] .gallery,
 html[data-theme="night"] .contact,
 html[data-theme="night"] .hero,
-html[data-theme="night"] .marquee { background: transparent !important; }
+html[data-theme="night"] .marquee,
+html[data-theme="night"] .gallery-bg,
+html[data-theme="night"] #weddings-teaser,
+html[data-theme="night"] .wgal-bg,
+html[data-theme="night"] .hire-bg,
+/* story-teaser, the about page band and weddings #process use an inline tint */
+html[data-theme="night"] section[style*="background:var(--bg-alt)"] { background: transparent !important; }
 
 /* Body remains the dark base color underneath the fireflies */
 html[data-theme="night"] body { background: var(--bg) !important; }
@@ -300,8 +307,7 @@ html[data-theme="night"] .vs-close:hover {
    navy and the text vanishes. We override the section + its inline-styled
    descendants to use the night palette properly. */
 html[data-theme="night"] #weddings-teaser {
-  background: var(--bg-alt) !important;
-  color: var(--text) !important;
+  color: var(--text) !important;   /* background: dissolved with the other tints */
 }
 html[data-theme="night"] #weddings-teaser h2,
 html[data-theme="night"] #weddings-teaser [style*="color:var(--bg)"] {

@@ -137,6 +137,9 @@ Checked 2026-10-06:
   local repo folder name.
 - Contact and sender address is **`chloe@amateurflorist.co`** (owner's choice).
   It's a free forward to a personal inbox, not a mailbox: nothing to log in to.
+- **0414 827 927** is the owner's real phone (confirmed 2026-10-08). It appears
+  only in the customer order email (`stripe-webhook`); don't add it to the site
+  without asking.
 - Rental schema **is applied** to the live database (`rental_units`,
   `rental_availability`, `products.is_rentable` all respond), but no product is
   marked rentable yet.
