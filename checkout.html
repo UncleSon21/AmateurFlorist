@@ -22,12 +22,10 @@
     winter:['#1c3656','#0e1d30','#7a96b8','#f6f8fa','#eaf0f5']
   }[s],r=document.documentElement.style;
   /* Night-mode pre-paint (must mirror night-mode.js NIGHT_VARS to avoid FOUC).
-     Resolution: ?night=on|off → localStorage('night-mode') → clock 18:00–06:00. */
+     Night follows the clock, 18:00–06:00; ?night=on|off previews either. */
   var nq=new URLSearchParams(location.search).get('night'),
-      nl=null;try{nl=localStorage.getItem('night-mode');}catch(e){}
-  var nm=(nq==='on'||nq==='off'||nq==='auto')?nq:(nl||'auto'),
       h=new Date().getHours(),
-      isN=nm==='night'||(nm==='auto'&&(h>=18||h<6));
+      isN=nq==='on'||(nq!=='off'&&(h>=18||h<6));
   if(isN){
     r.setProperty('--accent','#d4a857');r.setProperty('--accent-dark','#050811');
     r.setProperty('--accent-light','#8a9bb8');r.setProperty('--bg','#0a0e1a');
@@ -44,7 +42,7 @@
 </script>
 
 <title>Checkout — Amateur Florist</title>
-<meta name="description" content="Secure checkout for your Amateur Florist order. Pay safely via Stripe.">
+<meta name="description" content="Checkout for your Amateur Florist order. Delivery across Sydney.">
 <meta name="robots" content="noindex,nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -301,7 +299,7 @@ button{cursor:pointer;font-family:inherit}
 </head>
 <body>
 
-<div class="topbar">Secure checkout · Your details are protected</div>
+<div class="topbar">Free delivery across Sydney on orders over $50</div>
 
 <nav class="nav">
   <div class="nav-inner">
@@ -512,8 +510,8 @@ button{cursor:pointer;font-family:inherit}
           </div>
         </div>
         <div class="trust-strip">
-          <div><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> 256-bit SSL</div>
-          <div><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg> Fresh guarantee</div>
+          <div><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> Free delivery over $50</div>
+          <div><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Same-day before 2pm</div>
         </div>
       </aside>
     </div>

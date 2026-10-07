@@ -130,27 +130,6 @@ const CSS = `
       padding-left: 8px;
     }
 
-    /* Day/night control lives in the menu on phones; the floating pill
-       (public/night-mode.js) covered text and checkout fields there. */
-    #night-toggle { display: none !important; }
-    #${DRAWER_ID} .vf-drawer-theme {
-      display: inline-flex; align-items: center; gap: 10px;
-      align-self: flex-start;
-      margin-top: 24px; min-height: 44px; padding: 0 18px;
-      background: none;
-      border: .5px solid var(--border, rgba(0,0,0,.12));
-      border-radius: 22px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--text-muted, #6b5d54);
-      cursor: pointer;
-    }
-    #${DRAWER_ID} .vf-drawer-theme[hidden] { display: none; }
-    #${DRAWER_ID} .vf-drawer-theme-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: #ffd166; box-shadow: 0 0 10px rgba(255,209,102,.55);
-    }
-
     #${DRAWER_ID} .vf-drawer-foot {
       margin-top: auto;
       padding-top: 24px;
@@ -260,10 +239,6 @@ function injectDrawer(): HTMLElement | null {
       </button>
       <p class="vf-drawer-eyebrow">Menu</p>
       <div class="vf-drawer-links" id="vf-drawer-links"></div>
-      <button class="vf-drawer-theme" type="button" aria-label="Toggle day/night theme" hidden>
-        <span class="vf-drawer-theme-dot" aria-hidden="true"></span>
-        <span class="vf-drawer-theme-label">Auto</span>
-      </button>
       <p class="vf-drawer-foot">Amateur Florist &middot; Sydney</p>
     </nav>
   `;
@@ -290,25 +265,7 @@ function setupHandlers(): void {
   const drawer = document.getElementById(DRAWER_ID);
   if (!btn || !drawer) return;
 
-  // Mirror of the floating day/night pill from public/night-mode.js, which is hidden
-  // on phones. Clicking it clicks the real pill so the mode logic stays in one place;
-  // looked up lazily because the two scripts load independently.
-  const themeBtn = drawer.querySelector<HTMLButtonElement>(".vf-drawer-theme");
-  const syncThemeBtn = (): void => {
-    const pill = document.getElementById("night-toggle");
-    if (!themeBtn) return;
-    themeBtn.hidden = !pill;
-    const label = pill?.querySelector(".nt-label")?.textContent;
-    const themeLabel = themeBtn.querySelector(".vf-drawer-theme-label");
-    if (label && themeLabel) themeLabel.textContent = label;
-  };
-  themeBtn?.addEventListener("click", () => {
-    document.getElementById("night-toggle")?.click();
-    syncThemeBtn();
-  });
-
   const open = (): void => {
-    syncThemeBtn();
     drawer.classList.add("open");
     drawer.setAttribute("aria-hidden", "false");
     btn.setAttribute("aria-expanded", "true");

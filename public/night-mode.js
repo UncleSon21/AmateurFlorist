@@ -3,8 +3,8 @@
    Slim night-theme controller. Adds:
      · Moonlit Garden dark palette (overrides seasonal CSS vars when active)
      · Firefly particle system (anchored to the page, behind content)
-     · Tiny floating toggle pill: Auto · Day | Auto · Night | Day | Night
-     · Auto-by-clock (6pm–6am) by default, manual override persists in localStorage
+     · Follows the clock (6pm–6am). No visitor toggle: the owner removed it.
+       ?night=on|off in the URL previews either mode.
    Coexists with seasonalTheme.ts: when night is off, seasonal colors take over.
    ═══════════════════════════════════════════════════════════════ */
 (function () {
@@ -61,19 +61,12 @@
   }
 
   // ── State ────────────────────────────────────────────────────────────
-  // mode: 'auto' (clock-based) | 'day' | 'night'
-  let _mode = 'auto';
-
-  function loadMode() {
-    try {
-      const m = localStorage.getItem('night-mode');
-      if (m === 'auto' || m === 'day' || m === 'night') _mode = m;
-    } catch (e) {}
-  }
-
-  function saveMode() {
-    try { localStorage.setItem('night-mode', _mode); } catch (e) {}
-  }
+  // mode: 'auto' (clock-based) unless ?night=on|off forces one for previewing.
+  const _q = new URLSearchParams(location.search).get('night');
+  let _mode = _q === 'on' ? 'night' : _q === 'off' ? 'day' : 'auto';
+  // Visitors who used the old toggle still have its choice saved; drop it so
+  // nobody is stuck in day or night with no way to change it.
+  try { localStorage.removeItem('night-mode'); } catch (e) {}
 
   function isNightHour(date) {
     const h = (date || new Date()).getHours();
@@ -109,7 +102,6 @@
   function syncTheme() {
     if (shouldBeNight()) applyNight();
     else                 removeNight();
-    updateToggleUI();
   }
 
   // ── Firefly system ───────────────────────────────────────────────────
@@ -345,34 +337,6 @@
     }
   }
 
-  // ── Toggle pill ──────────────────────────────────────────────────────
-  function injectToggle() {
-    if (document.getElementById('night-toggle')) return;
-    const btn = document.createElement('button');
-    btn.id = 'night-toggle';
-    btn.type = 'button';
-    btn.setAttribute('aria-label', 'Toggle day/night theme');
-    btn.innerHTML = '<span class="nt-dot"></span><span class="nt-label">Auto</span>';
-    btn.addEventListener('click', () => {
-      _mode = _mode === 'auto' ? 'day' : _mode === 'day' ? 'night' : 'auto';
-      saveMode();
-      syncTheme();
-    });
-    document.body.appendChild(btn);
-  }
-
-  function updateToggleUI() {
-    const btn = document.getElementById('night-toggle');
-    if (!btn) return;
-    const label = btn.querySelector('.nt-label');
-    if (!label) return;
-    const night = shouldBeNight();
-    label.textContent =
-      _mode === 'auto' ? (night ? 'Auto · Night' : 'Auto · Day')
-    : _mode === 'night' ? 'Night'
-                        : 'Day';
-  }
-
   // ── Auto re-evaluator: check once a minute when on auto ──────────────
   let _ticker = null;
   function startTicker() {
@@ -384,9 +348,7 @@
 
   // ── Init ─────────────────────────────────────────────────────────────
   function init() {
-    loadMode();
     const start = () => {
-      injectToggle();
       syncTheme();
       startTicker();
     };
@@ -399,7 +361,7 @@
 
   // Minimal public API for debugging / tweaks
   window.NightMode = {
-    setMode(m) { if (m === 'auto' || m === 'day' || m === 'night') { _mode = m; saveMode(); syncTheme(); } },
+    setMode(m) { if (m === 'auto' || m === 'day' || m === 'night') { _mode = m; syncTheme(); } },
     isNight: () => shouldBeNight(),
     config:  CFG,
   };

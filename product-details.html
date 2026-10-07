@@ -22,12 +22,10 @@
     winter:['#1c3656','#0e1d30','#7a96b8','#f6f8fa','#eaf0f5']
   }[s],r=document.documentElement.style;
   /* Night-mode pre-paint (must mirror night-mode.js NIGHT_VARS to avoid FOUC).
-     Resolution: ?night=on|off → localStorage('night-mode') → clock 18:00–06:00. */
+     Night follows the clock, 18:00–06:00; ?night=on|off previews either. */
   var nq=new URLSearchParams(location.search).get('night'),
-      nl=null;try{nl=localStorage.getItem('night-mode');}catch(e){}
-  var nm=(nq==='on'||nq==='off'||nq==='auto')?nq:(nl||'auto'),
       h=new Date().getHours(),
-      isN=nm==='night'||(nm==='auto'&&(h>=18||h<6));
+      isN=nq==='on'||(nq!=='off'&&(h>=18||h<6));
   if(isN){
     r.setProperty('--accent','#d4a857');r.setProperty('--accent-dark','#050811');
     r.setProperty('--accent-light','#8a9bb8');r.setProperty('--bg','#0a0e1a');
@@ -559,10 +557,6 @@ button{cursor:pointer;font-family:inherit}
             Same-day delivery on orders before 2pm
           </div>
           <div class="trust-row">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Secure checkout — SSL encrypted
-          </div>
-          <div class="trust-row">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
             Free delivery within Sydney over $50
           </div>
@@ -585,7 +579,7 @@ button{cursor:pointer;font-family:inherit}
         <h3>Delivery information</h3>
         <ul>
           <li><strong>Same-day delivery:</strong> Order before 2pm for delivery today across Greater Sydney</li>
-          <li><strong>Next-day delivery:</strong> Order anytime — delivery guaranteed the following day</li>
+          <li><strong>Next-day delivery:</strong> Order anytime for delivery the following day</li>
           <li><strong>Scheduled delivery:</strong> Choose your preferred date at checkout</li>
           <li><strong>Free delivery:</strong> On all orders over $50 within Sydney</li>
         </ul>

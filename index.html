@@ -22,12 +22,10 @@
     winter:['#1c3656','#0e1d30','#7a96b8','#f6f8fa','#eaf0f5']
   }[s],r=document.documentElement.style;
   /* Night-mode pre-paint (must mirror night-mode.js NIGHT_VARS to avoid FOUC).
-     Resolution: ?night=on|off → localStorage('night-mode') → clock 18:00–06:00. */
+     Night follows the clock, 18:00–06:00; ?night=on|off previews either. */
   var nq=new URLSearchParams(location.search).get('night'),
-      nl=null;try{nl=localStorage.getItem('night-mode');}catch(e){}
-  var nm=(nq==='on'||nq==='off'||nq==='auto')?nq:(nl||'auto'),
       h=new Date().getHours(),
-      isN=nm==='night'||(nm==='auto'&&(h>=18||h<6));
+      isN=nq==='on'||(nq!=='off'&&(h>=18||h<6));
   if(isN){
     r.setProperty('--accent','#d4a857');r.setProperty('--accent-dark','#050811');
     r.setProperty('--accent-light','#8a9bb8');r.setProperty('--bg','#0a0e1a');
@@ -295,25 +293,6 @@ button{cursor:pointer;font-family:inherit}
     rgba(250,248,244,.40) 100%);
 }
 
-/* ── Marquee ── */
-.marquee{
-  border-top:.5px solid var(--border);
-  border-bottom:.5px solid var(--border);
-  padding:13px 0;overflow:hidden;background:var(--bg);
-}
-.marquee-track{
-  display:flex;gap:48px;
-  animation:marquee 22s linear infinite;
-  white-space:nowrap;
-}
-.marquee-item{
-  font-family:'Cormorant Garamond',serif;
-  font-size:13px;font-style:italic;
-  color:var(--accent-light);letter-spacing:1px;
-  display:inline-flex;align-items:center;gap:24px;flex-shrink:0;
-}
-.marquee-item::after{content:'·';color:var(--accent-light)}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ── Section shared ── */
 .section{padding:96px 0}
@@ -681,8 +660,9 @@ button{cursor:pointer;font-family:inherit}
   .hero-review{padding-top:12px}
   .testimonials-grid{grid-template-columns:1fr}
   .gallery-grid{grid-template-columns:1fr 1fr}
-  .trust-strip{flex-direction:column;gap:0}
-  .trust-item{border-right:none;border-bottom:.5px solid rgba(255,255,255,.06);width:100%;justify-content:center}
+  /* One or two short lines on phones, not four stacked rows. */
+  .trust-strip{padding:10px 12px}
+  .trust-item{border-right:none;padding:6px 10px;letter-spacing:1.5px}
   .footer-cols{grid-template-columns:1fr}
   .container{padding:0 24px}
   .occasions-grid{grid-template-columns:1fr}
@@ -694,7 +674,6 @@ button{cursor:pointer;font-family:inherit}
   .sec-subtitle{font-size:.95rem;margin-top:6px}
   .occasions-header{margin-bottom:28px}
   .bestsellers-grid,.collections-grid,.testimonials-grid,.gallery-grid,.delivery-grid{margin-top:28px}
-  .marquee{padding:14px 0}
   .hero-h1{font-size:3rem;line-height:1.05}
   .hero-divider{margin:14px 0}
   .hero-sub{font-size:1rem}
@@ -882,22 +861,6 @@ button{cursor:pointer;font-family:inherit}
   </div>
 </section>
 
-<!-- Marquee -->
-<div class="marquee">
-  <div class="marquee-track">
-    <span class="marquee-item">Same-day delivery</span>
-    <span class="marquee-item">Hire or buy</span>
-    <span class="marquee-item">Custom or hired bouquets</span>
-    <span class="marquee-item">Fresh, silk &amp; preserved</span>
-    <span class="marquee-item">Made in Sydney</span>
-    <span class="marquee-item">Same-day delivery</span>
-    <span class="marquee-item">Hire or buy</span>
-    <span class="marquee-item">Custom or hired bouquets</span>
-    <span class="marquee-item">Fresh, silk &amp; preserved</span>
-    <span class="marquee-item">Made in Sydney</span>
-  </div>
-</div>
-
 <!-- Shop by Occasion -->
 <section class="section occasions-bg reveal" id="occasions">
   <div class="container">
@@ -958,36 +921,6 @@ button{cursor:pointer;font-family:inherit}
   </div>
 </section>
 
-<!-- Your Wedding Bouquet -->
-<section class="section reveal" id="how-hire-works">
-  <div class="container">
-    <p class="eyebrow">Your Wedding Bouquet</p>
-    <h2 class="sec-title">Tell us your story,<br>we'll bring it to life</h2>
-    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-muted);font-size:1.05rem;margin-top:10px;max-width:560px">A one-of-a-kind bouquet designed around your day, or a ready-made favourite to hire for the day or keep forever — your choice.</p>
-  </div>
-  <div class="container" style="padding-top:0">
-    <div class="collections-grid">
-      <div class="coll-card reveal">
-        <span class="coll-num">01</span>
-        <h3 class="coll-name">Custom <br>design</h3>
-        <p class="coll-desc">Tell us your colours, your venue, how you met — we'll design a bouquet around your story.</p>
-      </div>
-      <div class="coll-card reveal">
-        <span class="coll-num">02</span>
-        <h3 class="coll-name">Hire, or <br>keep it</h3>
-        <p class="coll-desc">Choose a ready-made favourite. Hire it for your day and return it, or buy it outright to keep forever.</p>
-      </div>
-      <div class="coll-card reveal">
-        <span class="coll-num">03</span>
-        <h3 class="coll-name">Arrives <br>ready</h3>
-        <p class="coll-desc">Hired pieces arrive two days early in a protective case and are returned within four — nothing to worry about on the day.</p>
-      </div>
-    </div>
-    <p style="text-align:center;margin-top:40px">
-      <a href="weddings.html#hire" class="btn-dark">Explore your options →</a>
-    </p>
-  </div>
-</section>
 
 <!-- Featured arrangements — rendered from the products table by src/scripts/home-featured.ts.
      Was four hard-coded cards with names, prices and "best seller" badges that matched
@@ -1114,8 +1047,7 @@ button{cursor:pointer;font-family:inherit}
 
 <!-- Trust strip -->
 <div class="trust-strip">
-  <div class="trust-item"><span class="trust-dot"></span>Wedding Hire</div>
-  <div class="trust-item"><span class="trust-dot"></span>Hire or Buy</div>
+  <div class="trust-item"><span class="trust-dot"></span>Wedding hire or buy</div>
   <div class="trust-item"><span class="trust-dot"></span>Fresh &amp; Preserved</div>
   <div class="trust-item"><span class="trust-dot"></span>Sydney-wide Delivery</div>
 </div>

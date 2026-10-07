@@ -581,36 +581,6 @@ html[data-theme="night"] .field select {
   background-position: right 8px center !important;
 }
 
-/* ── Day/Night toggle pill ── */
-#night-toggle {
-  position: fixed; bottom: 24px; left: 24px; z-index: 9999;
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(28,22,18,.82); backdrop-filter: blur(10px);
-  color: #faf8f4; padding: 8px 14px; border-radius: 20px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px; letter-spacing: 1px; cursor: pointer; border: none;
-  transition: background .25s, color .25s, box-shadow .25s;
-  user-select: none;
-}
-#night-toggle:hover { background: rgba(28,22,18,.95); }
-html[data-theme="night"] #night-toggle {
-  background: rgba(19,24,41,.85);
-  color: #e8e3d8;
-  box-shadow: 0 0 24px -10px rgba(212,168,87,.45), inset 0 0 0 1px rgba(212,168,87,.18);
-}
-html[data-theme="night"] #night-toggle:hover {
-  background: rgba(26,33,56,.95);
-  box-shadow: 0 0 28px -8px rgba(212,168,87,.6), inset 0 0 0 1px rgba(212,168,87,.32);
-}
-#night-toggle .nt-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: #ffd166; box-shadow: 0 0 10px rgba(255,209,102,.55);
-  flex-shrink: 0;
-}
-html[data-theme="night"] #night-toggle .nt-dot {
-  background: #ffd864; box-shadow: 0 0 12px rgba(255,216,100,.7), 0 0 4px rgba(255,242,168,.9);
-}
-
 /* ── Inverted elements that went dark-on-dark at night ──
    These use --accent-dark as a background with --bg as text (or the reverse);
    the night palette makes both of those dark. Found with a contrast audit. */

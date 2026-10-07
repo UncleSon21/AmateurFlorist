@@ -22,12 +22,10 @@
     winter:['#1c3656','#0e1d30','#7a96b8','#f6f8fa','#eaf0f5']
   }[s],r=document.documentElement.style;
   /* Night-mode pre-paint (must mirror night-mode.js NIGHT_VARS to avoid FOUC).
-     Resolution: ?night=on|off → localStorage('night-mode') → clock 18:00–06:00. */
+     Night follows the clock, 18:00–06:00; ?night=on|off previews either. */
   var nq=new URLSearchParams(location.search).get('night'),
-      nl=null;try{nl=localStorage.getItem('night-mode');}catch(e){}
-  var nm=(nq==='on'||nq==='off'||nq==='auto')?nq:(nl||'auto'),
       h=new Date().getHours(),
-      isN=nm==='night'||(nm==='auto'&&(h>=18||h<6));
+      isN=nq==='on'||(nq!=='off'&&(h>=18||h<6));
   if(isN){
     r.setProperty('--accent','#d4a857');r.setProperty('--accent-dark','#050811');
     r.setProperty('--accent-light','#8a9bb8');r.setProperty('--bg','#0a0e1a');
@@ -135,7 +133,7 @@ button{cursor:pointer;font-family:inherit}
 .path-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
 .path-card:hover .path-img img{transform:scale(1.04)}
 .path-num{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:2px;color:var(--accent-light);margin-bottom:10px}
-.path-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--text);margin-bottom:6px;letter-spacing:-.5px}
+.path-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--text);margin-bottom:6px;letter-spacing:-.5px;line-height:1.15}
 .path-tag{font-family:'Great Vibes',cursive;color:var(--accent);font-size:1.4rem;display:block;margin-bottom:18px}
 .path-desc{font-size:14px;color:var(--text-muted);line-height:1.85;margin-bottom:24px}
 .path-feat{list-style:none;margin-bottom:28px}
@@ -282,10 +280,14 @@ button{cursor:pointer;font-family:inherit}
   .hire-card .piece-body{padding:14px 12px}
   .hire-card .piece-name{font-size:1.1rem}
   .proc-grid{grid-template-columns:1fr}
-  /* "If you choose to hire" steps use an inline 3-col grid, so !important is needed to stack them on phones. */
-  .hire-steps-grid{grid-template-columns:1fr !important}
   .proc-step{padding:28px 24px}
-  .wgal-grid{grid-template-columns:1fr 1fr}
+  /* Gallery two-up on phones: six full-width photos were ~2,000px of scrolling. */
+  .wgal-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-auto-rows:170px;margin-top:32px}
+  .wgal-1,.wgal-2,.wgal-3,.wgal-4,.wgal-5,.wgal-6{grid-column:span 1;grid-row:span 1}
+  /* The bullet points repeat each card's paragraph; on phones they were most of its height. */
+  .path-feat{display:none}
+  /* The two card links squeezed side by side, arrows wrapping onto their own lines. */
+  .path-cta{flex-direction:column;align-items:flex-start;gap:14px}
   .enq-card input,.enq-card select,.enq-card textarea{font-size:16px}
   /* Hero unified-backdrop on mobile only — photo fills, text overlays */
   .w-hero{display:flex;align-items:center;min-height:60vh;position:relative;overflow:hidden}
@@ -437,35 +439,12 @@ button{cursor:pointer;font-family:inherit}
           <li>Nothing wilts, nothing goes to waste</li>
         </ul>
         <div class="path-cta">
-          <a href="#hire-steps" style="font-size:11px;color:var(--text-muted);border-bottom:.5px solid var(--border);padding-bottom:2px">See how hire works →</a>
+          <a href="#process" style="font-size:11px;color:var(--text-muted);border-bottom:.5px solid var(--border);padding-bottom:2px">See how hire works →</a>
           <a href="#enquire" class="btn-ghost" data-prefill-interest="A ready-made bouquet, to hire or buy">Browse hire &amp; buy →</a>
         </div>
       </div>
     </div>
 
-    <!-- How hire works — only applies to path 02 -->
-    <div style="margin-top:56px">
-      <p class="eyebrow" id="hire-steps">If you choose to hire</p>
-      <div class="hire-steps-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:20px;border:.5px solid var(--border)">
-        <div class="proc-step">
-          <span class="proc-num">i.</span>
-          <h3 class="proc-name">Reserve your date</h3>
-          <p class="proc-desc">Choose your bouquet and tell us your wedding date. We check what's available and send a quote — confirming the quote is what secures it for your date.</p>
-        </div>
-        <div class="proc-step">
-          <span class="proc-num">ii.</span>
-          <h3 class="proc-name">Arrives before the day</h3>
-          <p class="proc-desc">Your flowers arrive two days early in a protective case, with time to check everything over before the wedding.</p>
-        </div>
-        <div class="proc-step">
-          <span class="proc-num">iii.</span>
-          <h3 class="proc-name">Return, or keep it</h3>
-          <p class="proc-desc">Send it back within four days and your bond is refunded — or keep the bouquet and pay the difference. It's yours either way.</p>
-        </div>
-      </div>
-    </div>
-
-    <p style="margin-top:24px;font-size:12px;color:var(--text-muted);font-style:italic;font-family:'Cormorant Garamond',serif">Enquiring is free and doesn't reserve stock — confirming your booking does.</p>
   </div>
 </section>
 
@@ -546,8 +525,8 @@ button{cursor:pointer;font-family:inherit}
       </div>
       <div class="proc-step">
         <span class="proc-num">iv.</span>
-        <h3 class="proc-name">Your flowers arrive</h3>
-        <p class="proc-desc">Hired pieces arrive two days early in a protective case, so there's time to check everything before the day.</p>
+        <h3 class="proc-name">Arrives, then return or keep</h3>
+        <p class="proc-desc">Hired pieces arrive two days early in a protective case. Afterwards, send it back within four days and your bond is refunded — or keep it and pay the difference.</p>
       </div>
     </div>
   </div>
@@ -560,12 +539,12 @@ button{cursor:pointer;font-family:inherit}
     <h2 class="sec-title">A few of our bouquets</h2>
 
     <div class="wgal-grid">
-      <a href="shop.html" class="wgal-item wgal-1"><img src="images/gallery/bouquet-white.jpg" srcset="images/gallery/bouquet-white-480.webp 480w, images/gallery/bouquet-white-800.webp 800w, images/gallery/bouquet-white.webp 1170w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw" alt="White bouquet in sheer wrapping, tied with a pearl ribbon" width="1170" height="1556" loading="lazy" decoding="async"></a>
-      <a href="shop.html" class="wgal-item wgal-2"><img src="images/gallery/bouquet-pink-roses.jpg" srcset="images/gallery/bouquet-pink-roses-480.webp 480w, images/gallery/bouquet-pink-roses-800.webp 800w, images/gallery/bouquet-pink-roses.webp 1092w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw" alt="Pink, white and red rose bouquet in white wrapping" width="1092" height="1056" loading="lazy" decoding="async"></a>
-      <a href="shop.html" class="wgal-item wgal-3"><img src="images/gallery/bouquet-pink-tulip.jpg" srcset="images/gallery/bouquet-pink-tulip-480.webp 480w, images/gallery/bouquet-pink-tulip-800.webp 800w, images/gallery/bouquet-pink-tulip.webp 1170w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw" alt="Pink tulip and rose bouquet" width="1170" height="1060" loading="lazy" decoding="async"></a>
-      <a href="shop.html" class="wgal-item wgal-4"><img src="images/gallery/bouquet-workshop.jpg" srcset="images/gallery/bouquet-workshop-480.webp 480w, images/gallery/bouquet-workshop-800.webp 800w, images/gallery/bouquet-workshop.webp 1125w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw" alt="Pink tulip arrangement in a vase" width="1125" height="1500" loading="lazy" decoding="async"></a>
-      <a href="shop.html" class="wgal-item wgal-5"><img src="images/gallery/flowers-market.jpg" srcset="images/gallery/flowers-market-480.webp 480w, images/gallery/flowers-market-800.webp 800w, images/gallery/flowers-market.webp 1170w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw" alt="Pink roses and white stock flowers" width="1170" height="1974" loading="lazy" decoding="async"></a>
-      <a href="shop.html" class="wgal-item wgal-6"><img src="images/gallery/customer-Leidine.jpg" srcset="images/gallery/customer-Leidine-480.webp 480w, images/gallery/customer-Leidine-800.webp 800w, images/gallery/customer-Leidine.webp 1170w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw" alt="Someone holding a wrapped pink rose bouquet" width="1170" height="1409" loading="lazy" decoding="async"></a>
+      <a href="shop.html" class="wgal-item wgal-1"><img src="images/gallery/bouquet-white.jpg" srcset="images/gallery/bouquet-white-480.webp 480w, images/gallery/bouquet-white-800.webp 800w, images/gallery/bouquet-white.webp 1170w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 50vw, 40vw" alt="White bouquet in sheer wrapping, tied with a pearl ribbon" width="1170" height="1556" loading="lazy" decoding="async"></a>
+      <a href="shop.html" class="wgal-item wgal-2"><img src="images/gallery/bouquet-pink-roses.jpg" srcset="images/gallery/bouquet-pink-roses-480.webp 480w, images/gallery/bouquet-pink-roses-800.webp 800w, images/gallery/bouquet-pink-roses.webp 1092w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 50vw, 40vw" alt="Pink, white and red rose bouquet in white wrapping" width="1092" height="1056" loading="lazy" decoding="async"></a>
+      <a href="shop.html" class="wgal-item wgal-3"><img src="images/gallery/bouquet-pink-tulip.jpg" srcset="images/gallery/bouquet-pink-tulip-480.webp 480w, images/gallery/bouquet-pink-tulip-800.webp 800w, images/gallery/bouquet-pink-tulip.webp 1170w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 50vw, 40vw" alt="Pink tulip and rose bouquet" width="1170" height="1060" loading="lazy" decoding="async"></a>
+      <a href="shop.html" class="wgal-item wgal-4"><img src="images/gallery/bouquet-workshop.jpg" srcset="images/gallery/bouquet-workshop-480.webp 480w, images/gallery/bouquet-workshop-800.webp 800w, images/gallery/bouquet-workshop.webp 1125w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 50vw, 40vw" alt="Pink tulip arrangement in a vase" width="1125" height="1500" loading="lazy" decoding="async"></a>
+      <a href="shop.html" class="wgal-item wgal-5"><img src="images/gallery/flowers-market.jpg" srcset="images/gallery/flowers-market-480.webp 480w, images/gallery/flowers-market-800.webp 800w, images/gallery/flowers-market.webp 1170w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 50vw, 40vw" alt="Pink roses and white stock flowers" width="1170" height="1974" loading="lazy" decoding="async"></a>
+      <a href="shop.html" class="wgal-item wgal-6"><img src="images/gallery/customer-Leidine.jpg" srcset="images/gallery/customer-Leidine-480.webp 480w, images/gallery/customer-Leidine-800.webp 800w, images/gallery/customer-Leidine.webp 1170w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 50vw, 40vw" alt="Someone holding a wrapped pink rose bouquet" width="1170" height="1409" loading="lazy" decoding="async"></a>
     </div>
   </div>
 </section>

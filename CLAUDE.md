@@ -70,6 +70,9 @@ These cost real debugging time; don't rediscover them:
   owner via the "DEV TOGGLE" CSS blocks; `startParticles` checks that CSS and
   doesn't run its animation loop while hidden. Season colours/hero copy still
   follow the date.
+- Night mode follows the clock (18:00–06:00) with **no visitor toggle**: the
+  owner removed the floating pill and the menu button. `?night=on|off` previews
+  either mode. The per-page pre-paint script and `night-mode.js` must agree.
 - Night-mode fireflies are anchored to the page: they scroll away with the
   content (owner's choice). Only a band ~3 screens tall around the viewport is
   drawn, on an absolutely positioned canvas moved with `translateY`; never make
@@ -160,6 +163,9 @@ Checked 2026-10-06:
   details first). Outstanding: Google Business Profile, Search Console.
 - Free delivery threshold is **$50** (owner confirmed) — code and copy agree.
 - The product page "In Vase +$30" option is switched off: it was never charged.
+- While orders go by email, no page claims "secure checkout", SSL or a "fresh
+  guarantee" (none was owner-supplied). The Stripe/SSL line inside checkout's
+  card section only shows once card payments are live.
 - The redesign mockup shipped invented testimonials, star ratings, "best
   seller" badges, wedding package and à la carte prices, deposit/cancellation
   terms, a Surry Hills studio and street address, opening hours, a team, SMS

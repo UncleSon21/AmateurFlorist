@@ -22,12 +22,10 @@
     winter:['#1c3656','#0e1d30','#7a96b8','#f6f8fa','#eaf0f5']
   }[s],r=document.documentElement.style;
   /* Night-mode pre-paint (must mirror night-mode.js NIGHT_VARS to avoid FOUC).
-     Resolution: ?night=on|off → localStorage('night-mode') → clock 18:00–06:00. */
+     Night follows the clock, 18:00–06:00; ?night=on|off previews either. */
   var nq=new URLSearchParams(location.search).get('night'),
-      nl=null;try{nl=localStorage.getItem('night-mode');}catch(e){}
-  var nm=(nq==='on'||nq==='off'||nq==='auto')?nq:(nl||'auto'),
       h=new Date().getHours(),
-      isN=nm==='night'||(nm==='auto'&&(h>=18||h<6));
+      isN=nq==='on'||(nq!=='off'&&(h>=18||h<6));
   if(isN){
     r.setProperty('--accent','#d4a857');r.setProperty('--accent-dark','#050811');
     r.setProperty('--accent-light','#8a9bb8');r.setProperty('--bg','#0a0e1a');
@@ -527,6 +525,10 @@ button{cursor:pointer;font-family:inherit}
   .page-hero-img{height:360px;border-radius:var(--radius)}
   .story-grid{grid-template-columns:1fr;gap:48px}
   .story-img-accent{display:none}
+  /* Single column: a squarer crop that keeps the person and bouquet and drops
+     most of the carpark ceiling above them. */
+  .story-img-main{aspect-ratio:1/1}
+  .story-img-main img{object-position:center 85%}
   .stats-inner{grid-template-columns:repeat(2,1fr)}
   .stat-item:nth-child(2){border-right:none}
   .stat-item:nth-child(3){border-top:.5px solid rgba(255,255,255,.08)}
@@ -542,14 +544,15 @@ button{cursor:pointer;font-family:inherit}
   .values-grid{grid-template-columns:1fr}
   .team-grid{grid-template-columns:1fr}
   .stats-inner{grid-template-columns:1fr 1fr}
+  .stat-item{padding:28px 12px}
+  .stats-inner .stat-num{font-size:1.45rem !important}   /* beats the inline 2rem */
+  .stat-label{letter-spacing:1.2px}
   .footer-cols{grid-template-columns:1fr}
   .container{padding:0 24px}
   .team-header{flex-direction:column;align-items:flex-start;gap:16px}
 }
 @media(max-width:480px){
   .page-hero-h1{font-size:2.8rem}
-  .stats-inner{grid-template-columns:1fr}
-  .stat-item{border-right:none;border-bottom:.5px solid rgba(255,255,255,.08)}
   .process-steps{grid-template-columns:1fr}
 }
 
