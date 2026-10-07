@@ -2,7 +2,7 @@
    night-mode.js — Amateur Florist
    Slim night-theme controller. Adds:
      · Moonlit Garden dark palette (overrides seasonal CSS vars when active)
-     · Firefly particle system (viewport-sized canvas, behind content)
+     · Firefly particle system (anchored to the page, behind content)
      · Tiny floating toggle pill: Auto · Day | Auto · Night | Day | Night
      · Auto-by-clock (6pm–6am) by default, manual override persists in localStorage
    Coexists with seasonalTheme.ts: when night is off, seasonal colors take over.
@@ -13,9 +13,11 @@
   const CFG = {
     nightStartHour: 18,   // 6pm
     nightEndHour:   6,    // 6am
-    firefliesMin: 6,          // count = screen area / firefliesAreaPer, clamped:
+    firefliesAnchor: 'page',  // 'page': scroll away with the content | 'screen': stay put on screen
+    firefliesMin: 6,          // per screenful = screen area / firefliesAreaPer, clamped:
     firefliesMax: 36,         //   ~8 on a phone, 32 on a 1440x900 laptop
     firefliesAreaPer: 40000,
+    firefliesTotalMax: 200,   // page mode: cap across the whole page
     firefliesPulse: 1,
     firefliesPalette: ['#fff2a8', '#ffd864', '#c8e87a', '#9ad4ff'],
   };
@@ -111,22 +113,30 @@
   }
 
   // ── Firefly system ───────────────────────────────────────────────────
-  // One viewport-sized canvas, fixed behind the content. The previous version
-  // used a canvas as tall as the page (15,000+ px on the homepage), rebuilt a
-  // radial gradient for each of 90 fireflies every frame, and reallocated the
-  // canvas on every layout change — it stalled phones. Now:
-  //   · the count scales with screen area (about 8 on a phone, at most 36)
-  //   · each colour's glow is rendered once to a sprite and stamped with drawImage
-  //   · movement is time-based; phones draw at ~30fps with a lower pixel ratio
+  // CFG.firefliesAnchor:
+  //   'page'   — each firefly has a spot on the page and scrolls away with the
+  //              content, like everything else on it (the owner's choice).
+  //              Only a band ~3 screens tall around the viewport is drawn, on an
+  //              absolutely positioned canvas the browser scrolls natively (no
+  //              jitter); the band is moved along every screen or so.
+  //   'screen' — a viewport-fixed canvas; fireflies stay put on screen while the
+  //              page scrolls underneath them.
+  // Either way the canvas stays small. A page-tall canvas (15,000+ px) with 90
+  // fireflies and a fresh gradient per firefly per frame used to stall phones.
+  // Count scales with screen area; glows are pre-rendered sprites; phones draw
+  // at ~30fps with a lower pixel ratio.
   let _animId = null;
   let _canvas = null;
   let _fireflies = [];
   let _resizeHandler = null;
+  let _scrollHandler = null;
+  let _resizeObserver = null;
   const _sprites = {};
   const SPRITE_R = 28;   // largest halo radius in CSS px
 
   function rand(a, b) { return a + Math.random() * (b - a); }
 
+  // Fireflies per screenful (about 8 on a phone, at most firefliesMax).
   function fireflyCount() {
     const perArea = (window.innerWidth * window.innerHeight) / CFG.firefliesAreaPer;
     return Math.round(Math.min(CFG.firefliesMax, Math.max(CFG.firefliesMin, perArea)));
@@ -146,6 +156,7 @@
       wobbleSpeed: rand(0.008, 0.018),
       flashAt: rand(0, 1500),
       flashCount: 0,
+      alpha: 0.5,
     };
   }
 
@@ -176,6 +187,13 @@
     return (_sprites[hex] = c);
   }
 
+  // Bottom of the page content. The body's own box, not scrollHeight: the
+  // absolutely positioned canvas counts towards scrollHeight, so it would hold
+  // the page tall after it shrinks (e.g. a shop filter).
+  function contentHeight() {
+    return Math.ceil(document.body.getBoundingClientRect().bottom + window.scrollY);
+  }
+
   function startFireflies() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (_animId) return;
@@ -192,34 +210,90 @@
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let lastW = 0, lastH = 0, lastDpr = 0, small = false, count = 0;
+    const pageMode = CFG.firefliesAnchor === 'page';
+    canvas.style.position = pageMode ? 'absolute' : 'fixed';
+    canvas.style.willChange = pageMode ? 'transform' : '';
 
-    function resize() {
+    let small = false, dpr = 1, vw = 0, vh = 0;
+    let areaH = 0;            // height fireflies live in: the page, or one screen
+    let bandTop = 0, bandH = 0, count = 0;
+
+    // Page mode: keep the drawn band around the viewport. Returns true if it moved.
+    function placeBand(force) {
+      if (!pageMode) return false;
+      const y = window.scrollY;
+      const nearTop = bandTop > 0 && y < bandTop + vh * 0.5;
+      const nearBottom = bandTop + bandH < areaH && y + vh > bandTop + bandH - vh * 0.5;
+      if (!force && !nearTop && !nearBottom) return false;
+      bandTop = Math.max(0, Math.min(areaH - bandH, y - vh));
+      canvas.style.transform = `translateY(${bandTop}px)`;
+      return true;
+    }
+
+    function layout() {
       small = window.innerWidth <= 768;
-      const dpr = Math.min(window.devicePixelRatio || 1, small ? 1.5 : 2);
-      const w = window.innerWidth;
+      // The page-mode canvas is three screens tall; soft glows don't need 2x.
+      dpr = Math.min(window.devicePixelRatio || 1, small || pageMode ? 1.5 : 2);
+      // clientWidth leaves out the scrollbar; innerWidth would make the
+      // absolute canvas wider than the page and add a sideways scroll.
+      vw = document.documentElement.clientWidth || window.innerWidth;
       // Phones: the URL bar changes innerHeight while scrolling. Only ever grow,
       // so the canvas isn't reallocated on every scroll.
-      const h = small ? Math.max(lastH, window.innerHeight) : window.innerHeight;
-      count = fireflyCount();
-      if (w === lastW && h === lastH && dpr === lastDpr) return;
-      canvas.width  = Math.floor(w * dpr);
-      canvas.height = Math.floor(h * dpr);
-      canvas.style.width  = w + 'px';
-      canvas.style.height = h + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      lastW = w; lastH = h; lastDpr = dpr;
+      vh = small ? Math.max(vh, window.innerHeight) : window.innerHeight;
+      const prevAreaH = areaH;
+      areaH = pageMode ? Math.max(vh, contentHeight()) : vh;
+      bandH = pageMode ? Math.min(areaH, vh * 3) : vh;
+      count = Math.min(CFG.firefliesTotalMax, Math.round(fireflyCount() * (areaH / vh)));
+      const pw = Math.floor(vw * dpr), ph = Math.floor(bandH * dpr);
+      if (canvas.width !== pw || canvas.height !== ph) {
+        canvas.width = pw;
+        canvas.height = ph;
+        canvas.style.width  = vw + 'px';
+        canvas.style.height = bandH + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      while (_fireflies.length < count) {
+        const f = makeFirefly(vw, areaH);
+        // Page grew (images, products loading): fill the new part, not the old.
+        if (prevAreaH && areaH > prevAreaH) f.y = rand(prevAreaH, areaH);
+        _fireflies.push(f);
+      }
+      if (_fireflies.length > count) _fireflies.length = count;
+      placeBand(true);
     }
-    resize();
-    let resizeQueued = false;
-    _resizeHandler = () => {
-      if (resizeQueued) return;
-      resizeQueued = true;
-      requestAnimationFrame(() => { resizeQueued = false; resize(); });
-    };
-    window.addEventListener('resize', _resizeHandler, { passive: true });
 
-    _fireflies = Array.from({ length: count }, () => makeFirefly(lastW, lastH));
+    function draw() {
+      ctx.clearRect(0, 0, vw, bandH);
+      for (let i = 0; i < _fireflies.length; i++) {
+        const f = _fireflies[i];
+        const y = f.y - bandTop;
+        if (y < -f.halo || y > bandH + f.halo) continue;   // outside the drawn band
+        ctx.globalAlpha = f.alpha;
+        ctx.drawImage(sprite(f.hue), f.x - f.halo, y - f.halo, f.halo * 2, f.halo * 2);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    let queued = false;
+    const relayout = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => { queued = false; layout(); draw(); });
+    };
+    _resizeHandler = relayout;
+    window.addEventListener('resize', _resizeHandler, { passive: true });
+    if (pageMode) {
+      // Redraw at once when the band moves, so it never shows old frames in the new spot.
+      _scrollHandler = () => { if (placeBand(false)) draw(); };
+      window.addEventListener('scroll', _scrollHandler, { passive: true });
+      if (window.ResizeObserver) {   // page height changes as images and products load
+        _resizeObserver = new ResizeObserver(relayout);
+        _resizeObserver.observe(document.body);
+      }
+    }
+
+    _fireflies = [];
+    layout();
 
     let tick = 0, prev = performance.now(), lastDraw = 0;
     function frame(now) {
@@ -230,11 +304,7 @@
       prev = now;
       tick += dt;
 
-      const w = lastW, h = lastH;
-      ctx.clearRect(0, 0, w, h);
-      while (_fireflies.length < count) _fireflies.push(makeFirefly(w, h));
-      if (_fireflies.length > count) _fireflies.length = count;
-
+      const w = vw, h = areaH;
       for (let i = 0; i < _fireflies.length; i++) {
         const f = _fireflies[i];
         f.phase  += f.speed * dt;
@@ -255,11 +325,9 @@
           f.flashAt = tick + rand(180, 720);
           f.flashCount = 0;
         }
-
-        ctx.globalAlpha = alpha;
-        ctx.drawImage(sprite(f.hue), f.x - f.halo, f.y - f.halo, f.halo * 2, f.halo * 2);
+        f.alpha = alpha;
       }
-      ctx.globalAlpha = 1;
+      draw();
     }
     _animId = requestAnimationFrame(frame);
   }
@@ -268,6 +336,8 @@
     if (_animId) cancelAnimationFrame(_animId);
     _animId = null;
     if (_resizeHandler) { window.removeEventListener('resize', _resizeHandler); _resizeHandler = null; }
+    if (_scrollHandler) { window.removeEventListener('scroll', _scrollHandler); _scrollHandler = null; }
+    if (_resizeObserver) { _resizeObserver.disconnect(); _resizeObserver = null; }
     if (_canvas) {
       const ctx = _canvas.getContext('2d');
       if (ctx) ctx.clearRect(0, 0, _canvas.width, _canvas.height);

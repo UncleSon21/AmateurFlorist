@@ -70,8 +70,13 @@ These cost real debugging time; don't rediscover them:
   owner via the "DEV TOGGLE" CSS blocks; `startParticles` checks that CSS and
   doesn't run its animation loop while hidden. Season colours/hero copy still
   follow the date.
-- Night-mode fireflies draw on a viewport-sized canvas; count scales with
-  screen area (`firefliesAreaPer` in `public/night-mode.js`, ~8 on a phone).
+- Night-mode fireflies are anchored to the page: they scroll away with the
+  content (owner's choice). Only a band ~3 screens tall around the viewport is
+  drawn, on an absolutely positioned canvas moved with `translateY`; never make
+  it page-tall again (it stalled phones). Count is ~8 per screenful on a phone
+  (`firefliesAreaPer`), capped by `firefliesTotalMax`.
+  `firefliesAnchor: 'screen'` in `public/night-mode.js` brings back the
+  viewport-fixed version.
 - Site photos in `images/gallery/` have WebP versions (480 / 800 / full) used via
   `<img srcset sizes>`; the JPEG stays as `src`. After adding or replacing a
   photo, run `python tools/make_webp.py` and give its `<img>` a `srcset`. Set

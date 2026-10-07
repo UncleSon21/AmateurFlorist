@@ -190,8 +190,10 @@ html[data-theme="night"] body::before {
    fireflies only show where the page-bg is exposed (which is everywhere in
    night mode, since section tints below are made transparent). */
 html[data-theme="night"] body { position: relative; }
+/* Anchored to the page; night-mode.js moves it with translateY and switches
+   it to position: fixed when CFG.firefliesAnchor is 'screen'. */
 #fireflies-canvas {
-  position: fixed; top: 0; left: 0;
+  position: absolute; top: 0; left: 0;
   pointer-events: none;
   z-index: 0;
   opacity: 0;
