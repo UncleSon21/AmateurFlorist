@@ -178,6 +178,20 @@ button{cursor:pointer;font-family:inherit}
 .piece-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);margin-bottom:3px}
 .piece-from{font-size:11px;color:var(--accent-light);letter-spacing:1px}
 
+/* HIRE COLLECTION — cards reuse .piece-card; filled by src/scripts/hire-collection.ts */
+[hidden]{display:none !important}
+.hire-bg{background:var(--bg-alt)}
+.hire-card{text-align:left;display:flex;flex-direction:column}
+.hire-card .piece-body{display:flex;flex-direction:column;gap:4px;flex:1;padding:18px 16px}
+.hire-material{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light)}
+.hire-card .piece-name{font-size:1.25rem;line-height:1.2;margin-bottom:2px}
+.hire-price{font-size:13px;color:var(--text-muted)}
+.hire-price strong{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:400;color:var(--accent)}
+.hire-actions{margin-top:auto;padding-top:14px;display:flex;align-items:center;justify-content:space-between;gap:10px 14px;flex-wrap:wrap}
+.hire-card .hire-enquire{padding:10px 18px}
+.enq-piece{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 6px 8px 14px;border:.5px solid var(--accent-light);border-radius:var(--radius);font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--bg)}
+.enq-piece button{background:none;border:none;color:var(--accent-light);font-size:1.4rem;line-height:1;min-width:44px;min-height:44px;cursor:pointer}
+
 /* PROCESS */
 .proc-bg{background:var(--bg)}
 .proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:48px;border:.5px solid var(--border)}
@@ -264,7 +278,9 @@ button{cursor:pointer;font-family:inherit}
   .nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}
   .container{padding:0 20px}
   .section{padding:64px 0}
-  .pieces-grid{grid-template-columns:1fr 1fr}
+  .pieces-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+  .hire-card .piece-body{padding:14px 12px}
+  .hire-card .piece-name{font-size:1.1rem}
   .proc-grid{grid-template-columns:1fr}
   /* "If you choose to hire" steps use an inline 3-col grid, so !important is needed to stack them on phones. */
   .hire-steps-grid{grid-template-columns:1fr !important}
@@ -453,6 +469,16 @@ button{cursor:pointer;font-family:inherit}
   </div>
 </section>
 
+<!-- HIRE COLLECTION: products marked is_rentable. Hidden until there is at least one. -->
+<section class="section hire-bg" id="hire-collection" hidden>
+  <div class="container">
+    <p class="eyebrow">The hire collection</p>
+    <h2 class="sec-title">Hire it for the day,<br>or keep it</h2>
+    <p class="sec-sub">Silk and preserved bouquets, made to last. Hire one for your wedding, or buy it to keep. Tap enquire and we'll reply about your date.</p>
+    <div class="pieces-grid" id="hire-grid"></div>
+  </div>
+</section>
+
 <!-- TWO PATHS -->
 <section class="section">
   <div class="container">
@@ -552,7 +578,7 @@ button{cursor:pointer;font-family:inherit}
 
     <div class="faq-grid">
       <div>
-        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--text-muted);line-height:1.7">Can't find your question? Ask it in the form below, or email us at <a href="mailto:hello@amateurflorist.co" style="color:var(--accent);border-bottom:.5px solid var(--accent-light)">hello@amateurflorist.co</a>.</p>
+        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--text-muted);line-height:1.7">Can't find your question? Ask it in the form below, or email us at <a href="mailto:chloe@amateurflorist.co" style="color:var(--accent);border-bottom:.5px solid var(--accent-light)">chloe@amateurflorist.co</a>.</p>
       </div>
 
       <div class="faq-list">
@@ -589,6 +615,11 @@ button{cursor:pointer;font-family:inherit}
           <option>Full wedding flowers (ceremony and reception)</option>
           <option>Not sure yet — help us decide</option>
         </select>
+      </div>
+      <div class="field full" id="enq-piece-row" hidden>
+        <label>The piece you're asking about</label>
+        <div class="enq-piece"><span id="enq-piece-name"></span><button type="button" id="enq-piece-clear" aria-label="Remove this piece from the enquiry">×</button></div>
+        <input type="hidden" name="piece" id="enq-piece">
       </div>
       <div class="field"><label>Your name</label><input type="text" name="name" id="enq-name" required placeholder="Your full name"></div>
       <div class="field"><label>Partner's name</label><input type="text" name="partnerName" id="enq-partner" placeholder="Optional"></div>
@@ -648,6 +679,7 @@ button{cursor:pointer;font-family:inherit}
           });
           if (!res.ok) throw new Error(`${res.status}`);
           form.reset();
+          window.dispatchEvent(new Event("enquiry:sent"));   // hire-collection.ts clears the piece
           msgEl.textContent = "Thank you — we'll be in touch soon.";
           msgEl.style.color = "var(--accent-light)";
           submit.textContent = "Sent ✓";
@@ -695,6 +727,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
 <script type="module">
   import { initSeasonalTheme, updateHeroCopy } from "./seasonalTheme.ts";
   import "./src/scripts/mobile-nav.ts";
+  import "./src/scripts/hire-collection.ts";
   const current = initSeasonalTheme();
   updateHeroCopy(current);
 </script>
@@ -724,6 +757,8 @@ document.querySelectorAll('.faq-item').forEach(item => {
 
 <!-- Night theme toggle + fireflies (shared across all pages) -->
 <script src="/night-mode.js" defer></script>
+<!-- Vercel Web Analytics: cookieless page views, served by Vercel once Analytics is switched on for the project -->
+<script defer src="/_vercel/insights/script.js" vite-ignore></script>
 
 </body>
 </html>

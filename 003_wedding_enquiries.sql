@@ -4,7 +4,8 @@
 -- version control (it is not in db.sql or 002_rental.sql). This file records it,
 -- and adds the `interest` column so the "I'm interested in" answer from the
 -- weddings.html form (custom design vs. hire/buy) is kept — that split is the
--- demand signal the hire model needs.
+-- demand signal the hire model needs — and `piece`, the hire-collection
+-- bouquet the couple tapped "Enquire" on (empty for general enquiries).
 --
 -- Safe to run more than once. On the live database the CREATE is a no-op (the
 -- table exists) and only the ALTERs take effect.
@@ -28,6 +29,7 @@ create table if not exists wedding_enquiries (
 );
 
 alter table wedding_enquiries add column if not exists interest text;
+alter table wedding_enquiries add column if not exists piece    text;
 
 -- Holds couples' names, emails and phone numbers: no public access at all.
 -- The edge function writes with the service role, which bypasses RLS, so no

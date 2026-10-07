@@ -8,7 +8,7 @@
 //   STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET
 //   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
 //   RESEND_API_KEY      — optional; emails skipped if missing
-//   FROM_EMAIL          — verified Resend sender (e.g. orders@amateurflorist.co)
+//   FROM_EMAIL          — bare verified Resend sender: chloe@amateurflorist.co
 //   OWNER_EMAIL         — where order alerts go
 //   TWILIO_*            — optional; SMS skipped if missing
 

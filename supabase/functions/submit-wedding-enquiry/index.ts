@@ -5,7 +5,8 @@
 //
 // Required secrets (set with: supabase secrets set KEY=value):
 //   RESEND_API_KEY  — Resend API key
-//   FROM_EMAIL      — verified sender (e.g. hello@amateurflorist.co)
+//   FROM_EMAIL      — bare verified sender address: chloe@amateurflorist.co
+//                     (no display name; "Amateur Florist" is added in sendEmail)
 //   OWNER_EMAIL     — where to deliver the enquiry
 //
 // Optional:
@@ -37,6 +38,7 @@ type Enquiry = {
   name?: string;
   partnerName?: string;
   interest?: string;
+  piece?: string;      // the hire-collection piece the couple tapped "Enquire" on
   email?: string;
   phone?: string;
   weddingDate?: string;
@@ -65,6 +67,7 @@ function buildEnquiryEmail(e: Enquiry): string {
       <p style="color:#6b5d54;margin:0 0 24px 0">From the Amateur Florist website.</p>
       <table style="width:100%;border-collapse:collapse">
         ${row("Interested in", e.interest)}
+        ${row("Piece",        e.piece)}
         ${row("Name",         e.name)}
         ${row("Partner",      e.partnerName)}
         ${row("Email",        e.email)}
@@ -92,7 +95,8 @@ async function sendEmail(to: string, subject: string, html: string, replyTo?: st
     console.warn("RESEND_API_KEY missing — email skipped");
     return false;
   }
-  const body: Record<string, any> = { from: FROM_EMAIL, to, subject, html };
+  // FROM_EMAIL is the bare address; the display name is added here, as in stripe-webhook.
+  const body: Record<string, any> = { from: `Amateur Florist <${FROM_EMAIL}>`, to, subject, html };
   if (replyTo) body.reply_to = replyTo;
 
   try {
@@ -131,14 +135,17 @@ async function saveEnquiry(data: Enquiry): Promise<boolean> {
     message:      data.message ?? null,
     // Custom design vs hire/buy — the demand signal the hire model needs.
     interest:     data.interest ?? null,
+    // Which hire piece they asked about, so demand can be counted per bouquet.
+    piece:        data.piece || null,
   };
   // supabase-js reports failures in `error`; it does not throw.
   let { error } = await supabase.from("wedding_enquiries").insert(row);
-  if (error && /interest/i.test(error.message)) {
-    // Live table predates the `interest` column (added by 003_wedding_enquiries.sql).
-    // Keep the lead rather than lose it; the email still carries the answer.
-    const { interest: _interest, ...withoutInterest } = row;
-    ({ error } = await supabase.from("wedding_enquiries").insert(withoutInterest));
+  if (error && /interest|piece/i.test(error.message)) {
+    // Live table predates the `interest`/`piece` columns (added by
+    // 003_wedding_enquiries.sql). Keep the lead rather than lose it; the email
+    // still carries both answers.
+    const { interest: _interest, piece: _piece, ...older } = row;
+    ({ error } = await supabase.from("wedding_enquiries").insert(older));
   }
   if (error) {
     console.error("wedding_enquiries insert failed:", error);
@@ -176,7 +183,7 @@ Deno.serve(async (req: Request) => {
     const notified = OWNER_EMAIL
       ? await sendEmail(
           OWNER_EMAIL,
-          `New wedding enquiry — ${data.name}${data.weddingDate ? ` (${data.weddingDate})` : ""}`,
+          `New wedding enquiry — ${data.name}${data.weddingDate ? ` (${data.weddingDate})` : ""}${data.piece ? ` · ${data.piece}` : ""}`,
           buildEnquiryEmail(data),
           data.email,
         )

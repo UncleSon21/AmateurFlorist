@@ -32,7 +32,7 @@ The short version:
 - Stripe — **test mode on purpose**; live activation needs the real owner's
   business details. Do not attempt to switch it. Checkout only shows the card
   form with a `pk_live_` key (`VITE_STRIPE_PUBLISHABLE_KEY`, set in Vercel);
-  otherwise it's "Email this order" to hello@amateurflorist.co. Add `?testpay`
+  otherwise it's "Email this order" to chloe@amateurflorist.co. Add `?testpay`
   to the checkout URL to exercise the Stripe test flow.
 - Resend for email
 - Hosting: **Vercel** only, at `www.amateurflorist.co` (apex redirects to `www`),
@@ -54,7 +54,7 @@ These cost real debugging time; don't rediscover them:
 - Resend will not deliver to arbitrary recipients until a custom domain is
   verified. `amateurflorist.co` needs no ABN, so this is now unblocked: add
   Resend's DNS records for it, then set `FROM_EMAIL` to an `@amateurflorist.co`
-  address. Public contact address on the site: `hello@amateurflorist.co`.
+  address. Public contact address on the site: `chloe@amateurflorist.co`.
 - Root-level files not referenced from HTML (robots, sitemap, OG images) are
   **not deployed**. Put them in `public/`.
 - Every page carries its own inline `<style>`; `styles/*.css` is not imported
@@ -88,6 +88,10 @@ These cost real debugging time; don't rediscover them:
   track grows to its widest child and pushed whole pages past a phone's width.
 - Shop filter URLs: `?type=fresh|forever`, `?material=`, `?category=`,
   `?occasion=` (only if that category exists), `?q=`.
+- Every page loads Vercel Web Analytics with
+  `<script defer src="/_vercel/insights/script.js" vite-ignore>` (`vite-ignore`
+  stops Vite warning it can't bundle it). Copy it into any new page. It 404s
+  until Analytics is switched on in the Vercel project.
 - Most phone traffic: check every layout change at 375px and 320px.
 
 ## Design system
@@ -131,12 +135,18 @@ Checked 2026-10-06:
 
 - Brand is **Amateur Florist** (owner confirmed). "Vania" survives only in the
   local repo folder name.
+- Contact and sender address is **`chloe@amateurflorist.co`** (owner's choice).
+  It's a free forward to a personal inbox, not a mailbox: nothing to log in to.
 - Rental schema **is applied** to the live database (`rental_units`,
   `rental_availability`, `products.is_rentable` all respond), but no product is
   marked rentable yet.
+- The weddings page **Hire collection** (`src/scripts/hire-collection.ts`) lists
+  every `is_rentable` product and stays hidden until there is one. Each card's
+  Enquire button puts the piece on the enquiry form (`piece`). Owner how-to:
+  `docs/HIRE_PIECES.md`.
 - `wedding_enquiries` exists live but was created outside the repo;
-  `003_wedding_enquiries.sql` records it and adds `interest`. Run it before
-  relying on that column.
+  `003_wedding_enquiries.sql` records it and adds `interest` and `piece`. Run
+  it, then redeploy `submit-wedding-enquiry`, before relying on those columns.
 - Redesign is integrated; the `*.original-bak` files are the pre-redesign pages.
 - SEO: meta + OG tags in place; **no JSON-LD on any page** (needs real business
   details first). Outstanding: Google Business Profile, Search Console.

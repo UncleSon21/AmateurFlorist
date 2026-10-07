@@ -554,6 +554,7 @@ html[data-theme="night"] .enq-card textarea {
   border-color: rgba(212,168,87,.2) !important;
   color: var(--text) !important;
 }
+html[data-theme="night"] .enq-piece { color: var(--text) !important; }
 
 /* ── /about.html ── */
 html[data-theme="night"] .page-hero { background: var(--bg-alt) !important; }

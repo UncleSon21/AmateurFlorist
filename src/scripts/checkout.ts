@@ -25,7 +25,7 @@ const PI_ENDPOINT = `${SUPABASE_URL}/functions/v1/create-payment-intent`;
 // deliberate test-mode key) real cards can't complete, so instead of a payment
 // form that can only fail, the customer emails the order to us.
 // Add ?testpay to the checkout URL to exercise the Stripe test flow.
-const ORDER_EMAIL = "hello@amateurflorist.co";
+const ORDER_EMAIL = "chloe@amateurflorist.co";
 const PAYMENTS_OPEN = !!STRIPE_PK &&
   (STRIPE_PK.startsWith("pk_live_") || new URLSearchParams(location.search).has("testpay"));
 
