@@ -30,7 +30,10 @@ The short version:
 - Vite static site, plain HTML + CSS + TypeScript (no framework)
 - Supabase (Postgres + Edge Functions), project ref `pflbjnviblravzgvfnvu`
 - Stripe — **test mode on purpose**; live activation needs the real owner's
-  business details. Do not attempt to switch it.
+  business details. Do not attempt to switch it. Checkout only shows the card
+  form with a `pk_live_` key (`VITE_STRIPE_PUBLISHABLE_KEY`, set in Vercel);
+  otherwise it's "Email this order" to hello@amateurflorist.co. Add `?testpay`
+  to the checkout URL to exercise the Stripe test flow.
 - Resend for email
 - Hosting: **Vercel** only, at `www.amateurflorist.co` (apex redirects to `www`),
   deployed from `master`. Vercel serves `404.html` for unknown URLs with a real

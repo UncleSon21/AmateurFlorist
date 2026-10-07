@@ -128,7 +128,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .nav-links{display:flex;align-items:center;gap:32px}
 .nav-links a,.nav-btn{
-  font-size:10px;font-weight:400;letter-spacing:2px;
+  font-size:11px;font-weight:400;letter-spacing:2px;
   text-transform:uppercase;color:var(--text-muted);
   background:none;border:none;
   position:relative;transition:color .3s;
@@ -158,7 +158,7 @@ button{cursor:pointer;font-family:inherit}
   opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);
 }
 .nav-shop-menu a{
-  display:block;padding:9px 22px;font-size:10px;letter-spacing:2px;
+  display:block;padding:9px 22px;font-size:11px;letter-spacing:2px;
   text-transform:uppercase;color:var(--text-muted);text-decoration:none;
   transition:background .2s,color .2s;
 }
@@ -171,7 +171,7 @@ button{cursor:pointer;font-family:inherit}
   letter-spacing:2px;line-height:1;display:block;
 }
 .logo-sub{
-  font-size:9px;font-weight:300;letter-spacing:3px;
+  font-size:11px;font-weight:300;letter-spacing:3px;
   text-transform:uppercase;color:var(--accent-light);
   display:block;margin-top:3px;
 }
@@ -182,7 +182,7 @@ button{cursor:pointer;font-family:inherit}
 /* Smaller name so mark + name sit clear of the nav links; steps down with width */
 .logo .logo-name{font-size:1.9rem}
 .logo-mark{width:32px;height:32px}
-@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}}
+@media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}.nav-inner .nav-links{gap:22px}.nav-inner .nav-links a,.nav-inner .nav-links .nav-btn{letter-spacing:1.4px}}
 @media(max-width:960px){.logo-mark{width:24px;height:24px}.logo .logo-name{font-size:1.5rem}}
 /* Tablets use the hamburger header (src/scripts/mobile-nav.ts): the desktop links did not fit beside the logo */
 @media(max-width:1023px){.nav-inner{grid-template-columns:auto 1fr auto;padding:14px 20px}.nav-links{display:none}.logo{grid-column:2}}
@@ -197,7 +197,7 @@ button{cursor:pointer;font-family:inherit}
 .cart-badge{
   position:absolute;top:-4px;right:-4px;
   background:var(--accent);color:#fff;
-  font-size:9px;width:16px;height:16px;
+  font-size:11px;width:16px;height:16px;
   border-radius:50%;display:flex;align-items:center;justify-content:center;
   font-family:'DM Sans',sans-serif;
 }
@@ -218,7 +218,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:10px;
-  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
   color:var(--accent);margin-bottom:20px;
 }
 .hero-eyebrow-line{width:24px;height:.5px;background:var(--accent-light);flex-shrink:0}
@@ -249,13 +249,13 @@ button{cursor:pointer;font-family:inherit}
   display:inline-flex;align-items:center;gap:8px;
   background:var(--accent-dark);color:var(--bg);
   padding:14px 32px;border:none;border-radius:var(--radius);
-  font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
+  font-size:11px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
   transition:background .3s;
 }
 .btn-dark:hover{background:var(--accent)}
 .btn-ghost{
   display:inline-flex;align-items:center;gap:6px;
-  font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
+  font-size:11px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
   color:var(--text-muted);border:none;background:none;
   border-bottom:.5px solid var(--border);padding-bottom:3px;
   transition:color .3s,gap .35s cubic-bezier(.16,1,.3,1),border-color .3s;
@@ -263,7 +263,7 @@ button{cursor:pointer;font-family:inherit}
 .btn-ghost:hover{color:var(--text);gap:12px;border-color:var(--accent)}
 .hero-trust{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-  font-size:10px;letter-spacing:.5px;color:var(--accent-light);
+  font-size:11px;letter-spacing:.5px;color:var(--accent-light);
   margin-bottom:16px;
 }
 .dot{font-size:8px;opacity:.4}
@@ -319,7 +319,7 @@ button{cursor:pointer;font-family:inherit}
 .section{padding:96px 0}
 .container{max-width:1200px;margin:0 auto;padding:0 48px}
 .eyebrow{
-  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
   color:var(--accent-light);font-weight:400;
   display:flex;align-items:center;gap:12px;margin-bottom:14px;
 }
@@ -364,7 +364,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .occ-desc{font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
 .occ-link{
-  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
   color:var(--accent);font-weight:400;
   display:inline-flex;align-items:center;gap:5px;
   transition:gap .3s cubic-bezier(.16,1,.3,1);
@@ -392,14 +392,14 @@ button{cursor:pointer;font-family:inherit}
 .prod-badge{
   position:absolute;top:10px;left:10px;
   padding:4px 10px;border-radius:var(--radius);
-  font-size:9px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;
+  font-size:11px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;
   font-family:'DM Sans',sans-serif;
 }
 .badge-bestseller{background:var(--accent-dark);color:#faf8f4}
 .badge-new{background:#fff;color:var(--accent);border:.5px solid var(--border)}
 .badge-wedding{background:var(--accent-light);color:#fff}
 /* Type badges — fresh vs forever */
-.type-badge{position:absolute;top:10px;right:10px;padding:5px 10px 5px 8px;border-radius:99px;font-size:9px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:5px;backdrop-filter:blur(10px);background:rgba(255,255,255,.85);color:var(--accent-dark)}
+.type-badge{position:absolute;top:10px;right:10px;padding:5px 10px 5px 8px;border-radius:99px;font-size:11px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:5px;backdrop-filter:blur(10px);background:rgba(255,255,255,.85);color:var(--accent-dark)}
 .type-badge::before{content:'';width:6px;height:6px;border-radius:50%;display:inline-block}
 .type-fresh::before{background:#6b8870}
 .type-forever::before{background:#a05870}
@@ -443,7 +443,7 @@ button{cursor:pointer;font-family:inherit}
 .coll-card:hover{background:#ede8df}
 .coll-num{
   font-family:'Cormorant Garamond',serif;
-  font-size:10px;letter-spacing:2px;color:var(--accent-light);
+  font-size:11px;letter-spacing:2px;color:var(--accent-light);
   margin-bottom:20px;display:block;
 }
 .coll-icon{
@@ -459,7 +459,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .coll-desc{font-size:12px;color:var(--text-muted);line-height:1.7;margin-bottom:20px}
 .text-link{
-  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
   color:var(--text-muted);display:inline-flex;align-items:center;gap:8px;
   border-bottom:.5px solid var(--border);padding-bottom:3px;
   transition:color .3s,gap .35s cubic-bezier(.16,1,.3,1),border-color .3s;
@@ -548,7 +548,7 @@ button{cursor:pointer;font-family:inherit}
   text-align:center;padding:32px;
 }
 .gal-cta-sub{
-  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
   color:var(--accent-light);display:block;margin-bottom:10px;
 }
 .gal-cta-title{
@@ -570,7 +570,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .trust-item{
   padding:16px 32px;
-  font-size:10px;letter-spacing:2.5px;text-transform:uppercase;
+  font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
   color:rgba(250,248,244,.5);
   border-right:.5px solid rgba(255,255,255,.06);
   display:flex;align-items:center;gap:8px;
@@ -599,7 +599,7 @@ button{cursor:pointer;font-family:inherit}
 .postcode-row button{
   padding:13px 22px;background:var(--accent-dark);color:#faf8f4;
   border:none;border-radius:var(--radius);
-  font-family:'DM Sans',sans-serif;font-size:10px;font-weight:400;
+  font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;
   letter-spacing:2px;text-transform:uppercase;
   transition:background .3s;
 }
@@ -641,7 +641,7 @@ button{cursor:pointer;font-family:inherit}
 
 .footer-tagline{font-size:12px;color:#b5a99a;line-height:1.7;max-width:260px}
 .footer-col h4{
-  font-size:9px;font-weight:400;letter-spacing:3px;text-transform:uppercase;
+  font-size:11px;font-weight:400;letter-spacing:3px;text-transform:uppercase;
   color:var(--accent-light);margin-bottom:18px;
 }
 .footer-col ul{list-style:none}
@@ -651,7 +651,7 @@ button{cursor:pointer;font-family:inherit}
 .footer-bottom{
   text-align:center;padding-top:24px;
   border-top:.5px solid rgba(255,255,255,.05);
-  font-size:10px;letter-spacing:1px;color:rgba(250,248,244,.6);
+  font-size:11px;letter-spacing:1px;color:rgba(250,248,244,.6);
 }
 
 /* ── Responsive ── */
@@ -755,7 +755,7 @@ button{cursor:pointer;font-family:inherit}
 .nav-branch                          { display: none !important; }
 
 /* ── Cart badge ── */
-.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:9px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
+.cart-badge,.cart-count{position:absolute;top:-2px;right:-6px;background:var(--accent);color:#fff;font-size:11px;font-weight:600;letter-spacing:.5px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 5px;line-height:1}
 </style>
 </head>
 <body>
@@ -1040,7 +1040,7 @@ button{cursor:pointer;font-family:inherit}
           <div style="background:#fff;padding:24px 22px">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
               <span style="width:8px;height:8px;border-radius:50%;background:#6b8870"></span>
-              <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)">Fresh</span>
+              <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)">Fresh</span>
             </div>
             <ul style="list-style:none;padding:0;margin:0;font-size:13px;color:var(--text);line-height:1.85">
               <li>· Lasts 7–14 days</li>
@@ -1051,7 +1051,7 @@ button{cursor:pointer;font-family:inherit}
           <div style="background:#fff;padding:24px 22px">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
               <span style="width:8px;height:8px;border-radius:50%;background:#a05870"></span>
-              <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)">Forever</span>
+              <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)">Forever</span>
             </div>
             <ul style="list-style:none;padding:0;margin:0;font-size:13px;color:var(--text);line-height:1.85">
               <li>· Lasts for years</li>
@@ -1087,8 +1087,8 @@ button{cursor:pointer;font-family:inherit}
         <li style="display:flex;align-items:center;gap:8px;color:rgba(250,248,244,.85)"><span style="color:var(--accent-light)">✦</span> Arrives two days early</li>
       </ul>
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
-        <a href="weddings.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--bg);color:var(--accent-dark);padding:14px 30px;border-radius:2px;font-size:10px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:background .3s">Explore weddings →</a>
-        <a href="weddings.html#enquire" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light);text-decoration:none;border-bottom:.5px solid rgba(180,196,210,.3);padding-bottom:3px">Send an enquiry</a>
+        <a href="weddings.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--bg);color:var(--accent-dark);padding:14px 30px;border-radius:2px;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:background .3s">Explore weddings →</a>
+        <a href="weddings.html#enquire" style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light);text-decoration:none;border-bottom:.5px solid rgba(180,196,210,.3);padding-bottom:3px">Send an enquiry</a>
       </div>
     </div>
   </div>
@@ -1343,7 +1343,7 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
   }
   .vs-link:hover { background:rgba(255,255,255,.08); color:#fff; padding-left:18px; }
   .vs-link .vs-tag {
-    font-family:'Inter', sans-serif; font-size:9px; letter-spacing:1.5px;
+    font-family:'Inter', sans-serif; font-size:11px; letter-spacing:1.5px;
     text-transform:uppercase; color:rgba(255,255,255,.45);
   }
   .vs-link .vs-arrow {
@@ -1391,7 +1391,7 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
   }
   .vs-footer kbd {
     padding:3px 8px; border:1px solid rgba(255,255,255,.25);
-    border-radius:3px; margin:0 4px; font-family:inherit; font-size:10px;
+    border-radius:3px; margin:0 4px; font-family:inherit; font-size:11px;
   }
 
   @media (max-width: 720px) {

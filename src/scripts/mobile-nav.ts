@@ -87,7 +87,7 @@ const CSS = `
       letter-spacing: 1px;
       white-space: nowrap;
     }
-    .nav-inner .logo .logo-sub { font-size: 10px; letter-spacing: 2.5px; }
+    .nav-inner .logo .logo-sub { font-size: 11px; letter-spacing: 2.5px; }
     .nav-inner .nav-icon-btn { min-width: 44px; min-height: 44px; }
     .nav-inner .nav-actions { gap: 0; }
     #${HAMBURGER_ID} { min-width: 44px; min-height: 44px; }
@@ -104,7 +104,7 @@ const CSS = `
     #${DRAWER_ID} .vf-drawer-close svg { width: 22px; height: 22px; }
 
     #${DRAWER_ID} .vf-drawer-eyebrow {
-      font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase;
+      font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
       color: var(--accent-light, #b5a99a);
       margin: 0 0 8px;
     }
@@ -154,7 +154,7 @@ const CSS = `
     #${DRAWER_ID} .vf-drawer-foot {
       margin-top: auto;
       padding-top: 24px;
-      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
       color: var(--accent-light, #b5a99a);
       text-align: center;
     }

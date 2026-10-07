@@ -21,6 +21,14 @@ const STRIPE_PK = import.meta.env['VITE_STRIPE_PUBLISHABLE_KEY'] as string | und
 
 const PI_ENDPOINT = `${SUPABASE_URL}/functions/v1/create-payment-intent`;
 
+// Online payment opens only with a live Stripe key. Until then (no key, or the
+// deliberate test-mode key) real cards can't complete, so instead of a payment
+// form that can only fail, the customer emails the order to us.
+// Add ?testpay to the checkout URL to exercise the Stripe test flow.
+const ORDER_EMAIL = "hello@amateurflorist.co";
+const PAYMENTS_OPEN = !!STRIPE_PK &&
+  (STRIPE_PK.startsWith("pk_live_") || new URLSearchParams(location.search).has("testpay"));
+
 // ─── Helpers ───
 function $(id: string) { return document.getElementById(id) as HTMLElement; }
 function inp(id: string) { return document.getElementById(id) as HTMLInputElement; }
@@ -260,7 +268,7 @@ async function createPaymentIntent(lines: EnrichedLine[]) {
 /* ─── Mount Stripe Elements (Express Checkout + Payment Element) ─── */
 async function mountStripeElements(lines: EnrichedLine[]) {
   if (!STRIPE_PK) {
-    showError("Payment is not configured (missing Stripe key). Please call us directly at (02) 9123-4567.");
+    showError(`Online payment isn't available right now. Please email us at ${ORDER_EMAIL}.`);
     return false;
   }
   if (!StripeGlobal) {
@@ -406,6 +414,76 @@ function setupContinueButton(lines: EnrichedLine[]) {
   });
 }
 
+/* ─── Order by email (while online payment isn't open) ─── */
+function buildOrderEmail(lines: EnrichedLine[]): { subject: string; body: string } {
+  const { subtotal, delivery, total } = renderSummary(lines);
+  const pickup = isPickupMode();
+  const val = (id: string) => (document.getElementById(id) as HTMLInputElement | null)?.value.trim() || "";
+  const address = [val("address"), val("suburb"), val("state"), val("postcode")].filter(Boolean).join(", ");
+  const name = val("name");
+  const [y = 0, m = 1, d = 1] = val("delivery-date").split("-").map(Number);
+  const date = y ? new Date(y, m - 1, d).toLocaleDateString("en-AU",
+    { weekday: "short", day: "numeric", month: "short", year: "numeric" }) : "";
+
+  // null = optional line with nothing to say (dropped); "" = deliberate blank line
+  const body = [
+    "Hi Amateur Florist,",
+    "",
+    "I'd like to order:",
+    ...lines.map(l => `- ${l.name}${l.variantName ? ` (${l.variantName})` : ""} × ${l.qty} — ${fmt(l.lineCents)}`),
+    "",
+    `Subtotal: ${fmt(subtotal)}`,
+    `Delivery: ${delivery === 0 ? "Free" : fmt(delivery)}`,
+    `Total: ${fmt(total)}`,
+    "",
+    `${pickup ? "Pickup" : "Delivery"} date: ${date}`,
+    val("delivery-time") ? `Preferred time: ${val("delivery-time")}` : null,
+    pickup ? "I'll pick up." : `Deliver to: ${address}`,
+    val("notes") ? `Card message / notes: ${val("notes")}` : null,
+    "",
+    `Name: ${name}`,
+    `Phone: ${val("phone")}`,
+    val("email") ? `Email: ${val("email")}` : null,
+  ].filter(line => line !== null).join("\n");
+
+  return { subject: `Order request — ${name}`, body };
+}
+
+function setupOrderByEmail(lines: EnrichedLine[]) {
+  const continueBtn = $("btn-continue") as HTMLButtonElement;
+  const label = continueBtn.querySelector("span");
+  if (label) label.textContent = "Email this order";
+
+  const note = document.createElement("div");
+  note.className = "pickup-note";
+  note.setAttribute("role", "note");
+  note.style.display = "flex";
+  note.style.marginBottom = "16px";
+  note.innerHTML = `<div><strong>Online payment isn't open yet</strong>
+    <span class="pickup-note-sub">Fill in your details and tap “Email this order”. It opens an email to us with
+    your order written out, and we'll reply to confirm it and arrange payment.</span></div>`;
+  continueBtn.before(note);
+
+  continueBtn.addEventListener("click", () => {
+    if (!validate()) {
+      const firstError = document.querySelector(".field.has-error") as HTMLElement | null;
+      firstError?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    const { subject, body } = buildOrderEmail(lines);
+    const link = document.createElement("a");
+    link.href = `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    // If no email app opened, they still need a way to reach us.
+    const sub = note.querySelector(".pickup-note-sub");
+    if (sub) sub.innerHTML = `Your email app should have opened with the order. If it didn't, email it to
+      <a href="mailto:${ORDER_EMAIL}" style="text-decoration:underline">${ORDER_EMAIL}</a>.`;
+  });
+}
+
 /* ─── Boot ─── */
 async function main() {
   initDeliveryDate();
@@ -424,7 +502,8 @@ async function main() {
   renderSummary(lines);
 
   initDeliveryToggle(() => renderSummary(lines));
-  setupContinueButton(lines);
+  if (PAYMENTS_OPEN) setupContinueButton(lines);
+  else setupOrderByEmail(lines);
 
   // Live validation on blur (clears red borders as they fix mistakes)
   ["name", "phone", "delivery-date", "address", "suburb"].forEach(id => {
