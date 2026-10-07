@@ -593,6 +593,11 @@ button{cursor:pointer;font-family:inherit}
 .nav-shop-menu a{display:block;padding:9px 22px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:background .2s,color .2s}
 .nav-shop-menu a:hover{background:var(--bg-alt);color:var(--accent)}
 .nav-shop-menu a::after{display:none}
+/* Phones: footer link columns side by side under the brand (as on the homepage) */
+@media(max-width:600px){
+  .footer-cols{grid-template-columns:1fr 1fr;gap:28px}
+  .footer-cols > :first-child{grid-column:1/-1}
+}
 </style>
 </head>
 <body>
@@ -654,7 +659,7 @@ button{cursor:pointer;font-family:inherit}
       <a href="#story" class="text-link">Read our story →</a>
     </div>
     <div class="page-hero-img reveal">
-      <img src="images/gallery/bouquet-workshop.jpg" alt="Flowers being arranged" width="1125" height="1500" loading="eager" decoding="async" fetchpriority="high">
+      <img src="images/gallery/bouquet-workshop.jpg" srcset="images/gallery/bouquet-workshop-480.webp 480w, images/gallery/bouquet-workshop-800.webp 800w, images/gallery/bouquet-workshop.webp 1125w" sizes="(max-width: 768px) 100vw, 50vw" alt="Flowers being arranged" width="1125" height="1500" loading="eager" decoding="async" fetchpriority="high">
     </div>
   </div>
 </div>
@@ -695,10 +700,10 @@ button{cursor:pointer;font-family:inherit}
       </div>
       <div class="story-img reveal">
         <div class="story-img-main">
-          <img src="images/gallery/customer-Leidine.jpg" alt="One of our bouquets" width="1170" height="1409" loading="lazy" decoding="async">
+          <img src="images/gallery/customer-Leidine.jpg" srcset="images/gallery/customer-Leidine-480.webp 480w, images/gallery/customer-Leidine-800.webp 800w, images/gallery/customer-Leidine.webp 1170w" sizes="(max-width: 768px) 100vw, 50vw" alt="One of our bouquets" width="1170" height="1409" loading="lazy" decoding="async">
         </div>
         <div class="story-img-accent">
-          <img src="images/gallery/bouquet-pink-roses.jpg" alt="Detail of a pink rose bouquet" width="1092" height="1056" loading="lazy" decoding="async">
+          <img src="images/gallery/bouquet-pink-roses.jpg" srcset="images/gallery/bouquet-pink-roses-480.webp 480w, images/gallery/bouquet-pink-roses-800.webp 800w, images/gallery/bouquet-pink-roses.webp 1092w" sizes="(max-width: 768px) 100vw, 50vw" alt="Detail of a pink rose bouquet" width="1092" height="1056" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
