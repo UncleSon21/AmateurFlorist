@@ -363,6 +363,10 @@ button{cursor:pointer;font-family:inherit}
   font-size:1.2rem;font-weight:300;color:var(--text);margin-bottom:5px;
 }
 .occ-desc{font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
+/* Occasions with no products are hidden by home-featured.ts (tag a product with
+   the category to bring one back). Two or four cards sit better two-across. */
+[hidden]{display:none !important}   /* the cards, pills and their grids set display */
+@media(min-width:1025px){.occasions-grid.occ-two-col{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .occ-link{
   font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
   color:var(--accent);font-weight:400;
@@ -902,7 +906,7 @@ button{cursor:pointer;font-family:inherit}
       <h2 class="sec-title">Find the perfect bouquet<br>for any moment</h2>
     </div>
     <div class="occasions-grid">
-      <a href="shop.html" class="occ-card reveal">
+      <a href="shop.html?occasion=birthday" class="occ-card reveal" data-occasion="birthday">
         <div class="occ-img"><img src="images/gallery/bouquet-pink-roses.jpg" srcset="images/gallery/bouquet-pink-roses-480.webp 480w, images/gallery/bouquet-pink-roses-800.webp 800w, images/gallery/bouquet-pink-roses.webp 1092w" sizes="(max-width: 600px) 50vw, 33vw" alt="Birthday flowers" width="1092" height="1056" loading="lazy" decoding="async"></div>
         <div class="occ-body">
           <h3 class="occ-name">Birthday</h3>
@@ -910,7 +914,7 @@ button{cursor:pointer;font-family:inherit}
           <span class="occ-link">Shop Birthday →</span>
         </div>
       </a>
-      <a href="shop.html" class="occ-card reveal">
+      <a href="shop.html?occasion=anniversary" class="occ-card reveal" data-occasion="anniversary">
         <div class="occ-img"><img src="images/gallery/bouquet-pink-tulip.jpg" srcset="images/gallery/bouquet-pink-tulip-480.webp 480w, images/gallery/bouquet-pink-tulip-800.webp 800w, images/gallery/bouquet-pink-tulip.webp 1170w" sizes="(max-width: 600px) 50vw, 33vw" alt="Anniversary flowers" width="1170" height="1060" loading="lazy" decoding="async"></div>
         <div class="occ-body">
           <h3 class="occ-name">Anniversary</h3>
@@ -918,7 +922,7 @@ button{cursor:pointer;font-family:inherit}
           <span class="occ-link">Shop Anniversary →</span>
         </div>
       </a>
-      <a href="shop.html" class="occ-card reveal">
+      <a href="shop.html?occasion=sympathy" class="occ-card reveal" data-occasion="sympathy">
         <div class="occ-img"><img src="images/gallery/bouquet-white.jpg" srcset="images/gallery/bouquet-white-480.webp 480w, images/gallery/bouquet-white-800.webp 800w, images/gallery/bouquet-white.webp 1170w" sizes="(max-width: 600px) 50vw, 33vw" alt="Sympathy flowers" width="1170" height="1556" loading="lazy" decoding="async"></div>
         <div class="occ-body">
           <h3 class="occ-name">Sympathy</h3>
@@ -926,7 +930,7 @@ button{cursor:pointer;font-family:inherit}
           <span class="occ-link">Shop Sympathy →</span>
         </div>
       </a>
-      <a href="shop.html" class="occ-card reveal">
+      <a href="weddings.html" class="occ-card reveal">
         <div class="occ-img"><img src="images/gallery/bouquet-workshop.jpg" srcset="images/gallery/bouquet-workshop-480.webp 480w, images/gallery/bouquet-workshop-800.webp 800w, images/gallery/bouquet-workshop.webp 1125w" sizes="(max-width: 600px) 50vw, 33vw" alt="Wedding flowers" width="1125" height="1500" loading="lazy" decoding="async"></div>
         <div class="occ-body">
           <h3 class="occ-name">Wedding</h3>
@@ -934,7 +938,7 @@ button{cursor:pointer;font-family:inherit}
           <span class="occ-link">Enquire →</span>
         </div>
       </a>
-      <a href="shop.html" class="occ-card reveal">
+      <a href="shop.html?occasion=new-baby" class="occ-card reveal" data-occasion="new-baby">
         <div class="occ-img"><img src="images/gallery/flowers-market.jpg" srcset="images/gallery/flowers-market-480.webp 480w, images/gallery/flowers-market-800.webp 800w, images/gallery/flowers-market.webp 1170w" sizes="(max-width: 600px) 50vw, 33vw" alt="New baby flowers" width="1170" height="1974" loading="lazy" decoding="async"></div>
         <div class="occ-body">
           <h3 class="occ-name">New Baby</h3>
@@ -942,7 +946,7 @@ button{cursor:pointer;font-family:inherit}
           <span class="occ-link">Shop New Baby →</span>
         </div>
       </a>
-      <a href="shop.html" class="occ-card reveal">
+      <a href="shop.html?occasion=thank-you" class="occ-card reveal" data-occasion="thank-you">
         <div class="occ-img"><img src="images/gallery/bouquet-pink-roses.jpg" srcset="images/gallery/bouquet-pink-roses-480.webp 480w, images/gallery/bouquet-pink-roses-800.webp 800w, images/gallery/bouquet-pink-roses.webp 1092w" sizes="(max-width: 600px) 50vw, 33vw" alt="Thank you flowers" width="1092" height="1056" loading="lazy" decoding="async"></div>
         <div class="occ-body">
           <h3 class="occ-name">Thank You</h3>
@@ -1417,12 +1421,12 @@ document.getElementById('postcodeInput').addEventListener('keydown', e => { if(e
 
         <h3 class="vs-section-title" style="margin-top:36px;">Shop by occasion</h3>
         <div class="vs-occasions">
-          <a class="vs-occ-pill" href="shop.html?occasion=birthday">Birthday</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=anniversary">Anniversary</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=sympathy">Sympathy</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=thank-you">Thank you</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=new-baby">New baby</a>
-          <a class="vs-occ-pill" href="shop.html?occasion=just-because">Just because</a>
+          <a class="vs-occ-pill" href="shop.html?occasion=birthday" data-occasion="birthday">Birthday</a>
+          <a class="vs-occ-pill" href="shop.html?occasion=anniversary" data-occasion="anniversary">Anniversary</a>
+          <a class="vs-occ-pill" href="shop.html?occasion=sympathy" data-occasion="sympathy">Sympathy</a>
+          <a class="vs-occ-pill" href="shop.html?occasion=thank-you" data-occasion="thank-you">Thank you</a>
+          <a class="vs-occ-pill" href="shop.html?occasion=new-baby" data-occasion="new-baby">New baby</a>
+          <a class="vs-occ-pill" href="shop.html?occasion=just-because" data-occasion="just-because">Just because</a>
         </div>
       </div>
 

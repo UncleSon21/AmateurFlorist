@@ -15,12 +15,13 @@ const MAX_CARDS = 4;
 
 type Product = {
   id: string; name: string; material: string; inStock: boolean;
-  images: string[]; variants: { priceCents: number }[];
+  images: string[]; variants: { priceCents: number }[]; categories: string[];
 };
 
 async function fetchProducts(): Promise<Product[]> {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return [];
-  const select = "id,name,material,in_stock,product_images(image_url,sort_order),variants(price_cents)";
+  const select = "id,name,material,in_stock,product_images(image_url,sort_order),variants(price_cents),"
+    + "product_categories(categories(name))";
   const res = await fetch(`${SUPABASE_URL}/rest/v1/products?select=${encodeURIComponent(select)}&order=name.asc`, {
     headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
   });
@@ -35,6 +36,9 @@ async function fetchProducts(): Promise<Product[]> {
       .sort((a: any, b: any) => a.sort_order - b.sort_order)
       .map((x: any) => x.image_url),
     variants: (p.variants || []).map((v: any) => ({ priceCents: v.price_cents })),
+    categories: (p.product_categories || [])
+      .map((pc: any) => pc.categories?.name)
+      .filter(Boolean),
   }));
 }
 
@@ -82,6 +86,35 @@ function overlayRow(p: any): string {
     </a>`;
 }
 
+// "Shop by occasion": hide every occasion card and search-overlay pill whose
+// category has no products, so none of them opens an empty or unfiltered shop.
+// The owner brings one back by tagging a product with that category in Supabase
+// (category name = the data-occasion slug, e.g. "anniversary", "new-baby").
+// If the products request fails, nothing is hidden: ?occasion= falls back to
+// the full shop.
+function syncOccasions(all: Product[]) {
+  const stocked = new Set(all.flatMap(p => p.categories));
+  document.querySelectorAll<HTMLElement>("[data-occasion]").forEach(el => {
+    el.hidden = !stocked.has(el.dataset["occasion"] || "");
+  });
+
+  const grid = document.querySelector<HTMLElement>(".occasions-grid");
+  if (grid) {
+    const cards = [...grid.querySelectorAll<HTMLElement>(".occ-card")].filter(c => !c.hidden);
+    // Only the Wedding card left: no occasion has products yet, so drop the section.
+    const section = grid.closest<HTMLElement>("section");
+    if (section) section.hidden = !cards.some(c => c.dataset["occasion"]);
+    grid.classList.toggle("occ-two-col", cards.length === 2 || cards.length === 4);
+  }
+
+  const pills = document.querySelector<HTMLElement>(".vs-occasions");
+  if (pills && !pills.querySelector("[data-occasion]:not([hidden])")) {
+    pills.hidden = true;
+    const heading = pills.previousElementSibling as HTMLElement | null;
+    if (heading?.classList.contains("vs-section-title")) heading.hidden = true;
+  }
+}
+
 function fallback(grid: HTMLElement) {
   grid.innerHTML = `
     <p style="grid-column:1/-1;text-align:center">
@@ -95,6 +128,7 @@ async function main() {
   if (!grid && !overlay) return;
   try {
     const all = await fetchProducts();
+    syncOccasions(all);
     const featured = all
       .filter((p: any) => p.inStock && p.variants.length > 0)
       .sort((a: any, b: any) =>

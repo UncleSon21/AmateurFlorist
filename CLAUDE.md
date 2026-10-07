@@ -88,6 +88,11 @@ These cost real debugging time; don't rediscover them:
   track grows to its widest child and pushed whole pages past a phone's width.
 - Shop filter URLs: `?type=fresh|forever`, `?material=`, `?category=`,
   `?occasion=` (only if that category exists), `?q=`.
+- Homepage "Shop by occasion" cards and the search overlay's occasion pills
+  carry `data-occasion="<category name>"` (birthday, anniversary, sympathy,
+  new-baby, thank-you, just-because). `home-featured.ts` hides any whose
+  category has no products; the section hides if only Wedding is left. Tagging
+  a product with that category in Supabase brings the card back.
 - Every page loads Vercel Web Analytics with
   `<script defer src="/_vercel/insights/script.js" vite-ignore>` (`vite-ignore`
   stops Vite warning it can't bundle it). Copy it into any new page. It 404s
