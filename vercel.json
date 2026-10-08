@@ -1,6 +1,19 @@
 {
   "cleanUrls": false,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "amateurflorist.vercel.app"
+        }
+      ],
+      "destination": "https://www.amateurflorist.co/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/.well-known/apple-developer-merchantid-domain-association",
@@ -11,8 +24,14 @@
     {
       "source": "/.well-known/apple-developer-merchantid-domain-association",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain" },
-        { "key": "Cache-Control", "value": "no-cache" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
       ]
     }
   ]

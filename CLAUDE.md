@@ -37,7 +37,8 @@ The short version:
 - Resend for email
 - Hosting: **Vercel** only, at `www.amateurflorist.co` (apex redirects to `www`),
   deployed from `master`. Vercel serves `404.html` for unknown URLs with a real
-  404 status. (Netlify was removed on 2026-10-06; `netlify.toml` is gone.)
+  404 status. `amateurflorist.vercel.app` 301s to `www` (host redirect in
+  `vercel.json`): Google had indexed the vercel.app copy first. (Netlify was removed on 2026-10-06; `netlify.toml` is gone.)
 
 ## Environment gotchas
 

@@ -604,6 +604,7 @@ html[data-theme="night"] .items-panel {              /* cart: was a white box */
   border-color: rgba(212,168,87,.16) !important;
 }
 html[data-theme="night"] .enq-bg .sec-title { color: var(--text) !important; }   /* weddings enquiry */
+html[data-theme="night"] .enq-ig a { color: var(--text) !important; }
 html[data-theme="night"] .enq-card .btn-light {
   background: var(--accent) !important;
   color: #0a0e1a !important;

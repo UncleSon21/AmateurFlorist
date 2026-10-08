@@ -26,6 +26,8 @@ const PI_ENDPOINT = `${SUPABASE_URL}/functions/v1/create-payment-intent`;
 // form that can only fail, the customer emails the order to us.
 // Add ?testpay to the checkout URL to exercise the Stripe test flow.
 const ORDER_EMAIL = "chloe@amateurflorist.co";
+// Instagram direct-message link (opens a chat in the app); an alternative way to order.
+const ORDER_INSTAGRAM = "https://ig.me/m/amateurflorist_";
 const PAYMENTS_OPEN = !!STRIPE_PK &&
   (STRIPE_PK.startsWith("pk_live_") || new URLSearchParams(location.search).has("testpay"));
 
@@ -461,7 +463,9 @@ function setupOrderByEmail(lines: EnrichedLine[]) {
   note.style.marginBottom = "16px";
   note.innerHTML = `<div><strong>Online payment isn't open yet</strong>
     <span class="pickup-note-sub">Fill in your details and tap “Email this order”. It opens an email to us with
-    your order written out, and we'll reply to confirm it and arrange payment.</span></div>`;
+    your order written out, and we'll reply to confirm it and arrange payment.</span>
+    <span class="pickup-note-sub">Rather message? <a href="${ORDER_INSTAGRAM}" target="_blank" rel="noopener"
+      style="text-decoration:underline">DM us on Instagram @amateurflorist_</a>.</span></div>`;
   continueBtn.before(note);
 
   continueBtn.addEventListener("click", () => {
