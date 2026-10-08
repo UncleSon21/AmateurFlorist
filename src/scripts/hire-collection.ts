@@ -117,6 +117,9 @@ async function initHireCollection(): Promise<void> {
   if (!section || !grid) return;
 
   document.getElementById("enq-piece-clear")?.addEventListener("click", () => setPiece(""));
+  // Arriving from a product page's "Enquire about hiring it" link.
+  const fromLink = new URLSearchParams(location.search).get("piece");
+  if (fromLink) setPiece(fromLink.slice(0, 120));
   // The form script clears the piece after a successful send.
   window.addEventListener("enquiry:sent", () => setPiece(""));
 

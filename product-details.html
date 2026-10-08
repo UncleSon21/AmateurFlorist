@@ -44,7 +44,7 @@
 <title>Product Details — Amateur Florist Sydney</title>
 <meta name="description" content="Handcrafted fresh and silk arrangements, delivered across Sydney. Choose your size and delivery date.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://www.amateurflorist.co/product-details.html">
+<!-- Canonical: set per bouquet by product-details.ts (product-details.html?id=…). -->
 <meta property="og:type" content="product">
 <meta property="og:site_name" content="Amateur Florist">
 <meta property="og:title" content="Bouquet — Amateur Florist Sydney">
@@ -376,6 +376,11 @@ button{cursor:pointer;font-family:inherit}
 #season-side-left,#season-side-right,.nav-branch { display: none !important; }
 
 .ig-order{margin-top:14px;font-size:13px;color:var(--text-muted)}
+.hire-offer{margin-top:16px;padding:14px 16px;border:.5px solid var(--border);border-radius:var(--radius);background:var(--bg-alt)}
+.hire-offer[hidden]{display:none}
+.hire-offer-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text)}
+.hire-offer-price{margin-top:2px;font-size:13px;color:var(--text-muted)}
+.hire-offer-link{display:inline-block;margin-top:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink);border-bottom:.5px solid var(--label)}
 .ig-order a{color:var(--ink);border-bottom:.5px solid var(--accent-light)}
 
 /* ── Desktop readability (owner: small text was hard to read on desktop;
@@ -585,6 +590,12 @@ button{cursor:pointer;font-family:inherit}
           <button class="btn-buy btn-buy-now">Buy Now</button>
           <button class="btn-cart btn-add-cart" id="addCartBtn">Add to Cart</button>
         </div>
+        <!-- Shown by product-details.ts when this bouquet is also for wedding hire -->
+        <div class="hire-offer" id="hireOffer" hidden>
+          <p class="hire-offer-title">Also available to hire for your wedding</p>
+          <p class="hire-offer-price" id="hireOfferPrice"></p>
+          <a class="hire-offer-link" id="hireOfferLink" href="weddings.html#enquire">Enquire about hiring it →</a>
+        </div>
         <p class="ig-order">Rather order by message? <a href="https://ig.me/m/amateurflorist_" target="_blank" rel="noopener">DM us on Instagram →</a></p>
 
         <!-- Trust -->
@@ -672,15 +683,22 @@ function initDateQuick() {
       } else {
         dInput.style.display = 'none';
         const target = new Date(); target.setDate(target.getDate() + parseInt(offset));
-        dInput.value = target.toISOString().slice(0,10);
+        dInput.value = localYmd(target);
       }
     });
   });
 
   // Set min date on the hidden custom date input
-  const today = new Date().toISOString().split('T')[0];
+  const today = localYmd(new Date());
   const di = document.getElementById('delivDate');
   if (di) { di.min = today; di.value = today; }
+}
+
+// YYYY-MM-DD in the visitor's own time zone. toISOString() is UTC, which in
+// Sydney before 11am is still yesterday.
+function localYmd(d) {
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
 function toggleGift() {

@@ -9,7 +9,7 @@
 // No redirect to Stripe's hosted page.
 
 import { fetchProductById } from "./db";
-import { loadCart } from "./cart";
+import { loadCart, saveCart } from "./cart";
 import { formatPrice } from "./utils";
 
 const FREE_DELIVERY_THRESHOLD_CENTS = 5000; // $50
@@ -20,10 +20,13 @@ const SUPABASE_ANON_KEY = import.meta.env['VITE_SUPABASE_ANON_KEY'] as string;
 const STRIPE_PK = import.meta.env['VITE_STRIPE_PUBLISHABLE_KEY'] as string | undefined;
 
 const PI_ENDPOINT = `${SUPABASE_URL}/functions/v1/create-payment-intent`;
+// While payment isn't open, orders go here: saved + emailed to the owner (004_order_requests.sql).
+const ORDER_ENDPOINT = `${SUPABASE_URL}/functions/v1/submit-order-request`;
 
 // Online payment opens only with a live Stripe key. Until then (no key, or the
 // deliberate test-mode key) real cards can't complete, so instead of a payment
-// form that can only fail, the customer emails the order to us.
+// form that can only fail, the order is sent to us as a request (we confirm it
+// and arrange payment). Emailing it is the fallback if that send fails.
 // Add ?testpay to the checkout URL to exercise the Stripe test flow.
 const ORDER_EMAIL = "chloe@amateurflorist.co";
 // Instagram direct-message link (opens a chat in the app); an alternative way to order.
@@ -43,9 +46,11 @@ const StripeGlobal: any = (window as any).Stripe;
 /* ─── Set minimum delivery date to today ─── */
 function initDeliveryDate() {
   const el = inp("delivery-date");
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  el.min = today.toISOString().split("T")[0] ?? "";
+  // The visitor's local date. toISOString() is UTC, which in Sydney before
+  // 11am is still yesterday, so the form defaulted to (and allowed) yesterday.
+  const now = new Date();
+  const pad = (n: number) => String(n).padStart(2, "0");
+  el.min = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
   if (!el.value) el.value = el.min;
 }
 
@@ -451,10 +456,32 @@ function buildOrderEmail(lines: EnrichedLine[]): { subject: string; body: string
   return { subject: `Order request — ${name}`, body };
 }
 
-function setupOrderByEmail(lines: EnrichedLine[]) {
+function esc(v: string): string {
+  return v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function orderMailto(lines: EnrichedLine[]): string {
+  const { subject, body } = buildOrderEmail(lines);
+  return `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+function showOrderSent(ref: string, phone: string, emailed: boolean) {
+  $("checkout-main").style.display = "none";
+  const done = $("checkout-empty");
+  done.innerHTML = `
+    <h2>Order request sent</h2>
+    <p>${ref ? `Your reference is <strong>${esc(ref)}</strong>. ` : ""}We'll contact you on
+      ${esc(phone)} to confirm your order. A $10 deposit by PayID secures it, and you pay the rest once
+      you've seen your bouquet and you're happy.${emailed ? " A copy is on its way to your email." : ""}</p>
+    <a href="shop.html" class="btn-place-order" style="display:inline-flex;width:auto;padding:14px 32px;text-decoration:none">Back to the shop</a>`;
+  done.style.display = "block";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function setupOrderRequest(lines: EnrichedLine[]) {
   const continueBtn = $("btn-continue") as HTMLButtonElement;
   const label = continueBtn.querySelector("span");
-  if (label) label.textContent = "Email this order";
+  if (label) label.textContent = "Send order request";
 
   const note = document.createElement("div");
   note.className = "pickup-note";
@@ -462,29 +489,73 @@ function setupOrderByEmail(lines: EnrichedLine[]) {
   note.style.display = "flex";
   note.style.marginBottom = "16px";
   note.innerHTML = `<div><strong>Online payment isn't open yet</strong>
-    <span class="pickup-note-sub">Fill in your details and tap “Email this order”. It opens an email to us with
-    your order written out, and we'll reply to confirm it and arrange payment.</span>
+    <span class="pickup-note-sub">Send your order: nothing is charged now. We'll contact you to confirm it,
+    and a $10 deposit by PayID secures it. You pay the rest once you've seen your bouquet and you're happy.
+    <a href="index.html#faq" style="text-decoration:underline">How it works</a></span>
     <span class="pickup-note-sub">Rather message? <a href="${ORDER_INSTAGRAM}" target="_blank" rel="noopener"
       style="text-decoration:underline">DM us on Instagram @amateurflorist_</a>.</span></div>`;
   continueBtn.before(note);
 
-  continueBtn.addEventListener("click", () => {
+  // #pay-error lives in the (hidden) payment section, so this mode has its own.
+  const err = document.createElement("div");
+  err.className = "pay-error";
+  err.setAttribute("role", "alert");
+  err.style.marginTop = "14px";
+  continueBtn.after(err);
+
+  continueBtn.addEventListener("click", async () => {
     if (!validate()) {
       const firstError = document.querySelector(".field.has-error") as HTMLElement | null;
       firstError?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
-    const { subject, body } = buildOrderEmail(lines);
-    const link = document.createElement("a");
-    link.href = `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    link.style.display = "none";
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    // If no email app opened, they still need a way to reach us.
-    const sub = note.querySelector(".pickup-note-sub");
-    if (sub) sub.innerHTML = `Your email app should have opened with the order. If it didn't, email it to
-      <a href="mailto:${ORDER_EMAIL}" style="text-decoration:underline">${ORDER_EMAIL}</a>.`;
+    err.classList.remove("show");
+    continueBtn.disabled = true;
+    continueBtn.classList.add("btn-loading");
+    if (label) label.textContent = "Sending…";
+
+    const val = (id: string) => (document.getElementById(id) as HTMLInputElement | null)?.value.trim() || "";
+    const payload = {
+      items: lines.map(l => ({
+        product_id: l.productId, variant_code: l.variantCode, qty: l.qty,
+        add_on_ids: l.addOnIds.map(Number).filter(Boolean),
+      })),
+      customer_name: val("name"), customer_phone: val("phone"), customer_email: val("email"),
+      delivery_date: val("delivery-date"), delivery_time: val("delivery-time"),
+      is_pickup: isPickupMode(),
+      street: val("address"), suburb: val("suburb"), state: val("state"), postcode: val("postcode"),
+      notes: val("notes"),
+    };
+
+    try {
+      const res = await fetch(ORDER_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+          "apikey": SUPABASE_ANON_KEY,
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || "");
+      saveCart([]);
+      document.dispatchEvent(new CustomEvent("cart:changed"));
+      window.dispatchEvent(new Event("cart:changed"));
+      showOrderSent(data.ref || "", payload.customer_phone, !!payload.customer_email);
+    } catch (e: any) {
+      console.error("Order request failed:", e);
+      // Never lose the order: offer the email route with it already written out.
+      // Show the function's own message (e.g. a missing address), not a raw network error.
+      const msg = e instanceof TypeError ? "" : e?.message;
+      err.innerHTML = `${esc(msg || "We couldn't send your order.")}
+        <a href="${esc(orderMailto(lines))}" style="text-decoration:underline">Email it to us instead</a>
+        (it opens your email app with the order filled in).`;
+      err.classList.add("show");
+      continueBtn.disabled = false;
+      continueBtn.classList.remove("btn-loading");
+      if (label) label.textContent = "Send order request";
+    }
   });
 }
 
@@ -507,7 +578,7 @@ async function main() {
 
   initDeliveryToggle(() => renderSummary(lines));
   if (PAYMENTS_OPEN) setupContinueButton(lines);
-  else setupOrderByEmail(lines);
+  else setupOrderRequest(lines);
 
   // Live validation on blur (clears red borders as they fix mistakes)
   ["name", "phone", "delivery-date", "address", "suburb"].forEach(id => {

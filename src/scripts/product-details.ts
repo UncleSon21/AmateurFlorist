@@ -316,6 +316,86 @@ function bindAddonCategories() {
   });
 }
 
+// ── Search (Google) ──────────────────────────────────────────────────────────
+// Each bouquet is its own page to Google: its own canonical address, description
+// and Product structured data (real name, photos, price range, stock). Without
+// this the page's canonical pointed every bouquet at the bare product page.
+const SITE = "https://www.amateurflorist.co";
+const MATERIAL_WORDS: Record<string, string> = {
+  fresh: "Fresh flowers",
+  artificial: "Silk (artificial) flowers",
+  silk: "Silk flowers",
+  preserved: "Preserved flowers",
+};
+
+function setSearchDetails(p: any, id: string) {
+  const url = `${SITE}/product-details.html?id=${encodeURIComponent(id)}`;
+  let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  if (!canonical) {
+    canonical = document.createElement("link");
+    canonical.rel = "canonical";
+    document.head.appendChild(canonical);
+  }
+  canonical.href = url;
+  document.querySelector('meta[property="og:url"]')?.setAttribute("content", url);
+
+  const prices: number[] = (p.variants || []).map((v: any) => v.priceCents).filter((c: number) => c > 0);
+  const low = prices.length ? Math.min(...prices) / 100 : 0;
+  const high = prices.length ? Math.max(...prices) / 100 : 0;
+  const material = MATERIAL_WORDS[p.material] ?? "Flowers";
+  const desc = [p.description, `${material}${low ? `, from $${low.toFixed(0)}` : ""}. Delivered across Sydney.`]
+    .filter(Boolean).join(" ").slice(0, 300);
+  document.querySelector('meta[name="description"]')?.setAttribute("content", desc);
+
+  const data: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: p.name,
+    description: desc,
+    image: (p.images || []).slice(0, 5),
+    sku: p.slug || id,
+    brand: { "@type": "Brand", name: "Amateur Florist" },
+    material: material.replace(/ flowers$/, ""),
+    url,
+  };
+  if (prices.length) {
+    data["offers"] = {
+      "@type": "AggregateOffer",
+      priceCurrency: "AUD",
+      lowPrice: low.toFixed(2),
+      highPrice: high.toFixed(2),
+      offerCount: prices.length,
+      availability: p.inStock === false ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+      url,
+      seller: { "@type": "Organization", name: "Amateur Florist", url: `${SITE}/` },
+    };
+  }
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify(data);
+  document.head.appendChild(script);
+}
+
+// ── Also available to hire ───────────────────────────────────────────────────
+// A bouquet marked is_rentable in Supabase also offers wedding hire here, with
+// its hire price and bond if set (never a made-up number). The link opens the
+// weddings enquiry form with this bouquet already filled in (?piece=).
+function showHireOffer(p: any) {
+  const box = qs<HTMLElement>("#hireOffer");
+  if (!box || !p.isRentable) return;
+  const money = (c: number) => `$${Number.isInteger(c / 100) ? c / 100 : (c / 100).toFixed(2)}`;
+  const priceEl = qs<HTMLElement>("#hireOfferPrice");
+  if (priceEl) {
+    priceEl.textContent = [
+      p.rentalPriceCents != null ? `Hire ${money(p.rentalPriceCents)}` : "Hire price on request",
+      p.depositCents ? `refundable bond ${money(p.depositCents)}` : "",
+    ].filter(Boolean).join(" · ");
+  }
+  const link = qs<HTMLAnchorElement>("#hireOfferLink");
+  if (link) link.href = `weddings.html?piece=${encodeURIComponent(p.name)}#enquire`;
+  box.hidden = false;
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
   updateNavCount();
@@ -349,6 +429,8 @@ async function main() {
     if (subtitleEl) subtitleEl.textContent = product.description ?? "";
     if (crumbEl) crumbEl.textContent = product.name;
     document.title = `${product.name} — Amateur Florist`;
+    setSearchDetails(product, id);
+    showHireOffer(product);
 
     // Material badge (keep .mat-badge: replacing the whole className dropped its styling)
     const badgeEl = qs<HTMLElement>("#material-badge");

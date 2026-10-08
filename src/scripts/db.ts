@@ -71,6 +71,7 @@ export async function fetchProductById(id: string) {
     .from("products")
     .select(`
       id, slug, name, description, material, in_stock, made_to_order, lead_time_days,
+      is_rentable, rental_price_cents, deposit_cents,
       product_images ( image_url, sort_order ),
       variants ( id, variant_code, name, price_cents ),
       product_add_ons ( add_ons ( id, slug, name, price_cents ) ),
@@ -95,6 +96,9 @@ export async function fetchProductById(id: string) {
     inStock: data.in_stock,
     madeToOrder: data.made_to_order ?? false,
     leadTimeDays: data.lead_time_days ?? 0,
+    isRentable: data.is_rentable === true,
+    rentalPriceCents: data.rental_price_cents as number | null,
+    depositCents: data.deposit_cents as number | null,
     images: (data.product_images || [])
       .sort((a: any, b: any) => a.sort_order - b.sort_order)
       .map((x: any) => x.image_url),

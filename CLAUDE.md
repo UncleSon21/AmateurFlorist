@@ -58,8 +58,8 @@ These cost real debugging time; don't rediscover them:
   address. Public contact address on the site: `chloe@amateurflorist.co`.
 - Root-level files not referenced from HTML (robots, sitemap, OG images) are
   **not deployed**. Put them in `public/`.
-- Every page carries its own inline `<style>`; `styles/*.css` is not imported
-  anywhere. Header/drawer CSS shared by all pages lives in
+- Every page carries its own inline `<style>` (the old `styles/` folder was
+  unused and has been deleted). Header/drawer CSS shared by all pages lives in
   `src/scripts/mobile-nav.ts`. The hamburger header is used **below 1024px**
   (the four desktop links don't fit beside the logo on tablets).
 - Logo: one drawing, `public/brand/mark.svg#heart`, referenced from every header
@@ -166,7 +166,28 @@ Checked 2026-10-06:
 - `wedding_enquiries` exists live but was created outside the repo;
   `003_wedding_enquiries.sql` records it and adds `interest` and `piece`. Run
   it, then redeploy `submit-wedding-enquiry`, before relying on those columns.
-- Redesign is integrated; the `*.original-bak` files are the pre-redesign pages.
+- Redesign is integrated (the pre-redesign `*.original-bak` pages were deleted;
+  they're in git history).
+- **Deposit terms (owner, 2026-10-08):** every order, $10 by PayID once the
+  owner confirms; the customer pays the rest only if happy with the finished
+  bouquet, otherwise the $10 is kept to cover making it; refunded if they cancel
+  before it's made. Worded the same in the homepage FAQ (`#faq`), checkout and
+  the order emails; change all three together.
+- **Orders while payment is closed** go through `submit-order-request`: it
+  re-prices from the database, saves to `order_requests` (`004_order_requests.sql`),
+  emails the owner and sends the customer a copy if they gave an email. No
+  payment is taken; the owner confirms and arranges payment. If the send fails,
+  checkout offers the old pre-filled email (mailto) so no order is lost.
+  **Owner must run 004 and deploy the function** or checkout falls back to email.
+- Product pages: each bouquet sets its own canonical
+  (`product-details.html?id=…`), meta description and Product JSON-LD in
+  `product-details.ts`; `vite.config.ts` adds every product to `dist/sitemap.xml`
+  at build (falls back to the fixed pages if Supabase is unreachable).
+- Product pages show "Also available to hire" for `is_rentable` bouquets,
+  linking to `weddings.html?piece=<name>#enquire` (prefills the enquiry).
+- Dates: use the visitor's local date, never `toISOString().slice(0,10)` — that
+  is UTC, i.e. yesterday in Sydney before 11am (checkout defaulted to it).
+  `rental.ts` uses UTC on purpose to match SQL `current_date`.
 - SEO: meta + OG tags in place. The homepage has JSON-LD (`WebSite` +
   `Florist`): name, URL, logo `public/brand/logo-512.png`, email, Instagram
   (`sameAs`), area served Sydney. **No phone and no street address** (owner's
