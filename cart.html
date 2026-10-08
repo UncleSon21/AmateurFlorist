@@ -68,7 +68,7 @@ a{text-decoration:none;color:inherit}
 button{cursor:pointer;font-family:inherit}
 
 /* ── Top bar ── */
-.topbar{background:var(--accent-dark);color:var(--accent-light);text-align:center;padding:9px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
+.topbar{background:var(--accent-dark);color:var(--label);text-align:center;padding:9px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
 .topbar a{color:#d4c5a0;border-bottom:.5px solid rgba(212,197,160,.4)}
 
 /* ── Nav ── */
@@ -77,11 +77,11 @@ button{cursor:pointer;font-family:inherit}
 .back-link{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);transition:color .3s,gap .3s;}
 .back-link:hover{color:var(--text);gap:12px}
 .logo{text-align:center}
-.logo-name{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block;}
-.logo-sub{font-size:11px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:2px;}
+.logo-name{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--ink);letter-spacing:2px;line-height:1;display:block;}
+.logo-sub{font-size:11px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--label);display:block;margin-top:2px;}
 /* Logo: tied-heart mark (public/brand/mark.svg) beside the script name */
 .logo a{display:inline-flex;align-items:center;gap:10px}
-.logo-mark{flex-shrink:0;color:var(--accent);--sw:2.8}
+.logo-mark{flex-shrink:0;color:var(--ink);--sw:2.8}
 .logo-text{display:flex;flex-direction:column;align-items:center}
 /* Smaller name so mark + name sit clear of the nav links; steps down with width */
 .logo .logo-name{font-size:1.9rem}
@@ -100,7 +100,7 @@ button{cursor:pointer;font-family:inherit}
 .cart-header{margin-bottom:40px}
 .cart-title{
   font-family:'Great Vibes',cursive;
-  font-size:3rem;color:var(--accent);font-weight:400;
+  font-size:3rem;color:var(--ink);font-weight:400;
   line-height:1;margin-bottom:6px;
 }
 .cart-sub{font-size:12px;color:var(--text-muted);letter-spacing:.5px}
@@ -116,13 +116,13 @@ button{cursor:pointer;font-family:inherit}
 .panel-title{
   padding:18px 24px;border-bottom:.5px solid var(--border);
   font-size:11px;font-weight:400;letter-spacing:3px;text-transform:uppercase;
-  color:var(--accent-light);
+  color:var(--label);
 }
 
 /* Loading */
-.cart-loading{padding:60px 24px;text-align:center;color:var(--accent-light)}
+.cart-loading{padding:60px 24px;text-align:center;color:var(--label)}
 .spinner{
-  width:32px;height:32px;border:.5px solid var(--border);border-top-color:var(--accent);
+  width:32px;height:32px;border:.5px solid var(--border);border-top-color:var(--ink);
   border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -134,7 +134,7 @@ button{cursor:pointer;font-family:inherit}
   background:var(--bg-alt);border-radius:50%;
   display:flex;align-items:center;justify-content:center;
 }
-.empty-icon svg{color:var(--accent-light)}
+.empty-icon svg{color:var(--label)}
 .cart-empty h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--text);margin-bottom:8px}
 .cart-empty p{font-size:13px;color:var(--text-muted);margin-bottom:28px}
 .btn-shop{
@@ -165,13 +165,13 @@ button{cursor:pointer;font-family:inherit}
   font-family:'Cormorant Garamond',serif;
   font-size:1.1rem;font-weight:300;color:var(--text);margin-bottom:3px;
 }
-.item-meta{font-size:11px;color:var(--accent-light);margin-bottom:12px;letter-spacing:.5px}
+.item-meta{font-size:11px;color:var(--label);margin-bottom:12px;letter-spacing:.5px}
 .item-qty-row{display:flex;align-items:center;gap:8px}
 .qty-btn{
   width:28px;height:28px;border:.5px solid var(--border);
   background:#fff;border-radius:var(--radius);
   font-size:1rem;display:flex;align-items:center;justify-content:center;
-  color:var(--accent);transition:all .2s;
+  color:var(--ink);transition:all .2s;
 }
 .qty-btn:hover{background:var(--accent-dark);color:#fff;border-color:var(--accent-dark)}
 .qty-val{width:32px;text-align:center;font-size:13px;color:var(--text)}
@@ -180,7 +180,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .item-price{
   font-family:'Cormorant Garamond',serif;
-  font-size:1.15rem;font-weight:300;color:var(--accent);
+  font-size:1.15rem;font-weight:300;color:var(--ink);
 }
 .item-remove{
   background:none;border:none;color:var(--border);padding:4px;
@@ -207,7 +207,7 @@ button{cursor:pointer;font-family:inherit}
 .summary-total-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
 #summaryTotal{
   font-family:'Cormorant Garamond',serif;
-  font-size:1.8rem;font-weight:300;color:var(--accent);
+  font-size:1.8rem;font-weight:300;color:var(--ink);
 }
 
 /* Free delivery progress */
@@ -215,7 +215,7 @@ button{cursor:pointer;font-family:inherit}
 .del-track{height:2px;background:var(--border);border-radius:1px;overflow:hidden;margin-bottom:6px}
 .del-bar{height:100%;background:var(--accent);border-radius:1px;transition:width .4s ease}
 .del-text{font-size:11px;color:var(--text-muted);text-align:center}
-.del-text strong{color:var(--accent)}
+.del-text strong{color:var(--ink)}
 
 /* Buttons */
 .btn-checkout{
@@ -235,7 +235,7 @@ button{cursor:pointer;font-family:inherit}
   font-size:11px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
   text-align:center;transition:border-color .3s,color .3s;
 }
-.btn-continue:hover{border-color:var(--accent);color:var(--text)}
+.btn-continue:hover{border-color:var(--ink);color:var(--text)}
 
 /* Trust row */
 .summary-trust{
@@ -245,9 +245,9 @@ button{cursor:pointer;font-family:inherit}
 }
 .trust-item{
   display:flex;flex-direction:column;align-items:center;gap:5px;
-  font-size:11px;color:var(--accent-light);text-align:center;
+  font-size:11px;color:var(--label);text-align:center;
 }
-.trust-item svg{color:var(--accent-light)}
+.trust-item svg{color:var(--label)}
 
 /* ── Footer ── */
 .footer{background:var(--accent-dark);padding:48px 0 24px}
@@ -288,12 +288,12 @@ button{cursor:pointer;font-family:inherit}
 .item-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text);margin-bottom:2px}
 .item-meta{font-size:11px;color:var(--text-muted);letter-spacing:.5px;margin-bottom:8px}
 .item-addons{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
-.addon-tag{font-size:11px;letter-spacing:1px;color:var(--accent);background:var(--bg-alt);padding:3px 9px;border-radius:99px;border:.5px solid var(--border)}
+.addon-tag{font-size:11px;letter-spacing:1px;color:var(--ink);background:var(--bg-alt);padding:3px 9px;border-radius:99px;border:.5px solid var(--border)}
 .item-qty-row{display:inline-flex;align-items:center;gap:0;border:.5px solid var(--border);border-radius:var(--radius);overflow:hidden;background:#fff}
 .qty-value{padding:0 14px;font-size:13px;color:var(--text);font-weight:400;min-width:30px;text-align:center}
 .item-right{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;gap:10px}
-.item-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--accent);white-space:nowrap}
-.item-remove{background:none;border:none;color:var(--accent-light);padding:4px;cursor:pointer;transition:color .2s;display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius)}
+.item-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--ink);white-space:nowrap}
+.item-remove{background:none;border:none;color:var(--label);padding:4px;cursor:pointer;transition:color .2s;display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius)}
 .item-remove:hover{color:var(--accent-dark)}
 /* Phones: 28px / 24px controls are too small to hit reliably. Kept last so it wins over the rules above. */
 @media(max-width:768px){
@@ -301,6 +301,40 @@ button{cursor:pointer;font-family:inherit}
   .item-remove{min-width:40px;min-height:40px}
 }
 
+
+/* ── Desktop readability (owner: small text was hard to read on desktop;
+   phones are unchanged). Text in --accent-light was about 2:1 in summer and
+   autumn, and --accent about 3.7:1 in summer. On desktop, --label and --ink
+   are those colours deepened toward --accent-dark (4.8:1 or better in every
+   season); dark bands keep the originals, which read fine there. Body text
+   goes from weight 300 to 400. ── */
+:root{--label:var(--accent-light);--ink:var(--accent)}
+@media(min-width:1025px){
+  :root{
+    --label:color-mix(in srgb,var(--accent-light) 45%,var(--accent-dark));
+    --ink:color-mix(in srgb,var(--accent) 75%,var(--accent-dark));
+  }
+  /* dark bands: a lighter label (6:1+), the plain accent */
+  .topbar,footer,.footer,.enq-bg,.stats-bg,.cta-banner,#weddings-teaser,.gal-cta,
+  .trust-strip,.vs-overlay{--label:color-mix(in srgb,var(--accent-light) 75%,#fff);--ink:var(--accent)}
+  body{font-weight:400}
+  /* sizes: small capitals 11->12px, notes 11->13px, descriptions 12-13->14px,
+     italic subtitles ~17->19px. Nav links and the logo line are left alone:
+     the header is tuned so the logo doesn't touch the links. */
+  .topbar,.eyebrow,.w-eyebrow,.hero-eyebrow,.shop-hero-eyebrow,.cta-eyebrow,.sec-label,
+  .stat-label,.footer-col h4,.occ-link,.text-link,.gal-cta-sub,.trust-item,.tab-btn,
+  .summary-hd,.cp-label,.enq-card label,.material-pill,.prod-price-from,.dq-day,
+  .mat-badge,.type-badge,.summary-total-label{font-size:12px}
+  .hero-from,.hero-trust,.prod-type,.footer-bottom,.breadcrumb-inner a,.breadcrumb-inner span,
+  .size-note,.sz-label,.gift-counter,.filter-results,.path-cta>a,.enq-fine{font-size:13px}
+  .enq-card label span{font-size:12px !important}
+  .occ-desc,.coll-desc,.value-desc,.step-desc,.proc-desc,.prod-desc,.ig-alt,.footer-tagline,
+  .hours-row,.trust-row,.summary-row,.delivery-pill,.path-feat li,.faq-a p,.del-info p,
+  .ig-order,.enq-ig,.tab-pane p,.tab-pane li,.pd-subtitle{font-size:14px}
+  .footer-col a{font-size:13px}
+  .sec-subtitle,.sec-sub,.shop-hero-sub,.cta-sub,.enq-new{font-size:1.2rem;font-weight:400}
+  .footer-definition{font-size:15px}
+}
 </style>
 </head>
 <body>

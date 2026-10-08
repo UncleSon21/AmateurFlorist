@@ -3,6 +3,17 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "amateurflorist.vercel.app"
+        }
+      ],
+      "destination": "https://www.amateurflorist.co/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {

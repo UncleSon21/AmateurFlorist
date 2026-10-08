@@ -68,7 +68,7 @@ a{text-decoration:none;color:inherit}
 button{cursor:pointer;font-family:inherit}
 
 /* Top bar */
-.topbar{background:var(--accent-dark);color:var(--accent-light);text-align:center;padding:9px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
+.topbar{background:var(--accent-dark);color:var(--label);text-align:center;padding:9px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
 
 /* Nav */
 .nav{position:sticky;top:0;z-index:900;background:rgba(250,248,244,.96);border-bottom:.5px solid var(--border);backdrop-filter:blur(16px);}
@@ -76,11 +76,11 @@ button{cursor:pointer;font-family:inherit}
 .back-link{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);transition:color .3s,gap .3s;}
 .back-link:hover{color:var(--text);gap:12px}
 .logo{text-align:center}
-.logo-name{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block;}
-.logo-sub{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:2px;}
+.logo-name{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--ink);letter-spacing:2px;line-height:1;display:block;}
+.logo-sub{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--label);display:block;margin-top:2px;}
 /* Logo: tied-heart mark (public/brand/mark.svg) beside the script name */
 .logo a{display:inline-flex;align-items:center;gap:10px}
-.logo-mark{flex-shrink:0;color:var(--accent);--sw:2.8}
+.logo-mark{flex-shrink:0;color:var(--ink);--sw:2.8}
 .logo-text{display:flex;flex-direction:column;align-items:center}
 /* Smaller name so mark + name sit clear of the nav links; steps down with width */
 .logo .logo-name{font-size:1.9rem}
@@ -88,7 +88,7 @@ button{cursor:pointer;font-family:inherit}
 @media(max-width:1200px){.logo a{gap:8px}.logo-mark{width:26px;height:26px}.logo .logo-name{font-size:1.5rem}}
 @media(max-width:960px){.logo-mark{width:24px;height:24px}.logo .logo-name{font-size:1.5rem}}
 
-.nav-secure{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light);display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.nav-secure{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--label);display:flex;align-items:center;gap:8px;justify-content:flex-end}
 
 /* Page */
 .checkout-page{padding:48px 0 100px;background:var(--bg);min-height:80vh;}
@@ -98,7 +98,7 @@ button{cursor:pointer;font-family:inherit}
 .checkout-header{margin-bottom:40px;text-align:center}
 .checkout-title{
   font-family:'Great Vibes',cursive;
-  font-size:3rem;color:var(--accent);font-weight:400;line-height:1;margin-bottom:8px;
+  font-size:3rem;color:var(--ink);font-weight:400;line-height:1;margin-bottom:8px;
 }
 .checkout-sub{font-size:11px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase}
 
@@ -119,7 +119,7 @@ button{cursor:pointer;font-family:inherit}
 
 .section-divider{
   margin:28px 0 18px;padding-top:22px;border-top:.5px solid var(--border);
-  font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--label);
 }
 .section-divider:first-child,.section-divider.first{margin-top:0;padding-top:0;border-top:none}
 
@@ -133,9 +133,9 @@ button{cursor:pointer;font-family:inherit}
   font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;
   background:#fff;color:var(--text);outline:none;transition:border-color .25s,background .25s;
 }
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ink)}
 .field textarea{resize:vertical;min-height:74px;font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic}
-.label-hint{color:var(--accent-light);text-transform:none;letter-spacing:0;font-style:italic;font-size:11px}
+.label-hint{color:var(--label);text-transform:none;letter-spacing:0;font-style:italic;font-size:11px}
 .field-error-text{display:none;font-size:11px;color:#c0392b;font-style:italic;font-family:'Cormorant Garamond',serif;line-height:1.4}
 .field.has-error input,.field.has-error select{border-color:#c0392b;background:#fff5f5}
 .field.has-error .field-error-text{display:block}
@@ -149,11 +149,11 @@ button{cursor:pointer;font-family:inherit}
   font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;
   transition:all .25s;text-align:left;
 }
-.mode-btn:hover{border-color:var(--accent-light);color:var(--text)}
-.mode-btn.active{border-color:var(--accent);background:var(--bg-alt);color:var(--text)}
-.mode-btn svg{color:var(--accent-light);transition:color .25s}
-.mode-btn.active svg{color:var(--accent)}
-.mode-btn .mode-meta{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent-light)}
+.mode-btn:hover{border-color:var(--label);color:var(--text)}
+.mode-btn.active{border-color:var(--ink);background:var(--bg-alt);color:var(--text)}
+.mode-btn svg{color:var(--label);transition:color .25s}
+.mode-btn.active svg{color:var(--ink)}
+.mode-btn .mode-meta{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--label)}
 
 /* Pickup note */
 .pickup-note{
@@ -200,7 +200,7 @@ button{cursor:pointer;font-family:inherit}
 /* ── Embedded Stripe payment area ── */
 .pay-section{margin-top:28px;padding-top:22px;border-top:.5px solid var(--border)}
 .pay-section-title{
-  font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--label);
   margin-bottom:14px;
 }
 .pay-loading{
@@ -209,7 +209,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .pay-divider{
   display:flex;align-items:center;gap:14px;margin:18px 0;
-  font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent-light);
+  font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--label);
 }
 .pay-divider::before,.pay-divider::after{
   content:'';flex:1;height:.5px;background:var(--border);
@@ -225,7 +225,7 @@ button{cursor:pointer;font-family:inherit}
 .pay-error.show{display:block;animation:fadeSlideIn .3s ease}
 .pay-trust-row{
   display:flex;align-items:center;justify-content:center;gap:16px;
-  margin-top:14px;font-size:11px;letter-spacing:1px;color:var(--accent-light);
+  margin-top:14px;font-size:11px;letter-spacing:1px;color:var(--label);
 }
 .pay-trust-row svg{flex-shrink:0}
 
@@ -234,7 +234,7 @@ button{cursor:pointer;font-family:inherit}
   background:#fff;border:.5px solid var(--border);border-radius:var(--radius);
   position:sticky;top:88px;overflow:hidden;
 }
-.summary-head{padding:18px 22px;border-bottom:.5px solid var(--border);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light)}
+.summary-head{padding:18px 22px;border-bottom:.5px solid var(--border);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--label)}
 .summary-loading{padding:32px 22px;text-align:center;font-size:12px;color:var(--text-muted);font-style:italic;font-family:'Cormorant Garamond',serif}
 
 /* Summary items (TS-rendered) */
@@ -246,7 +246,7 @@ button{cursor:pointer;font-family:inherit}
 .summary-line-info{min-width:0}
 .summary-line-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
 .summary-line-meta{font-size:11px;color:var(--text-muted);letter-spacing:.5px}
-.summary-line-price{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--accent);white-space:nowrap}
+.summary-line-price{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--ink);white-space:nowrap}
 
 .summary-totals{padding:14px 22px 18px;border-top:.5px solid var(--border)}
 .sum-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:8px}
@@ -255,10 +255,10 @@ button{cursor:pointer;font-family:inherit}
   align-items:baseline;margin-bottom:0;
 }
 .sum-row.grand .label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
-.sum-row.grand .val{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--accent);font-weight:300}
+.sum-row.grand .val{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--ink);font-weight:300}
 
 /* Trust strip */
-.trust-strip{display:flex;justify-content:space-around;padding:14px 22px;border-top:.5px solid var(--border);font-size:11px;letter-spacing:1px;color:var(--accent-light)}
+.trust-strip{display:flex;justify-content:space-around;padding:14px 22px;border-top:.5px solid var(--border);font-size:11px;letter-spacing:1px;color:var(--label)}
 .trust-strip > div{display:flex;align-items:center;gap:6px}
 
 /* Order error banner animation (banner is injected by checkout.ts) */
@@ -295,6 +295,40 @@ button{cursor:pointer;font-family:inherit}
 .nav-branch          { display: none !important; }
 #season-side-left,
 #season-side-right   { display: none !important; }
+
+/* ── Desktop readability (owner: small text was hard to read on desktop;
+   phones are unchanged). Text in --accent-light was about 2:1 in summer and
+   autumn, and --accent about 3.7:1 in summer. On desktop, --label and --ink
+   are those colours deepened toward --accent-dark (4.8:1 or better in every
+   season); dark bands keep the originals, which read fine there. Body text
+   goes from weight 300 to 400. ── */
+:root{--label:var(--accent-light);--ink:var(--accent)}
+@media(min-width:1025px){
+  :root{
+    --label:color-mix(in srgb,var(--accent-light) 45%,var(--accent-dark));
+    --ink:color-mix(in srgb,var(--accent) 75%,var(--accent-dark));
+  }
+  /* dark bands: a lighter label (6:1+), the plain accent */
+  .topbar,footer,.footer,.enq-bg,.stats-bg,.cta-banner,#weddings-teaser,.gal-cta,
+  .trust-strip,.vs-overlay{--label:color-mix(in srgb,var(--accent-light) 75%,#fff);--ink:var(--accent)}
+  body{font-weight:400}
+  /* sizes: small capitals 11->12px, notes 11->13px, descriptions 12-13->14px,
+     italic subtitles ~17->19px. Nav links and the logo line are left alone:
+     the header is tuned so the logo doesn't touch the links. */
+  .topbar,.eyebrow,.w-eyebrow,.hero-eyebrow,.shop-hero-eyebrow,.cta-eyebrow,.sec-label,
+  .stat-label,.footer-col h4,.occ-link,.text-link,.gal-cta-sub,.trust-item,.tab-btn,
+  .summary-hd,.cp-label,.enq-card label,.material-pill,.prod-price-from,.dq-day,
+  .mat-badge,.type-badge,.summary-total-label{font-size:12px}
+  .hero-from,.hero-trust,.prod-type,.footer-bottom,.breadcrumb-inner a,.breadcrumb-inner span,
+  .size-note,.sz-label,.gift-counter,.filter-results,.path-cta>a,.enq-fine{font-size:13px}
+  .enq-card label span{font-size:12px !important}
+  .occ-desc,.coll-desc,.value-desc,.step-desc,.proc-desc,.prod-desc,.ig-alt,.footer-tagline,
+  .hours-row,.trust-row,.summary-row,.delivery-pill,.path-feat li,.faq-a p,.del-info p,
+  .ig-order,.enq-ig,.tab-pane p,.tab-pane li,.pd-subtitle{font-size:14px}
+  .footer-col a{font-size:13px}
+  .sec-subtitle,.sec-sub,.shop-hero-sub,.cta-sub,.enq-new{font-size:1.2rem;font-weight:400}
+  .footer-definition{font-size:15px}
+}
 </style>
 </head>
 <body>
@@ -412,7 +446,7 @@ button{cursor:pointer;font-family:inherit}
 
           <!-- Pickup note (shown in pickup mode by checkout.ts) -->
           <div id="pickup-note" class="pickup-note" style="display:none">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);flex-shrink:0;margin-top:2px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ink);flex-shrink:0;margin-top:2px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             <div>
               <strong>Pickup in Sydney</strong>
               <span class="pickup-note-sub">We'll contact you on the number you give us to arrange the pickup address and time.</span>

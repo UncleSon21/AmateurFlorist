@@ -79,7 +79,7 @@ a{text-decoration:none;color:inherit}
 button{cursor:pointer;font-family:inherit}
 
 /* ── Top bar ── */
-.topbar{background:var(--accent-dark);color:var(--accent-light);text-align:center;padding:9px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
+.topbar{background:var(--accent-dark);color:var(--label);text-align:center;padding:9px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
 .topbar a{color:#d4c5a0;border-bottom:.5px solid rgba(212,197,160,.4);transition:opacity .3s}
 .topbar a:hover{opacity:.7}
 
@@ -89,11 +89,11 @@ button{cursor:pointer;font-family:inherit}
 .back-link{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);transition:color .3s,gap .3s cubic-bezier(.16,1,.3,1);}
 .back-link:hover{color:var(--text);gap:12px}
 .logo{text-align:center}
-.logo-name{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block;}
-.logo-sub{font-size:11px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:2px;}
+.logo-name{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--ink);letter-spacing:2px;line-height:1;display:block;}
+.logo-sub{font-size:11px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--label);display:block;margin-top:2px;}
 /* Logo: tied-heart mark (public/brand/mark.svg) beside the script name */
 .logo a{display:inline-flex;align-items:center;gap:10px}
-.logo-mark{flex-shrink:0;color:var(--accent);--sw:2.8}
+.logo-mark{flex-shrink:0;color:var(--ink);--sw:2.8}
 .logo-text{display:flex;flex-direction:column;align-items:center}
 /* Smaller name so mark + name sit clear of the nav links; steps down with width */
 .logo .logo-name{font-size:1.9rem}
@@ -108,8 +108,8 @@ button{cursor:pointer;font-family:inherit}
 
 /* ── Breadcrumb ── */
 .breadcrumb{padding:14px 0;border-bottom:.5px solid var(--border);background:var(--bg-alt);}
-.breadcrumb-inner{max-width:1200px;margin:0 auto;padding:0 48px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--accent-light);}
-.breadcrumb a{color:var(--accent);transition:color .3s}
+.breadcrumb-inner{max-width:1200px;margin:0 auto;padding:0 48px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--label);}
+.breadcrumb a{color:var(--ink);transition:color .3s}
 .breadcrumb a:hover{color:var(--text)}
 .breadcrumb-sep{opacity:.4}
 
@@ -134,7 +134,7 @@ button{cursor:pointer;font-family:inherit}
 @keyframes imgFade{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:scale(1)}}
 .pd-placeholder{
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
-  color:var(--accent-light);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--label);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
   width:100%;height:100%;
 }
 .pd-thumbs{display:flex;gap:8px;flex-wrap:wrap}
@@ -143,8 +143,8 @@ button{cursor:pointer;font-family:inherit}
   background:var(--bg-alt);cursor:pointer;
   border:.5px solid transparent;transition:border-color .25s;
 }
-.pd-thumb:hover{border-color:var(--accent-light)}
-.pd-thumb.active{border-color:var(--accent)}
+.pd-thumb:hover{border-color:var(--label)}
+.pd-thumb.active{border-color:var(--ink)}
 .pd-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 
 /* ── RIGHT: Info ── */
@@ -165,12 +165,12 @@ button{cursor:pointer;font-family:inherit}
 .pd-divider{height:.5px;background:var(--border);margin:24px 0}
 .sec-label{
   display:block;font-size:11px;font-weight:400;letter-spacing:2.5px;
-  text-transform:uppercase;color:var(--accent-light);margin-bottom:12px;
+  text-transform:uppercase;color:var(--label);margin-bottom:12px;
 }
 
 /* ── Size options ── */
 .size-section{margin-bottom:22px}
-.size-note{font-size:11px;color:var(--accent-light);margin-bottom:12px}
+.size-note{font-size:11px;color:var(--label);margin-bottom:12px}
 .size-opts{display:flex;gap:8px;flex-wrap:wrap}
 .size-opt{cursor:pointer}
 .size-opt input{display:none}
@@ -180,9 +180,9 @@ button{cursor:pointer;font-family:inherit}
   border-radius:var(--radius);background:#fff;
   min-width:90px;gap:3px;transition:all .2s;
 }
-.size-opt:hover .size-box{border-color:var(--accent-light);background:var(--bg-alt);transform:translateY(-2px)}
-.size-opt input:checked + .size-box{border-color:var(--accent);background:var(--bg-alt);box-shadow:0 0 0 1px var(--accent)}
-.size-box .sz-price{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:300;color:var(--accent)}
+.size-opt:hover .size-box{border-color:var(--label);background:var(--bg-alt);transform:translateY(-2px)}
+.size-opt input:checked + .size-box{border-color:var(--ink);background:var(--bg-alt);box-shadow:0 0 0 1px var(--accent)}
+.size-box .sz-price{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:300;color:var(--ink)}
 .size-box .sz-label{font-size:11px;color:var(--text-muted)}
 
 /* ── Presentation ── */
@@ -197,11 +197,11 @@ button{cursor:pointer;font-family:inherit}
   transition:all .2s;
 }
 .pres-box span{font-size:11px;font-weight:400;color:var(--text-muted);letter-spacing:.5px}
-.pres-box em{font-style:normal;color:var(--accent-light);font-size:11px}
-.pres-box svg{color:var(--accent-light)}
-.pres-opt:hover .pres-box{border-color:var(--accent-light)}
-.pres-opt input:checked + .pres-box{border-color:var(--accent);background:var(--bg-alt);box-shadow:0 0 0 1px var(--accent)}
-.pres-opt input:checked + .pres-box span,.pres-opt input:checked + .pres-box svg{color:var(--accent)}
+.pres-box em{font-style:normal;color:var(--label);font-size:11px}
+.pres-box svg{color:var(--label)}
+.pres-opt:hover .pres-box{border-color:var(--label)}
+.pres-opt input:checked + .pres-box{border-color:var(--ink);background:var(--bg-alt);box-shadow:0 0 0 1px var(--accent)}
+.pres-opt input:checked + .pres-box span,.pres-opt input:checked + .pres-box svg{color:var(--ink)}
 
 /* ── Quantity ── */
 .qty-section{margin-bottom:22px}
@@ -212,7 +212,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .qty-btn{
   width:40px;height:40px;border:none;background:transparent;
-  color:var(--accent);font-size:1.1rem;transition:background .2s;
+  color:var(--ink);font-size:1.1rem;transition:background .2s;
   display:flex;align-items:center;justify-content:center;
 }
 .qty-btn:hover{background:var(--bg-alt)}
@@ -232,10 +232,10 @@ button{cursor:pointer;font-family:inherit}
   color:var(--text);background:#fff;outline:none;
   transition:border-color .3s;
 }
-.date-input:focus{border-color:var(--accent)}
+.date-input:focus{border-color:var(--ink)}
 .date-quick{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
 .date-quick button{flex:1;min-width:0;padding:8px 10px;background:#fff;border:.5px solid var(--border);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text);letter-spacing:.3px;cursor:pointer;transition:all .3s;text-align:center;line-height:1.3}
-.date-quick button:hover{border-color:var(--accent);color:var(--accent)}
+.date-quick button:hover{border-color:var(--ink);color:var(--ink)}
 .date-quick button.active{background:var(--accent-dark);color:#faf8f4;border-color:var(--accent-dark)}
 .date-quick button .dq-day{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:.7;margin-bottom:2px}
 .date-quick button.active .dq-day{opacity:.85}
@@ -249,19 +249,19 @@ button{cursor:pointer;font-family:inherit}
 /* ── Gift message + preview ── */
 .gift-section{margin-bottom:22px}
 .gift-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 16px;background:#fff;border:.5px solid var(--border);border-radius:var(--radius);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);transition:border-color .3s}
-.gift-toggle:hover{border-color:var(--accent)}
+.gift-toggle:hover{border-color:var(--ink)}
 .gift-toggle .gt-left{display:flex;align-items:center;gap:10px}
-.gift-toggle .gt-icon{width:18px;height:18px;color:var(--accent)}
-.gift-toggle .gt-chev{font-size:1.2rem;color:var(--accent);transition:transform .3s;font-weight:300}
+.gift-toggle .gt-icon{width:18px;height:18px;color:var(--ink)}
+.gift-toggle .gt-chev{font-size:1.2rem;color:var(--ink);transition:transform .3s;font-weight:300}
 .gift-section.open .gift-toggle .gt-chev{transform:rotate(45deg)}
 .gift-fields{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1)}
 .gift-section.open .gift-fields{max-height:520px}
 .gift-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:14px}
 .gift-grid .field{display:flex;flex-direction:column;gap:5px}
 .gift-grid .field.full{grid-column:1/-1}
-.gift-grid label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light)}
+.gift-grid label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--label)}
 .gift-grid input,.gift-grid textarea{padding:10px 12px;background:#fff;border:.5px solid var(--border);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:12px;outline:none;transition:border-color .3s}
-.gift-grid input:focus,.gift-grid textarea:focus{border-color:var(--accent)}
+.gift-grid input:focus,.gift-grid textarea:focus{border-color:var(--ink)}
 .gift-grid textarea{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;resize:vertical;min-height:60px;line-height:1.5}
 .gift-counter{font-size:11px;color:var(--text-muted);text-align:right;margin-top:4px}
 .gift-counter.over{color:#a05870}
@@ -269,11 +269,11 @@ button{cursor:pointer;font-family:inherit}
 /* Card preview */
 .card-preview{margin-top:16px;background:linear-gradient(135deg,#f9f6f0 0%,#f0ebe0 100%);border:.5px solid var(--border);border-radius:var(--radius);padding:24px 28px;position:relative;box-shadow:0 4px 16px rgba(0,0,0,.05);transition:opacity .3s}
 .card-preview::before{content:'';position:absolute;inset:6px;border:.5px dashed rgba(139,115,85,.2);border-radius:1px;pointer-events:none}
-.cp-label{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent-light);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.cp-label{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--label);margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .cp-label::before{content:'';width:14px;height:.5px;background:var(--accent-light)}
 .cp-to{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text-muted);font-style:italic;margin-bottom:8px;min-height:1.5em}
 .cp-msg{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);line-height:1.65;font-style:italic;margin-bottom:14px;white-space:pre-wrap;min-height:3em}
-.cp-from{font-family:'Great Vibes',cursive;font-size:1.6rem;color:var(--accent);text-align:right;line-height:1;min-height:1em}
+.cp-from{font-family:'Great Vibes',cursive;font-size:1.6rem;color:var(--ink);text-align:right;line-height:1;min-height:1em}
 
 /* ── Order summary ── */
 .order-summary{
@@ -282,7 +282,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .summary-hd{
   font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--accent-light);margin-bottom:14px;
+  color:var(--label);margin-bottom:14px;
 }
 .summary-row{
   display:flex;justify-content:space-between;align-items:center;
@@ -296,7 +296,7 @@ button{cursor:pointer;font-family:inherit}
 .summary-total-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
 #total-price{
   font-family:'Cormorant Garamond',serif;
-  font-size:2rem;font-weight:300;color:var(--accent);letter-spacing:-.5px;
+  font-size:2rem;font-weight:300;color:var(--ink);letter-spacing:-.5px;
 }
 
 /* ── Action buttons ── */
@@ -308,7 +308,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .btn-buy:hover{background:var(--accent);transform:translateY(-1px)}
 .btn-cart{
-  padding:15px;background:#fff;color:var(--accent);
+  padding:15px;background:#fff;color:var(--ink);
   border:.5px solid var(--accent);border-radius:var(--radius);
   font-size:11px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
   transition:all .25s;
@@ -319,7 +319,7 @@ button{cursor:pointer;font-family:inherit}
 /* ── Trust items ── */
 .trust-list{display:flex;flex-direction:column;gap:10px;padding-top:4px}
 .trust-row{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text-muted)}
-.trust-row svg{color:var(--accent-light);flex-shrink:0}
+.trust-row svg{color:var(--label);flex-shrink:0}
 
 /* ── Tabs ── */
 .pd-tabs{margin-top:64px;padding-top:64px;border-top:.5px solid var(--border)}
@@ -327,12 +327,12 @@ button{cursor:pointer;font-family:inherit}
 .tab-btn{
   padding:12px 24px;background:none;border:none;
   font-size:11px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
-  color:var(--accent-light);cursor:pointer;
+  color:var(--label);cursor:pointer;
   border-bottom:1.5px solid transparent;margin-bottom:-.5px;
   transition:color .2s,border-color .2s;
 }
 .tab-btn:hover{color:var(--text)}
-.tab-btn.active{color:var(--text);border-bottom-color:var(--accent)}
+.tab-btn.active{color:var(--text);border-bottom-color:var(--ink)}
 .tab-pane{display:none}
 .tab-pane.active{display:block;animation:fadeUp .3s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -376,7 +376,41 @@ button{cursor:pointer;font-family:inherit}
 #season-side-left,#season-side-right,.nav-branch { display: none !important; }
 
 .ig-order{margin-top:14px;font-size:13px;color:var(--text-muted)}
-.ig-order a{color:var(--accent);border-bottom:.5px solid var(--accent-light)}
+.ig-order a{color:var(--ink);border-bottom:.5px solid var(--accent-light)}
+
+/* ── Desktop readability (owner: small text was hard to read on desktop;
+   phones are unchanged). Text in --accent-light was about 2:1 in summer and
+   autumn, and --accent about 3.7:1 in summer. On desktop, --label and --ink
+   are those colours deepened toward --accent-dark (4.8:1 or better in every
+   season); dark bands keep the originals, which read fine there. Body text
+   goes from weight 300 to 400. ── */
+:root{--label:var(--accent-light);--ink:var(--accent)}
+@media(min-width:1025px){
+  :root{
+    --label:color-mix(in srgb,var(--accent-light) 45%,var(--accent-dark));
+    --ink:color-mix(in srgb,var(--accent) 75%,var(--accent-dark));
+  }
+  /* dark bands: a lighter label (6:1+), the plain accent */
+  .topbar,footer,.footer,.enq-bg,.stats-bg,.cta-banner,#weddings-teaser,.gal-cta,
+  .trust-strip,.vs-overlay{--label:color-mix(in srgb,var(--accent-light) 75%,#fff);--ink:var(--accent)}
+  body{font-weight:400}
+  /* sizes: small capitals 11->12px, notes 11->13px, descriptions 12-13->14px,
+     italic subtitles ~17->19px. Nav links and the logo line are left alone:
+     the header is tuned so the logo doesn't touch the links. */
+  .topbar,.eyebrow,.w-eyebrow,.hero-eyebrow,.shop-hero-eyebrow,.cta-eyebrow,.sec-label,
+  .stat-label,.footer-col h4,.occ-link,.text-link,.gal-cta-sub,.trust-item,.tab-btn,
+  .summary-hd,.cp-label,.enq-card label,.material-pill,.prod-price-from,.dq-day,
+  .mat-badge,.type-badge,.summary-total-label{font-size:12px}
+  .hero-from,.hero-trust,.prod-type,.footer-bottom,.breadcrumb-inner a,.breadcrumb-inner span,
+  .size-note,.sz-label,.gift-counter,.filter-results,.path-cta>a,.enq-fine{font-size:13px}
+  .enq-card label span{font-size:12px !important}
+  .occ-desc,.coll-desc,.value-desc,.step-desc,.proc-desc,.prod-desc,.ig-alt,.footer-tagline,
+  .hours-row,.trust-row,.summary-row,.delivery-pill,.path-feat li,.faq-a p,.del-info p,
+  .ig-order,.enq-ig,.tab-pane p,.tab-pane li,.pd-subtitle{font-size:14px}
+  .footer-col a{font-size:13px}
+  .sec-subtitle,.sec-sub,.shop-hero-sub,.cta-sub,.enq-new{font-size:1.2rem;font-weight:400}
+  .footer-definition{font-size:15px}
+}
 </style>
 </head>
 <body>
@@ -503,7 +537,7 @@ button{cursor:pointer;font-family:inherit}
           <button type="button" class="gift-toggle" onclick="toggleGift()">
             <span class="gt-left">
               <svg class="gt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-              <span>Add a gift card message <span style="color:var(--accent-light);font-style:italic;font-family:'Cormorant Garamond',serif">— free</span></span>
+              <span>Add a gift card message <span style="color:var(--label);font-style:italic;font-family:'Cormorant Garamond',serif">— free</span></span>
             </span>
             <span class="gt-chev">+</span>
           </button>

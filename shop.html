@@ -83,7 +83,7 @@ a{text-decoration:none;color:inherit}
 button{cursor:pointer;font-family:inherit}
 
 /* ── Top bar ── */
-.topbar{background:var(--accent-dark);color:var(--accent-light);text-align:center;padding:9px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
+.topbar{background:var(--accent-dark);color:var(--label);text-align:center;padding:9px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
 .topbar a{color:#d4c5a0;border-bottom:.5px solid rgba(212,197,160,.4);transition:opacity .3s}
 .topbar a:hover{opacity:.7}
 
@@ -98,11 +98,11 @@ button{cursor:pointer;font-family:inherit}
 .nav-links a.active{color:var(--text)}
 .nav-links a.active::after{width:100%}
 .logo{text-align:center}
-.logo-name{font-family:'Great Vibes',cursive;font-size:2.4rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block;}
-.logo-sub{font-size:11px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:3px;}
+.logo-name{font-family:'Great Vibes',cursive;font-size:2.4rem;color:var(--ink);letter-spacing:2px;line-height:1;display:block;}
+.logo-sub{font-size:11px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--label);display:block;margin-top:3px;}
 /* Logo: tied-heart mark (public/brand/mark.svg) beside the script name */
 .logo a{display:inline-flex;align-items:center;gap:10px}
-.logo-mark{flex-shrink:0;color:var(--accent);--sw:2.8}
+.logo-mark{flex-shrink:0;color:var(--ink);--sw:2.8}
 .logo-text{display:flex;flex-direction:column;align-items:center}
 /* Smaller name so mark + name sit clear of the nav links; steps down with width */
 .logo .logo-name{font-size:1.9rem}
@@ -125,7 +125,7 @@ button{cursor:pointer;font-family:inherit}
 }
 .shop-hero-eyebrow{
   font-size:11px;letter-spacing:3px;text-transform:uppercase;
-  color:var(--accent-light);margin-bottom:16px;
+  color:var(--label);margin-bottom:16px;
   display:flex;align-items:center;justify-content:center;gap:12px;
 }
 .shop-hero-eyebrow::before,.shop-hero-eyebrow::after{content:'';display:inline-block;width:24px;height:.5px;background:var(--accent-light);}
@@ -135,7 +135,7 @@ button{cursor:pointer;font-family:inherit}
   font-weight:300;color:var(--text);
   letter-spacing:-1px;line-height:1.05;margin-bottom:12px;
 }
-.shop-hero h1 em{font-style:italic;color:var(--accent)}
+.shop-hero h1 em{font-style:italic;color:var(--ink)}
 .shop-hero-sub{
   font-family:'Cormorant Garamond',serif;
   font-size:1.05rem;font-style:italic;font-weight:300;
@@ -165,14 +165,14 @@ button{cursor:pointer;font-family:inherit}
   padding:0 14px;height:34px;flex-shrink:0;
   background:#fff;transition:border-color .3s;
 }
-.filter-search:focus-within{border-color:var(--accent)}
-.filter-search svg{color:var(--accent-light);flex-shrink:0}
+.filter-search:focus-within{border-color:var(--ink)}
+.filter-search svg{color:var(--label);flex-shrink:0}
 .filter-search input{
   border:none;background:transparent;outline:none;
   font-size:12px;font-weight:300;color:var(--text);width:160px;
   font-family:'DM Sans',sans-serif;
 }
-.filter-search input::placeholder{color:var(--accent-light)}
+.filter-search input::placeholder{color:var(--label)}
 
 /* Material pills */
 .material-pills{display:flex;gap:6px;flex-shrink:0}
@@ -184,7 +184,7 @@ button{cursor:pointer;font-family:inherit}
   color:var(--text-muted);transition:all .25s;
   white-space:nowrap;
 }
-.material-pill:hover{border-color:var(--accent);color:var(--accent)}
+.material-pill:hover{border-color:var(--ink);color:var(--ink)}
 .material-pill.active{background:var(--accent-dark);border-color:var(--accent-dark);color:#faf8f4}
 
 /* Category select */
@@ -199,19 +199,19 @@ button{cursor:pointer;font-family:inherit}
   font-family:'DM Sans',sans-serif;
   transition:border-color .3s;
 }
-.filter-select:focus{border-color:var(--accent)}
+.filter-select:focus{border-color:var(--ink)}
 
 /* Sort + results */
 .filter-right{margin-left:auto;display:flex;align-items:center;gap:16px;flex-shrink:0}
-.filter-results{font-size:11px;color:var(--accent-light);letter-spacing:.5px}
-.filter-results strong{color:var(--accent)}
+.filter-results{font-size:11px;color:var(--label);letter-spacing:.5px}
+.filter-results strong{color:var(--ink)}
 
 /* Grid layout toggle */
 .grid-toggle{display:flex;gap:4px}
 .grid-btn{
   width:28px;height:28px;border:.5px solid var(--border);border-radius:var(--radius);
   background:transparent;display:flex;align-items:center;justify-content:center;
-  color:var(--accent-light);transition:all .25s;
+  color:var(--label);transition:all .25s;
 }
 .grid-btn.active,.grid-btn:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
 
@@ -293,10 +293,10 @@ button{cursor:pointer;font-family:inherit}
   padding-top:12px;border-top:.5px solid var(--border);
 }
 .prod-price-wrap{}
-.prod-price-from{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--accent-light);display:block;margin-bottom:1px}
+.prod-price-from{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--label);display:block;margin-bottom:1px}
 .prod-price{
   font-family:'Cormorant Garamond',serif;
-  font-size:1.2rem;font-weight:300;color:var(--accent);
+  font-size:1.2rem;font-weight:300;color:var(--ink);
 }
 .prod-add{
   width:32px;height:32px;border-radius:var(--radius);
@@ -386,8 +386,42 @@ button{cursor:pointer;font-family:inherit}
   opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);
 }
 .nav-shop-menu a{display:block;padding:9px 22px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:background .2s,color .2s}
-.nav-shop-menu a:hover{background:var(--bg-alt);color:var(--accent)}
+.nav-shop-menu a:hover{background:var(--bg-alt);color:var(--ink)}
 .nav-shop-menu a::after{display:none}
+
+/* ── Desktop readability (owner: small text was hard to read on desktop;
+   phones are unchanged). Text in --accent-light was about 2:1 in summer and
+   autumn, and --accent about 3.7:1 in summer. On desktop, --label and --ink
+   are those colours deepened toward --accent-dark (4.8:1 or better in every
+   season); dark bands keep the originals, which read fine there. Body text
+   goes from weight 300 to 400. ── */
+:root{--label:var(--accent-light);--ink:var(--accent)}
+@media(min-width:1025px){
+  :root{
+    --label:color-mix(in srgb,var(--accent-light) 45%,var(--accent-dark));
+    --ink:color-mix(in srgb,var(--accent) 75%,var(--accent-dark));
+  }
+  /* dark bands: a lighter label (6:1+), the plain accent */
+  .topbar,footer,.footer,.enq-bg,.stats-bg,.cta-banner,#weddings-teaser,.gal-cta,
+  .trust-strip,.vs-overlay{--label:color-mix(in srgb,var(--accent-light) 75%,#fff);--ink:var(--accent)}
+  body{font-weight:400}
+  /* sizes: small capitals 11->12px, notes 11->13px, descriptions 12-13->14px,
+     italic subtitles ~17->19px. Nav links and the logo line are left alone:
+     the header is tuned so the logo doesn't touch the links. */
+  .topbar,.eyebrow,.w-eyebrow,.hero-eyebrow,.shop-hero-eyebrow,.cta-eyebrow,.sec-label,
+  .stat-label,.footer-col h4,.occ-link,.text-link,.gal-cta-sub,.trust-item,.tab-btn,
+  .summary-hd,.cp-label,.enq-card label,.material-pill,.prod-price-from,.dq-day,
+  .mat-badge,.type-badge,.summary-total-label{font-size:12px}
+  .hero-from,.hero-trust,.prod-type,.footer-bottom,.breadcrumb-inner a,.breadcrumb-inner span,
+  .size-note,.sz-label,.gift-counter,.filter-results,.path-cta>a,.enq-fine{font-size:13px}
+  .enq-card label span{font-size:12px !important}
+  .occ-desc,.coll-desc,.value-desc,.step-desc,.proc-desc,.prod-desc,.ig-alt,.footer-tagline,
+  .hours-row,.trust-row,.summary-row,.delivery-pill,.path-feat li,.faq-a p,.del-info p,
+  .ig-order,.enq-ig,.tab-pane p,.tab-pane li,.pd-subtitle{font-size:14px}
+  .footer-col a{font-size:13px}
+  .sec-subtitle,.sec-sub,.shop-hero-sub,.cta-sub,.enq-new{font-size:1.2rem;font-weight:400}
+  .footer-definition{font-size:15px}
+}
 </style>
 </head>
 <body>

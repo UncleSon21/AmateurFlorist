@@ -114,7 +114,7 @@ export function mountCartDrawer() {
       font-weight: 500;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--accent, #8b7355);
+      color: var(--ink, var(--accent, #8b7355));
     }
     #cart-drawer .drawer-header .drawer-count {
       font-size: 11px;
@@ -181,7 +181,7 @@ export function mountCartDrawer() {
     }
     #cart-drawer .drawer-item-qty {
       font-size: 11px;
-      color: var(--accent, #8b7355);
+      color: var(--ink, var(--accent, #8b7355));
       font-weight: 500;
       letter-spacing: 1px;
       flex-shrink: 0;
@@ -190,7 +190,7 @@ export function mountCartDrawer() {
       background: none;
       border: none;
       cursor: pointer;
-      color: var(--accent-light, #c8b89a);
+      color: var(--label, var(--accent-light, #c8b89a));
       padding: 4px;
       border-radius: var(--radius, 2px);
       font-size: 12px;

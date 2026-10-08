@@ -65,11 +65,11 @@ a{text-decoration:none;color:inherit}
 
 /* Nav */
 .nav{padding:18px 48px;border-bottom:.5px solid var(--border);display:flex;justify-content:center}
-.logo-name{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--accent);letter-spacing:2px;line-height:1;display:block;text-align:center}
-.logo-sub{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent-light);display:block;margin-top:2px;text-align:center}
+.logo-name{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--ink);letter-spacing:2px;line-height:1;display:block;text-align:center}
+.logo-sub{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--label);display:block;margin-top:2px;text-align:center}
 /* Logo: tied-heart mark (public/brand/mark.svg) beside the script name */
 .logo-link{display:inline-flex;align-items:center;gap:10px}
-.logo-mark{flex-shrink:0;color:var(--accent);--sw:2.8}
+.logo-mark{flex-shrink:0;color:var(--ink);--sw:2.8}
 .logo-text{display:flex;flex-direction:column;align-items:center}
 
 
@@ -78,15 +78,15 @@ a{text-decoration:none;color:inherit}
 .nf-card{max-width:620px;text-align:center}
 .nf-code{
   font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,12vw,8rem);font-weight:300;
-  color:var(--accent);letter-spacing:-2px;line-height:1;margin-bottom:8px;
+  color:var(--ink);letter-spacing:-2px;line-height:1;margin-bottom:8px;
 }
-.nf-code em{font-style:italic;color:var(--accent-light)}
-.nf-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+.nf-code em{font-style:italic;color:var(--label)}
+.nf-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--ink);margin-bottom:18px}
 .nf-title{
   font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;
   color:var(--text);line-height:1.1;letter-spacing:-.5px;margin-bottom:18px;
 }
-.nf-title em{font-style:italic;color:var(--accent)}
+.nf-title em{font-style:italic;color:var(--ink)}
 .nf-sub{
   font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--text-muted);
   max-width:480px;margin:0 auto 32px;line-height:1.6;
@@ -101,21 +101,55 @@ a{text-decoration:none;color:inherit}
 .btn-dark{background:var(--accent-dark);color:var(--bg);transition:background .3s}
 .btn-dark:hover{background:var(--accent)}
 .btn-ghost{color:var(--text-muted);background:transparent;border-bottom:.5px solid var(--border);padding:14px 0 6px;border-radius:0;transition:color .3s,gap .3s,border-color .3s}
-.btn-ghost:hover{color:var(--text);gap:14px;border-color:var(--accent)}
+.btn-ghost:hover{color:var(--text);gap:14px;border-color:var(--ink)}
 
 /* Suggested links */
 .nf-suggestions{margin-top:48px;padding-top:32px;border-top:.5px solid var(--border)}
-.nf-suggestions-label{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent-light);margin-bottom:14px}
+.nf-suggestions-label{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--label);margin-bottom:14px}
 .nf-suggestions-list{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;font-size:13px}
-.nf-suggestions-list a{color:var(--accent);border-bottom:.5px solid transparent;padding-bottom:2px;transition:border-color .3s}
-.nf-suggestions-list a:hover{border-color:var(--accent)}
+.nf-suggestions-list a{color:var(--ink);border-bottom:.5px solid transparent;padding-bottom:2px;transition:border-color .3s}
+.nf-suggestions-list a:hover{border-color:var(--ink)}
 
-.footer{padding:24px;text-align:center;font-size:11px;letter-spacing:1px;color:var(--accent-light);border-top:.5px solid var(--border)}
+.footer{padding:24px;text-align:center;font-size:11px;letter-spacing:1px;color:var(--label);border-top:.5px solid var(--border)}
 
 @media(max-width:600px){
   .nav{padding:14px 20px}
   .nf-actions{flex-direction:column;align-items:center}
   .btn-dark,.btn-ghost{width:100%;max-width:280px;justify-content:center}
+}
+
+/* ── Desktop readability (owner: small text was hard to read on desktop;
+   phones are unchanged). Text in --accent-light was about 2:1 in summer and
+   autumn, and --accent about 3.7:1 in summer. On desktop, --label and --ink
+   are those colours deepened toward --accent-dark (4.8:1 or better in every
+   season); dark bands keep the originals, which read fine there. Body text
+   goes from weight 300 to 400. ── */
+:root{--label:var(--accent-light);--ink:var(--accent)}
+@media(min-width:1025px){
+  :root{
+    --label:color-mix(in srgb,var(--accent-light) 45%,var(--accent-dark));
+    --ink:color-mix(in srgb,var(--accent) 75%,var(--accent-dark));
+  }
+  /* dark bands (this page's footer is light): a lighter label (6:1+), the plain accent */
+  .topbar,.enq-bg,.stats-bg,.cta-banner,#weddings-teaser,.gal-cta,
+  .trust-strip,.vs-overlay{--label:color-mix(in srgb,var(--accent-light) 75%,#fff);--ink:var(--accent)}
+  body{font-weight:400}
+  /* sizes: small capitals 11->12px, notes 11->13px, descriptions 12-13->14px,
+     italic subtitles ~17->19px. Nav links and the logo line are left alone:
+     the header is tuned so the logo doesn't touch the links. */
+  .topbar,.eyebrow,.w-eyebrow,.hero-eyebrow,.shop-hero-eyebrow,.cta-eyebrow,.sec-label,
+  .stat-label,.footer-col h4,.occ-link,.text-link,.gal-cta-sub,.trust-item,.tab-btn,
+  .summary-hd,.cp-label,.enq-card label,.material-pill,.prod-price-from,.dq-day,
+  .mat-badge,.type-badge,.summary-total-label{font-size:12px}
+  .hero-from,.hero-trust,.prod-type,.footer-bottom,.breadcrumb-inner a,.breadcrumb-inner span,
+  .size-note,.sz-label,.gift-counter,.filter-results,.path-cta>a,.enq-fine{font-size:13px}
+  .enq-card label span{font-size:12px !important}
+  .occ-desc,.coll-desc,.value-desc,.step-desc,.proc-desc,.prod-desc,.ig-alt,.footer-tagline,
+  .hours-row,.trust-row,.summary-row,.delivery-pill,.path-feat li,.faq-a p,.del-info p,
+  .ig-order,.enq-ig,.tab-pane p,.tab-pane li,.pd-subtitle{font-size:14px}
+  .footer-col a{font-size:13px}
+  .sec-subtitle,.sec-sub,.shop-hero-sub,.cta-sub,.enq-new{font-size:1.2rem;font-weight:400}
+  .footer-definition{font-size:15px}
 }
 </style>
 </head>

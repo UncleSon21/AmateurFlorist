@@ -8,6 +8,8 @@
 
 html[data-theme="night"] {
   color-scheme: dark;
+  --label: var(--accent-light);   /* pages deepen these on desktop for light backgrounds; */
+  --ink: var(--accent);            /* the dark palette doesn't need it */
 }
 
 /* Smooth crossfade when toggling */

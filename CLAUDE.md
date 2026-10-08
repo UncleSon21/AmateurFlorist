@@ -113,6 +113,13 @@ Use existing tokens and classes. Do not add a CSS framework or new stylesheet.
 #1e1a17  headings                         #6b5d54  muted body text
 ```
 
+- Text colour tokens: use `color:var(--label)` (not `--accent-light`) and
+  `color:var(--ink)` (not `--accent`) for text. They equal those colours on
+  phones; on desktop (≥1025px) each page's "Desktop readability" block deepens
+  them for light backgrounds (4.8:1+ in every season; `--accent-light` alone is
+  ~2:1 in summer/autumn) and resets them on dark bands. The same block sets
+  desktop body weight 400 and the desktop text sizes. Phones are untouched
+  (owner: mobile is good).
 - `Cormorant Garamond` — headings, italic pull-quotes
 - `Inter` — UI, buttons, eyebrows (uppercase, letter-spacing 2–3px)
 - `Great Vibes` — script accents only
