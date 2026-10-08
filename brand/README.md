@@ -15,7 +15,8 @@ like a hand-tied bouquet. The line under the name explains the name:
 | `amateur-florist-mark-burgundy.svg` | Mark only, for light backgrounds |
 
 The website uses `public/brand/mark.svg` (same drawing, takes the season's colour)
-and `public/favicon.svg`.
+and `public/favicon.svg`. `public/brand/logo-512.png` is the avatar rendered to PNG; it's
+the logo in the homepage's structured data, which Google can show in search.
 
 ## Colours
 

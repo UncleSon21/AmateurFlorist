@@ -167,8 +167,11 @@ Checked 2026-10-06:
   `003_wedding_enquiries.sql` records it and adds `interest` and `piece`. Run
   it, then redeploy `submit-wedding-enquiry`, before relying on those columns.
 - Redesign is integrated; the `*.original-bak` files are the pre-redesign pages.
-- SEO: meta + OG tags in place; **no JSON-LD on any page** (needs real business
-  details first). Outstanding: Google Business Profile, Search Console.
+- SEO: meta + OG tags in place. The homepage has JSON-LD (`WebSite` +
+  `Florist`): name, URL, logo `public/brand/logo-512.png`, email, Instagram
+  (`sameAs`), area served Sydney. **No phone and no street address** (owner's
+  choice; there is no public address). Outstanding: Google Business Profile,
+  Search Console.
 - Free delivery threshold is **$50** (owner confirmed) — code and copy agree.
 - The product page "In Vase +$30" option is switched off: it was never charged.
 - While orders go by email, no page claims "secure checkout", SSL or a "fresh
