@@ -350,7 +350,7 @@ button{cursor:pointer;font-family:inherit}
   color:var(--text-muted);margin-top:8px;
 }
 
-/* ── FAQ (native <details>: opens on tap, no script) ── */
+/* ── FAQ (native <details>; the script after the section slides it open/closed) ── */
 .home-faq{max-width:820px}
 .home-faq .faq-items{margin-top:32px;border-top:.5px solid var(--border)}
 .home-faq details{border-bottom:.5px solid var(--border)}
@@ -359,7 +359,11 @@ button{cursor:pointer;font-family:inherit}
 .home-faq summary::-webkit-details-marker{display:none}
 .home-faq summary::after{content:'+';flex-shrink:0;color:var(--ink);font-size:1.4rem;line-height:1;transition:transform .3s}
 .home-faq details[open] summary::after{transform:rotate(45deg)}
-.home-faq .faq-ans{padding:0 0 18px;max-width:680px;font-size:14px;line-height:1.8;color:var(--text-muted)}
+.home-faq details.is-closing summary::after{transform:none}
+/* overflow + a spacer instead of bottom padding, so the slide (script below)
+   can take the height all the way to 0 */
+.home-faq .faq-ans{overflow:hidden;max-width:680px;font-size:14px;line-height:1.8;color:var(--text-muted)}
+.home-faq .faq-ans::after{content:'';display:block;height:18px}
 .home-faq .faq-ans a{color:var(--ink);border-bottom:.5px solid var(--label)}
 
 /* ── Instagram ── */
@@ -1219,10 +1223,34 @@ button{cursor:pointer;font-family:inherit}
   </div>
 </section>
 <script>
-/* FAQPage structured data, built from the questions above (one source of truth). */
+/* FAQ: slide answers open and closed (Safari can't animate <details> with CSS
+   alone), matching the weddings FAQ's easing. Reduced-motion visitors get the
+   instant native toggle. Then FAQPage structured data, built from the same
+   questions (one source of truth). */
 (function () {
   var items = document.querySelectorAll('#faq details');
   if (!items.length) return;
+  var EASE = 'cubic-bezier(.16,1,.3,1)';
+  items.forEach(function (d) {
+    var summary = d.querySelector('summary'), ans = d.querySelector('.faq-ans');
+    summary.addEventListener('click', function (e) {
+      if (!ans.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      e.preventDefault();
+      if (d._anim) d._anim.cancel();
+      if (!d.open || d.classList.contains('is-closing')) {
+        d.classList.remove('is-closing');
+        d.open = true;
+        d._anim = ans.animate([{ height: '0px', opacity: 0 }, { height: ans.scrollHeight + 'px', opacity: 1 }],
+          { duration: 400, easing: EASE });
+        d._anim.onfinish = function () { d._anim = null; };
+      } else {
+        d.classList.add('is-closing');
+        d._anim = ans.animate([{ height: ans.offsetHeight + 'px', opacity: 1 }, { height: '0px', opacity: 0 }],
+          { duration: 320, easing: EASE });
+        d._anim.onfinish = function () { d.open = false; d.classList.remove('is-closing'); d._anim = null; };
+      }
+    });
+  });
   var data = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [] };
   items.forEach(function (d) {
     data.mainEntity.push({ '@type': 'Question', name: d.querySelector('summary').textContent.trim(),
